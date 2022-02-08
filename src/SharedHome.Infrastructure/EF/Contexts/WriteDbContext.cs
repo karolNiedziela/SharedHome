@@ -12,7 +12,7 @@ namespace SharedHome.Infrastructure.EF.Contexts
 {
     internal class WriteDbContext : DbContext
     {
-        public DbSet<Invitation> Invitations { get; set; }
+        public DbSet<Invitation> Invitations { get; set; } = default!;
 
         public DbSet<ShoppingList> ShoppingLists { get; set; } = default!;
         
