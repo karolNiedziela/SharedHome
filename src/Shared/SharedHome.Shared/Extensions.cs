@@ -2,13 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Abstractions.Time;
 using SharedHome.Shared.Abstractions.User;
 using SharedHome.Shared.Auth;
-using SharedHome.Shared.Commands;
 using SharedHome.Shared.Email;
-using SharedHome.Shared.Queries;
 using SharedHome.Shared.Time;
 using SharedHome.Shared.User;
 
@@ -21,8 +18,6 @@ namespace SharedHome.Shared
 
         public static IServiceCollection AddShared(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddCommands();
-            services.AddQueries();
 
             services.AddEmail(configuration);
 

@@ -1,11 +1,7 @@
-﻿using SharedHome.Shared.Abstractions.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public record AddShoppingListProduct(int ShoppingListId, string Name, int Quantity) : ICommand;
+    public record AddShoppingListProduct(int ShoppingListId, string Name, int Quantity) : ICommand<Unit>;
 }
