@@ -4,10 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedHome.Shared.Email
+namespace SharedHome.Application
 {
-    public enum EmailType
-    {
-        Confirmation
-    }
+    public sealed record AssemblyReference;
 }

@@ -1,13 +1,13 @@
+using FluentValidation.AspNetCore;
 using SharedHome.Application;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddEnvironmentVariables(prefix: "SharedHome_");
-
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(typeof(SharedHome.Application.AssemblyReference).Assembly));
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
