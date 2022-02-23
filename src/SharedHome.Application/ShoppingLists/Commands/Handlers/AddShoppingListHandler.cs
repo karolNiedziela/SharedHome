@@ -1,37 +1,26 @@
-﻿using MediatR;
-using SharedHome.Domain.ShoppingLists.Aggregates;
-using SharedHome.Domain.ShoppingLists.Events;
+﻿using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
-using SharedHome.Shared.Abstractions.Messaging;
-using SharedHome.Shared.Abstractions.Time;
-using SharedHome.Shared.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 {
-    public class AddShoppingListHandler : IRequestHandler<AddShoppingList, Response<string>>
+    public class AddShoppingListHandler : ICommandHandler<AddShoppingList>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
-        private readonly IMessageBroker _messageBroker;
+        //private readonly IMessageBroker _messageBroker;
 
-        public AddShoppingListHandler(IShoppingListRepository shoppingListRepository, IMessageBroker messageBroker)
+        public AddShoppingListHandler(IShoppingListRepository shoppingListRepository)
         {
             _shoppingListRepository = shoppingListRepository;
-            _messageBroker = messageBroker;
+            //_messageBroker = messageBroker;
         }
 
-        public async Task<Response<string>> Handle(AddShoppingList request, CancellationToken cancellationToken = default)
+        public async Task HandleAsync(AddShoppingList command)
         {
-            var shoppingList = ShoppingList.Create(request.Name, request.PersonId);
+            var shoppingList = ShoppingList.Create(command.Name, command.PersonId);
 
-            await _shoppingListRepository.AddAsync(shoppingList);
-            await _messageBroker.PublishAsync(new ShoppingListCreated(shoppingList.Name), cancellationToken);
-
-            return Response.Added(nameof(ShoppingList));
+            shoppingList = await _shoppingListRepository.AddAsync(shoppingList);
+            //await _messageBroker.PublishAsync(new ShoppingListCreated(shoppingList.Name), cancellationToken);
         }
     }
 }

@@ -1,14 +1,22 @@
 using SharedHome.Application;
+using SharedHome.Infrastructure;
 using SharedHome.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables(prefix: "SharedHome_");
+
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddShared(builder.Configuration);
 
-builder.Services.AddApplication();
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+});
 
 var app = builder.Build();
 
@@ -19,11 +27,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseShared();
+
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseShared();
 
 app.MapControllers();
 

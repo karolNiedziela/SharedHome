@@ -11,7 +11,7 @@ namespace SharedHome.Domain.ShoppingLists.Repositories
     {
         Task<ShoppingList> GetAsync(int id);
 
-        Task AddAsync(ShoppingList shoppingList);
+        Task<ShoppingList> AddAsync(ShoppingList shoppingList);
 
         Task UpdateAsync(ShoppingList shoppingList);
 

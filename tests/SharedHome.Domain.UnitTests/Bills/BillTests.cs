@@ -2,7 +2,6 @@
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
-using SharedHome.Domain.Shared.Exceptions;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -79,7 +78,7 @@ namespace SharedHome.Domain.UnitTests.Bills
             var exception = Record.Exception(() => bill.ChangeCost(-200m));
 
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<MoneyBelowZeroException>();
+            exception.ShouldBeOfType<BillCostBelowZeroException>();
         }
 
         [Fact]

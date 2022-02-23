@@ -1,5 +1,4 @@
-﻿using SharedHome.Domain.Shared.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +10,26 @@ namespace SharedHome.Domain.HouseGroups.ValueObjects
     {
         public Guid PersonId { get; }
 
-        public FullName FullName { get; }
+        public FirstName FirstName { get; } = default!;
 
-        public Email Email { get; }
+        public LastName LastName { get; } = default!;
+
+        public Email Email { get; } = default!;
 
         public bool IsOwner { get; init; }
 
-        public HouseGroupMember(Guid personId, FullName fullName, Email email, bool isOwner = false)
+        public string FullName => $"{FirstName} {LastName}";
+
+        private HouseGroupMember()
+        {
+
+        }
+
+        public HouseGroupMember(Guid personId, FirstName firstName, LastName lastName, Email email, bool isOwner = false)
         {
             PersonId = personId;
-            FullName = fullName;
+            FirstName = firstName;
+            LastName = lastName;
             Email = email;
             IsOwner = isOwner;
         }

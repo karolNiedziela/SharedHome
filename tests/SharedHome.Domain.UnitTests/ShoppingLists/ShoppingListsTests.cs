@@ -1,5 +1,4 @@
-﻿using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+﻿using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
@@ -164,7 +163,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             @event.ShouldNotBeNull();
 
             @event.ProductName.ShouldBe("product");
-            @event.Amount.ShouldBe(10m);
+            @event.Price.ShouldBe(10m);
         }
 
         [Fact]
@@ -217,7 +216,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductPriceChanged;
             @event.ShouldNotBeNull();
             @event.ProductName.ShouldBe("product");
-            @event.Amount.ShouldBe(25);
+            @event.Price.ShouldBe(25);
         }
 
         [Fact]
@@ -331,7 +330,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             return shoppingList;
         }
 
-        private static ShoppingListProduct GetProduct(Money? price = null, bool isBought = false)
+        private static ShoppingListProduct GetProduct(ProductPrice? price = null, bool isBought = false)
         {
             var product = new ShoppingListProduct("product", 1, price: price, isBought: isBought);
 

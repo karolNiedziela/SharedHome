@@ -2,7 +2,6 @@
 using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Bills.ValueObjects;
-using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 using System;
 using System.Collections.Generic;
@@ -24,7 +23,7 @@ namespace SharedHome.Domain.Bills.Entities
 
         public ServiceProviderName ServiceProvider { get; private set; } = default!;
 
-        public Money? Cost { get; private set; }
+        public BillCost? Cost { get; private set; }
 
         public DateOnly DateOfPayment { get; private set; }
 
@@ -33,7 +32,7 @@ namespace SharedHome.Domain.Bills.Entities
 
         }
 
-        private Bill(Guid personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, Money? cost = null, bool isPaid = false)
+        private Bill(Guid personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false)
         {
             PersonId = personId;
             BillType = billType;
@@ -43,10 +42,10 @@ namespace SharedHome.Domain.Bills.Entities
             IsPaid = isPaid;
         }
 
-        public static Bill Create(Guid personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, Money? cost = null, bool isPaid = false) =>
+        public static Bill Create(Guid personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false) =>
             new(personId, billType, serviceProvider, dateOfPayment, cost, isPaid);
 
-        public void PayFor(Money cost)
+        public void PayFor(BillCost cost)
         {
             IsAlreadyPaid();
 
@@ -64,7 +63,7 @@ namespace SharedHome.Domain.Bills.Entities
             AddEvent(new BillPaymentCanceled(Id, ServiceProvider, DateOfPayment));
         }
 
-        public void ChangeCost(Money cost)
+        public void ChangeCost(BillCost cost)
         {
             Cost = cost;
             AddEvent(new BillCostChanged(Id, ServiceProvider, Cost));

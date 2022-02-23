@@ -1,5 +1,4 @@
 ﻿using SharedHome.Domain.Bills.ValueObjects;
-using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 using System;
 using System.Collections.Generic;
@@ -9,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Bills.Events
 {
-    public record BillCostChanged(int BillId, ServiceProviderName ServiceProviderName, Money Cost) : IEvent;
+    public record BillCostChanged(int BillId, ServiceProviderName ServiceProviderName, BillCost Cost) : IEvent;
 }

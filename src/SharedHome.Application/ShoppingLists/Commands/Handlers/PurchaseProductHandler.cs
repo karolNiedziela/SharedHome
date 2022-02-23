@@ -1,17 +1,10 @@
-﻿using MediatR;
-using SharedHome.Application.ShoppingLists.Exceptions;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+﻿using SharedHome.Application.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.Repositories;
-using SharedHome.Shared.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 {
-    public class PurchaseProductHandler : IRequestHandler<PurchaseProduct, Response<string>>
+    public class PurchaseProductHandler : ICommandHandler<PurchaseProduct>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
 
@@ -20,19 +13,17 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
             _shoppingListRepository = shoppingListRepository;
         }
 
-        public async Task<Response<string>> Handle(PurchaseProduct request, CancellationToken cancellationToken = default)
+        public async Task HandleAsync(PurchaseProduct command)
         {
-            var shoppingList = await _shoppingListRepository.GetAsync(request.ShoppingListId);
+            var shoppingList = await _shoppingListRepository.GetAsync(command.ShoppingListId);
             if (shoppingList is null)
             {
-                throw new ShoppingListNotFoundException(request.ShoppingListId);
+                throw new ShoppingListNotFoundException(command.ShoppingListId);
             }
 
-            shoppingList.PurchaseProduct(request.ProductName, request.Price);
+            shoppingList.PurchaseProduct(command.ProductName, command.Price);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
-
-            return Response.Updated(nameof(ShoppingList));
-        }
+        } 
     }
 }

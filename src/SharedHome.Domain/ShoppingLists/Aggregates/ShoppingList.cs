@@ -1,6 +1,5 @@
 ﻿using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
-using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 using System;
 using System.Collections.Generic;
@@ -79,7 +78,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddEvent(new ShoppingListProductRemoved(Id, productName));
         }
 
-        public void PurchaseProduct(string productName, Money money)
+        public void PurchaseProduct(string productName, ProductPrice price)
         {
             IsAlreadyDone();
 
@@ -88,14 +87,14 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             {
                 throw new ShoppingListProductIsAlreadyBoughtException(productName);
             }
-            var boughtProduct = product with { Price = money, IsBought = true };
+            var boughtProduct = product with { Price = price, IsBought = true };
 
             _products.Find(product)!.Value = boughtProduct;
 
-            AddEvent(new ShoppingListProductPurchased(Id, productName, money));
+            AddEvent(new ShoppingListProductPurchased(Id, productName, price));
         }
 
-        public void ChangePriceOfProduct(string productName, Money price)
+        public void ChangePriceOfProduct(string productName, ProductPrice price)
         {
             IsAlreadyDone();
 

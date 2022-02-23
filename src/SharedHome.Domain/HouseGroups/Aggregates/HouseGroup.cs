@@ -16,7 +16,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         public IEnumerable<HouseGroupMember> Members => _members;
 
-        public int TotalMembers => _members.Count();
+        public int TotalMembers => _members.Count;
 
         private HouseGroup()
         {

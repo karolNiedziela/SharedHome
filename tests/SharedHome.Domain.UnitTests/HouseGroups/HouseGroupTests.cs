@@ -21,7 +21,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         {
             var houseGroup = GetHouseGroupWithMembersLimit();
 
-            var exception = Record.Exception(() => houseGroup.AddMember(new HouseGroupMember(_personId, "New Member", "newmember@email.com")));
+            var exception = Record.Exception(() => houseGroup.AddMember(new HouseGroupMember(_personId, "New", "Member", "newmember@email.com")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<TotalMembersLimitReachedException>();
@@ -32,7 +32,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         {
             var houseGroup = GetHouseGroupWithMember();
 
-            var exception = Record.Exception(() => houseGroup.AddMember(new HouseGroupMember(_personId, "New Member", "test@email.com", false)));
+            var exception = Record.Exception(() => houseGroup.AddMember(new HouseGroupMember(_personId, "New", "Member", "test@email.com", false)));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<PersonIsAlreadyInHouseGroupException>();
@@ -90,7 +90,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = GetHouseGroupWithMember(IsOwner: true);
 
             var memberToRemoveId = new Guid();
-            houseGroup.AddMember(new HouseGroupMember(memberToRemoveId, "Second Member", "secondmember@email.com", false));
+            houseGroup.AddMember(new HouseGroupMember(memberToRemoveId, "Second", "Member", "secondmember@email.com", false));
             houseGroup.ClearEvents();
 
             houseGroup.RemoveMember(_personId, memberToRemoveId);
@@ -120,7 +120,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = GetHouseGroupWithMember(IsOwner: true);
 
             var secondPersonId = new Guid();
-            houseGroup.AddMember(new HouseGroupMember(secondPersonId, "Second Member", "secondmember@email.com", false));
+            houseGroup.AddMember(new HouseGroupMember(secondPersonId, "Second", "Member", "secondmember@email.com", false));
             houseGroup.ClearEvents();
 
             houseGroup.HandOwnerRoleOver(_personId, secondPersonId);
@@ -138,7 +138,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         private HouseGroup GetHouseGroupWithMember(bool IsOwner = false)
         {
             var houseGroup = GetHouseGroup();
-            houseGroup.AddMember(new HouseGroupMember(_personId, "New Member", "member@email.com", IsOwner));
+            houseGroup.AddMember(new HouseGroupMember(_personId, "New", "Member", "member@email.com", IsOwner));
 
             return houseGroup;
         }
@@ -148,7 +148,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = GetHouseGroup();
             for (var i = 0; i < HouseGroup.MaxMembers; i++)
             {
-                houseGroup.AddMember(new HouseGroupMember(Guid.NewGuid(), $"Member Member{i + 1}", $"member{i + 1}@email.com"));
+                houseGroup.AddMember(new HouseGroupMember(Guid.NewGuid(), "Member", $"Member{i + 1}", $"member{i + 1}@email.com"));
             }
 
             return houseGroup;

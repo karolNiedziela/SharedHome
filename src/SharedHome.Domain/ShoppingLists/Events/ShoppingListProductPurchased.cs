@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.Shared.ValueObjects;
+﻿using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 using System;
 using System.Collections.Generic;
@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.ShoppingLists.Events
 {
-    public record ShoppingListProductPurchased(int ShoppingListId, string ProductName, Money Amount) : IEvent;
+    public record ShoppingListProductPurchased(int ShoppingListId, string ProductName, ProductPrice Price) : IEvent;
 }

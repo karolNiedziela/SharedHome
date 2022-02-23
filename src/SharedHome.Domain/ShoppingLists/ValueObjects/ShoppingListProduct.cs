@@ -1,5 +1,4 @@
-﻿using SharedHome.Domain.Shared.ValueObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +8,20 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
     public record ShoppingListProduct
     {
-        public ShoppingListProductName Name { get; }
+        public ShoppingListProductName Name { get; } = default!;
 
-        public Quantity Quantity { get; }
+        public Quantity Quantity { get; } = default!;
 
-        public Money? Price { get; init; }
+        public ProductPrice? Price { get; init; } = default!;
 
-        public bool IsBought { get; init; }
+        public bool IsBought { get; init; } = default!;
 
-        public ShoppingListProduct(ShoppingListProductName name, Quantity quantity, Money? price = null, bool isBought = false)
+        private ShoppingListProduct()
+        {
+
+        }
+
+        public ShoppingListProduct(ShoppingListProductName name, Quantity quantity, ProductPrice? price = null, bool isBought = false)
         {
             Name = name;
             Quantity = quantity;
