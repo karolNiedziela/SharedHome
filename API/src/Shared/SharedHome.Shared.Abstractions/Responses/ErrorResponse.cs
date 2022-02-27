@@ -6,12 +6,18 @@ namespace SharedHome.Shared.Abstractions.Responses
     {
         public HttpStatusCode StatusCode { get; set; }
 
-        public IEnumerable<string> Errors { get; set; }
+        public List<string> Errors { get; set; } = new ();
 
         public ErrorResponse(HttpStatusCode statusCode, IEnumerable<string> errors)
         {
             StatusCode = statusCode;
-            Errors = errors;
+            Errors = errors.ToList();
+        }
+
+        public ErrorResponse(HttpStatusCode statusCode, string errorMessage)
+        {
+            StatusCode = statusCode;
+            Errors.Add(errorMessage);
         }
     }
 }

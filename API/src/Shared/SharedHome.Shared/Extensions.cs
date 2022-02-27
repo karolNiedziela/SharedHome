@@ -6,6 +6,7 @@ using SharedHome.Shared.Abstractions.Time;
 using SharedHome.Shared.Abstractions.User;
 using SharedHome.Shared.Auth;
 using SharedHome.Shared.Email;
+using SharedHome.Shared.Exceptions;
 using SharedHome.Shared.Time;
 using SharedHome.Shared.User;
 
@@ -22,6 +23,8 @@ namespace SharedHome.Shared
             services.AddEmail(configuration);
 
             services.AddAuth(configuration);
+
+            services.AddErrorHandling();
 
             services.AddSingleton<ITime, UtcTime>();
             services.AddHttpContextAccessor();
@@ -44,9 +47,9 @@ namespace SharedHome.Shared
 
         public static IApplicationBuilder UseShared(this IApplicationBuilder applicationBuilder)
         {
-            applicationBuilder.UseAuth();
+            applicationBuilder.UseErrorHandling();
 
-            applicationBuilder.UseAuthorization();
+            applicationBuilder.UseAuth();
 
             return applicationBuilder;
         }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Abstractions.Exceptions
 {
-    public class ValidatorException : SharedHomeException
+    public class ValidatorException : Exception
     {
-        public ValidatorException(IReadOnlyDictionary<string, string[]> errorsDictionary)
-          : base("One or more validation errors occurred")
-          => ErrorsDictionary = errorsDictionary;
+        public IEnumerable<string> ErrorMessages { get; }
 
-        public IReadOnlyDictionary<string, string[]> ErrorsDictionary { get; }
+        public ValidatorException(IEnumerable<string> errorMessages)
+          : base("One or more validation errors occurred")
+          => ErrorMessages = errorMessages;
+
     }
 }
