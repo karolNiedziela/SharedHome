@@ -8,20 +8,20 @@
         <form class="row g-3 mb-2 mt-2">
           <div class="col-12 form-floating">
             <input
-              type="text"
+              type="email"
               class="form-control identity__input login__input"
-              placeholder="Username"
+              placeholder="Email"
               required
             />
             <label for="" class="identity__label login__label"
-              >Nazwa użytkownika</label
+              >Email</label
             >
           </div>
           <div class="col-12 form-floating">
             <input
               type="password"
               class="form-control identity__input login__input"
-              placeholder="Password"
+              placeholder="Hasło"
               required
             />
             <label for="" class="identity__label login__label">Hasło</label>
@@ -37,7 +37,7 @@
         </div>
         <hr class="mt-4" />
         <div class="d-grid col-12 mb-4">
-          <div class="btn identity__link-btn">Zarejestruj się</div>
+          <div class="btn identity__link-btn"><a class="identity__a" [routerLink]="['register']">Zarejestruj się</a></div>
         </div>
       </div>
     </div>

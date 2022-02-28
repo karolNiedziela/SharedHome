@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row">
+      <div class="row"></div>
+      <div class="d-flex flex-wrap justify-content-around align-items-center">
+        <div class="identity register col-md-4 ps-4 pe-4">
+          <form class="row g-3 mb-2 mt-2">
+            <div class="col-12 form-floating">
+              <input
+                type="email"
+                class="form-control identity__input register__input"
+                placeholder="Email"
+                required
+              />
+              <label for="" class="identity__label register__label"
+                >Email</label
+              >
+            </div>
+            <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control identity__input register__input"
+                  placeholder="Imię"
+                  required
+                />
+                <label for="" class="identity__label register__label"
+                  >Imię</label
+                >
+            </div>
+            <div class="col-12 form-floating">
+                <input
+                  type="text"
+                  class="form-control identity__input register__input"
+                  placeholder="Nazwisko"
+                  required
+                />
+                <label for="" class="identity__label register__label"
+                  >Nazwisko</label
+                >
+            </div>
+            <div class="col-12 form-floating">
+              <input
+                type="password"
+                class="form-control identity__input register__input"
+                placeholder="Password"
+                required
+              />
+              <label for="" class="identity__label register__label">Hasło</label>
+            </div>
+            <div class="col-12 form-floating">
+                <input
+                  type="password"
+                  class="form-control identity__input register__input"
+                  placeholder="Confirm password"
+                  required
+                />
+                <label for="" class="identity__label register__label">Powtórz hasło</label>
+              </div>
+            <div class="d-grid col-12">
+              <button type="submit" class="btn identity__submit-btn">
+                Zarejestruj się
+              </button>
+            </div>
+          </form>
+          <hr class="mt-4" />
+          <div class="d-grid col-12 mb-4">
+            <div class="btn identity__link-btn"><a class="identity__a" [routerLink]="['']"> Zaloguj się</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-4" />
