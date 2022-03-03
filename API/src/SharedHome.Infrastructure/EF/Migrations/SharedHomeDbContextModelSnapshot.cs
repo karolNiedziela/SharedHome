@@ -176,7 +176,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bills");
+                    b.ToTable("Bills", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup", b =>
@@ -193,7 +193,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HouseGroups");
+                    b.ToTable("HouseGroups", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.Invitations.Aggregates.Invitation", b =>
@@ -216,7 +216,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                     b.HasKey("HouseGroupId", "PersonId");
 
-                    b.ToTable("Invitations");
+                    b.ToTable("Invitations", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList", b =>
@@ -241,7 +241,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShoppingLists");
+                    b.ToTable("ShoppingLists", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Infrastructure.Identity.Entities.ApplicationUser", b =>
@@ -369,7 +369,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("SharedHome.Domain.Bills.Entities.Bill", b =>
                 {
-                    b.OwnsOne("SharedHome.Domain.Bills.ValueObjects.BillCost", "Cost", b1 =>
+                    b.OwnsOne("SharedHome.Domain.Bills.Entities.Bill.Cost#SharedHome.Domain.Bills.ValueObjects.BillCost", "Cost", b1 =>
                         {
                             b1.Property<int>("BillId")
                                 .HasColumnType("int");
@@ -382,13 +382,13 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                             b1.HasKey("BillId");
 
-                            b1.ToTable("Bills");
+                            b1.ToTable("Bills", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("BillId");
                         });
 
-                    b.OwnsOne("SharedHome.Domain.Bills.ValueObjects.ServiceProviderName", "ServiceProvider", b1 =>
+                    b.OwnsOne("SharedHome.Domain.Bills.Entities.Bill.ServiceProvider#SharedHome.Domain.Bills.ValueObjects.ServiceProviderName", "ServiceProvider", b1 =>
                         {
                             b1.Property<int>("BillId")
                                 .HasColumnType("int");
@@ -400,7 +400,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                             b1.HasKey("BillId");
 
-                            b1.ToTable("Bills");
+                            b1.ToTable("Bills", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("BillId");
@@ -414,7 +414,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup", b =>
                 {
-                    b.OwnsMany("SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember", "Members", b1 =>
+                    b.OwnsMany("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup.Members#SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember", "Members", b1 =>
                         {
                             b1.Property<int>("HouseGroupId")
                                 .HasColumnType("int");
@@ -438,7 +438,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("HouseGroupId");
 
-                            b1.OwnsOne("SharedHome.Domain.HouseGroups.ValueObjects.Email", "Email", b2 =>
+                            b1.OwnsOne("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup.Members#SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember.Email#SharedHome.Domain.HouseGroups.ValueObjects.Email", "Email", b2 =>
                                 {
                                     b2.Property<int>("HouseGroupMemberHouseGroupId")
                                         .HasColumnType("int");
@@ -453,13 +453,13 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                                     b2.HasKey("HouseGroupMemberHouseGroupId", "HouseGroupMemberId");
 
-                                    b2.ToTable("HouseGroupMembers");
+                                    b2.ToTable("HouseGroupMembers", (string)null);
 
                                     b2.WithOwner()
                                         .HasForeignKey("HouseGroupMemberHouseGroupId", "HouseGroupMemberId");
                                 });
 
-                            b1.OwnsOne("SharedHome.Domain.HouseGroups.ValueObjects.FirstName", "FirstName", b2 =>
+                            b1.OwnsOne("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup.Members#SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember.FirstName#SharedHome.Domain.HouseGroups.ValueObjects.FirstName", "FirstName", b2 =>
                                 {
                                     b2.Property<int>("HouseGroupMemberHouseGroupId")
                                         .HasColumnType("int");
@@ -474,13 +474,13 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                                     b2.HasKey("HouseGroupMemberHouseGroupId", "HouseGroupMemberId");
 
-                                    b2.ToTable("HouseGroupMembers");
+                                    b2.ToTable("HouseGroupMembers", (string)null);
 
                                     b2.WithOwner()
                                         .HasForeignKey("HouseGroupMemberHouseGroupId", "HouseGroupMemberId");
                                 });
 
-                            b1.OwnsOne("SharedHome.Domain.HouseGroups.ValueObjects.LastName", "LastName", b2 =>
+                            b1.OwnsOne("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup.Members#SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember.LastName#SharedHome.Domain.HouseGroups.ValueObjects.LastName", "LastName", b2 =>
                                 {
                                     b2.Property<int>("HouseGroupMemberHouseGroupId")
                                         .HasColumnType("int");
@@ -495,7 +495,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                                     b2.HasKey("HouseGroupMemberHouseGroupId", "HouseGroupMemberId");
 
-                                    b2.ToTable("HouseGroupMembers");
+                                    b2.ToTable("HouseGroupMembers", (string)null);
 
                                     b2.WithOwner()
                                         .HasForeignKey("HouseGroupMemberHouseGroupId", "HouseGroupMemberId");
@@ -516,7 +516,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList", b =>
                 {
-                    b.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListName", "Name", b1 =>
+                    b.OwnsOne("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList.Name#SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListName", "Name", b1 =>
                         {
                             b1.Property<int>("ShoppingListId")
                                 .HasColumnType("int");
@@ -528,13 +528,13 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                             b1.HasKey("ShoppingListId");
 
-                            b1.ToTable("ShoppingLists");
+                            b1.ToTable("ShoppingLists", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ShoppingListId");
                         });
 
-                    b.OwnsMany("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProduct", "Products", b1 =>
+                    b.OwnsMany("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList.Products#SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProduct", "Products", b1 =>
                         {
                             b1.Property<int>("ShoppingListId")
                                 .HasColumnType("int");
@@ -555,7 +555,28 @@ namespace SharedHome.Infrastructure.EF.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ShoppingListId");
 
-                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ProductPrice", "Price", b2 =>
+                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList.Products#SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProduct.Name#SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProductName", "Name", b2 =>
+                                {
+                                    b2.Property<int>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("ShoppingListProductId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<string>("Value")
+                                        .IsRequired()
+                                        .HasColumnType("longtext")
+                                        .HasColumnName("Name");
+
+                                    b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
+
+                                    b2.ToTable("ShoppingListProducts", (string)null);
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
+                                });
+
+                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList.Products#SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProduct.Price#SharedHome.Domain.ShoppingLists.ValueObjects.ProductPrice", "Price", b2 =>
                                 {
                                     b2.Property<int>("ShoppingListProductShoppingListId")
                                         .HasColumnType("int");
@@ -571,13 +592,13 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
-                                    b2.ToTable("ShoppingListProducts");
+                                    b2.ToTable("ShoppingListProducts", (string)null);
 
                                     b2.WithOwner()
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
                                 });
 
-                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.Quantity", "Quantity", b2 =>
+                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList.Products#SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProduct.Quantity#SharedHome.Domain.ShoppingLists.ValueObjects.Quantity", "Quantity", b2 =>
                                 {
                                     b2.Property<int>("ShoppingListProductShoppingListId")
                                         .HasColumnType("int");
@@ -591,28 +612,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
-                                    b2.ToTable("ShoppingListProducts");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
-                                });
-
-                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProductName", "Name", b2 =>
-                                {
-                                    b2.Property<int>("ShoppingListProductShoppingListId")
-                                        .HasColumnType("int");
-
-                                    b2.Property<int>("ShoppingListProductId")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("Value")
-                                        .IsRequired()
-                                        .HasColumnType("longtext")
-                                        .HasColumnName("Name");
-
-                                    b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
-
-                                    b2.ToTable("ShoppingListProducts");
+                                    b2.ToTable("ShoppingListProducts", (string)null);
 
                                     b2.WithOwner()
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");

@@ -9,7 +9,7 @@ namespace SharedHome.Domain.ShoppingLists.Repositories
 {
     public interface IShoppingListRepository
     {
-        Task<ShoppingList> GetAsync(int id);
+        Task<ShoppingList?> GetAsync(int id);
 
         Task<ShoppingList> AddAsync(ShoppingList shoppingList);
 

@@ -1,5 +1,7 @@
-﻿using SharedHome.Domain.ShoppingLists.Aggregates;
+﻿using Microsoft.EntityFrameworkCore;
+using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Infrastructure.EF.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +12,39 @@ namespace SharedHome.Infrastructure.EF.Repositories
 {
     internal sealed class ShoppingListRepository : IShoppingListRepository
     {
-        public Task<ShoppingList> AddAsync(ShoppingList shoppingList)
+        private readonly SharedHomeDbContext _context;
+
+        public ShoppingListRepository(SharedHomeDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<ShoppingList?> GetAsync(int id)
+            => await _context.ShoppingLists
+            .Include(shoppingList => shoppingList!.Products)
+            .SingleOrDefaultAsync(shoppingList => shoppingList!.Id == id);
+
+        public async Task<ShoppingList> AddAsync(ShoppingList shoppingList)
+        {
+            await _context.ShoppingLists.AddAsync(shoppingList);
+
+            await _context.SaveChangesAsync();
+
+            return shoppingList;
         }
 
-        public Task DeleteAsync(ShoppingList shoppingList)
+        public async Task DeleteAsync(ShoppingList shoppingList)
         {
-            throw new NotImplementedException();
+            _context.ShoppingLists.Remove(shoppingList);
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task<ShoppingList> GetAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task UpdateAsync(ShoppingList shoppingList)
+        public async Task UpdateAsync(ShoppingList shoppingList)
         {
-            throw new NotImplementedException();
+            _context.ShoppingLists.Update(shoppingList);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

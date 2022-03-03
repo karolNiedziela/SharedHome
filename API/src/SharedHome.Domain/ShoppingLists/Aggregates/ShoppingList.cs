@@ -33,6 +33,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
         private ShoppingList(ShoppingListName name, Guid personId, bool isDone = false)
         {
             Name = name;
+            PersonId = personId;
             IsDone = isDone;
         }
 
@@ -87,9 +88,8 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             {
                 throw new ShoppingListProductIsAlreadyBoughtException(productName);
             }
-            var boughtProduct = product with { Price = price, IsBought = true };
 
-            _products.Find(product)!.Value = boughtProduct;
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, true));
 
             AddEvent(new ShoppingListProductPurchased(Id, productName, price));
         }
@@ -104,9 +104,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
 
-            var productWithChangedPrice = product with { Price = price };
-
-            _products.Find(product)!.Value = productWithChangedPrice;
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, product.IsBought));
 
             AddEvent(new ShoppingListProductPriceChanged(Id, productName, price));
         }
@@ -120,9 +118,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             {
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
-            var canceledProduct = product with { Price = null, IsBought = false };
-
-            _products.Find(product)!.Value = canceledProduct;
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, false));
 
             AddEvent(new ShoppingListProductPurchaseCanceled(Id, productName));
         }
