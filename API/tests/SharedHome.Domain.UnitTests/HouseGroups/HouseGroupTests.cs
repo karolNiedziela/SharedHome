@@ -59,7 +59,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var exception = Record.Exception(() => houseGroup.RemoveMember(new Guid(), new Guid()));
 
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<HouseGroupMemberWasNotFoundException>();
+            exception.ShouldBeOfType<HouseGroupMemberNotFoundException>();
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var exception = Record.Exception(() => houseGroup.RemoveMember(_personId, new Guid()));
 
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<HouseGroupMemberWasNotFoundException>();
+            exception.ShouldBeOfType<HouseGroupMemberNotFoundException>();
         }
 
         [Fact]

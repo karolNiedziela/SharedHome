@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.HouseGroups.Exceptions
 {
-    public class HouseGroupMemberWasNotFoundException : SharedHomeException
+    public class HouseGroupMemberNotFoundException : SharedHomeException
     {
         public Guid PersonId { get; }
 
-        public HouseGroupMemberWasNotFoundException(Guid personId) : base($"House group member with person id '{personId}' was not found.")
+        public HouseGroupMemberNotFoundException(Guid personId) : base($"House group member with person id '{personId}' was not found.")
         {
             PersonId = personId;
         }

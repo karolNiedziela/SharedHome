@@ -83,7 +83,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             var member = _members.SingleOrDefault(x => x.PersonId == personId);
             if (member is null)
             {
-                throw new HouseGroupMemberWasNotFoundException(personId);
+                throw new HouseGroupMemberNotFoundException(personId);
             }
 
             return member;
