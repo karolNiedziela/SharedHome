@@ -12,7 +12,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 {
     public class ShoppingList : Entity, IAggregateRoot
     {
-        private readonly LinkedList<ShoppingListProduct> _products = new();
+        private readonly List<ShoppingListProduct> _products = new();
 
         public int Id { get; private set; }
 
@@ -54,7 +54,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductAlreadyExistsException(Name, product.Name);
             }
 
-            _products.AddLast(product);
+            _products.Add(product);
 
             AddEvent(new ShoppingListProductAdded(Id, product.Name));
         }

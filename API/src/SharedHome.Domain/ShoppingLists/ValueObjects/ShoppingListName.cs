@@ -9,6 +9,8 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
     public record ShoppingListName
     {
+        private const int MaximumLength = 20;
+
         public string Name { get; }
 
         public ShoppingListName(string name)
@@ -16,6 +18,11 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new EmptyShoppingListNameException();
+            }
+
+            if (name.Length > MaximumLength)
+            {
+                throw new TooLongShoppingListNameException(MaximumLength);
             }
 
             Name = name;

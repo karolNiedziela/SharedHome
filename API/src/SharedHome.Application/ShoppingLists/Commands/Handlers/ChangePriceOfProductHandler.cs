@@ -2,26 +2,24 @@
 using SharedHome.Application.ShoppingLists.Exceptions;
 using SharedHome.Application.ShoppingLists.Extensions;
 using SharedHome.Domain.ShoppingLists.Repositories;
-using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 {
-    public class AddShoppingListProductHandler : ICommandHandler<AddShoppingListProduct, Unit>
+    public class ChangePriceOfProductHandler : ICommandHandler<ChangePriceOfProduct, Unit>
     {
-        private IShoppingListRepository _shoppingListRepository;
+        private readonly IShoppingListRepository _shoppingListRepository;
 
-        public AddShoppingListProductHandler(IShoppingListRepository shoppingListRepository)
+        public ChangePriceOfProductHandler(IShoppingListRepository shoppingListRepository)
         {
             _shoppingListRepository = shoppingListRepository;
         }
 
-        public async Task<Unit> Handle(AddShoppingListProduct request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(ChangePriceOfProduct request, CancellationToken cancellationToken)
         {
             var shoppingList = await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId);
 
-            var shoppingListProduct = new ShoppingListProduct(request.Name, request.Quantity);
-            shoppingList.AddProduct(shoppingListProduct);
+            shoppingList.ChangePriceOfProduct(request.ProductName, request.Price);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
 
