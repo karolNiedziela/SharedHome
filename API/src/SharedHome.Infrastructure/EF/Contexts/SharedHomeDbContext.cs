@@ -6,12 +6,17 @@ using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Infrastructure.Identity.Entities;
+using SharedHome.Shared.Abstractions.Domain;
+using SharedHome.Shared.Abstractions.Time;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace SharedHome.Infrastructure.EF.Contexts
 {
     public class SharedHomeDbContext : IdentityDbContext<ApplicationUser>
     {
+        private readonly ITime _time;
+
         public DbSet<Invitation> Invitations { get; set; } = default!;
 
         public DbSet<ShoppingList> ShoppingLists { get; set; } = default!;
@@ -20,9 +25,9 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         public DbSet<HouseGroup> HouseGroups { get; set; } = default!;
         
-        public SharedHomeDbContext(DbContextOptions<SharedHomeDbContext> options) : base(options)
+        public SharedHomeDbContext(DbContextOptions<SharedHomeDbContext> options, ITime time) : base(options)
         {
-
+            _time = time;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -38,5 +43,27 @@ namespace SharedHome.Infrastructure.EF.Contexts
             modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
             modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
         }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            foreach (EntityEntry<Entity> entry in ChangeTracker.Entries<Entity>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.Entity.CreatedAt = _time.CurrentDate();
+                        entry.Entity.ModifiedAt = _time.CurrentDate();
+                        break;
+
+                    case EntityState.Modified:
+                        entry.Entity.ModifiedAt = _time.CurrentDate();
+                        break;
+                }
+            }
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            return result;
+        } 
     }
 }

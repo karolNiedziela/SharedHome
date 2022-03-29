@@ -3,11 +3,6 @@ using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Bills.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Bills.Entities
 {
@@ -15,7 +10,7 @@ namespace SharedHome.Domain.Bills.Entities
     {
         public int Id { get; set; }
 
-        public Guid PersonId { get; private set; }
+        public string PersonId { get; private set; } = default!;
 
         public bool IsPaid { get; private set; } = false;
 
@@ -32,7 +27,7 @@ namespace SharedHome.Domain.Bills.Entities
 
         }
 
-        private Bill(Guid personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false)
+        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false)
         {
             PersonId = personId;
             BillType = billType;
@@ -42,7 +37,7 @@ namespace SharedHome.Domain.Bills.Entities
             IsPaid = isPaid;
         }
 
-        public static Bill Create(Guid personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false) =>
+        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false) =>
             new(personId, billType, serviceProvider, dateOfPayment, cost, isPaid);
 
         public void PayFor(BillCost cost)
@@ -75,7 +70,7 @@ namespace SharedHome.Domain.Bills.Entities
             AddEvent(new BillDateOfPaymentChanged(Id, ServiceProvider, DateOfPayment));
         }
 
-        public void IsAlreadyPaid()
+        private void IsAlreadyPaid()
         {
             if (IsPaid)
             {
@@ -83,7 +78,7 @@ namespace SharedHome.Domain.Bills.Entities
             }
         }
 
-        public void IsNotAlreadyPaid()
+        private void IsNotAlreadyPaid()
         {
             if (!IsPaid)
             {

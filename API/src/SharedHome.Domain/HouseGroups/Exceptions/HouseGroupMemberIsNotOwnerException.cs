@@ -9,9 +9,9 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
 {
     public class HouseGroupMemberIsNotOwnerException : SharedHomeException
     {
-        public Guid PersonId { get; }
+        public string PersonId { get; }
 
-        public HouseGroupMemberIsNotOwnerException(Guid personId) : base($"House group member with person id '{personId}' is not owner.")
+        public HouseGroupMemberIsNotOwnerException(string personId) : base($"House group member with person id '{personId}' is not owner.")
         {
             PersonId = personId;
         }

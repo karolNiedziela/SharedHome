@@ -23,8 +23,13 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         }
 
-        public static HouseGroup Create() 
-            => new();
+        public static HouseGroup Create(HouseGroupMember houseGroupMember)
+        {
+            var houseGroup = new HouseGroup();
+            houseGroup.AddMember(houseGroupMember);
+
+            return houseGroup;
+        }
 
         public void AddMember(HouseGroupMember houseGroupMember)
         {
@@ -40,7 +45,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             AddEvent(new HouseGroupMemberAdded(Id, houseGroupMember));
         }
 
-        public void RemoveMember(Guid requestedById, Guid memberToRemoveId)
+        public void RemoveMember(string requestedById, string memberToRemoveId)
         {
             var requester = GetMember(requestedById);
             if (!requester.IsOwner)
@@ -56,7 +61,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
         }
 
         // Change owner of house group, only current owner can give this status to another member
-        public void HandOwnerRoleOver(Guid oldOwnerPersonId, Guid newOwnerPersonid)
+        public void HandOwnerRoleOver(string oldOwnerPersonId, string newOwnerPersonid)
         {
             var memberOldOwner = GetMember(oldOwnerPersonId);
             if (!memberOldOwner.IsOwner)
@@ -78,7 +83,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             AddEvent(new HouseGroupOwnerChanged(Id, oldOwner, newOwner));
         }
 
-        private HouseGroupMember GetMember(Guid personId)
+        private HouseGroupMember GetMember(string personId)
         {
             var member = _members.SingleOrDefault(x => x.PersonId == personId);
             if (member is null)

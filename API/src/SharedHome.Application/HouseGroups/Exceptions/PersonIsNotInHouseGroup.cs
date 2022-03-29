@@ -1,0 +1,17 @@
+﻿using SharedHome.Shared.Abstractions.Exceptions;
+
+namespace SharedHome.Application.HouseGroups.Exceptions
+{
+    public class PersonIsNotInHouseGroup : SharedHomeException
+    {
+        public PersonIsNotInHouseGroup(string personId, int houseGroupId) 
+            : base($"Person with id '{personId}' is not in house group with id '{houseGroupId}'")
+        {
+            PersonId = personId;
+            HouseGroupId = houseGroupId;
+        }
+
+        public string PersonId { get; }
+        public int HouseGroupId { get; }
+    }
+}

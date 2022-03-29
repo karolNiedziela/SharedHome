@@ -16,7 +16,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         public int Id { get; private set; }
 
-        public Guid PersonId { get; private set; }
+        public string PersonId { get; private set; } = default!;
 
         public ShoppingListName Name { get; private set; } = default!;
 
@@ -30,14 +30,14 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         }
 
-        private ShoppingList(ShoppingListName name, Guid personId, bool isDone = false)
+        private ShoppingList(ShoppingListName name, string personId, bool isDone = false)
         {
             Name = name;
             PersonId = personId;
             IsDone = isDone;
         }
 
-        public static ShoppingList Create(ShoppingListName name, Guid personId, bool isDone = false)
+        public static ShoppingList Create(ShoppingListName name, string personId, bool isDone = false)
             => new (name, personId, isDone);
 
         public void ChangeName(ShoppingListName shoppingListName)

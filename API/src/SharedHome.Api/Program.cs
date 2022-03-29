@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
-    .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(typeof(SharedHome.Application.AssemblyReference).Assembly));
+    .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(typeof(ApplicationAssemblyReference).Assembly));
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);

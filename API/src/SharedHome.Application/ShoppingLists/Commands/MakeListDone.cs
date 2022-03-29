@@ -3,5 +3,8 @@ using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public record MakeListDone(int ShoppingListId) : ICommand<Unit>;
+    public class MakeListDone : AuthorizeCommand, ICommand<Unit>
+    {
+        public int ShoppingListId { get; set; }
+    }
 }

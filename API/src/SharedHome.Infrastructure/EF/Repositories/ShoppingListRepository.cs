@@ -2,11 +2,6 @@
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Infrastructure.EF.Repositories
 {
@@ -18,10 +13,10 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _context = context;
         }
-        public async Task<ShoppingList?> GetAsync(int id)
+        public async Task<ShoppingList?> GetAsync(int id, string personId)
             => await _context.ShoppingLists
-            .Include(shoppingList => shoppingList!.Products)
-            .SingleOrDefaultAsync(shoppingList => shoppingList!.Id == id);
+            .Include(shoppingList => shoppingList.Products)
+            .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id && shoppingList.PersonId == personId);
 
         public async Task<ShoppingList> AddAsync(ShoppingList shoppingList)
         {
@@ -38,7 +33,6 @@ namespace SharedHome.Infrastructure.EF.Repositories
 
             await _context.SaveChangesAsync();
         }
-
 
         public async Task UpdateAsync(ShoppingList shoppingList)
         {

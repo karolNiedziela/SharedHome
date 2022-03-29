@@ -1,12 +1,6 @@
-﻿using SharedHome.Domain.HouseGroups.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.HouseGroups.Events
 {
-    public record HouseGroupMemberRemoved(int Id, Guid RemovedMemberId) : IEvent;
+    public record HouseGroupMemberRemoved(int Id, string RemovedMemberId) : IEvent;
 }

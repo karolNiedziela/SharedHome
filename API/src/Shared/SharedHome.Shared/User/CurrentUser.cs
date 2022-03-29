@@ -18,32 +18,15 @@ namespace SharedHome.Shared.User
             _context = contextAccessor.HttpContext!;
         }
 
-        public Guid? UserId 
+        public string UserId 
         { 
             get
             {
                 var userId = _context?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                return string.IsNullOrWhiteSpace(userId) ? Guid.Empty : Guid.Parse(userId);
+                return string.IsNullOrWhiteSpace(userId) ? string.Empty : userId;
             }
         }
-
-        public bool IsAutenticated 
-        { 
-            get
-            {
-                return UserId.HasValue;
-            }
-        }
-
-        public string Role
-        {
-            get
-            {
-                return _context.User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Role)?.Value!;
-            }
-        }
-
 
         public Dictionary<string, IEnumerable<string>> Claims
         {
@@ -52,6 +35,6 @@ namespace SharedHome.Shared.User
                 return _context.User.Claims.GroupBy(c => c.Type)
                     .ToDictionary(x => x.Key, x => x.Select(c => c.Value.ToString()));
             }
-        }
+        }   
     }
 }

@@ -3,6 +3,9 @@ using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public record UndoListDone(int ShoppingListId) : ICommand<Unit>;
+    public class UndoListDone: AuthorizeCommand, ICommand<Unit>
+    {
+        public int ShoppingListId { get; set; }
+    }
 
 }

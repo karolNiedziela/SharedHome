@@ -3,5 +3,12 @@ using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public record AddShoppingListProduct(int ShoppingListId, string Name, int Quantity) : ICommand<Unit>;
+    public class AddShoppingListProduct : AuthorizeCommand, ICommand<Unit>
+    {
+        public int ShoppingListId { get; set; }
+
+        public string ProductName { get; set; } = default!;
+
+        public int Quantity { get; set; }
+    }
 }

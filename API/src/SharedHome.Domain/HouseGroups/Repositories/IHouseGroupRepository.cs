@@ -1,21 +1,19 @@
 ﻿using SharedHome.Domain.HouseGroups.Aggregates;
-using SharedHome.Domain.HouseGroups.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.HouseGroups.Repositories
 {
     public interface IHouseGroupRepository
     {
-        Task<HouseGroup> GetAsync(int houseGroupId);
+        Task<HouseGroup?> GetAsync(int houseGroupId, string personId);
 
-        Task AddAsync(HouseGroup shoppingList);
+        Task AddAsync(HouseGroup houseGroup);
 
-        Task UpdateAsync(HouseGroup shoppingList);
+        Task UpdateAsync(HouseGroup houseGroup);
 
-        Task DeleteAsync(HouseGroup shoppingList);
+        Task DeleteAsync(HouseGroup houseGroup);
+
+        Task<bool> IsPersonInHouseGroup(string personId);
+
+        Task<bool> IsPersonInHouseGroup(string personId, int houseGroupId);
     }
 }

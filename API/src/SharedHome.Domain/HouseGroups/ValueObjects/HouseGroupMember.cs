@@ -8,7 +8,7 @@ namespace SharedHome.Domain.HouseGroups.ValueObjects
 {
     public record HouseGroupMember
     {
-        public Guid PersonId { get; }
+        public string PersonId { get; } = default!;
 
         public FirstName FirstName { get; } = default!;
 
@@ -18,14 +18,14 @@ namespace SharedHome.Domain.HouseGroups.ValueObjects
 
         public bool IsOwner { get; init; }
 
-        public string FullName => $"{FirstName} {LastName}";
+        public string FullName => $"{FirstName.Value} {LastName.Value}";
 
         private HouseGroupMember()
         {
 
         }
 
-        public HouseGroupMember(Guid personId, FirstName firstName, LastName lastName, Email email, bool isOwner = false)
+        public HouseGroupMember(string personId, FirstName firstName, LastName lastName, Email email, bool isOwner = false)
         {
             PersonId = personId;
             FirstName = firstName;

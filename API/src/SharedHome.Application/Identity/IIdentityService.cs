@@ -11,5 +11,9 @@ namespace SharedHome.Application.Identity
         Task<AuthenticationSucessResult> LoginAsync(LoginRequest request);
 
         Task ConfirmEmailAsync(string code, string email);
+
+        Task<bool> IsInRoleAsync(string userId, string role);
+
+        Task<bool> AuthorizeAsync(string userId, string policyName);
     }
 }

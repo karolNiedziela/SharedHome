@@ -9,9 +9,9 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
 {
     public class PersonIsAlreadyInHouseGroupException : SharedHomeException
     {
-        public Guid PersonId { get; }
+        public string PersonId { get; }
 
-        public PersonIsAlreadyInHouseGroupException(Guid personId) : base($"Person with id '{personId}' is already in house group.")
+        public PersonIsAlreadyInHouseGroupException(string personId) : base($"Person with id '{personId}' is already in house group.")
         {
             PersonId = personId;
         }

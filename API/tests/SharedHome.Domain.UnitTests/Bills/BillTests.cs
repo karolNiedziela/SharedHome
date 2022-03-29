@@ -4,17 +4,14 @@ using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using Shouldly;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SharedHome.Domain.UnitTests.Bills
 {
     public class BillTests
     {
-        private Guid _personId = new("46826ecb-c40d-441c-ad0d-f11e616e4948");
+        private string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
 
         [Fact]
         public void PayFor_Throws_BillPaidException_When_Bill_Is_Already_Paid()
@@ -115,7 +112,7 @@ namespace SharedHome.Domain.UnitTests.Bills
 
         private Bill GetBill(bool isPaid = false)
         {
-            return Bill.Create(_personId, BillType.OTHER, "test", new DateOnly(2022, 10, 10), cost: 1000m, isPaid: isPaid);
+            return Bill.Create(_personId, BillType.Other, "test", new DateOnly(2022, 10, 10), cost: 1000m, isPaid: isPaid);
         }
     }
 }

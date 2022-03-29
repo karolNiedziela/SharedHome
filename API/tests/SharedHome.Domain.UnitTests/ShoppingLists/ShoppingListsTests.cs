@@ -14,7 +14,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 {
     public class ShoppingListsTests
     {
-        private Guid _personId = new("46826ecb-c40d-441c-ad0d-f11e616e4948");
+        private string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
 
         [Fact]
         public void AddProduct_Throws_ShoppingListAlreadyDoneException_When_Shopping_List_Is_Marked_As_Done()

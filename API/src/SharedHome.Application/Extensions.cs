@@ -14,9 +14,10 @@ namespace SharedHome.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserInformationBehaviour<,>));
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }

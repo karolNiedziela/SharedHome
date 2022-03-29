@@ -9,11 +9,8 @@ namespace SharedHome.Shared.Abstractions.User
 {
     public interface ICurrentUser
     {
-        bool IsAutenticated { get; }
+        string UserId { get; }
 
-        Guid? UserId { get; }
-
-
-        string Role { get; }
+        Dictionary<string, IEnumerable<string>> Claims { get; }
     }
 }

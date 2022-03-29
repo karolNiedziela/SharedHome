@@ -3,5 +3,12 @@ using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public record ChangePriceOfProduct(int ShoppingListId, string ProductName, decimal Price) : ICommand<Unit>;
+    public class ChangePriceOfProduct : AuthorizeCommand, ICommand<Unit> 
+    {
+        public int ShoppingListId { get; set; }
+
+        public string ProductName { get; set; } = default!;
+
+        public decimal Price { get; set; }
+    }
 }

@@ -17,7 +17,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 
         public async Task<Unit> Handle(DeleteShoppingListProduct request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId);
+            var shoppingList = await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId, request.PersonId!);
 
             shoppingList.RemoveProduct(request.ProductName);
 

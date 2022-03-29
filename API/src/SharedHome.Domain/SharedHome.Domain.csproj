@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Shared\SharedHome.Shared\SharedHome.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Bills\Repositories\" />
-  </ItemGroup>
-
 </Project>

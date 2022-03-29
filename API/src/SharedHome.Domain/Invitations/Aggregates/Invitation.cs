@@ -15,7 +15,7 @@ namespace SharedHome.Domain.Invitations.Aggregates
 
         public int HouseGroupId { get; private set; } = default!;
 
-        public Guid PersonId { get; private set; } = default!;
+        public string PersonId { get; private set; } = default!;
 
 
         private Invitation()
@@ -23,7 +23,7 @@ namespace SharedHome.Domain.Invitations.Aggregates
 
         }
 
-        private Invitation(int houseGroupId, Guid personId)
+        private Invitation(int houseGroupId, string personId)
         {
             HouseGroupId = houseGroupId;
             HouseGroupId = houseGroupId;
@@ -31,7 +31,7 @@ namespace SharedHome.Domain.Invitations.Aggregates
             Status = InvitationStatus.PENDING;
         }
 
-        public static Invitation Create(int houseGroupId, Guid personId)
+        public static Invitation Create(int houseGroupId, string personId)
             => new(houseGroupId, personId);
 
         public void Accept()

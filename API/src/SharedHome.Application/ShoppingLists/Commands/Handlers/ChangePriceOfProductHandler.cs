@@ -17,7 +17,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 
         public async Task<Unit> Handle(ChangePriceOfProduct request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId);
+            var shoppingList = await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId, request.PersonId!);
 
             shoppingList.ChangePriceOfProduct(request.ProductName, request.Price);
 

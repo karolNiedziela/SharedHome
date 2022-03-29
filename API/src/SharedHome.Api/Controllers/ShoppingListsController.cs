@@ -1,14 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Application.DTO;
 using SharedHome.Application.ShoppingLists.Commands;
+using SharedHome.Application.ShoppingLists.Queries;
+using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Api.Controllers
 {
     public class ShoppingListsController : ApiController
     {
-        [HttpGet]
-        public async Task<IActionResult> GetShoppingList()
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(int id)
         {
-            return Ok();
+            var shoppingList = await Mediator.Send(new GetShoppingList
+            {
+                Id = id
+            });
+
+            if (shoppingList.Data is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(shoppingList);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Response<IEnumerable<ShoppingListDto>>>> GetAllByYearAndMonth([FromQuery] GetAllShoppingListByYearAndMonth query)
+        {
+            var shoppingLists = await Mediator.Send(query);
+
+            return Ok(shoppingLists);
         }
 
         [HttpPost]
@@ -27,7 +48,7 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        [HttpPost("{shoppingListId:int}/products/{name}/purchase")]
+        [HttpPut("{shoppingListId:int}/products/{productName}/purchase")]
         public async Task<IActionResult> PurchaseShoppingListProduct([FromBody] PurchaseProduct command)
         {
             await Mediator.Send(command);
@@ -35,7 +56,7 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{shoppingListId:int}/products/{name}/cancelpurchase")]
+        [HttpPut("{shoppingListId:int}/products/{productName}/cancelpurchase")]
         public async Task<IActionResult> CancePurchaseOfProduct([FromBody] CancelPurchaseOfProduct command)
         {
             await Mediator.Send(command);
@@ -43,7 +64,7 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{shoppingListId:int}/products/{name}/changeprice")]
+        [HttpPut("{shoppingListId:int}/products/{productName}/changeprice")]
         public async Task<IActionResult> ChangePriceOfProduct([FromBody] ChangePriceOfProduct command)
         {
             await Mediator.Send(command);
@@ -59,12 +80,12 @@ namespace SharedHome.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{shoppingListId:int}/products/{name}")]
+        [HttpDelete("{shoppingListId:int}/products/{productName}")]
         public async Task<IActionResult> DeleteShoppingListProduct([FromBody] DeleteShoppingListProduct command)
         {
             await Mediator.Send(command);
 
             return NoContent();
-        }
+        }   
     }
 }

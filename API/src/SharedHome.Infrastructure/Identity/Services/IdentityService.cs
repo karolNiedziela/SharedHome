@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using SharedHome.Application.Identity;
 using SharedHome.Application.Identity.Models;
@@ -18,12 +19,18 @@ namespace SharedHome.Infrastructure.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthManager _authManager;
         private readonly IIdentityEmailSender _emailSender;
+        private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
+        private readonly IAuthorizationService _authorizationService;
 
-        public IdentityService(UserManager<ApplicationUser> userManager, IAuthManager authManager, IIdentityEmailSender emailSender)
+
+        public IdentityService(UserManager<ApplicationUser> userManager, IAuthManager authManager, IIdentityEmailSender emailSender,
+            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory, IAuthorizationService authorizationService)
         {
             _userManager = userManager;
             _authManager = authManager;
             _emailSender = emailSender;
+            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
+            _authorizationService = authorizationService;
         }
 
         public async Task<Response<string>> RegisterAsync(RegisterUserRequest request)
@@ -70,7 +77,7 @@ namespace SharedHome.Infrastructure.Identity.Services
                 throw new InvalidCredentialsException();
             }
 
-            var authenticationResult = _authManager.CreateToken(user.Id);
+            var authenticationResult = _authManager.CreateToken(user.Id, user.FirstName, user.LastName, user.Email);
 
             return authenticationResult;
         }
@@ -90,6 +97,34 @@ namespace SharedHome.Infrastructure.Identity.Services
             {
                 throw new IdentityException(MapIdentityErrorToIEnumerableString(result.Errors));
             }
+        }
+
+        public async Task<bool> IsInRoleAsync(string userId, string role)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            if (user is null)
+            {
+                return false;
+            }
+
+            return await _userManager.IsInRoleAsync(user, role);
+        }
+
+        public async Task<bool> AuthorizeAsync(string userId, string policyName)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            if (user is null)
+            {
+                return false;
+            }
+
+            var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+
+            var result = await _authorizationService.AuthorizeAsync(principal, policyName);
+
+            return result.Succeeded;
         }
 
         private async Task SendConfirmationEmailAsync(ApplicationUser user)
@@ -113,6 +148,5 @@ namespace SharedHome.Infrastructure.Identity.Services
         {
             return Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
         }
-
     }
 }

@@ -9,9 +9,9 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
 {
     public class HouseGroupMemberNotFoundException : SharedHomeException
     {
-        public Guid PersonId { get; }
+        public string PersonId { get; }
 
-        public HouseGroupMemberNotFoundException(Guid personId) : base($"House group member with person id '{personId}' was not found.")
+        public HouseGroupMemberNotFoundException(string personId) : base($"House group member with person id '{personId}' was not found.")
         {
             PersonId = personId;
         }

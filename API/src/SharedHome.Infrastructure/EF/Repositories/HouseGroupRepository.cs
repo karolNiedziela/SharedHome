@@ -1,33 +1,51 @@
-﻿using SharedHome.Domain.HouseGroups.Aggregates;
+﻿using Microsoft.EntityFrameworkCore;
+using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Repositories
 {
     internal sealed class HouseGroupRepository : IHouseGroupRepository
     {
-        public Task AddAsync(HouseGroup shoppingList)
+        private readonly SharedHomeDbContext _dbContext;
+
+        public HouseGroupRepository(SharedHomeDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
         }
 
-        public Task DeleteAsync(HouseGroup shoppingList)
+        public async Task<HouseGroup?> GetAsync(int houseGroupId, string personId)
+            => await _dbContext.HouseGroups
+            .Include(houseGroup => houseGroup.Members
+                .Where(member => member.PersonId == personId))
+            .SingleOrDefaultAsync(houseGroup => houseGroup.Id == houseGroupId);
+
+        public async Task AddAsync(HouseGroup houseGroup)
         {
-            throw new NotImplementedException();
+            await _dbContext.HouseGroups.AddAsync(houseGroup);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task<HouseGroup> GetAsync(int houseGroupId)
+        public async Task DeleteAsync(HouseGroup houseGroup)
         {
-            throw new NotImplementedException();
+            _dbContext.HouseGroups.Remove(houseGroup);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(HouseGroup shoppingList)
+        public async Task UpdateAsync(HouseGroup houseGroup)
         {
-            throw new NotImplementedException();
+            _dbContext.HouseGroups.Update(houseGroup);
+            await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<bool> IsPersonInHouseGroup(string personId)
+            => await _dbContext.HouseGroups
+            .AnyAsync(houseGroup => houseGroup.Members
+                .Any(member => member.PersonId == personId));
+
+        public async Task<bool> IsPersonInHouseGroup(string personId, int houseGroupId)
+            => await _dbContext.HouseGroups
+            .AnyAsync(houseGroup => houseGroup.Id == houseGroupId && houseGroup.Members
+                .Any(member => member.PersonId == personId));
     }
 }

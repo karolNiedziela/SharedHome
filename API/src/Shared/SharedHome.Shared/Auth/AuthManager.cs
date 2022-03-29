@@ -23,7 +23,8 @@ namespace SharedHome.Shared.Auth
             _time = time;
         }
 
-        public AuthenticationSucessResult CreateToken(string userId, string? role = null, string? email = null)
+        public AuthenticationSucessResult CreateToken(string userId, string firstName, string lastName, string email,
+            string? role = null)
         {
             var now = _time.CurrentDate();
 
@@ -32,9 +33,12 @@ namespace SharedHome.Shared.Auth
                 new(JwtRegisteredClaimNames.Sub, userId),
                 new(JwtRegisteredClaimNames.UniqueName, userId.ToString()),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeMilliseconds().ToString())
+                new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeMilliseconds().ToString()),
+                new(ClaimTypes.Email, email),
+                new("FirstName", firstName),
+                new("LastName", lastName)
             };
-
+            
             if (!string.IsNullOrWhiteSpace(role))
             {
                 jwtClaims.Add(new Claim(ClaimTypes.Role, role));

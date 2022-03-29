@@ -18,7 +18,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 
         public async Task<Unit> Handle(AddShoppingList request, CancellationToken cancellationToken)
         {
-            var shoppingList = ShoppingList.Create(request.Name, request.PersonId);
+            var shoppingList = ShoppingList.Create(request.Name, request.PersonId!);
 
             shoppingList = await _shoppingListRepository.AddAsync(shoppingList);
             //await _messageBroker.PublishAsync(new ShoppingListCreated(shoppingList.Name), cancellationToken);

@@ -1,17 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.Repositories;
 using SharedHome.Shared.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Infrastructure.EF
 {
@@ -21,6 +18,8 @@ namespace SharedHome.Infrastructure.EF
         {
             services.AddScoped<IShoppingListRepository, ShoppingListRepository>();
             services.AddScoped<IHouseGroupRepository, HouseGroupRepository>();
+            services.AddScoped<IInvitationRepository, InvitationRepository>();
+            services.AddScoped<IBillRepository, BillRepository>();
 
             var mySQLOptions = configuration.GetOptions<MySQLOptions>(MySQLOptions.SQLOptionsName);
 
