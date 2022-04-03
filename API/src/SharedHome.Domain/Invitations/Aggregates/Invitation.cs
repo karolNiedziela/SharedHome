@@ -28,7 +28,7 @@ namespace SharedHome.Domain.Invitations.Aggregates
             HouseGroupId = houseGroupId;
             HouseGroupId = houseGroupId;
             PersonId = personId;
-            Status = InvitationStatus.PENDING;
+            Status = InvitationStatus.Pending;
         }
 
         public static Invitation Create(int houseGroupId, string personId)
@@ -38,14 +38,14 @@ namespace SharedHome.Domain.Invitations.Aggregates
         {
             ThrowIfInvalidInvitationStatus(Status);
 
-            Status = InvitationStatus.ACCEPTED;
+            Status = InvitationStatus.Accepted;
         }
 
         public void Reject()
         {
             ThrowIfInvalidInvitationStatus(Status);
 
-            Status = InvitationStatus.REJECTED;
+            Status = InvitationStatus.Rejected;
         }
 
         // For changing status of invitation, it is invalid when invitation has different status than PENDING
@@ -53,10 +53,10 @@ namespace SharedHome.Domain.Invitations.Aggregates
         {
             switch (status)
             {
-                case InvitationStatus.ACCEPTED:
+                case InvitationStatus.Accepted:
                     throw new InvitationAcceptedException();
 
-                case InvitationStatus.REJECTED:
+                case InvitationStatus.Rejected:
                     throw new InvitationRejectedException();
             }
         }
