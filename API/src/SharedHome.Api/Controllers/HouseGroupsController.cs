@@ -30,7 +30,7 @@ namespace SharedHome.Api.Controllers
         }
 
         [HttpDelete("{houseGroupId:int}/members/{personToRemoveId:guid}")]
-        public async Task<IActionResult> RemoveHouseGroupMemberAsync([FromBody] RemoveHousGroupMember command)
+        public async Task<IActionResult> RemoveHouseGroupMemberAsync([FromBody] RemoveHouseGroupMember command)
         {
             await Mediator.Send(command);
 
