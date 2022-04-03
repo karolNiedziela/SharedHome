@@ -21,7 +21,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         {
             var invitation = GetInvitation();
 
-            invitation.Status.ShouldBe(InvitationStatus.PENDING);
+            invitation.Status.ShouldBe(InvitationStatus.Pending);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
 
             invitation.Accept();
 
-            invitation.Status.ShouldBe(InvitationStatus.ACCEPTED);
+            invitation.Status.ShouldBe(InvitationStatus.Accepted);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
 
             invitation.Reject();
 
-            invitation.Status.ShouldBe(InvitationStatus.REJECTED);
+            invitation.Status.ShouldBe(InvitationStatus.Rejected);
         }
 
 
