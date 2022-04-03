@@ -16,10 +16,10 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore src/SharedHome.Api
+      run: dotnet restore API/src/SharedHome.Api
     - name: Build
-      run: dotnet build --configuration Release src/SharedHome.Api
+      run: dotnet build --configuration Release API/src/SharedHome.Api
     - name: Run Domain Tests
-      run: dotnet test --configuration Release tests/SharedHome.Domain.UnitTests
+      run: dotnet test --configuration Release API/tests/SharedHome.Domain.UnitTests
     - name: Run Application Tests
-      run: dotnet test --configuration Release tests/SharedHome.Applicatio.UnitTests
+      run: dotnet test --configuration Release API/tests/SharedHome.Applicatio.UnitTests
