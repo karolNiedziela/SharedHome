@@ -2,9 +2,9 @@
 
 namespace SharedHome.Application.HouseGroups.Exceptions
 {
-    public class PersonIsNotInHouseGroup : SharedHomeException
+    public class PersonIsNotInHouseGroupException : SharedHomeException
     {
-        public PersonIsNotInHouseGroup(string personId, int houseGroupId) 
+        public PersonIsNotInHouseGroupException(string personId, int houseGroupId) 
             : base($"Person with id '{personId}' is not in house group with id '{houseGroupId}'")
         {
             PersonId = personId;

@@ -23,7 +23,7 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
         {    
             if (!await _houseGroupRepostiory.IsPersonInHouseGroup(request.PersonId!, request.HouseGroupId)) 
             {
-                throw new PersonIsNotInHouseGroup(request.PersonId!, request.HouseGroupId);
+                throw new PersonIsNotInHouseGroupException(request.PersonId!, request.HouseGroupId);
             }
 
             if (await _invitationRepository.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId, request.PersonId!))

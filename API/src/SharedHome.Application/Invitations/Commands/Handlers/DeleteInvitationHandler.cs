@@ -5,11 +5,11 @@ using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.Invitations.Commands.Handlers
 {
-    public class DeleteInvitationHouseGroup : ICommandHandler<DeleteInvitation, Unit>
+    public class DeleteInvitationHandler : ICommandHandler<DeleteInvitation, Unit>
     {
         private readonly IInvitationRepository _invitationRepository;
 
-        public DeleteInvitationHouseGroup(IInvitationRepository invitationRepository)
+        public DeleteInvitationHandler(IInvitationRepository invitationRepository)
         {
             _invitationRepository = invitationRepository;
         }

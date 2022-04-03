@@ -6,7 +6,7 @@ using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.HouseGroups.Commands.Handlers
 {
-    public class RemoveHouseGroupMemberHandler : ICommandHandler<RemoveHousGroupMember, Unit>
+    public class RemoveHouseGroupMemberHandler : ICommandHandler<RemoveHouseGroupMember, Unit>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
 
@@ -15,7 +15,7 @@ namespace SharedHome.Application.HouseGroups.Commands.Handlers
             _houseGroupRepository = houseGroupRepository;
         }
 
-        public async Task<Unit> Handle(RemoveHousGroupMember request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(RemoveHouseGroupMember request, CancellationToken cancellationToken)
         {
             var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
 
