@@ -22,4 +22,4 @@ jobs:
     - name: Run Domain Tests
       run: dotnet test --configuration Release API/tests/SharedHome.Domain.UnitTests
     - name: Run Application Tests
-      run: dotnet test --configuration Release API/tests/SharedHome.Applicatio.UnitTests
+      run: dotnet test --configuration Release API/tests/SharedHome.Application.UnitTests
