@@ -16,7 +16,7 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
 
         public async Task<Unit> Handle(DeleteInvitation request, CancellationToken cancellationToken)
         {
-            var invitation = await _invitationRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
+            var invitation = await _invitationRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
 
             await _invitationRepository.DeleteAsync(invitation);
 
