@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Exceptions;
-using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Application.Services;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
@@ -11,27 +11,30 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
     public class SendInvitationHandler : ICommandHandler<SendInvitation, Unit>
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly IHouseGroupRepository _houseGroupRepostiory;
+        private readonly IHouseGroupService _houseGroupService;
+        private readonly IInvitationService _invitationService;
 
-        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupRepository houseGroupRepostiory)
+        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupService houseGroupService, IInvitationService invitationService)
         {
             _invitationRepository = invitationRepository;
-            _houseGroupRepostiory = houseGroupRepostiory;
+            _houseGroupService = houseGroupService;
+            _invitationService = invitationService;
         }
 
         public async Task<Unit> Handle(SendInvitation request, CancellationToken cancellationToken)
         {    
-            if (!await _houseGroupRepostiory.IsPersonInHouseGroup(request.PersonId!, request.HouseGroupId)) 
+            if (!await _houseGroupService.IsPersonInHouseGroup(request.PersonId!, request.HouseGroupId)) 
             {
                 throw new PersonIsNotInHouseGroupException(request.PersonId!, request.HouseGroupId);
             }
 
-            if (await _invitationRepository.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId, request.PersonId!))
+            if (await _invitationService.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId, request.PersonId!))
             {
                 throw new InvitationAlreadySentException(request.HouseGroupId, request.PersonId!);
             }
 
-            var invitation = Invitation.Create(request.HouseGroupId, request.RequestedToPersonId);
+            var invitation = Invitation.Create(request.HouseGroupId, request.RequestedToPersonId, 
+                request.FirstName!, request.LastName!);
 
             await _invitationRepository.AddAsync(invitation);
 

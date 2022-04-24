@@ -3,6 +3,7 @@ using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.Bills.Commands.Handlers
 {
@@ -17,10 +18,10 @@ namespace SharedHome.Application.Bills.Commands.Handlers
 
         public async Task<Unit> Handle(AddBill request, CancellationToken cancellationToken)
         {
-            var billType = (BillType)Enum.Parse(typeof(BillType), request.BillType);
+            var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
             var bill = Bill.Create(request.PersonId!, billType, request.ServiceProviderName,
-                DateOnly.FromDateTime(request.DateOfPayment), request.Cost);
+                request.DateOfPayment, request.Cost);
 
             await _billRepository.AddAsync(bill);
 

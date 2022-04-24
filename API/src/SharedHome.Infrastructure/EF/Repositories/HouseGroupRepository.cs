@@ -37,15 +37,5 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _dbContext.HouseGroups.Update(houseGroup);
             await _dbContext.SaveChangesAsync();
         }
-
-        public async Task<bool> IsPersonInHouseGroup(string personId)
-            => await _dbContext.HouseGroups
-            .AnyAsync(houseGroup => houseGroup.Members
-                .Any(member => member.PersonId == personId));
-
-        public async Task<bool> IsPersonInHouseGroup(string personId, int houseGroupId)
-            => await _dbContext.HouseGroups
-            .AnyAsync(houseGroup => houseGroup.Id == houseGroupId && houseGroup.Members
-                .Any(member => member.PersonId == personId));
     }
 }

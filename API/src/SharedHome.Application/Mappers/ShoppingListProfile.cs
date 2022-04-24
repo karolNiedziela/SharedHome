@@ -14,7 +14,7 @@ namespace SharedHome.Application.Mappers
             CreateMap<ShoppingListProduct, ShoppingListProductDto>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.Value))
                 .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity.Value))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price!.Value));
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price == null ? null : src.Price.Value));
         }
     }
 }

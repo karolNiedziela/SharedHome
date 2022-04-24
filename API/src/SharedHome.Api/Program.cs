@@ -2,11 +2,16 @@ using FluentValidation.AspNetCore;
 using SharedHome.Application;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    })
     .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(typeof(ApplicationAssemblyReference).Assembly));
 
 builder.Services.AddApplication();

@@ -20,14 +20,14 @@ namespace SharedHome.Domain.Bills.Entities
 
         public BillCost? Cost { get; private set; }
 
-        public DateOnly DateOfPayment { get; private set; }
+        public DateTime DateOfPayment { get; private set; }
 
         private Bill()
         {
 
         }
 
-        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false)
+        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, BillCost? cost = null, bool isPaid = false)
         {
             PersonId = personId;
             BillType = billType;
@@ -37,7 +37,7 @@ namespace SharedHome.Domain.Bills.Entities
             IsPaid = isPaid;
         }
 
-        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, BillCost? cost = null, bool isPaid = false) =>
+        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, BillCost? cost = null, bool isPaid = false) =>
             new(personId, billType, serviceProvider, dateOfPayment, cost, isPaid);
 
         public void PayFor(BillCost cost)
@@ -64,7 +64,7 @@ namespace SharedHome.Domain.Bills.Entities
             AddEvent(new BillCostChanged(Id, ServiceProvider, Cost));
         }
 
-        public void ChangeDateOfPayment(DateOnly dateOfPayment)
+        public void ChangeDateOfPayment(DateTime dateOfPayment)
         {
             DateOfPayment = dateOfPayment;
             AddEvent(new BillDateOfPaymentChanged(Id, ServiceProvider, DateOfPayment));

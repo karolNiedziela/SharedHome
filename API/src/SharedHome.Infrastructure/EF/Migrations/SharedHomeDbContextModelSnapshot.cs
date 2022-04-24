@@ -160,8 +160,8 @@ namespace SharedHome.Infrastructure.EF.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateOnly>("DateOfPayment")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateOfPayment")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<bool>("IsPaid")
                         .ValueGeneratedOnAdd()
@@ -515,6 +515,57 @@ namespace SharedHome.Infrastructure.EF.Migrations
                         });
 
                     b.Navigation("Members");
+                });
+
+            modelBuilder.Entity("SharedHome.Domain.Invitations.Aggregates.Invitation", b =>
+                {
+                    b.OwnsOne("SharedHome.Domain.HouseGroups.ValueObjects.FirstName", "SentByFirstName", b1 =>
+                        {
+                            b1.Property<int>("InvitationHouseGroupId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("InvitationPersonId")
+                                .HasColumnType("varchar(255)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("SentByFirstName");
+
+                            b1.HasKey("InvitationHouseGroupId", "InvitationPersonId");
+
+                            b1.ToTable("Invitations");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvitationHouseGroupId", "InvitationPersonId");
+                        });
+
+                    b.OwnsOne("SharedHome.Domain.HouseGroups.ValueObjects.LastName", "SentByLastName", b1 =>
+                        {
+                            b1.Property<int>("InvitationHouseGroupId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("InvitationPersonId")
+                                .HasColumnType("varchar(255)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("SentByLastName");
+
+                            b1.HasKey("InvitationHouseGroupId", "InvitationPersonId");
+
+                            b1.ToTable("Invitations");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvitationHouseGroupId", "InvitationPersonId");
+                        });
+
+                    b.Navigation("SentByFirstName")
+                        .IsRequired();
+
+                    b.Navigation("SentByLastName")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList", b =>

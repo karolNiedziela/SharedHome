@@ -9,7 +9,7 @@ namespace SharedHome.Api.Controllers
     public class HouseGroupsController : ApiController
     {
         [HttpGet("{personId:guid}")]
-        public async Task<ActionResult<Response<HouseGroupDto>>> GeAsync(string personId)
+        public async Task<ActionResult<Response<HouseGroupDto>>> GetAsync(string personId)
         {
             var houseGroup = await Mediator.Send(new GetHouseGroup { PersonId = personId });
 
@@ -37,7 +37,7 @@ namespace SharedHome.Api.Controllers
             return NoContent();
         }
 
-        [HttpPut("{houseGroupId:int}/handownerroleover")]
+        [HttpPatch("{houseGroupId:int}/handownerroleover")]
         public async Task<IActionResult> HandOwnerRoleOverAsync([FromBody] HandOwnerRoleOver command)
         {
             await Mediator.Send(command);

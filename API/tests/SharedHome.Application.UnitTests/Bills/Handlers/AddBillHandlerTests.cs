@@ -27,7 +27,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             var command = new AddBill
             {
                 ServiceProviderName = "Bill",
-                BillType = "Water"
+                BillType = 2
             };
 
             await _commandHandler.Handle(command, default);

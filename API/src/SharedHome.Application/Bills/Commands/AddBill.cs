@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Bills.Commands
 {
-    public class AddBill : AuthorizeCommand, ICommand<Unit>
+    public class AddBill : AuthorizeRequest, ICommand<Unit>
     {
-        public string BillType { get; set; } = default!;
+        public int BillType { get; set; }
 
         public string ServiceProviderName { get; set; } = default!;
 

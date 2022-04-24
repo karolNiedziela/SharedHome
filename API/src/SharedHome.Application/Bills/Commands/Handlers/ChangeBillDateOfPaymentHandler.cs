@@ -18,7 +18,7 @@ namespace SharedHome.Application.Bills.Commands.Handlers
         {
             var bill = await _billRepository.GetOrThrowAsync(request.BillId, request.PersonId!);
 
-            bill.ChangeDateOfPayment(DateOnly.FromDateTime(request.DateOfPayment));
+            bill.ChangeDateOfPayment(request.DateOfPayment);
 
             await _billRepository.UpdateAsync(bill);
 

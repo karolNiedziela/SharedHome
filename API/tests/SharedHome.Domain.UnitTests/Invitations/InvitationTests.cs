@@ -15,6 +15,8 @@ namespace SharedHome.Domain.UnitTests.Invitations
     {
         private int _houseGroupId = 1;
         private string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
+        private string _firstName = "FirstName";
+        private string _lastName = "LastName";
 
         [Fact]
         public void NewInvitation_Should_Have_InvitationStatus_Set_To_Pending()
@@ -95,7 +97,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
 
         private Invitation GetInvitation()
         {
-            return Invitation.Create(_houseGroupId, _personId);
+            return Invitation.Create(_houseGroupId, _personId, _firstName, _lastName);
         }
     }
 }

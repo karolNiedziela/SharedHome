@@ -7,6 +7,7 @@ using SharedHome.Shared.Abstractions.User;
 using SharedHome.Shared.Auth;
 using SharedHome.Shared.Email;
 using SharedHome.Shared.Exceptions;
+using SharedHome.Shared.Filters;
 using SharedHome.Shared.Time;
 using SharedHome.Shared.User;
 
@@ -40,6 +41,8 @@ namespace SharedHome.Shared
                     Title = ApiTitle,
                     Version = ApiVersion
                 });
+
+                swagger.OperationFilter<SwaggerExcludeFilter>();
             });
 
             return services;

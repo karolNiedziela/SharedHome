@@ -3,6 +3,7 @@ using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands;
 using SharedHome.Application.HouseGroups.Commands.Handlers;
 using SharedHome.Application.HouseGroups.Exceptions;
+using SharedHome.Application.Services;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
@@ -16,13 +17,15 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class AddHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
+        private readonly IHouseGroupService _houseGroupService;
         private readonly ICommandHandler<AddHouseGroup, Unit> _commandHandler;
         
 
         public AddHouseGroupHandlerTests()
         {
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
-            _commandHandler = new AddHouseGroupHandler(_houseGroupRepository);
+            _houseGroupService = Substitute.For<IHouseGroupService>();
+            _commandHandler = new AddHouseGroupHandler(_houseGroupRepository, _houseGroupService);
         }
 
         [Fact]
@@ -33,7 +36,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 PersonId = "personId"
             };
 
-            _houseGroupRepository.IsPersonInHouseGroup(Arg.Any<string>()).Returns(true);
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -52,7 +55,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 Email = "person@email.com"
             };
 
-            _houseGroupRepository.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
 
             await _commandHandler.Handle(command, default);
 

@@ -15,7 +15,8 @@ namespace SharedHome.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserInformationBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserInformationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PagedQueryBehavior<,>));
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

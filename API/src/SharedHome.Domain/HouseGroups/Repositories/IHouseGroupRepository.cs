@@ -11,9 +11,5 @@ namespace SharedHome.Domain.HouseGroups.Repositories
         Task UpdateAsync(HouseGroup houseGroup);
 
         Task DeleteAsync(HouseGroup houseGroup);
-
-        Task<bool> IsPersonInHouseGroup(string personId);
-
-        Task<bool> IsPersonInHouseGroup(string personId, int houseGroupId);
     }
 }

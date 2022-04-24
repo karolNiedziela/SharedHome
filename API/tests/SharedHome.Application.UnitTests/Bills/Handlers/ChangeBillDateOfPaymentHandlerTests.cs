@@ -41,7 +41,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             await _commandHandler.Handle(command, default);
 
             await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(bill =>
-                bill.DateOfPayment == DateOnly.FromDateTime(command.DateOfPayment)));
+                bill.DateOfPayment == command.DateOfPayment));
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using SharedHome.Shared.Abstractions.Commands;
-using System.Windows.Input;
+using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Bills.Commands
 {
-    public class ChangeBillDateOfPayment : AuthorizeCommand, ICommand<Unit>
+    public class ChangeBillDateOfPayment : AuthorizeRequest, ICommand<Unit>
     {
         public int BillId { get; set; }
 

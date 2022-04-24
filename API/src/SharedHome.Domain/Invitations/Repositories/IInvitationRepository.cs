@@ -11,7 +11,5 @@ namespace SharedHome.Domain.Invitations.Repositories
         Task DeleteAsync(Invitation invitation);
 
         Task UpdateAsync(Invitation invitation);
-
-        Task<bool> IsAnyInvitationFromHouseGroupToPerson(int houseGroupId, string personId);
     }
 }

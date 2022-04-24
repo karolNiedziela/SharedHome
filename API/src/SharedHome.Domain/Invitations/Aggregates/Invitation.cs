@@ -1,11 +1,7 @@
-﻿using SharedHome.Domain.Invitations.Exceptions;
+﻿using SharedHome.Domain.HouseGroups.ValueObjects;
 using SharedHome.Domain.Invitations.Constants;
+using SharedHome.Domain.Invitations.Exceptions;
 using SharedHome.Shared.Abstractions.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Invitations.Aggregates
 {
@@ -15,6 +11,10 @@ namespace SharedHome.Domain.Invitations.Aggregates
 
         public int HouseGroupId { get; private set; } = default!;
 
+        public FirstName SentByFirstName { get; private set; } = default!;
+
+        public LastName SentByLastName { get; private set; } = default!;
+
         public string PersonId { get; private set; } = default!;
 
 
@@ -23,16 +23,18 @@ namespace SharedHome.Domain.Invitations.Aggregates
 
         }
 
-        private Invitation(int houseGroupId, string personId)
+        private Invitation(int houseGroupId, string personId, FirstName sentByFirstName, LastName sentByLastName)
         {
             HouseGroupId = houseGroupId;
-            HouseGroupId = houseGroupId;
             PersonId = personId;
+            SentByFirstName = sentByFirstName;
+            SentByLastName = sentByLastName;
             Status = InvitationStatus.Pending;
         }
 
-        public static Invitation Create(int houseGroupId, string personId)
-            => new(houseGroupId, personId);
+        public static Invitation Create(int houseGroupId, string personId, 
+            FirstName sentByFirstName, LastName sentByLastName)
+            => new(houseGroupId, personId, sentByFirstName, sentByLastName);
 
         public void Accept()
         {

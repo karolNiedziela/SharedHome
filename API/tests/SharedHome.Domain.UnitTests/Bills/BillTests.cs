@@ -99,20 +99,20 @@ namespace SharedHome.Domain.UnitTests.Bills
         {
             var bill = GetBill(true);
 
-            bill.ChangeDateOfPayment(new DateOnly(2022, 5, 10));
+            bill.ChangeDateOfPayment(new DateTime(2022, 5, 10));
 
-            bill.DateOfPayment.ShouldBe(new DateOnly(2022, 5, 10));
+            bill.DateOfPayment.ShouldBe(new DateTime(2022, 5, 10));
             bill.Events.Count().ShouldBe(1);
 
             var @event = bill.Events.FirstOrDefault() as BillDateOfPaymentChanged;
             @event.ShouldNotBeNull();
 
-            @event.DateOfPayment.ShouldBe(new DateOnly(2022, 5, 10));
+            @event.DateOfPayment.ShouldBe(new DateTime(2022, 5, 10));
         }
 
         private Bill GetBill(bool isPaid = false)
         {
-            return Bill.Create(_personId, BillType.Other, "test", new DateOnly(2022, 10, 10), cost: 1000m, isPaid: isPaid);
+            return Bill.Create(_personId, BillType.Other, "test", new DateTime(2022, 10, 10), cost: 1000m, isPaid: isPaid);
         }
     }
 }

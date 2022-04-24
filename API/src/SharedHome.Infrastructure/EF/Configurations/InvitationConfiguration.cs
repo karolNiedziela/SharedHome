@@ -17,6 +17,20 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
             builder.Property(invitation => invitation.Status)
                    .HasConversion<string>();
+
+            builder.OwnsOne(invitation => invitation.SentByFirstName, navigation =>
+            {
+                navigation.Property(sentByFirstName => sentByFirstName.Value)
+                          .HasColumnName("SentByFirstName")
+                          .IsRequired();
+            });
+
+            builder.OwnsOne(invitation => invitation.SentByLastName, navigation =>
+            {
+                navigation.Property(sentByLastName => sentByLastName.Value)
+                          .HasColumnName("SentByLastName")
+                          .IsRequired();
+            });
         }
     }
 }

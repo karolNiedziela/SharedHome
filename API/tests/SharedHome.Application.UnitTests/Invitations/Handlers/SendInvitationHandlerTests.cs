@@ -4,7 +4,7 @@ using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Commands;
 using SharedHome.Application.Invitations.Commands.Handlers;
 using SharedHome.Application.Invitations.Exceptions;
-using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Application.Services;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
@@ -18,20 +18,22 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     public class SendInvitationHandlerTests
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly IHouseGroupRepository _houseGroupRepository;
+        private readonly IInvitationService _invitationService;
+        private readonly IHouseGroupService _houseGroupService;
         private readonly ICommandHandler<SendInvitation, Unit> _commandHandler;
 
         public SendInvitationHandlerTests()
         {
             _invitationRepository = Substitute.For<IInvitationRepository>();
-            _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
-            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupRepository);
+            _houseGroupService = Substitute.For<IHouseGroupService>();
+            _invitationService = Substitute.For<IInvitationService>();
+            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService);
         }
 
         [Fact]
         public async Task Handle_Throws_PersonIsNotInHouseGroupException_When_Person_Is_Not_In_HouseGroup()
         {
-            _houseGroupRepository.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
                 .Returns(false);
 
             var exception = await Record.ExceptionAsync(() => 
@@ -44,10 +46,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Throws_InvitationAlreadySentException_When_Invitation_Already_Sent_ToPerson()
         {
-            _houseGroupRepository.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
                 .Returns(true);
 
-            _invitationRepository.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
+            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(true);
 
             var exception = await Record.ExceptionAsync(() =>
@@ -60,17 +62,19 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Shoudl_Call_Repository_OnSuccess()
         {
-            _houseGroupRepository.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
              .Returns(true);
 
-            _invitationRepository.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
+            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(false);
 
             var command = new SendInvitation
             {
                 HouseGroupId = 1,
                 PersonId = "personId",
-                RequestedToPersonId = "requestedPersonId"
+                RequestedToPersonId = "requestedPersonId",
+                FirstName = "FirstName",
+                LastName = "LastName",
             };
 
             await _commandHandler.Handle(command, default);

@@ -2,10 +2,11 @@
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.HouseGroups.Queries
 {
-    public class GetHouseGroup : AuthorizeCommand, IQuery<Response<HouseGroupDto>>
+    public class GetHouseGroup : AuthorizeRequest, IQuery<Response<HouseGroupDto>>
     {
 
     }

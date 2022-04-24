@@ -11,8 +11,10 @@ namespace SharedHome.Application.UnitTests.Providers
     {
         public const int DefaultHouseGroupId = 1;
         public const string DefaultPersonId = "personId";
+        public const string DefaultFirstName = "FirstName";
+        public const string DefaultLastName = "LastName";
 
         public static Invitation Get()
-            => Invitation.Create(DefaultHouseGroupId, DefaultPersonId);        
+            => Invitation.Create(DefaultHouseGroupId, DefaultPersonId, DefaultFirstName, DefaultLastName);        
     }
 }

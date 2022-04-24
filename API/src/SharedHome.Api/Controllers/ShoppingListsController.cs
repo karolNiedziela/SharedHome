@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SharedHome.Application.DTO;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.Queries;
@@ -6,6 +7,7 @@ using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Api.Controllers
 {
+    [Authorize]
     public class ShoppingListsController : ApiController
     {
         [HttpGet("{id:int}")]
@@ -25,7 +27,7 @@ namespace SharedHome.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<IEnumerable<ShoppingListDto>>>> GetAllByYearAndMonth([FromQuery] GetAllShoppingListByYearAndMonth query)
+        public async Task<ActionResult<Response<IEnumerable<ShoppingListDto>>>> GetAllByYearAndMonthAndIsDone([FromQuery] GetAllShoppingListsByYearAndMonthAndIsDone query)
         {
             var shoppingLists = await Mediator.Send(query);
 
@@ -48,7 +50,7 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{shoppingListId:int}/products/{productName}/purchase")]
+        [HttpPatch("{shoppingListId:int}/products/{productName}/purchase")]
         public async Task<IActionResult> PurchaseShoppingListProduct([FromBody] PurchaseProduct command)
         {
             await Mediator.Send(command);
@@ -56,7 +58,7 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{shoppingListId:int}/products/{productName}/cancelpurchase")]
+        [HttpPatch("{shoppingListId:int}/products/{productName}/cancelpurchase")]
         public async Task<IActionResult> CancePurchaseOfProduct([FromBody] CancelPurchaseOfProduct command)
         {
             await Mediator.Send(command);
@@ -64,7 +66,7 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        [HttpPut("{shoppingListId:int}/products/{productName}/changeprice")]
+        [HttpPatch("{shoppingListId:int}/products/{productName}/changeprice")]
         public async Task<IActionResult> ChangePriceOfProduct([FromBody] ChangePriceOfProduct command)
         {
             await Mediator.Send(command);

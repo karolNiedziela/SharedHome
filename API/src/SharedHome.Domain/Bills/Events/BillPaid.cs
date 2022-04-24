@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Bills.Events
 {
-    public record BillPaid(int BillId, ServiceProviderName ServiceProviderName, BillCost Cost, DateOnly DateOfPayment) : IEvent;
+    public record BillPaid(int BillId, ServiceProviderName ServiceProviderName, BillCost Cost, DateTime DateOfPayment) : IEvent;
 }
