@@ -25,11 +25,13 @@ namespace SharedHome.Application.HouseGroups.Commands.Handlers
             {
                 throw new PersonIsAlreadyInHouseGroupException(request.PersonId!);
             }
-
-            var houseGroup = HouseGroup.Create(new HouseGroupMember(request.PersonId!, request.FirstName!, 
-                request.LastName!, request.Email!, true));
+            var houseGroup = HouseGroup.Create();
 
             await _houseGroupRepository.AddAsync(houseGroup);
+
+            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, request.PersonId!, true));
+
+            await _houseGroupRepository.UpdateAsync(houseGroup);
 
             return Unit.Value;
         }

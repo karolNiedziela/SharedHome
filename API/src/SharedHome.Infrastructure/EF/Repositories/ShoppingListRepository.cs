@@ -7,16 +7,24 @@ namespace SharedHome.Infrastructure.EF.Repositories
 {
     internal sealed class ShoppingListRepository : IShoppingListRepository
     {
-        private readonly SharedHomeDbContext _context;
+        private readonly WriteSharedHomeDbContext _context;
 
-        public ShoppingListRepository(SharedHomeDbContext context)
+        public ShoppingListRepository(WriteSharedHomeDbContext context)
         {
             _context = context;
         }
         public async Task<ShoppingList?> GetAsync(int id, string personId)
-            => await _context.ShoppingLists
+        {
+            var result = await _context.ShoppingLists
             .Include(shoppingList => shoppingList.Products)
             .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id && shoppingList.PersonId == personId);
+
+            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
+            return result;
+        }
+        //=> await _context.ShoppingLists
+        //.Include(shoppingList => shoppingList.Products)
+        //.SingleOrDefaultAsync(shoppingList => shoppingList.Id == id && shoppingList.PersonId == personId);
 
         public async Task<ShoppingList> AddAsync(ShoppingList shoppingList)
         {
@@ -31,12 +39,15 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _context.ShoppingLists.Remove(shoppingList);
 
+
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(ShoppingList shoppingList)
         {
             _context.ShoppingLists.Update(shoppingList);
+
+            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
 
             await _context.SaveChangesAsync();
         }

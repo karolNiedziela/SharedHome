@@ -14,7 +14,7 @@ namespace SharedHome.Domain.ShoppingLists.Exceptions
         public string ProductName { get; }
 
         public ShoppingListProductAlreadyExistsException(string shoppingListName, string productName) 
-            : base($"Shopping list '{shoppingListName} already has product '{productName}'")
+            : base($"Shopping list '{shoppingListName} already has product '{productName}'.")
         {
             ShoppingListName = shoppingListName;
             ProductName = productName;

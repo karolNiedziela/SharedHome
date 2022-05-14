@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
+using SharedHome.Application.Services;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.Commands.Handlers;
 using SharedHome.Application.ShoppingLists.Exceptions;
@@ -17,12 +18,14 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     public class AddShoppingListProductHandlerTests
     {
         private readonly IShoppingListRepository _shoppingListRepository;
+        private readonly IHouseGroupService _houseGroupService;
         private readonly ICommandHandler<AddShoppingListProduct, Unit> _commandHandler;
 
         public AddShoppingListProductHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
-            _commandHandler = new AddShoppingListProductHandler(_shoppingListRepository);
+            _houseGroupService = Substitute.For<IHouseGroupService>();
+            _commandHandler = new AddShoppingListProductHandler(_shoppingListRepository, _houseGroupService);
         }
 
         [Fact]

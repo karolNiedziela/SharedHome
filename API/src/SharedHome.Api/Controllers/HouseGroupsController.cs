@@ -8,10 +8,10 @@ namespace SharedHome.Api.Controllers
 {
     public class HouseGroupsController : ApiController
     {
-        [HttpGet("{personId:guid}")]
-        public async Task<ActionResult<Response<HouseGroupDto>>> GetAsync(string personId)
+        [HttpGet]
+        public async Task<ActionResult<Response<HouseGroupDto>>> GetAsync()
         {
-            var houseGroup = await Mediator.Send(new GetHouseGroup { PersonId = personId });
+            var houseGroup = await Mediator.Send(new GetHouseGroup());
 
             if (houseGroup.Data is null)
             {

@@ -6,9 +6,11 @@ namespace SharedHome.Application.Invitations.Dto
     {
         public int HouseGroupId { get; set; }
 
-        public string PersonId { get; set; } = default!;
+        public string RequestedByPersonId { get; set; } = default!;
 
-        public InvitationStatus InvitationStatus { get; set; }
+        public string RequestedToPersonId { get; set; } = default!;
+
+        public string InvitationStatus { get; set; } = default!;
 
         public string SentByFirstName { get; set; } = default!;
 

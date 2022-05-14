@@ -4,33 +4,33 @@ using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    public class GetInvitationByStatusHandler : IQueryHandler<GetInvitationsByStatus, Response<List<InvitationDto>>>
+    internal class GetInvitationByStatusHandler : IQueryHandler<GetInvitationsByStatus, Response<List<InvitationDto>>>
     {
-        private readonly SharedHomeDbContext _context;
+        private readonly DbSet<InvitationReadModel> _invitations;
         private readonly IMapper _mapper;
 
-        public GetInvitationByStatusHandler(SharedHomeDbContext context, IMapper mapper)
+        public GetInvitationByStatusHandler(ReadSharedHomeDbContext context, IMapper mapper)
         {
-            _context = context;
+            _invitations = context.Invitations;
             _mapper = mapper;
         }
 
         public async Task<Response<List<InvitationDto>>> Handle(GetInvitationsByStatus request, CancellationToken cancellationToken)
         {
-
             var invitationStatus = request.Status.HasValue ?
                 EnumHelper.ToEnumByIntOrThrow<InvitationStatus>(request.Status.Value) :
                 InvitationStatus.Pending;
 
-            var invitations = await _context.Invitations
-                .Where(invitation => invitation.Status == invitationStatus &&
-                invitation.PersonId == request.PersonId)
+            var invitations = await _invitations
+                .Where(invitation => invitation.Status == invitationStatus.ToString() &&
+                invitation.RequestedToPersonId == request.PersonId)
                 .ToListAsync();
 
             return new Response<List<InvitationDto>>(_mapper.Map<List<InvitationDto>>(invitations));

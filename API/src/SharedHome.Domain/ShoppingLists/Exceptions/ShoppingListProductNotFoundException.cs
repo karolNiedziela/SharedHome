@@ -12,7 +12,7 @@ namespace SharedHome.Domain.ShoppingLists.Exceptions
         public string ProductName { get; }
 
         public ShoppingListProductNotFoundException(string productName) 
-            : base($"Shopping list product '{productName}' was not found. ")
+            : base($"Shopping list product '{productName}' was not found.")
         {
             ProductName = productName;
         }

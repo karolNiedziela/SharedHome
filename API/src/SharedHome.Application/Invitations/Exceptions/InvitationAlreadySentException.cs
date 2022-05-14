@@ -4,14 +4,15 @@ namespace SharedHome.Application.Invitations.Exceptions
 {
     public class InvitationAlreadySentException : SharedHomeException
     {
-        public InvitationAlreadySentException(int houseGroupId, string personId) 
-            : base($"Invitation from house group with id '{houseGroupId}' already sent to person with id '{personId}'.")
+        public int HouseGroupId { get; }
+
+        public string RequestedToPersonId { get; }
+
+        public InvitationAlreadySentException(int houseGroupId, string requestedToPersonId) 
+            : base($"Invitation from house group with id '{houseGroupId}' already sent to person with id '{requestedToPersonId}'.")
         {
             HouseGroupId = houseGroupId;
-            PersonId = personId;
+            RequestedToPersonId = requestedToPersonId;
         }
-
-        public int HouseGroupId { get; }
-        public string PersonId { get; }
     }
 }

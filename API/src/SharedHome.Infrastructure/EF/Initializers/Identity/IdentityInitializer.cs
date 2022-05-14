@@ -1,0 +1,113 @@
+﻿using Microsoft.AspNetCore.Identity;
+using SharedHome.Infrastructure.Identity.Entities;
+
+namespace SharedHome.Infrastructure.EF.Initializers.Identity
+{
+    public class IdentityInitializer : IDataInitializer
+    {
+        private readonly InitializerOptions _initializerOptions;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public IdentityInitializer(InitializerOptions initializerOptions, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            _initializerOptions = initializerOptions;
+            _userManager = userManager;
+            _roleManager = roleManager;
+        }
+
+        public async Task SeedAsync()
+        {
+            await AddRoles();
+
+            await AddDefaultUsersWithRoles();
+        }
+
+        private async Task AddRoles()
+        {
+            if (!await _roleManager.RoleExistsAsync(InitializerConstants.Administrator))
+            {
+                await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Id = InitializerConstants.AdministratorRoleId,
+                    Name = InitializerConstants.Administrator,
+                    NormalizedName = InitializerConstants.Administrator.ToUpper(),
+                });
+            }
+
+
+            if (!await _roleManager.RoleExistsAsync(InitializerConstants.User))
+            {
+                await _roleManager.CreateAsync(new IdentityRole
+                {
+                    Id = InitializerConstants.UserRoleId,
+                    Name = InitializerConstants.User,
+                    NormalizedName = InitializerConstants.User.ToUpper(),
+                });
+            }
+        }
+
+        private async Task AddDefaultUsersWithRoles()
+        {
+            if(await _userManager.FindByIdAsync(InitializerConstants.AdminUserId) is null)
+            {
+                var administrator = new ApplicationUser
+                {
+                    Id = InitializerConstants.AdminUserId,
+                    FirstName = InitializerConstants.AdminFirstName,
+                    LastName = InitializerConstants.AdminLastName,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    Email = InitializerConstants.AdminEmail,
+                    NormalizedEmail = InitializerConstants.AdminEmail.ToUpper(),
+                    UserName = InitializerConstants.AdminUserName,
+                    NormalizedUserName = InitializerConstants.AdminUserName.ToUpper(),
+                };
+
+                await _userManager.CreateAsync(administrator, _initializerOptions.AdminPassword);
+
+                await _userManager.AddToRoleAsync(administrator, InitializerConstants.Administrator);
+            }
+
+            if (await _userManager.FindByIdAsync(InitializerConstants.CharlesUserId) is null)
+            {
+                var charles = new ApplicationUser
+                {
+                    Id = InitializerConstants.CharlesUserId,
+                    FirstName = InitializerConstants.CharlesFirstName,
+                    LastName = InitializerConstants.CharlesLastName,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    Email = InitializerConstants.CharlesEmail,
+                    NormalizedEmail = InitializerConstants.CharlesEmail.ToUpper(),
+                    UserName = InitializerConstants.CharlesUserName,
+                    NormalizedUserName = InitializerConstants.CharlesUserName.ToUpper(),
+                };
+
+                await _userManager.CreateAsync(charles, _initializerOptions.CharlesPassword);
+
+                await _userManager.AddToRoleAsync(charles, InitializerConstants.Administrator);
+            }
+
+            if (await _userManager.FindByIdAsync(InitializerConstants.FrancUserId) is null)
+            {
+                var franc = new ApplicationUser
+                {
+                    Id = InitializerConstants.FrancUserId,
+                    FirstName = InitializerConstants.FrancFirstName,
+                    LastName = InitializerConstants.FrancLastName,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    Email = InitializerConstants.FrancEmail,
+                    NormalizedEmail = InitializerConstants.FrancEmail.ToUpper(),
+                    UserName = InitializerConstants.FrancUserName,
+                    NormalizedUserName = InitializerConstants.FrancUserName.ToUpper(),
+                };
+
+                await _userManager.CreateAsync(franc, _initializerOptions.FrancPassword);
+
+                await _userManager.AddToRoleAsync(franc, InitializerConstants.Administrator);
+            }
+        }
+    }
+}

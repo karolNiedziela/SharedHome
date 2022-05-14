@@ -3,27 +3,29 @@ using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.DTO;
 using SharedHome.Application.HouseGroups.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.HouseGroups.Handlers
 {
-    public class GetHouseGroupHandler : IQueryHandler<GetHouseGroup, Response<HouseGroupDto>>
+    internal class GetHouseGroupHandler : IQueryHandler<GetHouseGroup, Response<HouseGroupDto>>
     {
-        private readonly SharedHomeDbContext _dbContext;
+        private readonly DbSet<HouseGroupReadModel> _houseGroups;
         private readonly IMapper _mapper;
 
-        public GetHouseGroupHandler(SharedHomeDbContext dbContext, IMapper mapper)
+        public GetHouseGroupHandler(ReadSharedHomeDbContext context, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _houseGroups = context.HouseGroups;
             _mapper = mapper;
         }
 
         public async Task<Response<HouseGroupDto>> Handle(GetHouseGroup request, CancellationToken cancellationToken)
         {
-            var houseGroup = await _dbContext.HouseGroups
+            var houseGroup = await _houseGroups
                 .Include(hg => hg.Members
                     .OrderByDescending(member => member.IsOwner))
+                .ThenInclude(m => m.Person)
                 .Where(houseGroup => houseGroup.Members.Any(member => member.PersonId == request.PersonId))
                 .FirstOrDefaultAsync();
 

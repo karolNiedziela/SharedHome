@@ -8,6 +8,10 @@
 
         public bool IsDone { get; set; }
 
+        public string CreatedByFirstName { get; set; } = default!;
+
+        public string CreatedByLastName { get; set; } = default!;
+
         public IEnumerable<ShoppingListProductDto> Products { get; set; } = default!;
     }
 }

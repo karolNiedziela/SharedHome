@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Extensions;
-using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.Invitations.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.HouseGroups.ValueObjects;
@@ -30,8 +29,7 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
             await _invitationRepository.UpdateAsync(invitation);
 
             var houseGroup = await _houseGroupRepository.GetOrThrowAsync(invitation.HouseGroupId, request.PersonId!);
-            houseGroup.AddMember(new HouseGroupMember(request.PersonId!, request.FirstName!, request.LastName!,
-                request.Email!));
+            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, request.PersonId!));
 
             await _houseGroupRepository.UpdateAsync(houseGroup);
 

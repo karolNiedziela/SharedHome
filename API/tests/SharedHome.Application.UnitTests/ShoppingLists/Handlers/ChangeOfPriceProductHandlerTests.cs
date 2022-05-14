@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
+using SharedHome.Application.Services;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.Commands.Handlers;
 using SharedHome.Application.ShoppingLists.Extensions;
@@ -16,12 +17,14 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     public class ChangeOfPriceProductHandlerTests
     {
         private readonly IShoppingListRepository _shoppingListRepository;
+        private readonly IHouseGroupService _houseGroupService;
         private readonly ICommandHandler<ChangePriceOfProduct, Unit> _commandHandler;
 
         public ChangeOfPriceProductHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
-            _commandHandler = new ChangePriceOfProductHandler(_shoppingListRepository);
+            _houseGroupService = Substitute.For<IHouseGroupService>();
+            _commandHandler = new ChangePriceOfProductHandler(_shoppingListRepository, _houseGroupService);
         }
 
         [Fact]

@@ -37,12 +37,10 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
             _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
 
-            var returnedHouseGroup = await _houseGroupRepository.GetOrThrowAsync(1, "personId");
+            var returnedHouseGroup = await _houseGroupRepository.GetOrThrowAsync(0, "personId");
 
-            returnedHouseGroup.Id.ShouldBe(1);
-            returnedHouseGroup.Members.First().FirstName.Value.ShouldBe(HouseGroupProvider.DefaultPersonFirstName);
-            returnedHouseGroup.Members.First().LastName.Value.ShouldBe(HouseGroupProvider.DefaultPersonLastName);
-            returnedHouseGroup.Members.First().Email.Value.ShouldBe(HouseGroupProvider.DefaultPersonEmail);
+            returnedHouseGroup.Id.ShouldBe(0);
+            returnedHouseGroup.Members.First().PersonId.ShouldBe(HouseGroupProvider.DefaultPersonId);
         }
     }
 }

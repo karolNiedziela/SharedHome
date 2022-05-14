@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
-    public class ShoppingListProduct : ValueObject
+    public record ShoppingListProduct
     {
         public ShoppingListProductName Name { get; private set; } = default!;
 
@@ -36,17 +36,6 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
             Quantity = shoppingListProduct.Quantity;
             Price = shoppingListProduct.Price;
             IsBought = shoppingListProduct.IsBought;
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Name;
-            yield return Quantity;
-            if (Price is not null)
-            {
-                yield return Price;
-            }
-            yield return IsBought;
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using SharedHome.Application.Identity;
 using SharedHome.Application.Identity.Models;
+using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Infrastructure.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Exceptions;
 using SharedHome.Shared.Abstractions.Auth;
@@ -21,16 +23,18 @@ namespace SharedHome.Infrastructure.Identity.Services
         private readonly IIdentityEmailSender _emailSender;
         private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
         private readonly IAuthorizationService _authorizationService;
+        private readonly IPersonRepository _personRepository;
 
 
         public IdentityService(UserManager<ApplicationUser> userManager, IAuthManager authManager, IIdentityEmailSender emailSender,
-            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory, IAuthorizationService authorizationService)
+            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory, IAuthorizationService authorizationService, IPersonRepository personRepository)
         {
             _userManager = userManager;
             _authManager = authManager;
             _emailSender = emailSender;
             _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
             _authorizationService = authorizationService;
+            _personRepository = personRepository;
         }
 
         public async Task<Response<string>> RegisterAsync(RegisterUserRequest request)
@@ -51,6 +55,9 @@ namespace SharedHome.Infrastructure.Identity.Services
             {
                 throw new IdentityException(MapIdentityErrorToIEnumerableString(result.Errors));
             }
+
+            var person = Person.Create(applicationUser.Id, applicationUser.FirstName, applicationUser.LastName);
+            await _personRepository.AddAsync(person);
 
             if (_userManager.Options.SignIn.RequireConfirmedEmail)
             {

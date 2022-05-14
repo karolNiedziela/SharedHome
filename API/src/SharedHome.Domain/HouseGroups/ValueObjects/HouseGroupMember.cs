@@ -1,37 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.HouseGroups.ValueObjects
 {
-    public record HouseGroupMember
+    public class HouseGroupMember : Entity
     {
-        public string PersonId { get; } = default!;
+        public string PersonId { get; private set; } = default!;
 
-        public FirstName FirstName { get; } = default!;
+        public int HouseGroupId { get; private set; }
 
-        public LastName LastName { get; } = default!;
-
-        public Email Email { get; } = default!;
-
-        public bool IsOwner { get; init; }
-
-        public string FullName => $"{FirstName.Value} {LastName.Value}";
+        public bool IsOwner { get; private set; }
 
         private HouseGroupMember()
         {
 
         }
 
-        public HouseGroupMember(string personId, FirstName firstName, LastName lastName, Email email, bool isOwner = false)
+        public HouseGroupMember(int houseGroupId, string personId, bool isOwner = false)
         {
+            HouseGroupId = houseGroupId;
             PersonId = personId;
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
             IsOwner = isOwner;
         }
+
+        public void MarkAsOwner() => IsOwner = true;
+
+        public void UnmarkAsOwner() => IsOwner = false;
     }
 }

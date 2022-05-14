@@ -11,8 +11,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         private readonly List<HouseGroupMember> _members = new();
 
-
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         public IEnumerable<HouseGroupMember> Members => _members;
 
@@ -23,10 +22,9 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         }
 
-        public static HouseGroup Create(HouseGroupMember houseGroupMember)
+        public static HouseGroup Create()
         {
             var houseGroup = new HouseGroup();
-            houseGroup.AddMember(houseGroupMember);
 
             return houseGroup;
         }
@@ -71,16 +69,17 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
             var memberNewOwner = GetMember(newOwnerPersonid);
 
-            var oldOwner = memberOldOwner with { IsOwner = false };
-            var newOwner = memberNewOwner with { IsOwner = true };
+            memberOldOwner.UnmarkAsOwner();
+            memberNewOwner.MarkAsOwner();
+            
 
             var oldOwnerIndex = _members.FindIndex(hm => hm.PersonId == oldOwnerPersonId);
-            _members[oldOwnerIndex] = oldOwner;
+            _members[oldOwnerIndex] = memberOldOwner;
 
             var newOwnerIndex = _members.FindIndex(hm => hm.PersonId == newOwnerPersonid);
-            _members[newOwnerIndex] = newOwner;
+            _members[newOwnerIndex] = memberNewOwner;
 
-            AddEvent(new HouseGroupOwnerChanged(Id, oldOwner, newOwner));
+            AddEvent(new HouseGroupOwnerChanged(Id, memberOldOwner, memberNewOwner));
         }
 
         private HouseGroupMember GetMember(string personId)

@@ -1,4 +1,5 @@
 ﻿using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.ShoppingLists.Aggregates;
 
 namespace SharedHome.Domain.HouseGroups.Repositories
 {
@@ -11,5 +12,6 @@ namespace SharedHome.Domain.HouseGroups.Repositories
         Task UpdateAsync(HouseGroup houseGroup);
 
         Task DeleteAsync(HouseGroup houseGroup);
+
     }
 }

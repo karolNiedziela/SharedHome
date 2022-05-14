@@ -274,19 +274,6 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void SumProductPrices_Returns_Total_Sum_Of_Bought_Products()
-        {
-            var shoppingList = GetShoppingList();
-            var product = new ShoppingListProduct("product", 3);
-            shoppingList.AddProduct(product);
-            shoppingList.PurchaseProduct("product", 10m);
-
-            var result = shoppingList.SumProductPrices();
-
-            result.ShouldBe(30);
-        }
-
-        [Fact]
         public void MakeListDone_Throws_ShoppingListAlreadyDoneException_When_Is_Already_Done()
         {
             var shoppingList = GetShoppingList(isDone: true);

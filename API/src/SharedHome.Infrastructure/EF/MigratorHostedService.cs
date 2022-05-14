@@ -18,9 +18,17 @@ namespace SharedHome.Infrastructure.EF
         {
             using var scope = _serviceProvider.CreateScope();
 
-            var dbContext = scope.ServiceProvider.GetRequiredService<SharedHomeDbContext>();
+            var writeDbContext = scope.ServiceProvider.GetRequiredService<WriteSharedHomeDbContext>();
 
-            await dbContext.Database.MigrateAsync();
+            await writeDbContext.Database.MigrateAsync();
+
+            var readDbContext = scope.ServiceProvider.GetRequiredService<ReadSharedHomeDbContext>();
+
+            await readDbContext.Database.MigrateAsync();
+
+            var identityDbContext = scope.ServiceProvider.GetRequiredService<IdentitySharedHomeDbContext>();
+
+            await identityDbContext.Database.MigrateAsync();
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

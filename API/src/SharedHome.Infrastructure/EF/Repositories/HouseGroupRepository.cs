@@ -7,9 +7,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
 {
     internal sealed class HouseGroupRepository : IHouseGroupRepository
     {
-        private readonly SharedHomeDbContext _dbContext;
+        private readonly WriteSharedHomeDbContext _dbContext;
 
-        public HouseGroupRepository(SharedHomeDbContext dbContext)
+        public HouseGroupRepository(WriteSharedHomeDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -36,6 +36,6 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _dbContext.HouseGroups.Update(houseGroup);
             await _dbContext.SaveChangesAsync();
-        }
+        }  
     }
 }

@@ -1,8 +1,7 @@
 ﻿using SharedHome.Application.DTO;
-using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Queries;
-using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Abstractions.Requests;
+using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.HouseGroups.Queries
 {

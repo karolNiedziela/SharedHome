@@ -9,7 +9,7 @@ namespace SharedHome.Api.Extensions
         {
             using var scope = app.ApplicationServices.CreateScope();
 
-            var dbContext = scope.ServiceProvider.GetRequiredService<SharedHomeDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<WriteSharedHomeDbContext>();
 
             dbContext.Database.Migrate();
         }

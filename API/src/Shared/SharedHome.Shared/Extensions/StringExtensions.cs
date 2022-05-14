@@ -27,5 +27,8 @@ namespace SharedHome.Shared.Extensionss
 
             return stringBuilder.ToString()[..1] + stringBuilder.ToString()[1..].ToLower();
         }
+
+        public static string FirstCharToUpper(this string @string)
+            => @string[0].ToString().ToUpper() + @string[1..];
     }
 }

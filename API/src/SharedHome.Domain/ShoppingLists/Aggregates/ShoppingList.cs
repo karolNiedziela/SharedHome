@@ -1,12 +1,7 @@
-﻿using SharedHome.Domain.ShoppingLists.Exceptions;
+﻿using SharedHome.Domain.ShoppingLists.Events;
+using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharedHome.Domain.ShoppingLists.Events;
 
 namespace SharedHome.Domain.ShoppingLists.Aggregates
 {
@@ -16,14 +11,14 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         public int Id { get; private set; }
 
-        public string PersonId { get; private set; } = default!;
-
         public ShoppingListName Name { get; private set; } = default!;
 
         // Indicator to mark, that list is closed
         public bool IsDone { get; private set; } = false;
 
         public IEnumerable<ShoppingListProduct> Products => _products;
+
+        public string PersonId { get; private set; } = default!;
 
         private ShoppingList()
         {
@@ -118,14 +113,11 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             {
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
+            
             product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, false));
 
             AddEvent(new ShoppingListProductPurchaseCanceled(Id, productName));
         }
-
-        // Sums all product prices for products which are bought
-        public decimal SumProductPrices()
-            => _products.Where(product => product.IsBought).Aggregate((decimal)0, (count, product) => count + (product.Quantity * (decimal)product.Price!));
 
         public void MakeListDone()
         {

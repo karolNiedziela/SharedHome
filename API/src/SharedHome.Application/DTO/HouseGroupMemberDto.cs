@@ -2,7 +2,7 @@
 {
     public class HouseGroupMemberDto
     {
-        public Guid PersonId { get; set; }
+        public string PersonId { get; set; } = default!;
 
         public string FirstName { get; set; } = default!;
 

@@ -8,7 +8,7 @@ namespace SharedHome.Application.Invitations.Extensions
     {
         public static async Task<Invitation> GetOrThrowAsync(this IInvitationRepository repository, int houseGroupId, string personId)
         {
-            var invitation = await repository.GetAsync(houseGroupId, personId); ;
+            var invitation = await repository.GetAsync(houseGroupId, personId);
             if (invitation is null)
             {
                 throw new InvitationNotFoundException(houseGroupId);

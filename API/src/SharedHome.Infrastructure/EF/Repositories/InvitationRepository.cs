@@ -7,15 +7,15 @@ namespace SharedHome.Infrastructure.EF.Repositories
 {
     public class InvitationRepository : IInvitationRepository
     {
-        private readonly SharedHomeDbContext _dbContext;
+        private readonly WriteSharedHomeDbContext _dbContext;
 
-        public InvitationRepository(SharedHomeDbContext dbContext)
+        public InvitationRepository(WriteSharedHomeDbContext dbContext)
         {
             _dbContext = dbContext;
         }
         public async Task<Invitation?> GetAsync(int houseGroupId, string personId)
             => await _dbContext.Invitations.SingleOrDefaultAsync(i => i.HouseGroupId == houseGroupId &&
-            i.PersonId == personId);
+            i.RequestedToPersonId == personId);
 
         public async Task AddAsync(Invitation invitation)
         {
@@ -37,6 +37,6 @@ namespace SharedHome.Infrastructure.EF.Repositories
 
         public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(int houseGroupId, string personId)
             => await _dbContext.Invitations.AnyAsync(invitation => invitation.HouseGroupId == houseGroupId &&
-            invitation.PersonId == personId);
+            invitation.RequestedToPersonId == personId);
     }
 }

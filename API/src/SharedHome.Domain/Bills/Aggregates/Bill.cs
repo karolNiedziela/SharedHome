@@ -8,9 +8,7 @@ namespace SharedHome.Domain.Bills.Entities
 {
     public class Bill : Entity, IAggregateRoot
     {
-        public int Id { get; set; }
-
-        public string PersonId { get; private set; } = default!;
+        public int Id { get; private set; }
 
         public bool IsPaid { get; private set; } = false;
 
@@ -21,6 +19,8 @@ namespace SharedHome.Domain.Bills.Entities
         public BillCost? Cost { get; private set; }
 
         public DateTime DateOfPayment { get; private set; }
+
+        public string PersonId { get; private set; } = default!;
 
         private Bill()
         {

@@ -7,9 +7,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
 {
     public class BillRepository : IBillRepository
     {
-        private readonly SharedHomeDbContext _context;
+        private readonly WriteSharedHomeDbContext _context;
 
-        public BillRepository(SharedHomeDbContext context)
+        public BillRepository(WriteSharedHomeDbContext context)
         {
             _context = context;
         }

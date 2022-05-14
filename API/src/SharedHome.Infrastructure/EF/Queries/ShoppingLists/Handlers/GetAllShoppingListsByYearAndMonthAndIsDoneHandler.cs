@@ -5,27 +5,26 @@ using SharedHome.Application.Services;
 using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Time;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
-    public class GetAllShoppingListsByYearAndMonthAndIsDoneHandler : IQueryHandler<GetAllShoppingListsByYearAndMonthAndIsDone, Paged<ShoppingListDto>>
+    internal class GetAllShoppingListsByYearAndMonthAndIsDoneHandler : IQueryHandler<GetAllShoppingListsByYearAndMonthAndIsDone, Paged<ShoppingListDto>>
     {
-        private readonly SharedHomeDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ITime _time;
-        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupService _houseGroupService;
+        private readonly DbSet<ShoppingListReadModel> _shoppingLists;
 
-        public GetAllShoppingListsByYearAndMonthAndIsDoneHandler(SharedHomeDbContext dbContext, IMapper mapper, ITime time,
-            IHouseGroupRepository houseGroupRepository, IHouseGroupService houseGroupService)
+        public GetAllShoppingListsByYearAndMonthAndIsDoneHandler(IMapper mapper, ITime time,
+            IHouseGroupService houseGroupService, ReadSharedHomeDbContext context)
         {
-            _dbContext = dbContext;
             _mapper = mapper;
             _time = time;
-            _houseGroupRepository = houseGroupRepository;
             _houseGroupService = houseGroupService;
+            _shoppingLists = context.ShoppingLists;
         }
 
         public async Task<Paged<ShoppingListDto>> Handle(GetAllShoppingListsByYearAndMonthAndIsDone request, CancellationToken cancellationToken)
@@ -39,13 +38,10 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
             if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
             {
-                var houseGroupPersonIds = await _dbContext.HouseGroups
-                    .Include(houseGroup => houseGroup.Members)
-                    .SelectMany(houseGroup => houseGroup.Members
-                    .Select(member => member.PersonId))
-                    .ToListAsync();
+                var houseGroupPersonIds = await _houseGroupService.GetHouseGroupPersonsId(request.PersonId!);
 
-                return await _dbContext.ShoppingLists
+                return await _shoppingLists
+                    .Include(shoppingList => shoppingList.Person)
                     .Include(shoppingLists => shoppingLists.Products)
                     .Where(shoppingList => shoppingList.CreatedAt.Month == request.Month.Value &&
                     shoppingList.CreatedAt.Year == request.Year.Value &&
@@ -55,7 +51,8 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                     .PaginateAsync(request.PageNumber, request.PageSize);
             }
 
-            return await _dbContext.ShoppingLists
+            return await _shoppingLists
+                .Include(shoppingList => shoppingList.Person)
                 .Include(shoppingList => shoppingList.Products)
                 .Where(shoppingList => shoppingList.CreatedAt.Month == request.Month.Value &&
                 shoppingList.CreatedAt.Year == request.Year.Value &&

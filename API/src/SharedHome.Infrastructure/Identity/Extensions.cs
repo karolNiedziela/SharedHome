@@ -29,7 +29,7 @@ namespace SharedHome.Infrastructure.Identity
 
                 options.Lockout.AllowedForNewUsers = false;
             })
-            .AddEntityFrameworkStores<SharedHomeDbContext>()
+            .AddEntityFrameworkStores<IdentitySharedHomeDbContext>()
             .AddDefaultTokenProviders();
 
             services.AddScoped<IIdentityService, IdentityService>();

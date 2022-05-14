@@ -34,6 +34,15 @@ namespace SharedHome.Api.Controllers
             return Ok(shoppingLists);
         }
 
+        [HttpGet]
+        [Route("monthlycost")]
+        public async Task<ActionResult<Response<List<ShoppingListMonthlyCostDto>>>> GetMonthlyCostByYearAsync([FromQuery] GetMonthlyShoppingListCostsByYear query)
+        {
+            var shoppingLists = await Mediator.Send(query);
+
+            return Ok(shoppingLists);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddShoppingList([FromBody] AddShoppingList command)
         {

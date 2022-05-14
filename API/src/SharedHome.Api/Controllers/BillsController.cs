@@ -32,6 +32,15 @@ namespace SharedHome.Api.Controllers
             return Ok(bills);
         }
 
+        [HttpGet]
+        [Route("monthlycost")]
+        public async Task<ActionResult<List<BillMonthlyCostDto>>> GetMonthlyCostByYearAsync([FromQuery] GetMonthlyBillCostByYear query)
+        {
+            var groupedBillCostsByYear = await Mediator.Send(query);
+
+            return Ok(groupedBillCostsByYear);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddBillAsync([FromBody] AddBill command)
         {

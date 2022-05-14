@@ -5,15 +5,15 @@ using SharedHome.Application.Services;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Initializers;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.Repositories;
 using SharedHome.Infrastructure.EF.Services;
 using SharedHome.Shared.Abstractions.Queries;
-using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Options;
-using System.Linq;
 
 namespace SharedHome.Infrastructure.EF
 {
@@ -35,7 +35,7 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IHouseGroupRepository, HouseGroupRepository>();
             services.AddScoped<IInvitationRepository, InvitationRepository>();
             services.AddScoped<IBillRepository, BillRepository>();
-
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
             //Services
             services.AddScoped<IInvitationService, InvitationService>();
@@ -43,12 +43,25 @@ namespace SharedHome.Infrastructure.EF
 
             var mySQLOptions = configuration.GetOptions<MySQLOptions>(MySQLOptions.SQLOptionsName);
 
-            services.AddDbContext<SharedHomeDbContext>(options =>
+            services.AddDbContext<WriteSharedHomeDbContext>(options =>
             {
                 options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString));
             });
 
+            services.AddDbContext<ReadSharedHomeDbContext>(options =>
+            {
+                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString));
+            });
+
+            services.AddDbContext<IdentitySharedHomeDbContext>(options =>
+            {
+                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString));
+            });
+
+
+            services.AddInitializer(configuration);
             services.AddHostedService<MigratorHostedService>();
+            services.AddHostedService<SeedDataService>();
 
             return services;
         }

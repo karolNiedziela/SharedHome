@@ -1,12 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application.PipelineBehaviours;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Application
 {
@@ -17,8 +11,6 @@ namespace SharedHome.Application
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserInformationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PagedQueryBehavior<,>));
-
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;
         }

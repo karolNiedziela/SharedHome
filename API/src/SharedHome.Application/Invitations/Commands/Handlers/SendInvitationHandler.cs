@@ -28,13 +28,12 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
                 throw new PersonIsNotInHouseGroupException(request.PersonId!, request.HouseGroupId);
             }
 
-            if (await _invitationService.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId, request.PersonId!))
+            if (await _invitationService.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId!, request.RequestedToPersonId))
             {
-                throw new InvitationAlreadySentException(request.HouseGroupId, request.PersonId!);
+                throw new InvitationAlreadySentException(request.HouseGroupId, request.RequestedToPersonId!);
             }
 
-            var invitation = Invitation.Create(request.HouseGroupId, request.RequestedToPersonId, 
-                request.FirstName!, request.LastName!);
+            var invitation = Invitation.Create(request.HouseGroupId, request.PersonId!, request.RequestedToPersonId);
 
             await _invitationRepository.AddAsync(invitation);
 
