@@ -16,14 +16,14 @@ namespace SharedHome.Domain.Persons.Aggregates
 
         }
 
-        private Person(string id, string firstName, string lastName)
+        private Person(string id, FirstName firstName, LastName lastName)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
         }
 
-        public static Person Create(string id, string firstName, string lastName)
+        public static Person Create(string id, FirstName firstName, LastName lastName)
             => new(id, firstName, lastName);
     }
 }

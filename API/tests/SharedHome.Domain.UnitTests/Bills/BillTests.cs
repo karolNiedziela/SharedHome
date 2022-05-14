@@ -13,6 +13,17 @@ namespace SharedHome.Domain.UnitTests.Bills
     {
         private string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
 
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void Create_Throws_EmptyServiceProviderNameException_When_Name_Is_NullOrWhiteSpace(string name) 
+        {
+            var exception = Record.Exception(() => Bill.Create(_personId, BillType.Trash, name, DateTime.Now));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<EmptyServiceProviderNameException>();
+        }
+
         [Fact]
         public void PayFor_Throws_BillPaidException_When_Bill_Is_Already_Paid()
         {

@@ -10,8 +10,8 @@ namespace SharedHome.Application.UnitTests.Providers
         public const string DefaultShoppingListName = "ShoppingList";
         public const string DefaultProductName = "Product";
 
-        public static ShoppingList GetEmpty()        
-            => ShoppingList.Create(DefaultShoppingListName, DefaultPersonId);
+        public static ShoppingList GetEmpty(bool isDone = false)        
+            => ShoppingList.Create(DefaultShoppingListName, DefaultPersonId, isDone);
 
 
         public static ShoppingList GetWithProduct(int quantity = 1, ProductPrice? productPrice = null, bool isBought = false)

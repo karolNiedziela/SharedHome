@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Application.DTO;
 using SharedHome.Application.Services;
+using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;

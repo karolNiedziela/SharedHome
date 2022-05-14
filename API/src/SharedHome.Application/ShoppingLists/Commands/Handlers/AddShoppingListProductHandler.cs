@@ -20,10 +20,9 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 
         public async Task<Unit> Handle(AddShoppingListProduct request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId, request.PersonId!);
-            //var shoppingList = await _houseGroupService.IsPersonInHouseGroup(request.PersonId!) ?
-            //     await _houseGroupService.GetShoppingListAsync(request.ShoppingListId, request.PersonId!) :
-            //     await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId, request.PersonId!);
+            var shoppingList = await _houseGroupService.IsPersonInHouseGroup(request.PersonId!) ?
+                 await _houseGroupService.GetShoppingListAsync(request.ShoppingListId, request.PersonId!) :
+                 await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId, request.PersonId!);
 
             var shoppingListProduct = new ShoppingListProduct(request.ProductName, request.Quantity);
             shoppingList.AddProduct(shoppingListProduct);

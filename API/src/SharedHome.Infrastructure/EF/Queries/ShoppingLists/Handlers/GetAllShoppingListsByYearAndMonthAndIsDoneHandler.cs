@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using SharedHome.Application.DTO;
 using SharedHome.Application.Services;
+using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
-using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;

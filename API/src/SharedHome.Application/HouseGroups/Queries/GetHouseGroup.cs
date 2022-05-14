@@ -1,4 +1,4 @@
-﻿using SharedHome.Application.DTO;
+﻿using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Requests;
 using SharedHome.Shared.Abstractions.Responses;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using SharedHome.Application.DTO;
+using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Shared.Abstractions.Queries;
-using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.ShoppingLists.Queries
 {

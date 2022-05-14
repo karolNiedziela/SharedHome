@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using SharedHome.Application.DTO;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Infrastructure.EF.Models;
 
 namespace SharedHome.Infrastructure.Automapper.Profiles

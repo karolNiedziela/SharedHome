@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedHome.Application.DTO;
 using SharedHome.Application.ShoppingLists.Commands;
+using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
@@ -83,6 +83,14 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
+        [HttpPatch("{shoppingListId:int}/setisdone")]
+        public async Task<IActionResult> SetIsDone([FromBody]SetIsShoppingListDone command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteShoppingList([FromBody] DeleteShoppingList command)
         {
@@ -97,6 +105,6 @@ namespace SharedHome.Api.Controllers
             await Mediator.Send(command);
 
             return NoContent();
-        }   
+        }
     }
 }

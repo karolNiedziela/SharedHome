@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Application.DTO
+﻿namespace SharedHome.Application.ShoppingLists.DTO
 {
     public  class ShoppingListMonthlyCostDto
     {

@@ -16,6 +16,62 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
     {
         private string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
 
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void Create_Throws_EmptyShoppingListNameException_When_ShoppingListName_Is_NullOrWhiteSpace(string shoppingListName)
+        {
+            var exception = Record.Exception(() => ShoppingList.Create(shoppingListName, _personId));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<EmptyShoppingListNameException>();
+        }
+
+        [Fact]
+        public void Create_Throws_TooLongShoppingListNameException_When_ShoppingListName_Is_Longer_Than_20_Characters()
+        {
+            var exception = Record.Exception(() => ShoppingList.Create(new string('k', 25), _personId));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<TooLongShoppingListNameException>();
+        }
+
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void AddProduct_Throws_EmptyShoppingListProductNameException_When_ShoppingListProductName_Is_NullOrWhiteSpace(string shoppingListProductName)
+        {
+            var shoppingList = GetShoppingList();
+
+            var exception = Record.Exception(() => shoppingList.AddProduct(new ShoppingListProduct(shoppingListProductName, 1)));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<EmptyShoppingListProductNameException>();
+        }
+
+        [Fact]
+        public void AddProduct_Throws_QuantityBelowZeroException_When_Quantity_Is_Lower_Than_Zero()
+        {
+            var shoppingList = GetShoppingList();
+
+            var exception = Record.Exception(() => shoppingList.AddProduct(new ShoppingListProduct("Product", -5)));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<QuantityBelowZeroException>();
+        }
+
+        [Fact]
+        public void AddProduct_Throws_ProductPriceBelowZeroException_When_ProductPrice_Is_Lower_Than_Zero()
+        {
+            var shoppingList = GetShoppingList();
+
+            var exception = Record.Exception(() => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, -10)));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<ProductPriceBelowZeroException>();
+        }
+
         [Fact]
         public void AddProduct_Throws_ShoppingListAlreadyDoneException_When_Shopping_List_Is_Marked_As_Done()
         {

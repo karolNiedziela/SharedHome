@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SharedHome.Application.DTO;
 using SharedHome.Application.HouseGroups.Commands;
+using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 

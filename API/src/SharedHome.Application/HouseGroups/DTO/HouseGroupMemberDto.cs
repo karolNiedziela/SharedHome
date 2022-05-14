@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Application.DTO
+﻿namespace SharedHome.Application.HouseGroups.DTO
 {
     public class HouseGroupMemberDto
     {
