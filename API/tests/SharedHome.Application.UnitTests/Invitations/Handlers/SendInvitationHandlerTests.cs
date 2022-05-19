@@ -4,7 +4,7 @@ using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Commands;
 using SharedHome.Application.Invitations.Commands.Handlers;
 using SharedHome.Application.Invitations.Exceptions;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
@@ -18,7 +18,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     public class SendInvitationHandlerTests
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly IInvitationService _invitationService;
+        private readonly IInvitationReadService _invitationService;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly ICommandHandler<SendInvitation, Unit> _commandHandler;
 
@@ -26,7 +26,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             _invitationRepository = Substitute.For<IInvitationRepository>();
             _houseGroupService = Substitute.For<IHouseGroupReadService>();
-            _invitationService = Substitute.For<IInvitationService>();
+            _invitationService = Substitute.For<IInvitationReadService>();
             _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService);
         }
 

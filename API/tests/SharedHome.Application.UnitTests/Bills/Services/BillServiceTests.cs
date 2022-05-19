@@ -1,7 +1,7 @@
 ﻿using NSubstitute;
 using SharedHome.Application.Bills.Extensions;
 using SharedHome.Application.Bills.Services;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Repositories;

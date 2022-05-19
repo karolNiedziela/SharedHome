@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Responses;

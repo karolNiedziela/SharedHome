@@ -1,7 +1,4 @@
-﻿using SharedHome.Domain.Bills.Entities;
-using SharedHome.Domain.ShoppingLists.Aggregates;
-
-namespace SharedHome.Application.Services
+﻿namespace SharedHome.Application.ReadServices
 {
     public interface IHouseGroupReadService
     {

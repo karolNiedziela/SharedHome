@@ -1,6 +1,6 @@
-﻿namespace SharedHome.Application.Services
+﻿namespace SharedHome.Application.ReadServices
 {
-    public interface IInvitationService
+    public interface IInvitationReadService
     {
         Task<bool> IsAnyInvitationFromHouseGroupToPerson(int houseGroupId, string requestedToPersonId);
     }

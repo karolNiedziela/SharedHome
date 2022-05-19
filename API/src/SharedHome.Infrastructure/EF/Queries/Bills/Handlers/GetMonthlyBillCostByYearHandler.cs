@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;

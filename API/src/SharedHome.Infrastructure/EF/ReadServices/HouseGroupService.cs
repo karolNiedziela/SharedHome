@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
 
-namespace SharedHome.Infrastructure.EF.Services
+namespace SharedHome.Infrastructure.EF.ReadServices
 {
     internal class HouseGroupService : IHouseGroupReadService
     {

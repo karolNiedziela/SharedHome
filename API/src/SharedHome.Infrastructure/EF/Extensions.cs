@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Repositories;
@@ -11,7 +11,7 @@ using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Initializers;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.Repositories;
-using SharedHome.Infrastructure.EF.Services;
+using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Options;
 
@@ -38,7 +38,7 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IPersonRepository, PersonRepository>();
 
             //Services
-            services.AddScoped<IInvitationService, InvitationService>();
+            services.AddScoped<IInvitationReadService, InvitationReadService>();
             services.AddScoped<IHouseGroupReadService, HouseGroupService>();
 
             var mySQLOptions = configuration.GetOptions<MySQLOptions>(MySQLOptions.SQLOptionsName);

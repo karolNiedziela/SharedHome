@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.HouseGroups.ValueObjects;

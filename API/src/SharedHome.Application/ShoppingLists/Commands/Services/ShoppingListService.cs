@@ -1,4 +1,4 @@
-﻿using SharedHome.Application.Services;
+﻿using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Extensions;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;

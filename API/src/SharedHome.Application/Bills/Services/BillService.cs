@@ -1,5 +1,5 @@
 ﻿using SharedHome.Application.Bills.Extensions;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;

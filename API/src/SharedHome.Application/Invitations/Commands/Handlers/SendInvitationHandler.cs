@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Exceptions;
-using SharedHome.Application.Services;
+using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
@@ -12,9 +12,9 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupReadService _houseGroupService;
-        private readonly IInvitationService _invitationService;
+        private readonly IInvitationReadService _invitationService;
 
-        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupReadService houseGroupService, IInvitationService invitationService)
+        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupReadService houseGroupService, IInvitationReadService invitationService)
         {
             _invitationRepository = invitationRepository;
             _houseGroupService = houseGroupService;
