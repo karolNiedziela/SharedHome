@@ -2,27 +2,27 @@
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
-using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    public class GetInvitationHandler : IQueryHandler<GetInvitation, Response<InvitationDto>>
+    internal class GetInvitationHandler : IQueryHandler<GetInvitation, Response<InvitationDto>>
     {
-        private readonly WriteSharedHomeDbContext _context;
+        private readonly DbSet<InvitationReadModel> _invitations;
         private readonly IMapper _mapper;        
 
-        public GetInvitationHandler(WriteSharedHomeDbContext context, IMapper mapper)
+        public GetInvitationHandler(ReadSharedHomeDbContext context, IMapper mapper)
         {
-            _context = context;
+            _invitations = context.Invitations;
             _mapper = mapper;
         }
 
         public async Task<Response<InvitationDto>> Handle(GetInvitation request, CancellationToken cancellationToken)
         {
-            var invitation = await _context.Invitations
+            var invitation = await _invitations
                 .Include(x => x.RequestedToPersonId == request.PersonId!)
                 .SingleOrDefaultAsync(invitation => invitation.HouseGroupId == request.HouseGroupId &&
                 invitation.RequestedToPersonId == request.PersonId);
