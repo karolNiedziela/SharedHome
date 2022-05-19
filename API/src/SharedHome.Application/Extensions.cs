@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using SharedHome.Application.Bills.Services;
 using SharedHome.Application.PipelineBehaviours;
 using SharedHome.Application.ShoppingLists.Commands.Services;
+using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.ShoppingLists.Services;
 
 namespace SharedHome.Application
@@ -15,6 +17,7 @@ namespace SharedHome.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PagedQueryBehavior<,>));
 
             services.AddScoped<IShoppingListService, ShoppingListService>();
+            services.AddScoped<IBillService, BillService>();
 
             return services;
         }

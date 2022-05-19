@@ -40,7 +40,6 @@ namespace SharedHome.Infrastructure.EF
             //Services
             services.AddScoped<IInvitationService, InvitationService>();
             services.AddScoped<IHouseGroupReadService, HouseGroupService>();
-            services.AddScoped<IBillService, BillService>();
 
             var mySQLOptions = configuration.GetOptions<MySQLOptions>(MySQLOptions.SQLOptionsName);
 

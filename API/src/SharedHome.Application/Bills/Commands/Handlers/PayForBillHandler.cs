@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using SharedHome.Application.Bills.Exceptions;
-using SharedHome.Application.Bills.Extensions;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills.Services;
 using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.Bills.Commands.Handlers
@@ -9,15 +8,17 @@ namespace SharedHome.Application.Bills.Commands.Handlers
     public class PayForBillHandler : ICommandHandler<PayForBill, Unit>
     {
         private readonly IBillRepository _billRepository;
+        private readonly IBillService _billService;
 
-        public PayForBillHandler(IBillRepository billRepository)
+        public PayForBillHandler(IBillRepository billRepository, IBillService billService)
         {
             _billRepository = billRepository;
+            _billService = billService;
         }
 
         public async Task<Unit> Handle(PayForBill request, CancellationToken cancellationToken)
         {
-            var bill = await _billRepository.GetOrThrowAsync(request.BillId, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
 
             bill.PayFor(request.Cost);
 

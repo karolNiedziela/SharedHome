@@ -16,5 +16,16 @@ namespace SharedHome.Application.Bills.Extensions
 
             return bill;
         }
+
+        public static async Task<Bill> GetOrThrowAsync(this IBillRepository billRepository, int id, IEnumerable<string> personIds)
+        {
+            var bill = await billRepository.GetAsync(id, personIds);
+            if (bill is null)
+            {
+                throw new BillNotFoundException(id);
+            }
+
+            return bill;
+        }
     }
 }

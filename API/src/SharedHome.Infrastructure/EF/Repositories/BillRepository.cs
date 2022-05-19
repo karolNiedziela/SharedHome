@@ -17,6 +17,11 @@ namespace SharedHome.Infrastructure.EF.Repositories
         public async Task<Bill?> GetAsync(int id, string personId)
             => await _context.Bills.SingleOrDefaultAsync(b => b.Id == id && b.PersonId == personId);
 
+        public async Task<Bill?> GetAsync(int id, IEnumerable<string> personIds)
+            => await _context.Bills
+             .SingleOrDefaultAsync(bill => bill.Id == id &&
+             personIds.Contains(bill.PersonId));
+
         public async Task AddAsync(Bill bill)
         {
             await _context.Bills.AddAsync(bill);

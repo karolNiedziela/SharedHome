@@ -6,6 +6,8 @@ namespace SharedHome.Domain.Bills.Repositories
     {
         Task<Bill?> GetAsync(int id, string personId);
 
+        Task<Bill?> GetAsync(int id, IEnumerable<string> personIds);
+
         Task AddAsync(Bill bill);
 
         Task DeleteAsync(Bill bill);

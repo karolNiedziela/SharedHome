@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using SharedHome.Application.Bills.Extensions;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills.Services;
 using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.Bills.Commands.Handlers
@@ -8,15 +8,17 @@ namespace SharedHome.Application.Bills.Commands.Handlers
     public class DeleteBillHandler : ICommandHandler<DeleteBill, Unit>
     {
         private readonly IBillRepository _billRepository;
+        private readonly IBillService _billService;
 
-        public DeleteBillHandler(IBillRepository billRepository)
+        public DeleteBillHandler(IBillRepository billRepository, IBillService billService)
         {
             _billRepository = billRepository;
+            _billService = billService;
         }
 
         public async Task<Unit> Handle(DeleteBill request, CancellationToken cancellationToken)
         {
-            var bill = await _billRepository.GetOrThrowAsync(request.BillId, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
 
             await _billRepository.DeleteAsync(bill);
 

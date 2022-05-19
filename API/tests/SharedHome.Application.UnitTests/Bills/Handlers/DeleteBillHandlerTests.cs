@@ -2,10 +2,10 @@
 using NSubstitute;
 using SharedHome.Application.Bills.Commands;
 using SharedHome.Application.Bills.Commands.Handlers;
-using SharedHome.Application.Bills.Extensions;
 using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills.Services;
 using SharedHome.Shared.Abstractions.Commands;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,12 +15,14 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     public class DeleteBillHandlerTests
     {
         private readonly IBillRepository _billRepository;
+        private readonly IBillService _billService;
         private readonly ICommandHandler<DeleteBill, Unit> _commandHandler;
 
         public DeleteBillHandlerTests()
         {
             _billRepository = Substitute.For<IBillRepository>();
-            _commandHandler = new DeleteBillHandler(_billRepository);
+            _billService = Substitute.For<IBillService>();
+            _commandHandler = new DeleteBillHandler(_billRepository, _billService);
         }
 
         [Fact]
@@ -28,7 +30,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         {
             var bill = BillProvider.Get();
 
-            _billRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
               .Returns(bill);
 
             var command = new DeleteBill

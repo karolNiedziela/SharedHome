@@ -6,6 +6,7 @@ using SharedHome.Application.Bills.Extensions;
 using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills.Services;
 using SharedHome.Shared.Abstractions.Commands;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,12 +16,14 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     public class ChangeBillCostHandlerTests
     {
         private readonly IBillRepository _billRepository;
+        private readonly IBillService _billService;
         private readonly ICommandHandler<ChangeBillCost, Unit> _commandHandler;
 
         public ChangeBillCostHandlerTests()
         {
             _billRepository = Substitute.For<IBillRepository>();
-            _commandHandler = new ChangeBillCostHandler(_billRepository);
+            _billService = Substitute.For<IBillService>();
+            _commandHandler = new ChangeBillCostHandler(_billRepository, _billService);
         }
 
         [Fact]
@@ -28,7 +31,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         {
             var bill = BillProvider.Get(billCost: 1000);
 
-            _billRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(bill);
 
             var command = new ChangeBillCost
