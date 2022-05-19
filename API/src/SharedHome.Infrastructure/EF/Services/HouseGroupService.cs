@@ -1,54 +1,36 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Services;
-using SharedHome.Application.ShoppingLists.Exceptions;
-using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Models;
 
 namespace SharedHome.Infrastructure.EF.Services
 {
-    public class HouseGroupService : IHouseGroupService
+    internal class HouseGroupService : IHouseGroupReadService
     {
-        private readonly WriteSharedHomeDbContext _dbContext;
+        private readonly DbSet<HouseGroupReadModel> _houseGroups;
 
-        public HouseGroupService(WriteSharedHomeDbContext dbContext)
+        public HouseGroupService(ReadSharedHomeDbContext context)
         {
-            _dbContext = dbContext;
+            _houseGroups = context.HouseGroups;
         }
 
-        public async Task<IEnumerable<string>> GetHouseGroupPersonsId(string personId)
-         => await _dbContext.HouseGroups
-           .Include(houseGroup => houseGroup.Members
-             .Where(member => member.PersonId == personId))
-           .SelectMany(houseGroup => houseGroup.Members
-           .Select(member => member.PersonId))
-           .ToListAsync();
-
         public async Task<bool> IsPersonInHouseGroup(string personId)
-          => await _dbContext.HouseGroups
+          => await _houseGroups
             .Include(houseGroup => houseGroup.Members)
           .AnyAsync(houseGroup => houseGroup.Members
               .Any(member => member.PersonId == personId));
 
         public async Task<bool> IsPersonInHouseGroup(string personId, int houseGroupId)
-            => await _dbContext.HouseGroups
+            => await _houseGroups
             .AnyAsync(houseGroup => houseGroup.Id == houseGroupId && houseGroup.Members
-                .Any(member => member.PersonId == personId));
-
-        public async Task<ShoppingList> GetShoppingListAsync(int shoppingListId, string personId)
-        {
-            var houseGroupPersonIds = await GetHouseGroupPersonsId(personId);
-
-            var shoppingList = await _dbContext.ShoppingLists
-                .Include(shoppingList => shoppingList.Products)
-                .SingleOrDefaultAsync(shoppingList => shoppingList.Id == shoppingListId && houseGroupPersonIds.Contains(shoppingList.PersonId!));
-
-            if (shoppingList is null)
-            {
-                throw new ShoppingListNotFoundException(shoppingListId);
-            }
-
-            return shoppingList;
-        }
-
+                .Any(member => member.PersonId == personId));      
+        
+        public async Task<IEnumerable<string>> GetMemberPersonIds(string personId)
+             => await _houseGroups
+               .Include(houseGroup => houseGroup.Members
+                 .Where(member => member.PersonId == personId))
+               .SelectMany(houseGroup => houseGroup.Members
+               .Select(member => member.PersonId))
+               .ToListAsync();
     }
 }

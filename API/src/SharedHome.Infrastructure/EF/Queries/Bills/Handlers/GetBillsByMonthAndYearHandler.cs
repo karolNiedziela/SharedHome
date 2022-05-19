@@ -16,9 +16,9 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;
         private readonly ITime _time;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
 
-        public GetBillsByMonthAndYearHandler(ReadSharedHomeDbContext context, IMapper mapper, ITime time, IHouseGroupService houseGroupService)
+        public GetBillsByMonthAndYearHandler(ReadSharedHomeDbContext context, IMapper mapper, ITime time, IHouseGroupReadService houseGroupService)
         {
             _bills = context.Bills;
             _mapper = mapper;
@@ -37,7 +37,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 
             if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetHouseGroupPersonsId(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
 
                 var billsFromHouseGroup = await _bills
                     .Where(bill => houseGroupPersonsId.Contains(bill.PersonId) &&

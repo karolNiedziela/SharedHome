@@ -28,7 +28,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         {
             var bill = BillProvider.Get();
 
-            _billRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _billRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
               .Returns(bill);
 
             var command = new DeleteBill

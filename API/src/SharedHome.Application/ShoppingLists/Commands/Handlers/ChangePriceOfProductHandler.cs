@@ -1,7 +1,6 @@
 ﻿using MediatR;
-using SharedHome.Application.Services;
-using SharedHome.Application.ShoppingLists.Extensions;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.ShoppingLists.Commands.Handlers
@@ -9,19 +8,17 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
     public class ChangePriceOfProductHandler : ICommandHandler<ChangePriceOfProduct, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IShoppingListService _shoppingListService;
 
-        public ChangePriceOfProductHandler(IShoppingListRepository shoppingListRepository, IHouseGroupService houseGroupService)
+        public ChangePriceOfProductHandler(IShoppingListRepository shoppingListRepository, IShoppingListService shoppingListService)
         {
             _shoppingListRepository = shoppingListRepository;
-            _houseGroupService = houseGroupService;
+            _shoppingListService = shoppingListService;
         }
 
         public async Task<Unit> Handle(ChangePriceOfProduct request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _houseGroupService.IsPersonInHouseGroup(request.PersonId!) ?
-             await _houseGroupService.GetShoppingListAsync(request.ShoppingListId, request.PersonId!) :
-             await _shoppingListRepository.GetOrThrowAsync(request.ShoppingListId, request.PersonId!);
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 
             shoppingList.ChangePriceOfProduct(request.ProductName, request.Price);
 

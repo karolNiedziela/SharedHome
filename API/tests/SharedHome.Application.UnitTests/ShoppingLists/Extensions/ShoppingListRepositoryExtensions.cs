@@ -32,7 +32,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Extensions
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
-            _shoppingListRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _shoppingListRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(shoppingList);
 
             var returnedShoppingList = await _shoppingListRepository.GetOrThrowAsync(1, "personId");

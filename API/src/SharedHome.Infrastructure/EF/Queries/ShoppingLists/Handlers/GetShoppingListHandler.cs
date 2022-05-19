@@ -12,12 +12,12 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
     internal class GetShoppingListHandler : IQueryHandler<GetShoppingList, Response<ShoppingListDto>>
     {
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
 
         public GetShoppingListHandler(ReadSharedHomeDbContext context, IMapper mapper, 
-            IHouseGroupService houseGroupService)
+            IHouseGroupReadService houseGroupService)
         {
             _mapper = mapper;
             _houseGroupService = houseGroupService;
@@ -28,7 +28,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
         {
             if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
             {
-                var houseGroupPersonIds = await _houseGroupService.GetHouseGroupPersonsId(request.PersonId!);
+                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
 
                 var shoppingListFromHouseGroup = await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)

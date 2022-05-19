@@ -19,13 +19,13 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IInvitationService _invitationService;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
         private readonly ICommandHandler<SendInvitation, Unit> _commandHandler;
 
         public SendInvitationHandlerTests()
         {
             _invitationRepository = Substitute.For<IInvitationRepository>();
-            _houseGroupService = Substitute.For<IHouseGroupService>();
+            _houseGroupService = Substitute.For<IHouseGroupReadService>();
             _invitationService = Substitute.For<IInvitationService>();
             _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService);
         }

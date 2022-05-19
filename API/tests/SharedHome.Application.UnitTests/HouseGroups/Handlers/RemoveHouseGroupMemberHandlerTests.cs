@@ -39,7 +39,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 PersonToRemoveId = personToRemoveId
             };
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
 
             var membersCountBeforeRemove = houseGroup.Members.Count();

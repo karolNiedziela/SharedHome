@@ -28,7 +28,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(invitation);
 
             var command = new DeleteInvitation

@@ -36,6 +36,7 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _dbContext.HouseGroups.Update(houseGroup);
             await _dbContext.SaveChangesAsync();
-        }  
+        }
+
     }
 }

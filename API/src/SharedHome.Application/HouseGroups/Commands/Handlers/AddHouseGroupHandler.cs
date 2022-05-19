@@ -11,9 +11,9 @@ namespace SharedHome.Application.HouseGroups.Commands.Handlers
     public class AddHouseGroupHandler : ICommandHandler<AddHouseGroup, Unit>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
 
-        public AddHouseGroupHandler(IHouseGroupRepository houseGroupRepository, IHouseGroupService houseGroupService)
+        public AddHouseGroupHandler(IHouseGroupRepository houseGroupRepository, IHouseGroupReadService houseGroupService)
         {
             _houseGroupRepository = houseGroupRepository;
             _houseGroupService = houseGroupService;

@@ -34,13 +34,13 @@ namespace SharedHome.Application.UnitTests.Invitations.Extensions
         {
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _invitationRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(invitation);
 
-            var returnedInvitation = await _invitationRepository.GetOrThrowAsync(1, "personId");
+            var returnedInvitation = await _invitationRepository.GetAsync(1, "personId");
 
             invitation.ShouldNotBeNull();
-            returnedInvitation.HouseGroupId.ShouldBe(1);
+            returnedInvitation!.HouseGroupId.ShouldBe(1);
         }
     }
 }

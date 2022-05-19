@@ -16,9 +16,9 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
     {
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
         private readonly ITime _time;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
 
-        public GetMonthlyShoppingListCostsByYearHandler(ReadSharedHomeDbContext context, ITime time, IHouseGroupService houseGroupService)
+        public GetMonthlyShoppingListCostsByYearHandler(ReadSharedHomeDbContext context, ITime time, IHouseGroupReadService houseGroupService)
         {
             _shoppingLists = context.ShoppingLists;
             _time = time;
@@ -40,7 +40,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
             if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetHouseGroupPersonsId(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
 
                 shoppingLists = await _shoppingLists
                     .Include(shoppingList => shoppingList.Products)

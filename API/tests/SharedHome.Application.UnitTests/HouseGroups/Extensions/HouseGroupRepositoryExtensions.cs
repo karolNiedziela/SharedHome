@@ -34,12 +34,12 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
         {
             var houseGroup = HouseGroupProvider.GetWithOwner();
 
-            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
 
-            var returnedHouseGroup = await _houseGroupRepository.GetOrThrowAsync(0, "personId");
+            var returnedHouseGroup = await _houseGroupRepository.GetAsync(0, "personId");
 
-            returnedHouseGroup.Id.ShouldBe(0);
+            returnedHouseGroup!.Id.ShouldBe(0);
             returnedHouseGroup.Members.First().PersonId.ShouldBe(HouseGroupProvider.DefaultPersonId);
         }
     }

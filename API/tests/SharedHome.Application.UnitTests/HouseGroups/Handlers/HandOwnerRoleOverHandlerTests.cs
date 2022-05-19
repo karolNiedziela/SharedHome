@@ -38,7 +38,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 NewOwnerPersonId = newOwnerPersonId
             };
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
 
             await _commandHandler.Handle(command, default);

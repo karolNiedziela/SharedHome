@@ -1,13 +1,12 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Services;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.Commands.Handlers;
 using SharedHome.Application.ShoppingLists.Exceptions;
-using SharedHome.Application.ShoppingLists.Extensions;
 using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 using Shouldly;
 using System.Threading.Tasks;
@@ -18,14 +17,14 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     public class AddShoppingListProductHandlerTests
     {
         private readonly IShoppingListRepository _shoppingListRepository;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IShoppingListService _shoppingListService;
         private readonly ICommandHandler<AddShoppingListProduct, Unit> _commandHandler;
 
         public AddShoppingListProductHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
-            _houseGroupService = Substitute.For<IHouseGroupService>();
-            _commandHandler = new AddShoppingListProductHandler(_shoppingListRepository, _houseGroupService);
+            _shoppingListService = Substitute.For<IShoppingListService>();
+            _commandHandler = new AddShoppingListProductHandler(_shoppingListRepository, _shoppingListService);
         }
 
         [Fact]
@@ -38,27 +37,11 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 Quantity = 1,
             };
 
-            _shoppingListRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetEmpty());
+            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetEmpty());
 
             await _commandHandler.Handle(command, default);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Any<ShoppingList>());
-        }
-
-        [Fact]
-        public async Task Handle_Should_Throw_ShoppingListNotFoundException_When_ShoppingList_Was_Not_Found()
-        {
-            var command = new AddShoppingListProduct
-            {
-                ShoppingListId = 1,
-                ProductName = "Product",
-                Quantity = 1,
-            };
-
-            var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
-
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<ShoppingListNotFoundException>();
         }
     }
 }

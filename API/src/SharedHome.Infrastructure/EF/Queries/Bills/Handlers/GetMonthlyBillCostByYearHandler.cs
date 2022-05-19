@@ -17,9 +17,9 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly ITime _time;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
 
-        public GetMonthlyBillCostByYearHandler(ReadSharedHomeDbContext context, ITime time, IHouseGroupService houseGroupService)
+        public GetMonthlyBillCostByYearHandler(ReadSharedHomeDbContext context, ITime time, IHouseGroupReadService houseGroupService)
         {
             _bills = context.Bills;
             _time = time;
@@ -42,7 +42,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 
             if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetHouseGroupPersonsId(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
 
                 bills = await _bills.Where(bill => bill.IsPaid &&
                     bill.DateOfPayment.Year == request.Year &&

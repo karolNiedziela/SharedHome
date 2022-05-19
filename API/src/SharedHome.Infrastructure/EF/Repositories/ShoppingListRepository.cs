@@ -14,17 +14,15 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _context = context;
         }
         public async Task<ShoppingList?> GetAsync(int id, string personId)
-        {
-            var result = await _context.ShoppingLists
+            => await _context.ShoppingLists
             .Include(shoppingList => shoppingList.Products)
             .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id && shoppingList.PersonId == personId);
 
-            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
-            return result;
-        }
-        //=> await _context.ShoppingLists
-        //.Include(shoppingList => shoppingList.Products)
-        //.SingleOrDefaultAsync(shoppingList => shoppingList.Id == id && shoppingList.PersonId == personId);
+        public async Task<ShoppingList?> GetAsync(int id, IEnumerable<string> personIds)
+            => await _context.ShoppingLists
+                   .Include(shoppingList => shoppingList.Products)
+                    .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id &&
+                        personIds.Contains(shoppingList.PersonId!));
 
         public async Task<ShoppingList> AddAsync(ShoppingList shoppingList)
         {
@@ -47,9 +45,8 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _context.ShoppingLists.Update(shoppingList);
 
-            Console.WriteLine(_context.ChangeTracker.DebugView.LongView);
-
             await _context.SaveChangesAsync();
         }
+
     }
 }

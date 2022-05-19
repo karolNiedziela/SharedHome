@@ -17,14 +17,14 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class AddHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
         private readonly ICommandHandler<AddHouseGroup, Unit> _commandHandler;
         
 
         public AddHouseGroupHandlerTests()
         {
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
-            _houseGroupService = Substitute.For<IHouseGroupService>();
+            _houseGroupService = Substitute.For<IHouseGroupReadService>();
             _commandHandler = new AddHouseGroupHandler(_houseGroupRepository, _houseGroupService);
         }
 

@@ -16,5 +16,17 @@ namespace SharedHome.Application.ShoppingLists.Extensions
 
             return shoppingList;
         }
+
+        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository, int shoppingListId, IEnumerable<string> personIds)
+        {
+            var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personIds);
+            if (shoppingList is null)
+            {
+                throw new ShoppingListNotFoundException(shoppingListId);
+            }
+
+            return shoppingList;
+        }
+
     }
 }

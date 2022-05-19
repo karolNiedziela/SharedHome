@@ -43,12 +43,12 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
 
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(invitation);
 
             var houseGroup = HouseGroupProvider.GetWithOwner();
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
 
             await _commandHandler.Handle(command, default);

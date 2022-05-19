@@ -6,6 +6,8 @@ namespace SharedHome.Domain.ShoppingLists.Repositories
     {
         Task<ShoppingList?> GetAsync(int id, string personId);
 
+        Task<ShoppingList?> GetAsync(int id, IEnumerable<string> personIds);
+
         Task<ShoppingList> AddAsync(ShoppingList shoppingList);
 
         Task UpdateAsync(ShoppingList shoppingList);

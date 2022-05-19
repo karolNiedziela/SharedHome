@@ -11,10 +11,10 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
     public class SendInvitationHandler : ICommandHandler<SendInvitation, Unit>
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly IHouseGroupService _houseGroupService;
+        private readonly IHouseGroupReadService _houseGroupService;
         private readonly IInvitationService _invitationService;
 
-        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupService houseGroupService, IInvitationService invitationService)
+        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupReadService houseGroupService, IInvitationService invitationService)
         {
             _invitationRepository = invitationRepository;
             _houseGroupService = houseGroupService;
