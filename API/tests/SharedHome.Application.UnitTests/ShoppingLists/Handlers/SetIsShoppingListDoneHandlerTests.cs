@@ -45,7 +45,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         }
 
         [Fact]
-        public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success_WhenPersonIsInHouseGroupAndIsDoneFalse()
+        public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success()
         {
             var command = new SetIsShoppingListDone
             {
@@ -62,40 +62,5 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 => shoppingList.IsDone == false));
         }
 
-        [Fact]
-        public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success_WhenPersonIsNotInHouseGroupAndIsDoneTrue()
-        {
-            var command = new SetIsShoppingListDone
-            {
-                ShoppingListId = 0,
-                IsDone = true,
-            };
-
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
-                .Returns(ShoppingListProvider.GetEmpty());
-
-            await _commandHandler.Handle(command, default);
-
-            await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList
-                => shoppingList.IsDone == true));
-        }
-
-        [Fact]
-        public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success_WhenPersonIsNotInHouseGroupAndIsDoneFalse()
-        {
-            var command = new SetIsShoppingListDone
-            {
-                ShoppingListId = 0,
-                IsDone = false,
-            };
-
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
-               .Returns(ShoppingListProvider.GetEmpty(true));
-
-            await _commandHandler.Handle(command, default);
-
-            await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList
-                => shoppingList.IsDone == false));
-        }
     }
 }

@@ -130,6 +130,50 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             @event.NewOwner.IsOwner.ShouldBeTrue();
         }
 
+        [Fact]
+        public void Leave_Should_Throw_LeavingHouseGroupNewOwnerNotDefinedException_When_Leaving_Member_Is_Owner_And_Members_Count_Is_Greater_Than_Zero()
+        {
+            var houseGroup = GetHouseGroupWithMember();
+            houseGroup.AddMember(new HouseGroupMember(0, "memberId"));
+
+            var exception = Record.Exception(() => houseGroup.Leave(_personId));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<LeavingHouseGroupNewOwnerNotDefinedException>();
+        }
+
+        [Fact]
+        public void Leave_Should_Not_Throw_LeavingHouseGroupNewOwnerNotDefinedException_When_Leaving_Member_Is_Owner_And_Members_Count_Is_Greater_Than_Zero()
+        {
+            var houseGroup = GetHouseGroupWithMember();
+
+            var exception = Record.Exception(() => houseGroup.Leave(_personId));
+
+            exception.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Leave_Should_Remove_Member_And_Set_New_Owner_When_Leaving_Member_Is_Owner()
+        {
+            var houseGroup = GetHouseGroupWithMember();
+            houseGroup.AddMember(new HouseGroupMember(0, "secondMemberId"));
+
+            houseGroup.Leave(_personId, "secondMemberId");
+
+            houseGroup.Members.Count().ShouldBe(1);
+            houseGroup.Members.First().IsOwner.ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Leave_Should_Remove_Member_When_Member_Is_Not_Owner()
+        {
+            var houseGroup = GetHouseGroupWithMember(false);
+
+            houseGroup.Leave(_personId);
+
+            houseGroup.Members.Count().ShouldBe(0);
+        }
+
         private HouseGroup GetHouseGroup() 
             => HouseGroup.Create();
 

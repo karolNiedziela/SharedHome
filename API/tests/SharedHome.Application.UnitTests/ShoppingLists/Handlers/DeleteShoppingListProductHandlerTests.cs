@@ -26,7 +26,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         }
 
         [Fact]
-        public async Task DeleteShoppingListProduct_Should_Call_Repository_On_Success_WhenPersonIsInHouseGroup()
+        public async Task DeleteShoppingListProduct_Should_Call_Repository_On_Success()
         {
             var command = new DeleteShoppingListProduct
             {
@@ -36,23 +36,6 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(ShoppingListProvider.GetWithProduct());
-
-            await _commandHandler.Handle(command, default);
-
-            await _shoppingListRepository.Received(1).UpdateAsync(Arg.Any<ShoppingList>());
-        }
-
-        [Fact]
-        public async Task DeleteShoppingListProduct_Should_Call_Repository_On_Success_WhenPersonIsNotInHouseGroup()
-        {
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
-                .Returns(ShoppingListProvider.GetWithProduct());
-
-            var command = new DeleteShoppingListProduct
-            {
-                ShoppingListId = 0,
-                ProductName = "Product"
-            };
 
             await _commandHandler.Handle(command, default);
 
