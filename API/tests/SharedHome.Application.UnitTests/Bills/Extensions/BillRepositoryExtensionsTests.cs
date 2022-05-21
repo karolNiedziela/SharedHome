@@ -1,8 +1,8 @@
 ﻿using NSubstitute;
 using SharedHome.Application.Bills.Exceptions;
 using SharedHome.Application.Bills.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,7 +38,7 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
 
             var returnedBill = await _billRepository.GetOrThrowAsync(1, "personId");
 
-            returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.DefaultServiceProviderName);
+            returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.ServiceProviderName);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
             var personIds = new List<string> { "personId" };
             var returnedBill = await _billRepository.GetOrThrowAsync(1, personIds);
 
-            returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.DefaultServiceProviderName);
+            returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.ServiceProviderName);
         }
     }
 }

@@ -2,11 +2,10 @@
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands;
 using SharedHome.Application.HouseGroups.Commands.Handlers;
-using SharedHome.Application.HouseGroups.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,12 +29,12 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithAdditionalMembers();
 
-            var personToRemoveId = HouseGroupProvider.DefaultPersonId + "0";
+            var personToRemoveId = HouseGroupProvider.PersonId + "0";
 
             var command = new RemoveHouseGroupMember
             {
                 HouseGroupId = 1,
-                PersonId = HouseGroupProvider.DefaultPersonId,
+                PersonId = HouseGroupProvider.PersonId,
                 PersonToRemoveId = personToRemoveId
             };
 

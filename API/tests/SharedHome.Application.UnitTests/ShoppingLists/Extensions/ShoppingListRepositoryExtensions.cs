@@ -1,8 +1,8 @@
 ﻿using NSubstitute;
 using SharedHome.Application.ShoppingLists.Exceptions;
 using SharedHome.Application.ShoppingLists.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
@@ -37,7 +37,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Extensions
 
             var returnedShoppingList = await _shoppingListRepository.GetOrThrowAsync(1, "personId");
 
-            returnedShoppingList.Name.Name.ShouldBe(ShoppingListProvider.DefaultShoppingListName);
+            returnedShoppingList.Name.Name.ShouldBe(ShoppingListProvider.ShoppingListName);
         }
     }
 }

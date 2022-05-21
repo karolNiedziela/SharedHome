@@ -2,13 +2,11 @@
 using NSubstitute;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.Commands.Handlers;
-using SharedHome.Application.ShoppingLists.Exceptions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
-using Shouldly;
+using SharedHome.Tests.Shared.Providers;
 using System.Threading.Tasks;
 using Xunit;
 

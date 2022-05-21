@@ -1,17 +1,16 @@
 ﻿using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
-using System;
 
-namespace SharedHome.Application.UnitTests.Providers
+namespace SharedHome.Tests.Shared.Providers
 {
     public static class ShoppingListProvider
     {
-        public const string DefaultPersonId = "c2506a12-41d4-4205-aafa-b835ae4bc057";
-        public const string DefaultShoppingListName = "ShoppingList";
-        public const string DefaultProductName = "Product";
+        public const string PersonId = "c2506a12-41d4-4205-aafa-b835ae4bc057";
+        public const string ShoppingListName = "ShoppingList";
+        public const string ProductName = "Product";
 
         public static ShoppingList GetEmpty(bool isDone = false)        
-            => ShoppingList.Create(DefaultShoppingListName, DefaultPersonId, isDone);
+            => ShoppingList.Create(ShoppingListName, PersonId, isDone);
 
 
         public static ShoppingList GetWithProduct(int quantity = 1, ProductPrice? productPrice = null, bool isBought = false)
@@ -23,6 +22,6 @@ namespace SharedHome.Application.UnitTests.Providers
             return shoppingList;
         }
         public static ShoppingListProduct GetProduct(int quantity = 1, ProductPrice? productPrice = null, bool isBought = false)
-            => new(DefaultProductName, quantity, productPrice, isBought);
+            => new(ProductName, quantity, productPrice, isBought);
     }
 }

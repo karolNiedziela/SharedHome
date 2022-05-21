@@ -2,11 +2,10 @@
 using NSubstitute;
 using SharedHome.Application.Invitations.Commands;
 using SharedHome.Application.Invitations.Commands.Handlers;
-using SharedHome.Application.Invitations.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Tests.Shared.Providers;
 using System.Threading.Tasks;
 using Xunit;
 

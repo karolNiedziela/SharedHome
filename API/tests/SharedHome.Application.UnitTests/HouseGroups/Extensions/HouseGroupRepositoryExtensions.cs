@@ -1,8 +1,8 @@
 ﻿using NSubstitute;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.HouseGroups.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
         [Fact]
         public async Task GetOrThrowAsync_Should_Return_HouseGroup()
         {
-            var houseGroup = HouseGroupProvider.GetWithOwner();
+            var houseGroup = HouseGroupProvider.GetWithMember();
 
             _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
@@ -40,7 +40,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
             var returnedHouseGroup = await _houseGroupRepository.GetAsync(0, "personId");
 
             returnedHouseGroup!.Id.ShouldBe(0);
-            returnedHouseGroup.Members.First().PersonId.ShouldBe(HouseGroupProvider.DefaultPersonId);
+            returnedHouseGroup.Members.First().PersonId.ShouldBe(HouseGroupProvider.PersonId);
         }
     }
 }

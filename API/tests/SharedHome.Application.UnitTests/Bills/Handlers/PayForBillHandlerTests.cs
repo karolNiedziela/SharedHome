@@ -2,11 +2,11 @@
 using NSubstitute;
 using SharedHome.Application.Bills.Commands;
 using SharedHome.Application.Bills.Commands.Handlers;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Tests.Shared.Providers;
 using System.Threading.Tasks;
 using Xunit;
 

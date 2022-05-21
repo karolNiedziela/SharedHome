@@ -2,6 +2,7 @@
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
 using System.Linq;
@@ -11,14 +12,13 @@ namespace SharedHome.Domain.UnitTests.Bills
 {
     public class BillTests
     {
-        private string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
-
         [Theory]
         [InlineData("")]
         [InlineData(null)]
         public void Create_Throws_EmptyServiceProviderNameException_When_Name_Is_NullOrWhiteSpace(string name) 
         {
-            var exception = Record.Exception(() => Bill.Create(_personId, BillType.Trash, name, DateTime.Now));
+            var exception = Record.Exception(() 
+                => Bill.Create(BillProvider.PersonId, BillType.Trash, name, DateTime.Now));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<EmptyServiceProviderNameException>();
@@ -27,7 +27,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void PayFor_Throws_BillPaidException_When_Bill_Is_Already_Paid()
         {
-            var bill = GetBill(true);
+            var bill = BillProvider.Get(isPaid: true);
 
             var exception = Record.Exception(() => bill.PayFor(2500m));
 
@@ -38,7 +38,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void PayFor_Adds_BillPaid_Event_On_Success()
         {
-            var bill = GetBill();
+            var bill = BillProvider.Get();
 
             bill.PayFor(1500m);
 
@@ -55,7 +55,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void CancelPayment_Throws_BillNotPaidException_When_Bill_Is_Not_Paid()
         {
-            var bill = GetBill();
+            var bill = BillProvider.Get();
 
             var exception = Record.Exception(() => bill.CancelPayment());
 
@@ -66,7 +66,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void CancelPayment_Adds_BillPaymentCanceled_Event_On_Success()
         {
-            var bill = GetBill(true);
+            var bill = BillProvider.Get(isPaid: true);
 
             bill.CancelPayment();
 
@@ -81,7 +81,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void ChangeCost_Throws_MoneyBelowZeroException_When_Value_Is_Lower_Than_Zero()
         {
-            var bill = GetBill(true);
+            var bill = BillProvider.Get(isPaid: true);
 
             var exception = Record.Exception(() => bill.ChangeCost(-200m));
 
@@ -92,7 +92,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void ChangeCost_Adds_BillCostChanged_Event_On_Success()
         {
-            var bill = GetBill(true);
+            var bill = BillProvider.Get(isPaid: true);
 
             bill.ChangeCost(500m);
 
@@ -108,7 +108,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void ChangeDateOfPayments_Adds_BillDateOfPaymentChanged_Event_On_Success()
         {
-            var bill = GetBill(true);
+            var bill = BillProvider.Get(isPaid: true);
 
             bill.ChangeDateOfPayment(new DateTime(2022, 5, 10));
 
@@ -120,10 +120,6 @@ namespace SharedHome.Domain.UnitTests.Bills
 
             @event.DateOfPayment.ShouldBe(new DateTime(2022, 5, 10));
         }
-
-        private Bill GetBill(bool isPaid = false)
-        {
-            return Bill.Create(_personId, BillType.Other, "test", new DateTime(2022, 10, 10), cost: 1000m, isPaid: isPaid);
-        }
+       
     }
 }

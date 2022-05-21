@@ -1,16 +1,14 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Application.Invitations.Commands;
 using SharedHome.Application.Invitations.Commands.Handlers;
-using SharedHome.Application.Invitations.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Tests.Shared.Providers;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -46,7 +44,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(invitation);
 
-            var houseGroup = HouseGroupProvider.GetWithOwner();
+            var houseGroup = HouseGroupProvider.Get();
 
             _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);

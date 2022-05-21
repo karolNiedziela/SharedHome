@@ -1,8 +1,8 @@
 ﻿using NSubstitute;
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.Invitations.Extensions;
-using SharedHome.Application.UnitTests.Providers;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
