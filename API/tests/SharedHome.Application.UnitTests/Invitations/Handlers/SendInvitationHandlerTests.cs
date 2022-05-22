@@ -73,8 +73,6 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 HouseGroupId = 1,
                 PersonId = "personId",
                 RequestedToPersonId = "requestedPersonId",
-                FirstName = "FirstName",
-                LastName = "LastName",
             };
 
             await _commandHandler.Handle(command, default);

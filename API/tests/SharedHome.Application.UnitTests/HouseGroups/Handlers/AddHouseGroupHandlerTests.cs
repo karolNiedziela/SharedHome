@@ -50,9 +50,6 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
             var command = new AddHouseGroup
             {
                 PersonId = "personId",
-                FirstName = "person",
-                LastName = "person",
-                Email = "person@email.com"
             };
 
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);

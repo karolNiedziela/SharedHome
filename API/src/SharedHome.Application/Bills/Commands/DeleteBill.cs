@@ -4,8 +4,10 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Bills.Commands
 {
-    public class DeleteBill : AuthorizeRequest, ICommand<Unit>
+    public class DeleteBill : IAuthorizeRequest, ICommand<Unit>
     {
         public int BillId { get; set; }
+
+        public string? PersonId { get; set; }
     }
 }

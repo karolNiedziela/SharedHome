@@ -4,9 +4,9 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.HouseGroups.Commands
 {
-    public class AddHouseGroup : AuthorizeRequest, ICommand<Unit>
+    public class AddHouseGroup : IAuthorizeRequest, ICommand<Unit>
     {
-
+        public string? PersonId { get; set; }
     }
 
 }

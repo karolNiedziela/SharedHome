@@ -4,8 +4,9 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Bills.Commands
 {
-    public class CancelBillPayment : AuthorizeRequest, ICommand<Unit>
+    public class CancelBillPayment : IAuthorizeRequest, ICommand<Unit>
     {
         public int BillId { get; set; }
+        public string? PersonId { get; set; }
     }
 }

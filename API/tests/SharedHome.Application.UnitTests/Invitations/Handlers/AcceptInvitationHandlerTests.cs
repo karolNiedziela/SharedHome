@@ -34,9 +34,6 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             {
                 PersonId = "AcceptPersonId",
                 HouseGroupId = 1,
-                LastName = "personLastName",
-                FirstName = "personFirstName",
-                Email = "personEmail@email.com",
             };
 
             var invitation = InvitationProvider.Get();
