@@ -31,7 +31,7 @@ namespace SharedHome.Shared.Exceptions
 
         private async Task HandleErrorAsync(HttpContext context, Exception exception)
         {
-            _logger.LogWarning($"{exception.Source} : {exception.Message}");
+            _logger.LogWarning("{exceptionSource} : {exceptionMessage}", exception.Source, exception.Message);
             var errorResponse = _exceptionMapper.Map(exception);
 
             context.Response.StatusCode = (int)(errorResponse?.StatusCode ?? HttpStatusCode.InternalServerError);

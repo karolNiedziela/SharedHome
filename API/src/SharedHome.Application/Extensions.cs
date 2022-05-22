@@ -15,6 +15,7 @@ namespace SharedHome.Application
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserInformationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PagedQueryBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
             services.AddScoped<IShoppingListService, ShoppingListService>();
             services.AddScoped<IBillService, BillService>();
