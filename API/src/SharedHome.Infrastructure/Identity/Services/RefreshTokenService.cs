@@ -7,10 +7,11 @@ using SharedHome.Infrastructure.Identity.Repositories;
 using SharedHome.Shared.Abstractions.Time;
 using SharedHome.Shared.Abstractions.User;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace SharedHome.Infrastructure.Identity.Services
 {
-    internal class RefreshTokenService : IRefreshTokenService
+    public class RefreshTokenService : IRefreshTokenService
     {
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -64,12 +65,6 @@ namespace SharedHome.Infrastructure.Identity.Services
                 throw new UserNotFoundException(_currentUser.UserId);
             }
 
-            var refreshToken = await _refreshTokenRepository.GetAsync(_currentUser.UserId);
-            if (refreshToken is null)
-            {
-                throw new InvalidRefreshTokenException();
-            }
-
             await RemoveRefreshTokenAsync(_currentUser.UserId);
 
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -79,8 +74,18 @@ namespace SharedHome.Infrastructure.Identity.Services
 
             return authenticationResult;
         }
+        public async Task RemoveRefreshTokenAsync(string userId)
+        {
+            var refreshToken = await _refreshTokenRepository.GetAsync(userId);
+            if (refreshToken is null)
+            {
+                throw new InvalidRefreshTokenException();
+            }
 
-        public async Task ValidateRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest)
+            await _refreshTokenRepository.DeleteAsync(refreshToken);
+        }       
+
+        private async Task ValidateRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest)
         {
             if (refreshTokenRequest == null || string.IsNullOrEmpty(refreshTokenRequest.RefreshToken))
             {
@@ -93,7 +98,7 @@ namespace SharedHome.Infrastructure.Identity.Services
                 throw new InvalidRefreshTokenException();
             }
 
-            var refreshTokenValidateHash = _passwordHashService.HashUsingPbkdf2(refreshTokenRequest.RefreshToken, Convert.FromBase64String(refreshToken.TokenSalt));
+            var refreshTokenValidateHash = _passwordHashService.HashUsingPbkdf2(refreshTokenRequest.RefreshToken, Encoding.ASCII.GetBytes(refreshToken.TokenSalt));
 
             if (refreshToken.TokenHash != refreshTokenValidateHash)
             {
@@ -106,15 +111,5 @@ namespace SharedHome.Infrastructure.Identity.Services
             }
         }
 
-        public async Task RemoveRefreshTokenAsync(string userId)
-        {
-            var refreshToken = await _refreshTokenRepository.GetAsync(userId);
-            if (refreshToken is null)
-            {
-                throw new InvalidRefreshTokenException();
-            }
-
-            await _refreshTokenRepository.DeleteAsync(refreshToken);
-        }       
     }
 }

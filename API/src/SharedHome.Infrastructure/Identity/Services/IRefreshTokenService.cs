@@ -8,8 +8,6 @@ namespace SharedHome.Infrastructure.Identity.Services
 
         Task<AuthenticationSucessResult> RefreshTokenAsync(RefreshTokenRequest refreshTokenRequest);
 
-        Task ValidateRefreshTokenAsync(RefreshTokenRequest refreshTokenRequest);
-
         Task RemoveRefreshTokenAsync(string userId);
 
     }
