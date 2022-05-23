@@ -1,8 +1,7 @@
-﻿using SharedHome.Application.Identity.Models;
-using SharedHome.Shared.Abstractions.Auth;
+﻿using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Shared.Abstractions.Responses;
 
-namespace SharedHome.Application.Identity
+namespace SharedHome.Infrastructure.Identity.Services
 {
     public interface IIdentityService
     {
@@ -12,8 +11,6 @@ namespace SharedHome.Application.Identity
 
         Task ConfirmEmailAsync(string code, string email);
 
-        Task<bool> IsInRoleAsync(string userId, string role);
-
-        Task<bool> AuthorizeAsync(string userId, string policyName);
+        Task<Response<string>> LogoutAsync(string userId);
     }
 }

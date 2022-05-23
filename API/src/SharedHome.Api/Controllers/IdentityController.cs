@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SharedHome.Application.Identity;
-using SharedHome.Application.Identity.Models;
-using SharedHome.Shared.Abstractions.Auth;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using SharedHome.Infrastructure.Identity.Auth;
+using SharedHome.Infrastructure.Identity.Models;
+using SharedHome.Infrastructure.Identity.Services;
 
 namespace SharedHome.Api.Controllers
 {
@@ -9,10 +10,12 @@ namespace SharedHome.Api.Controllers
     public class IdentityController : ApiController
     {
         private readonly IIdentityService _identityService;
+        private readonly IRefreshTokenService _refreshTokenService;
 
-        public IdentityController(IIdentityService identityService)
+        public IdentityController(IIdentityService identityService, IRefreshTokenService refreshTokenService)
         {
             _identityService = identityService;
+            _refreshTokenService = refreshTokenService;
         }
 
         [HttpPost]
@@ -45,6 +48,16 @@ namespace SharedHome.Api.Controllers
             await _identityService.ConfirmEmailAsync(code, email);
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("refreshtoken")]
+        [Authorize]
+        public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
+        {
+            var authenticationResult = await _refreshTokenService.RefreshTokenAsync(request);
+
+            return Ok(authenticationResult);
         }
     }
 }

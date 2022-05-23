@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SharedHome.Infrastructure.Identity;
 using SharedHome.Infrastructure.Identity.Entities;
 
 namespace SharedHome.Infrastructure.EF.Initializers.Identity
@@ -25,24 +26,24 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
 
         private async Task AddRoles()
         {
-            if (!await _roleManager.RoleExistsAsync(InitializerConstants.Administrator))
+            if (!await _roleManager.RoleExistsAsync(AppIdentityConstants.Roles.Administrator))
             {
                 await _roleManager.CreateAsync(new IdentityRole
                 {
                     Id = InitializerConstants.AdministratorRoleId,
-                    Name = InitializerConstants.Administrator,
-                    NormalizedName = InitializerConstants.Administrator.ToUpper(),
+                    Name = AppIdentityConstants.Roles.Administrator,
+                    NormalizedName = AppIdentityConstants.Roles.Administrator.ToUpper(),
                 });
             }
 
 
-            if (!await _roleManager.RoleExistsAsync(InitializerConstants.User))
+            if (!await _roleManager.RoleExistsAsync(AppIdentityConstants.Roles.User))
             {
                 await _roleManager.CreateAsync(new IdentityRole
                 {
                     Id = InitializerConstants.UserRoleId,
-                    Name = InitializerConstants.User,
-                    NormalizedName = InitializerConstants.User.ToUpper(),
+                    Name = AppIdentityConstants.Roles.User,
+                    NormalizedName = AppIdentityConstants.Roles.User.ToUpper(),
                 });
             }
         }
@@ -66,7 +67,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
 
                 await _userManager.CreateAsync(administrator, _initializerOptions.AdminPassword);
 
-                await _userManager.AddToRoleAsync(administrator, InitializerConstants.Administrator);
+                await _userManager.AddToRoleAsync(administrator, AppIdentityConstants.Roles.Administrator);
             }
 
             if (await _userManager.FindByIdAsync(InitializerConstants.CharlesUserId) is null)
@@ -86,7 +87,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
 
                 await _userManager.CreateAsync(charles, _initializerOptions.CharlesPassword);
 
-                await _userManager.AddToRoleAsync(charles, InitializerConstants.Administrator);
+                await _userManager.AddToRoleAsync(charles, AppIdentityConstants.Roles.Administrator);
             }
 
             if (await _userManager.FindByIdAsync(InitializerConstants.FrancUserId) is null)
@@ -106,7 +107,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
 
                 await _userManager.CreateAsync(franc, _initializerOptions.FrancPassword);
 
-                await _userManager.AddToRoleAsync(franc, InitializerConstants.Administrator);
+                await _userManager.AddToRoleAsync(franc, AppIdentityConstants.Roles.Administrator);
             }
         }
     }

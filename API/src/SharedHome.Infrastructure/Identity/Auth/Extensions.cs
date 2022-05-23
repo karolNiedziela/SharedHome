@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SharedHome.Shared.Abstractions.Auth;
 using SharedHome.Shared.Options;
 using System.Text;
 
-namespace SharedHome.Shared.Auth
+namespace SharedHome.Infrastructure.Identity.Auth
 {
     public static class Extensions
     {
@@ -16,7 +14,7 @@ namespace SharedHome.Shared.Auth
             var authOptions = configuration.GetOptions<AuthOptions>(AuthOptions.AuthOptionsName);
             services.AddSingleton(authOptions);
 
-            services.AddSingleton<IAuthManager, AuthManager>();
+            services.AddScoped<IAuthManager, AuthManager>();
 
             var key = Encoding.UTF8.GetBytes(authOptions.Secret);
 
@@ -33,22 +31,15 @@ namespace SharedHome.Shared.Auth
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    RequireExpirationTime = false,
+                    RequireExpirationTime = true,
                     ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
                 };
             });
 
             return services;
-        }
-
-        public static IApplicationBuilder UseAuth(this IApplicationBuilder app)
-        {
-            app.UseAuthentication();
-
-            return app;
         }
     }
 }

@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Application.Identity;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.Identity.Auth;
 using SharedHome.Infrastructure.Identity.Entities;
+using SharedHome.Infrastructure.Identity.Repositories;
 using SharedHome.Infrastructure.Identity.Services;
 
 namespace SharedHome.Infrastructure.Identity
 {
     public static class Extensions
     {
-        public static IServiceCollection AddIdentity(this IServiceCollection services)
+        public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -32,8 +35,13 @@ namespace SharedHome.Infrastructure.Identity
             .AddEntityFrameworkStores<IdentitySharedHomeDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddAuth(configuration);
 
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
+            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
             return services;
         }

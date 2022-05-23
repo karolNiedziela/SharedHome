@@ -1,6 +1,5 @@
 using FluentValidation.AspNetCore;
 using Serilog;
-using Serilog.Events;
 using SharedHome.Application;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
@@ -55,6 +54,8 @@ try
     app.UseRouting();
 
     app.UseShared();
+
+    app.UseAuthentication();
 
     app.UseAuthorization();
 

@@ -27,8 +27,6 @@
 
         // Roles
         public const string AdministratorRoleId = "83D724E5-E83C-4319-B49F-AD23445FB698";
-        public const string Administrator = "Administrator";
         public const string UserRoleId = "2BE3119C-504C-4782-8A8B-3D26694113A8";
-        public const string User = "User";
     }
 }

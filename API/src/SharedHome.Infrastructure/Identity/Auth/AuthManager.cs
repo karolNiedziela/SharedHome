@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using SharedHome.Shared.Abstractions.Auth;
+using SharedHome.Infrastructure.Identity.Entities;
+using SharedHome.Infrastructure.Identity.Models;
+using SharedHome.Infrastructure.Identity.Repositories;
+using SharedHome.Infrastructure.Identity.Services;
 using SharedHome.Shared.Abstractions.Time;
-using System;
-using System.Collections.Generic;
+using SharedHome.Shared.Abstractions.User;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SharedHome.Shared.Auth
+namespace SharedHome.Infrastructure.Identity.Auth
 {
     public class AuthManager : IAuthManager
     {
@@ -23,8 +23,7 @@ namespace SharedHome.Shared.Auth
             _time = time;
         }
 
-        public AuthenticationSucessResult CreateToken(string userId, string firstName, string lastName, string email,
-            string? role = null)
+        public AuthenticationSucessResult CreateToken(string userId, string email, IEnumerable<string> roles)
         {
             var now = _time.CurrentDate();
 
@@ -35,14 +34,8 @@ namespace SharedHome.Shared.Auth
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeMilliseconds().ToString()),
                 new(ClaimTypes.Email, email),
-                new("FirstName", firstName),
-                new("LastName", lastName)
-            };
-            
-            if (!string.IsNullOrWhiteSpace(role))
-            {
-                jwtClaims.Add(new Claim(ClaimTypes.Role, role));
-            }
+                new(ClaimTypes.Role, string.Join(",", roles))
+            };          
 
             var expires = now.Add(_authOptions.Expiry);
 
@@ -55,16 +48,16 @@ namespace SharedHome.Shared.Auth
                 signingCredentials: signingCredentials
             );
 
-            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             return new AuthenticationSucessResult
             {
-                AccessToken = token,
+                AccessToken = accessToken,
                 UserId = userId,
-                Role = role ?? string.Empty,
+                Roles = roles,
                 Expiry = new DateTimeOffset(expires).ToUnixTimeMilliseconds(),
-                Email = email ?? string.Empty,
-            };
+                Email = email,
+            }; ;
         }
     }
 }

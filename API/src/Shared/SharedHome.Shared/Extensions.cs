@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using SharedHome.Shared.Abstractions.Time;
 using SharedHome.Shared.Abstractions.User;
-using SharedHome.Shared.Auth;
 using SharedHome.Shared.Email;
 using SharedHome.Shared.Exceptions;
 using SharedHome.Shared.Filters;
@@ -20,10 +19,7 @@ namespace SharedHome.Shared
 
         public static IServiceCollection AddShared(this IServiceCollection services, IConfiguration configuration)
         {
-
             services.AddEmail(configuration);
-
-            services.AddAuth(configuration);
 
             services.AddErrorHandling();
 
@@ -51,8 +47,6 @@ namespace SharedHome.Shared
         public static IApplicationBuilder UseShared(this IApplicationBuilder applicationBuilder)
         {
             applicationBuilder.UseErrorHandling();
-
-            applicationBuilder.UseAuth();
 
             return applicationBuilder;
         }

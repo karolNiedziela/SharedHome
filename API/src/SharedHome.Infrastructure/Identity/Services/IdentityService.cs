@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using SharedHome.Application.Identity;
-using SharedHome.Application.Identity.Models;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.Persons.Repositories;
+using SharedHome.Infrastructure.Identity.Auth;
 using SharedHome.Infrastructure.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Exceptions;
-using SharedHome.Shared.Abstractions.Auth;
+using SharedHome.Infrastructure.Identity.Models;
+using SharedHome.Infrastructure.Identity.Repositories;
 using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Abstractions.Responses;
-using SharedHome.Shared.Email;
 using System.Text;
 
 namespace SharedHome.Infrastructure.Identity.Services
@@ -20,21 +19,20 @@ namespace SharedHome.Infrastructure.Identity.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthManager _authManager;
-        private readonly IIdentityEmailSender _emailSender;
-        private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
-        private readonly IAuthorizationService _authorizationService;
+        private readonly IIdentityEmailSender _emailSender;        
         private readonly IPersonRepository _personRepository;
-
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly IRefreshTokenService _refreshTokenService;
 
         public IdentityService(UserManager<ApplicationUser> userManager, IAuthManager authManager, IIdentityEmailSender emailSender,
-            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory, IAuthorizationService authorizationService, IPersonRepository personRepository)
+             IPersonRepository personRepository, IRefreshTokenRepository refreshTokenRepository, IRefreshTokenService refreshTokenService)
         {
             _userManager = userManager;
             _authManager = authManager;
             _emailSender = emailSender;
-            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
-            _authorizationService = authorizationService;
             _personRepository = personRepository;
+            _refreshTokenRepository = refreshTokenRepository;
+            _refreshTokenService = refreshTokenService;
         }
 
         public async Task<Response<string>> RegisterAsync(RegisterUserRequest request)
@@ -49,7 +47,7 @@ namespace SharedHome.Infrastructure.Identity.Services
 
             var result = await _userManager.CreateAsync(applicationUser, request.Password);
 
-            // TODO: Assign role
+            await _userManager.AddToRoleAsync(applicationUser, AppIdentityConstants.Roles.User);
 
             if (!result.Succeeded)
             {
@@ -84,7 +82,11 @@ namespace SharedHome.Infrastructure.Identity.Services
                 throw new InvalidCredentialsException();
             }
 
-            var authenticationResult = _authManager.CreateToken(user.Id, user.FirstName, user.LastName, user.Email);
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var authenticationResult = _authManager.CreateToken(user.Id, user.Email, userRoles);
+            var refreshToken = await _refreshTokenService.CreateRefreshToken(user.Id);
+            authenticationResult.RefreshToken = refreshToken;
 
             return authenticationResult;
         }
@@ -106,32 +108,17 @@ namespace SharedHome.Infrastructure.Identity.Services
             }
         }
 
-        public async Task<bool> IsInRoleAsync(string userId, string role)
+        public async Task<Response<string>> LogoutAsync(string userId)
         {
-            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
-
-            if (user is null)
+            var refreshToken = await _refreshTokenRepository.GetAsync(userId);
+            if (refreshToken is null)
             {
-                return false;
+                throw new InvalidRefreshTokenException();
             }
 
-            return await _userManager.IsInRoleAsync(user, role);
-        }
+            await _refreshTokenService.RemoveRefreshTokenAsync(userId);
 
-        public async Task<bool> AuthorizeAsync(string userId, string policyName)
-        {
-            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
-
-            if (user is null)
-            {
-                return false;
-            }
-
-            var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
-
-            var result = await _authorizationService.AuthorizeAsync(principal, policyName);
-
-            return result.Succeeded;
+            return new Response<string>("Logout successfully.");
         }
 
         private async Task SendConfirmationEmailAsync(ApplicationUser user)
@@ -154,6 +141,6 @@ namespace SharedHome.Infrastructure.Identity.Services
         private static string Decode(string code)
         {
             return Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        }
+        }        
     }
 }
