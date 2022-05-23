@@ -2,7 +2,7 @@
 
 namespace SharedHome.Infrastructure.Identity.Exceptions
 {
-    internal class UserNotFoundException : SharedHomeException
+    public class UserNotFoundException : SharedHomeException
     {
         public string UserId { get; }
 
