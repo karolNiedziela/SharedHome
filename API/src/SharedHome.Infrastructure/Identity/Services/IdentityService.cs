@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Logging;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Infrastructure.Identity.Auth;
@@ -23,9 +24,11 @@ namespace SharedHome.Infrastructure.Identity.Services
         private readonly IPersonRepository _personRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IRefreshTokenService _refreshTokenService;
+        private readonly ILogger<IdentityService> _logger;
 
         public IdentityService(UserManager<ApplicationUser> userManager, IAuthManager authManager, IIdentityEmailSender emailSender,
-             IPersonRepository personRepository, IRefreshTokenRepository refreshTokenRepository, IRefreshTokenService refreshTokenService)
+             IPersonRepository personRepository, IRefreshTokenRepository refreshTokenRepository, IRefreshTokenService refreshTokenService, 
+             ILogger<IdentityService> logger)
         {
             _userManager = userManager;
             _authManager = authManager;
@@ -33,6 +36,7 @@ namespace SharedHome.Infrastructure.Identity.Services
             _personRepository = personRepository;
             _refreshTokenRepository = refreshTokenRepository;
             _refreshTokenService = refreshTokenService;
+            _logger = logger;
         }
 
         public async Task<Response<string>> RegisterAsync(RegisterUserRequest request)
@@ -46,16 +50,18 @@ namespace SharedHome.Infrastructure.Identity.Services
             };
 
             var result = await _userManager.CreateAsync(applicationUser, request.Password);
-
-            await _userManager.AddToRoleAsync(applicationUser, AppIdentityConstants.Roles.User);
-
+            
             if (!result.Succeeded)
             {
                 throw new IdentityException(MapIdentityErrorToIEnumerableString(result.Errors));
             }
+            _logger.LogInformation("User with id '{userId}' created.", applicationUser.Id);
+
+            await _userManager.AddToRoleAsync(applicationUser, AppIdentityConstants.Roles.User);
 
             var person = Person.Create(applicationUser.Id, applicationUser.FirstName, applicationUser.LastName);
             await _personRepository.AddAsync(person);
+            _logger.LogInformation("Person with id '{userId}' created.", person.Id);
 
             if (_userManager.Options.SignIn.RequireConfirmedEmail)
             {
@@ -106,6 +112,8 @@ namespace SharedHome.Infrastructure.Identity.Services
             {
                 throw new IdentityException(MapIdentityErrorToIEnumerableString(result.Errors));
             }
+
+            _logger.LogInformation("User with id '{userId}' confirmed email.", user.Id);
         }
 
         public async Task<Response<string>> LogoutAsync(string userId)

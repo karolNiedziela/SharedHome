@@ -1,11 +1,7 @@
-﻿using SharedHome.Shared.Abstractions.Email;
+﻿using Microsoft.Extensions.Logging;
+using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Email.Options;
 using SharedHome.Shared.Email.Templates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Email
 {
@@ -13,7 +9,8 @@ namespace SharedHome.Shared.Email
     {
         private readonly Dictionary<string, string> Replacements = new();
 
-        public ConfirmationEmailSender(EmailOptions emailOptions) : base(emailOptions)
+        public ConfirmationEmailSender(EmailOptions emailOptions, ILogger<ConfirmationEmailSender> logger) 
+            : base(emailOptions, logger)
         {
         }
 

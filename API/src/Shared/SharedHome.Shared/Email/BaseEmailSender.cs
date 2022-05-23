@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 using MimeKit;
 using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Email.Options;
@@ -13,10 +14,12 @@ namespace SharedHome.Shared.Email
     public abstract class BaseEmailSender
     {
         private readonly EmailOptions _emailOptions;
+        private readonly ILogger _logger;
 
-        public BaseEmailSender(EmailOptions emailOptions)
+        public BaseEmailSender(EmailOptions emailOptions, ILogger logger)
         {
             _emailOptions = emailOptions;
+            _logger = logger;
         }
 
         public async Task SendAsync(EmailMessage emailMessage)
@@ -29,6 +32,7 @@ namespace SharedHome.Shared.Email
                 await smtp.ConnectAsync(_emailOptions.Host, _emailOptions.Port, true);
                 await smtp.AuthenticateAsync(_emailOptions.Address, _emailOptions.Password);
                 await smtp.SendAsync(mimeMessage);
+                _logger.LogInformation("Email sent to '{emailAddress}", string.Join(", ", emailMessage.Recipients));
             }
             catch (Exception ex)
             {
