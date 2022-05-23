@@ -19,7 +19,9 @@ jobs:
       run: dotnet restore API/src/SharedHome.Api
     - name: Build
       run: dotnet build --configuration Release API/src/SharedHome.Api
-    - name: Run Domain Tests
+    - name: Run Domain Unit Tests
       run: dotnet test --configuration Release API/tests/SharedHome.Domain.UnitTests
-    - name: Run Application Tests
+    - name: Run Application Unit Tests
       run: dotnet test --configuration Release API/tests/SharedHome.Application.UnitTests
+    - name: Run Infrastructure Unit Tests
+      run: dotnet test --configuration Release API/tests/SharedHome.Infrastructure.UnitTests
