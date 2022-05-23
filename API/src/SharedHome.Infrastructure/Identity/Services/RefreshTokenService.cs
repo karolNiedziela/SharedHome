@@ -16,12 +16,12 @@ namespace SharedHome.Infrastructure.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICurrentUser _currentUser;
         private readonly IAuthManager _authManager;
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
         private readonly IPasswordHashService _passwordHashService;
         private readonly AuthOptions _authOptions;
 
         public RefreshTokenService(IRefreshTokenRepository refreshTokenRepository, UserManager<ApplicationUser> userManager, ICurrentUser currentUser, IAuthManager authManager,
-            ITime time, IPasswordHashService passwordHashService, AuthOptions authOptions)
+            ITimeProvider time, IPasswordHashService passwordHashService, AuthOptions authOptions)
         {
             _refreshTokenRepository = refreshTokenRepository;
             _userManager = userManager;

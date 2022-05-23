@@ -15,10 +15,10 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
     internal class GetMonthlyShoppingListCostsByYearHandler : IQueryHandler<GetMonthlyShoppingListCostsByYear, Response<List<ShoppingListMonthlyCostDto>>>
     {
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
         private readonly IHouseGroupReadService _houseGroupService;
 
-        public GetMonthlyShoppingListCostsByYearHandler(ReadSharedHomeDbContext context, ITime time, IHouseGroupReadService houseGroupService)
+        public GetMonthlyShoppingListCostsByYearHandler(ReadSharedHomeDbContext context, ITimeProvider time, IHouseGroupReadService houseGroupService)
         {
             _shoppingLists = context.ShoppingLists;
             _time = time;

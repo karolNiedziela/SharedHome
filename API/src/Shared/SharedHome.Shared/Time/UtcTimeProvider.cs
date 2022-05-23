@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Time
 {
-    public class UtcTime : ITime
+    public class UtcTimeProvider : ITimeProvider
     {
         public DateTime CurrentDate() => DateTime.UtcNow;        
     }

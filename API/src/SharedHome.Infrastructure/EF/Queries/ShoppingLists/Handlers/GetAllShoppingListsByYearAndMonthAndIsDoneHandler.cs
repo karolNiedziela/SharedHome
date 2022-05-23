@@ -13,11 +13,11 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
     internal class GetAllShoppingListsByYearAndMonthAndIsDoneHandler : IQueryHandler<GetAllShoppingListsByYearAndMonthAndIsDone, Paged<ShoppingListDto>>
     {
         private readonly IMapper _mapper;
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
 
-        public GetAllShoppingListsByYearAndMonthAndIsDoneHandler(IMapper mapper, ITime time,
+        public GetAllShoppingListsByYearAndMonthAndIsDoneHandler(IMapper mapper, ITimeProvider time,
             IHouseGroupReadService houseGroupService, ReadSharedHomeDbContext context)
         {
             _mapper = mapper;

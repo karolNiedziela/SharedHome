@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Abstractions.Time
 {
-    public interface ITime
+    public interface ITimeProvider
     {
         DateTime CurrentDate();
     }

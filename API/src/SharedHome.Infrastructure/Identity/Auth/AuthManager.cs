@@ -15,9 +15,9 @@ namespace SharedHome.Infrastructure.Identity.Auth
     public class AuthManager : IAuthManager
     {
         private readonly AuthOptions _authOptions;
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
 
-        public AuthManager(AuthOptions authOptions, ITime time)
+        public AuthManager(AuthOptions authOptions, ITimeProvider time)
         {
             _authOptions = authOptions;
             _time = time;

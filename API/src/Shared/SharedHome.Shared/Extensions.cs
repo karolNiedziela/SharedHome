@@ -23,7 +23,7 @@ namespace SharedHome.Shared
 
             services.AddErrorHandling();
 
-            services.AddSingleton<ITime, UtcTime>();
+            services.AddSingleton<ITimeProvider, UtcTimeProvider>();
             services.AddHttpContextAccessor();
             services.AddScoped<ICurrentUser, CurrentUser>();
 

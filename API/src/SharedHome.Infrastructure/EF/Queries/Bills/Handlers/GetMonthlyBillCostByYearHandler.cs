@@ -16,10 +16,10 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
     internal class GetMonthlyBillCostByYearHandler : IQueryHandler<GetMonthlyBillCostByYear, Response<List<BillMonthlyCostDto>>>
     {
         private readonly DbSet<BillReadModel> _bills;
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
         private readonly IHouseGroupReadService _houseGroupService;
 
-        public GetMonthlyBillCostByYearHandler(ReadSharedHomeDbContext context, ITime time, IHouseGroupReadService houseGroupService)
+        public GetMonthlyBillCostByYearHandler(ReadSharedHomeDbContext context, ITimeProvider time, IHouseGroupReadService houseGroupService)
         {
             _bills = context.Bills;
             _time = time;

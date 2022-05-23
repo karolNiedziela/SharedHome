@@ -14,7 +14,7 @@ namespace SharedHome.Infrastructure.EF.Contexts
 {
     public class WriteSharedHomeDbContext : DbContext
     {
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
 
         public DbSet<Invitation> Invitations { get; set; } = default!;
 
@@ -27,7 +27,7 @@ namespace SharedHome.Infrastructure.EF.Contexts
         public DbSet<HouseGroup> HouseGroups { get; set; } = default!;
 
    
-        public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options, ITime time) : base(options)
+        public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options, ITimeProvider time) : base(options)
         {
             _time = time;
         }

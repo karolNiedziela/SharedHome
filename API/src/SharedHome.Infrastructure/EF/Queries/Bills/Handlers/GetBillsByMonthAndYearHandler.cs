@@ -15,10 +15,10 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;
-        private readonly ITime _time;
+        private readonly ITimeProvider _time;
         private readonly IHouseGroupReadService _houseGroupService;
 
-        public GetBillsByMonthAndYearHandler(ReadSharedHomeDbContext context, IMapper mapper, ITime time, IHouseGroupReadService houseGroupService)
+        public GetBillsByMonthAndYearHandler(ReadSharedHomeDbContext context, IMapper mapper, ITimeProvider time, IHouseGroupReadService houseGroupService)
         {
             _bills = context.Bills;
             _mapper = mapper;
