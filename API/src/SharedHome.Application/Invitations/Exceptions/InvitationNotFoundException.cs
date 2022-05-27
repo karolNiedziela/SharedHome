@@ -4,6 +4,8 @@ namespace SharedHome.Application.Invitations.Exceptions
 {
     public class InvitationNotFoundException : SharedHomeException
     {
+        public override string ErrorCode => "InvitationNotFound";
+
         public int HouseGroupId { get; }
 
         public InvitationNotFoundException(int houseGroupId) 

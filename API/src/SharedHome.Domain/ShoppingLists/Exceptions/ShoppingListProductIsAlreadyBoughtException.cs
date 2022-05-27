@@ -1,14 +1,11 @@
 ﻿using SharedHome.Shared.Abstractions.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.ShoppingLists.Exceptions
 {
     public class ShoppingListProductIsAlreadyBoughtException : SharedHomeException
     {
+        public override string ErrorCode => "ShoppingListProductIsAlreadyBought";
+
         public string ProductName { get; }
 
         public ShoppingListProductIsAlreadyBoughtException(string productName)

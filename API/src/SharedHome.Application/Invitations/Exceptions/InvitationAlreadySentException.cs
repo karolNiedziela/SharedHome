@@ -4,6 +4,8 @@ namespace SharedHome.Application.Invitations.Exceptions
 {
     public class InvitationAlreadySentException : SharedHomeException
     {
+        public override string ErrorCode => "InvitationAlreadySent";
+
         public int HouseGroupId { get; }
 
         public string RequestedToPersonId { get; }

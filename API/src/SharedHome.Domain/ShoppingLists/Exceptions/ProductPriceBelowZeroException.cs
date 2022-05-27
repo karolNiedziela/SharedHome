@@ -1,14 +1,11 @@
 ﻿using SharedHome.Shared.Abstractions.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.ShoppingLists.Exceptions
 {
     public class ProductPriceBelowZeroException : SharedHomeException
     {
+        public override string ErrorCode => "ProductPriceBelowZero";
+
         public ProductPriceBelowZeroException() : base("Product price cannot be lower than zero.")
         {
         }

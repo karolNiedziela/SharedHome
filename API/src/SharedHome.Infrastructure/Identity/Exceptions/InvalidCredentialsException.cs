@@ -1,14 +1,11 @@
 ﻿using SharedHome.Shared.Abstractions.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Infrastructure.Identity.Exceptions
 {
     public class InvalidCredentialsException : SharedHomeException
     {
+        public override string ErrorCode => "InvalidCredentials";
+
         public InvalidCredentialsException() : base("Invalid credentials.")
         {
         }

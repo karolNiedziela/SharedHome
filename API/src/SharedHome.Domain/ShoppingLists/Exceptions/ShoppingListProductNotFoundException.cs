@@ -1,14 +1,11 @@
 ﻿using SharedHome.Shared.Abstractions.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.ShoppingLists.Exceptions
 {
     public class ShoppingListProductNotFoundException : SharedHomeException
     {
+        public override string ErrorCode => "ShoppingListProductNotFound";
+
         public string ProductName { get; }
 
         public ShoppingListProductNotFoundException(string productName) 

@@ -4,6 +4,8 @@ namespace SharedHome.Infrastructure.Identity.Exceptions
 {
     public class UserNotFoundException : SharedHomeException
     {
+        public override string ErrorCode => "UserNotFound";
+
         public string UserId { get; }
 
         public UserNotFoundException(string userId) : base($"User with id: '{userId}' was not found.")
