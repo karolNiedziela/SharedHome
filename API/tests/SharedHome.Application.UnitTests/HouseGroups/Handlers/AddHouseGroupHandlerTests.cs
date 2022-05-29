@@ -2,9 +2,9 @@
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands;
 using SharedHome.Application.HouseGroups.Commands.Handlers;
-using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using Shouldly;

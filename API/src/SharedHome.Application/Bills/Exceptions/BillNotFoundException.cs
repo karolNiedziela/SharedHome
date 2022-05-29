@@ -1,4 +1,5 @@
-﻿using SharedHome.Shared.Abstractions.Exceptions;
+﻿using SharedHome.Shared.Abstractions.Attributes;
+using SharedHome.Shared.Abstractions.Exceptions;
 
 namespace SharedHome.Application.Bills.Exceptions
 {
@@ -6,8 +7,12 @@ namespace SharedHome.Application.Bills.Exceptions
     {
         public override string ErrorCode => "BillNotFound";
 
+        [Order]
+        public int BillId { get; }
+
         public BillNotFoundException(int billId) : base($"Bill with id '{billId}' was not found.")
         {
+            BillId = billId;
         }
     }
 }
