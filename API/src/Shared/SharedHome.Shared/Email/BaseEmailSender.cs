@@ -1,13 +1,9 @@
 ﻿using MailKit.Net.Smtp;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using MimeKit;
 using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Email.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Email
 {
@@ -15,11 +11,13 @@ namespace SharedHome.Shared.Email
     {
         private readonly EmailOptions _emailOptions;
         private readonly ILogger _logger;
+        protected readonly IStringLocalizer _localizer;
 
-        public BaseEmailSender(EmailOptions emailOptions, ILogger logger)
+        public BaseEmailSender(EmailOptions emailOptions, ILogger logger, IStringLocalizerFactory localizerFactory)
         {
             _emailOptions = emailOptions;
             _logger = logger;
+            _localizer = localizerFactory.Create("EmailTemplates", "SharedHome.Api");
         }
 
         public async Task SendAsync(EmailMessage emailMessage)
