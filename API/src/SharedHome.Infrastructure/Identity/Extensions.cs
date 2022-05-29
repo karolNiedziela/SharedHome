@@ -32,6 +32,7 @@ namespace SharedHome.Infrastructure.Identity
 
                 options.Lockout.AllowedForNewUsers = false;
             })
+            .AddErrorDescriber<MultilanguageIdentityErrorDescriber>()
             .AddEntityFrameworkStores<IdentitySharedHomeDbContext>()
             .AddDefaultTokenProviders();
 

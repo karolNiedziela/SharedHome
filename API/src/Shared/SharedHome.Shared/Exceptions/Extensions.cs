@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Shared.Abstractions.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Exceptions
 {
@@ -14,7 +9,7 @@ namespace SharedHome.Shared.Exceptions
         public static IServiceCollection AddErrorHandling(this IServiceCollection services)
         {
             services.AddScoped<GlobalErrorHandlerMiddleware>();
-            services.AddSingleton<IExceptionToErrorResponseMapper, ExceptionToErrorResponseMapper>();
+            services.AddScoped<IExceptionToErrorResponseMapper, ExceptionToErrorResponseMapper>();
 
             return services;
         }

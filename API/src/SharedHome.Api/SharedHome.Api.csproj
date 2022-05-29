@@ -7,6 +7,9 @@
     <UserSecretsId>8fbe9b2f-c9c9-43af-9a34-5c3ba49444df</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <EmbeddedResourceUseDependentUponConvention>false</EmbeddedResourceUseDependentUponConvention>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.3.6" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />

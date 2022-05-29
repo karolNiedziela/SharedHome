@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BillCostBelowZero" xml:space="preserve">
+    <value>Koszt rachunku nie może być mniejszy od zera.</value>
+  </data>
+  <data name="BillNotFound" xml:space="preserve">
+    <value>Rachunek o identyfikatorze {0} nie został znaleziony.</value>
+  </data>
+  <data name="BillNotPaid" xml:space="preserve">
+    <value>Rachunek nie jest zapłacony.</value>
+  </data>
+  <data name="BillPaid" xml:space="preserve">
+    <value>Rachunek jest zapłacony.</value>
+  </data>
+  <data name="EmptyFirstName" xml:space="preserve">
+    <value>Imię nie może być puste.</value>
+  </data>
+  <data name="EmptyLastName" xml:space="preserve">
+    <value>Nazwisko nie może być puste.</value>
+  </data>
+  <data name="EmptyServiceProviderName" xml:space="preserve">
+    <value>Nazwa dostawcy usługi nie może być pusta.</value>
+  </data>
+  <data name="EmptyShoppingListName" xml:space="preserve">
+    <value>Nazwa listy zakupów nie może być pusta.</value>
+  </data>
+  <data name="EmptyShoppingListProductName" xml:space="preserve">
+    <value>Nazwa produktu nie może być pusta.</value>
+  </data>
+  <data name="HouseGroupMemberIsNotOwner" xml:space="preserve">
+    <value>Członek grupy domowej o identyfikatorze osoby {0} nie jest właścicielem.</value>
+  </data>
+  <data name="HouseGroupMemberNotFoundException" xml:space="preserve">
+    <value>Członek grupy domowej o identyfikatorze osoby {0} nie został znaleziony.</value>
+  </data>
+  <data name="HouseGroupNotFoundException" xml:space="preserve">
+    <value>Grupa domowa o identyfikatorze {0} nie została znaleziona.</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Niepoprawne dane logowania.</value>
+  </data>
+  <data name="InvalidEnum" xml:space="preserve">
+    <value>Niepoprawna wartość słownika.</value>
+  </data>
+  <data name="InvalidRefreshToken" xml:space="preserve">
+    <value>Nieprawidłowy token.</value>
+  </data>
+  <data name="InvitationAccepted" xml:space="preserve">
+    <value>Zaproszenie zostało już zaakceptowane.</value>
+  </data>
+  <data name="InvitationAlreadySent" xml:space="preserve">
+    <value>Zaproszenie z grupy domowej o identyfikatorze {0} zostało już wysłane do osoby o identyfikatorze {1}.</value>
+  </data>
+  <data name="InvitationNotFound" xml:space="preserve">
+    <value>Zaproszenie od grupy domowej o identyfikatorze {0} nie zostało znalezione.</value>
+  </data>
+  <data name="InvitationRejected" xml:space="preserve">
+    <value>Zaproszenie zostało już odrzucone.</value>
+  </data>
+  <data name="LeavingHouseGroupNewOwnerNotDefined" xml:space="preserve">
+    <value>Jako właściciel musisz wybrać nowego właściciela.</value>
+  </data>
+  <data name="PersonIsAlreadyInHouseGroup" xml:space="preserve">
+    <value>Osoba o identyfikatorze osoby jest już w grupie domowej.</value>
+  </data>
+  <data name="PersonIsNotInHouseGroup" xml:space="preserve">
+    <value>Osoba o identyfikatorze {0} nie jest w grupie domowej o identyfikatorze {1}.</value>
+  </data>
+  <data name="ProductPriceBelowZero" xml:space="preserve">
+    <value>Cena produktu nie może być mniejsza niż zero.</value>
+  </data>
+  <data name="QuantityBelowZero" xml:space="preserve">
+    <value>Liczba produktów nie może być mniejsza niż zero.</value>
+  </data>
+  <data name="RefreshTokenExpired" xml:space="preserve">
+    <value>Token wygasł.</value>
+  </data>
+  <data name="ShoppingListAlreadyDone" xml:space="preserve">
+    <value>Lista zakupów została już zamknięta.</value>
+  </data>
+  <data name="ShoppingListNotFound" xml:space="preserve">
+    <value>Lista zakupów o identyfikatorze '{0}' nie została znaleziona.</value>
+  </data>
+  <data name="ShoppingListProductAlreadyExists" xml:space="preserve">
+    <value>Produkt {0} już istnieje na liście zakupów {1}.</value>
+  </data>
+  <data name="ShoppingListProductIsAlreadyBought" xml:space="preserve">
+    <value>Produkt {0} został już zakupiony.</value>
+  </data>
+  <data name="ShoppingListProductNotFound" xml:space="preserve">
+    <value>Produkt {0} nie został znaleziony.</value>
+  </data>
+  <data name="ShoppingListProductWasNotBought" xml:space="preserve">
+    <value>Produkt {0} nie został zakupiony.</value>
+  </data>
+  <data name="TooLongShoppingListNameException" xml:space="preserve">
+    <value>Nazwa może zawierać maksymalnie {0} znaków.</value>
+  </data>
+  <data name="TotalMembersLimitReached" xml:space="preserve">
+    <value>Maksymalny limit członków został osiągniety. Limit wynosi {0}.</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Użytkownik o identyfikatorze {0} nie został znaleziony.</value>
+  </data>
+</root>
