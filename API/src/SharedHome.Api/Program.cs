@@ -54,6 +54,15 @@ try
         options.SupportedUICultures = supportedCultures;
     });
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: "Origin",
+                          policy =>
+                          {
+                              policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200");
+                          });
+    });
+
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddShared(builder.Configuration);
@@ -82,6 +91,8 @@ try
     app.UseSerilogRequestLogging();
 
     app.UseRouting();
+
+    app.UseCors("Origin");
 
     app.UseShared();
 

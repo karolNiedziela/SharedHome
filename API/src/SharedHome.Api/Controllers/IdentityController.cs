@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SharedHome.Infrastructure.Identity.Auth;
 using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Infrastructure.Identity.Services;
+using SharedHome.Shared.Abstractions.User;
 
 namespace SharedHome.Api.Controllers
 {
@@ -11,11 +11,13 @@ namespace SharedHome.Api.Controllers
     {
         private readonly IIdentityService _identityService;
         private readonly IRefreshTokenService _refreshTokenService;
+        private readonly ICurrentUser _currentUser;
 
-        public IdentityController(IIdentityService identityService, IRefreshTokenService refreshTokenService)
+        public IdentityController(IIdentityService identityService, IRefreshTokenService refreshTokenService, ICurrentUser currentUser)
         {
             _identityService = identityService;
             _refreshTokenService = refreshTokenService;
+            _currentUser = currentUser;
         }
 
         [HttpPost]
@@ -58,6 +60,16 @@ namespace SharedHome.Api.Controllers
             var authenticationResult = await _refreshTokenService.RefreshTokenAsync(request);
 
             return Ok(authenticationResult);
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        [Authorize]
+        public async Task<IActionResult> LogoutAsync()
+        {
+            await _identityService.LogoutAsync(_currentUser.UserId);
+
+            return Ok();
         }
     }
 }
