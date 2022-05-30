@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.Identity.Auth;
 using SharedHome.Infrastructure.Identity.Entities;
-using SharedHome.Infrastructure.Identity.Repositories;
 using SharedHome.Infrastructure.Identity.Services;
 
 namespace SharedHome.Infrastructure.Identity
@@ -38,11 +36,7 @@ namespace SharedHome.Infrastructure.Identity
 
             services.AddAuth(configuration);
 
-            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-
             services.AddScoped<IIdentityService, IdentityService>();
-            services.AddScoped<IPasswordHashService, PasswordHashService>();
-            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 
             return services;
         }

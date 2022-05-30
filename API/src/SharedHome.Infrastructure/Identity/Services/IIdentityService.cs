@@ -10,7 +10,5 @@ namespace SharedHome.Infrastructure.Identity.Services
         Task<AuthenticationSucessResult> LoginAsync(LoginRequest request);
 
         Task ConfirmEmailAsync(string code, string email);
-
-        Task<Response<string>> LogoutAsync(string userId);
     }
 }
