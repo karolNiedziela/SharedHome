@@ -6,39 +6,39 @@
       </div>
       <div class="identity login col-md-4 ps-4 pe-4">
         <form class="row g-3 mb-2 mt-2">
-          <div class="col-12 form-floating">
-            <input
-              type="email"
-              class="form-control identity__input login__input"
-              placeholder="Email"
-              required
-            />
-            <label for="" class="identity__label login__label"
-              >Email</label
-            >
-          </div>
-          <div class="col-12 form-floating">
-            <input
-              type="password"
-              class="form-control identity__input login__input"
-              placeholder="Hasło"
-              required
-            />
-            <label for="" class="identity__label login__label">Hasło</label>
-          </div>
-          <div class="d-grid col-12">
-            <button type="submit" class="btn identity__submit-btn">
-              Zaloguj się
-            </button>
-          </div>
+          <app-form-input
+            class="col-12 form-floating"
+            type="email"
+            placeholder="Email"
+            [isRequired]="true"
+            labelText="Email"
+          ></app-form-input>
+          <app-form-input
+            class="col-12 form-floating"
+            type="password"
+            placeholder="Password"
+            [isRequired]="true"
+            labelText="Password"
+          ></app-form-input>
+          <app-button
+            class="d-grid col-12"
+            text="Zaloguj się"
+            type="submit"
+            (onButtonClick)="test()"
+          ></app-button>
         </form>
         <div class="col-12 text-center">
           <a>Zapomniałeś hasła?</a>
         </div>
         <hr class="mt-4" />
-        <div class="d-grid col-12 mb-4">
-          <div class="btn identity__link-btn"><a class="identity__a" [routerLink]="['register']">Zarejestruj się</a></div>
-        </div>
+        <!-- <div class="btn identity__link-btn"> -->
+        <app-button
+          [routerLink]="['register']"
+          class="d-grid col-12 mb-4"
+          text="Zarejestruj się"
+          type="submit"
+        ></app-button>
+        <!-- </div> -->
       </div>
     </div>
   </div>
