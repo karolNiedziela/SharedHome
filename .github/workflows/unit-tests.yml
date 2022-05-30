@@ -23,5 +23,3 @@ jobs:
       run: dotnet test --configuration Release API/tests/SharedHome.Domain.UnitTests
     - name: Run Application Unit Tests
       run: dotnet test --configuration Release API/tests/SharedHome.Application.UnitTests
-    - name: Run Infrastructure Unit Tests
-      run: dotnet test --configuration Release API/tests/SharedHome.Infrastructure.UnitTests
