@@ -10,14 +10,10 @@ namespace SharedHome.Api.Controllers
     public class IdentityController : ApiController
     {
         private readonly IIdentityService _identityService;
-        private readonly IRefreshTokenService _refreshTokenService;
-        private readonly ICurrentUser _currentUser;
 
-        public IdentityController(IIdentityService identityService, IRefreshTokenService refreshTokenService, ICurrentUser currentUser)
+        public IdentityController(IIdentityService identityService)
         {
             _identityService = identityService;
-            _refreshTokenService = refreshTokenService;
-            _currentUser = currentUser;
         }
 
         [HttpPost]
@@ -48,26 +44,6 @@ namespace SharedHome.Api.Controllers
             }
 
             await _identityService.ConfirmEmailAsync(code, email);
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("refreshtoken")]
-        [Authorize]
-        public async Task<IActionResult> RefreshToken(RefreshTokenRequest request)
-        {
-            var authenticationResult = await _refreshTokenService.RefreshTokenAsync(request);
-
-            return Ok(authenticationResult);
-        }
-
-        [HttpPost]
-        [Route("logout")]
-        [Authorize]
-        public async Task<IActionResult> LogoutAsync()
-        {
-            await _identityService.LogoutAsync(_currentUser.UserId);
 
             return Ok();
         }

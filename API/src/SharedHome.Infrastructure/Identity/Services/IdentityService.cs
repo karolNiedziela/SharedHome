@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SharedHome.Domain.Persons.Aggregates;
@@ -8,7 +7,6 @@ using SharedHome.Infrastructure.Identity.Auth;
 using SharedHome.Infrastructure.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Exceptions;
 using SharedHome.Infrastructure.Identity.Models;
-using SharedHome.Infrastructure.Identity.Repositories;
 using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Abstractions.Responses;
@@ -22,20 +20,15 @@ namespace SharedHome.Infrastructure.Identity.Services
         private readonly IAuthManager _authManager;
         private readonly IIdentityEmailSender _emailSender;        
         private readonly IPersonRepository _personRepository;
-        private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly IRefreshTokenService _refreshTokenService;
         private readonly ILogger<IdentityService> _logger;
 
         public IdentityService(UserManager<ApplicationUser> userManager, IAuthManager authManager, IIdentityEmailSender emailSender,
-             IPersonRepository personRepository, IRefreshTokenRepository refreshTokenRepository, IRefreshTokenService refreshTokenService, 
-             ILogger<IdentityService> logger)
+             IPersonRepository personRepository, ILogger<IdentityService> logger)
         {
             _userManager = userManager;
             _authManager = authManager;
             _emailSender = emailSender;
-            _personRepository = personRepository;
-            _refreshTokenRepository = refreshTokenRepository;
-            _refreshTokenService = refreshTokenService;
+            _personRepository = personRepository;            
             _logger = logger;
         }
 
@@ -91,8 +84,6 @@ namespace SharedHome.Infrastructure.Identity.Services
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var authenticationResult = _authManager.CreateToken(user.Id, user.Email, userRoles);
-            var refreshToken = await _refreshTokenService.CreateRefreshToken(user.Id);
-            authenticationResult.RefreshToken = refreshToken;
 
             return authenticationResult;
         }
@@ -114,19 +105,6 @@ namespace SharedHome.Infrastructure.Identity.Services
             }
 
             _logger.LogInformation("User with id '{userId}' confirmed email.", user.Id);
-        }
-
-        public async Task<Response<string>> LogoutAsync(string userId)
-        {
-            var refreshToken = await _refreshTokenRepository.GetAsync(userId);
-            if (refreshToken is null)
-            {
-                throw new InvalidRefreshTokenException();
-            }
-
-            await _refreshTokenService.RemoveRefreshTokenAsync(userId);
-
-            return new Response<string>("Logout successfully.");
         }
 
         private async Task SendConfirmationEmailAsync(ApplicationUser user)

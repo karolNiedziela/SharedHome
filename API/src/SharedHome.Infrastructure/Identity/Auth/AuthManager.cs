@@ -1,11 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using SharedHome.Infrastructure.Identity.Entities;
+﻿using Microsoft.IdentityModel.Tokens;
 using SharedHome.Infrastructure.Identity.Models;
-using SharedHome.Infrastructure.Identity.Repositories;
-using SharedHome.Infrastructure.Identity.Services;
 using SharedHome.Shared.Abstractions.Time;
-using SharedHome.Shared.Abstractions.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

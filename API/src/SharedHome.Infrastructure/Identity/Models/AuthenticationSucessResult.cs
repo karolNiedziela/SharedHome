@@ -4,8 +4,6 @@
     {
         public string AccessToken { get; set; } = default!;
 
-        public string RefreshToken { get; set; } = default!;
-
         public long Expiry { get; set; } = default!;
 
         public string UserId { get; set; } = default!;
