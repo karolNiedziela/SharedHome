@@ -7,7 +7,7 @@ namespace SharedHome.Infrastructure.Identity.Services
     {
         Task<Response<string>> RegisterAsync(RegisterUserRequest request);
 
-        Task<AuthenticationSucessResult> LoginAsync(LoginRequest request);
+        Task<JwtDto> LoginAsync(LoginRequest request);
 
         Task ConfirmEmailAsync(string code, string email);
     }

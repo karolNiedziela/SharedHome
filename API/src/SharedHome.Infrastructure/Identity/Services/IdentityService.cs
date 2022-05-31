@@ -66,7 +66,7 @@ namespace SharedHome.Infrastructure.Identity.Services
             return new Response<string>("Thanks for signing up.");
         }
 
-        public async Task<AuthenticationSucessResult> LoginAsync(LoginRequest request)
+        public async Task<JwtDto> LoginAsync(LoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null)

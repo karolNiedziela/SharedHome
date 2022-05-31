@@ -27,7 +27,7 @@ namespace SharedHome.Api.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<AuthenticationSucessResult>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<JwtDto>> Login([FromBody] LoginRequest request)
         {
             var authenticationResult = await _identityService.LoginAsync(request);
 

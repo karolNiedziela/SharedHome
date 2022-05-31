@@ -5,6 +5,6 @@ namespace SharedHome.Infrastructure.Identity.Auth
 {
     public interface IAuthManager
     {
-        AuthenticationSucessResult CreateToken(string userId, string email, IEnumerable<string> roles);
+        JwtDto CreateToken(string userId, string email, IEnumerable<string> roles);
     }
 }

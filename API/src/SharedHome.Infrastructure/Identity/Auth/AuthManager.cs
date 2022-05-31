@@ -18,7 +18,7 @@ namespace SharedHome.Infrastructure.Identity.Auth
             _time = time;
         }
 
-        public AuthenticationSucessResult CreateToken(string userId, string email, IEnumerable<string> roles)
+        public JwtDto CreateToken(string userId, string email, IEnumerable<string> roles)
         {
             var now = _time.CurrentDate();
 
@@ -45,7 +45,7 @@ namespace SharedHome.Infrastructure.Identity.Auth
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return new AuthenticationSucessResult
+            return new JwtDto
             {
                 AccessToken = accessToken,
                 UserId = userId,
