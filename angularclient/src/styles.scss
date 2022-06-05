@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Damion&display=swap");
+@import "/src/assets/_variables.scss";
 
 * {
   margin: 0;
@@ -19,10 +20,10 @@ body {
 
 a {
   text-decoration: none;
-  color: white;
+  color: $l_white_color;
 }
 
 a:hover {
-  color: #3f51b5 !important;
+  color: $l_primary_color !important;
   cursor: pointer;
 }

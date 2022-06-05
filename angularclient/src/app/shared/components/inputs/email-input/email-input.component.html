@@ -1,0 +1,24 @@
+<div class="form-floating">
+  <input
+    type="email"
+    class="form-control sharedhome__input register__input"
+    [placeholder]="placeholder"
+    (input)="onChanged($any($event.target).value)"
+    (blur)="onTouched()"
+    [ngClass]="{
+      'is-invalid': controlDir?.control?.touched && !controlDir.control?.valid
+    }"
+  />
+  <label class="sharedhome__label">{{ labelText }}</label>
+  <div
+    class="invalid-feedback"
+    *ngIf="controlDir?.control?.touched && !controlDir.control?.valid"
+  >
+    <div *ngIf="controlDir.control?.errors?.['required']">
+      This field is required.
+    </div>
+    <div *ngIf="controlDir.control?.hasError('email')">
+      Please provide a valid email adress.
+    </div>
+  </div>
+</div>

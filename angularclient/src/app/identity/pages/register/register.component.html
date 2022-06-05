@@ -1,62 +1,43 @@
-<div class="container-fludi">
+<div class="container-fluid">
   <div class="row">
     <div class="d-flex flex-wrap justify-content-around align-items-center">
       <div class="col-md-6 mt-4 text-center welcome">
         <div class="welcome__app-name">Shared home</div>
       </div>
-      <div class="identity register col-md-4 ps-4 pe-4 ms-4 me-4">
-        <form class="row g-3 mb-2 mt-2">
-          <app-form-input
-            class="col-12 form-floating"
-            type="email"
-            placeholder="Email"
-            [isRequired]="true"
-            labelText="Email"
-          ></app-form-input>
-          <app-form-input
-            class="col-12 form-floating"
-            type="text"
-            placeholder="First name"
-            [isRequired]="true"
+      <div class="identity register col-md-5 ps-4 pe-4 ms-4 me-4">
+        <form
+          class="row g-3 mb-2 mt-2"
+          [formGroup]="registerForm"
+          (submit)="onSubmit()"
+        >
+          <app-email-input formControlName="email"></app-email-input>
+          <app-text-input
             labelText="First name"
-          ></app-form-input>
-          <app-form-input
-            class="col-12 form-floating"
-            type="text"
-            placeholder="Last name"
-            [isRequired]="true"
+            placeholder="First name"
+            formControlName="firstName"
+          ></app-text-input>
+          <app-text-input
             labelText="Last name"
-          >
-          </app-form-input>
-          <app-form-input
-            class="col-12 form-floating"
-            type="password"
-            placeholder="Password"
-            [isRequired]="true"
-            labelText="Password"
-          ></app-form-input>
-          <app-form-input
-            class="col-12 form-floating"
-            type="password"
-            placeholder="Confirm password"
-            [isRequired]="true"
-            labelText="Confirm password"
-          ></app-form-input>
+            placeholder="Last name"
+            formControlName="lastName"
+          ></app-text-input>
+          <app-passwords-form formControlName="password"></app-passwords-form>
           <app-button
             class="d-grid col-12"
-            text="Zarejestruj się"
+            text="Sign up"
             type="submit"
           ></app-button>
         </form>
         <hr class="mt-4" />
         <app-button
-          [routerLink]="['']"
+          [routerLink]="['/login']"
           class="d-grid col-12 mb-4"
-          text="Zaloguj się"
+          text="Login"
           type="submit"
         ></app-button>
       </div>
     </div>
   </div>
 </div>
+
 <hr class="mt-4" />

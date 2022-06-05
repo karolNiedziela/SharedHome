@@ -1,0 +1,15 @@
+@import "/src/assets/_variables.scss";
+
+.form-control:focus + .sharedhome__label {
+  color: $l_primary_color !important;
+  opacity: 1;
+  font-weight: 700;
+}
+
+.form-control:focus {
+  color: $l_black_color;
+  background-color: $l_white_color;
+  border-color: $l_primary_color;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(63, 81, 181, 0.2);
+}

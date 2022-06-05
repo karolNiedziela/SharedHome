@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from './../../../core/services/authentication.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { first } from 'rxjs';
@@ -9,7 +10,13 @@ import { first } from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
-  constructor(private authenticationService: AuthenticationService) {}
+  loginForm!: FormGroup;
+  constructor(private authenticationService: AuthenticationService) {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', Validators.required),
+      password: new FormControl(''),
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -19,5 +26,14 @@ export class LoginComponent implements OnInit {
       .login('charles@email.com', 'charles1=')
       .pipe(first())
       .subscribe((data) => {});
+  }
+
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      console.log('form is invalid');
+      return;
+    }
+
+    console.log('submitted');
   }
 }

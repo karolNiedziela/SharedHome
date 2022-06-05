@@ -1,0 +1,30 @@
+<div class="form-floating">
+  <input
+    type="text"
+    class="form-control sharedhome__input register__input"
+    [placeholder]="placeholder"
+    (input)="onChanged($any($event.target).value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    [ngClass]="{
+      'is-invalid': controlDir?.control?.touched && !controlDir.control?.valid
+    }"
+  />
+  <label class="sharedhome__label">{{ labelText }}</label>
+  <div
+    class="invalid-feedback"
+    *ngIf="controlDir?.control?.touched && !controlDir.control?.valid"
+  >
+    <div *ngIf="controlDir.control?.errors?.['required']">
+      This field is required.
+    </div>
+    <div *ngIf="controlDir.control?.hasError('minlength')">
+      This field must contain at least
+      {{ controlDir.control?.errors?.['minlength'].requiredLength }} characters.
+    </div>
+    <div *ngIf="controlDir.control?.hasError('maxlength')">
+      This field can contain maximum
+      {{ controlDir.control?.errors?.['maxlength'].requiredLength }} characters.
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
+import { faEyeSlash } from './../../node_modules/@fortawesome/free-solid-svg-icons/faEyeSlash.d';
+import { library } from './../../node_modules/@fortawesome/fontawesome-svg-core/index.d';
 import { AuthenticationResultInterceptor } from './core/interceptors/authentication-result.interceptor';
-import { FormInputComponent } from './shared/components/inputs/form-input/form-input.component';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +14,11 @@ import { RegisterComponent } from './identity/pages/register/register.component'
 import { ButtonComponent } from './shared/components/button/button.component';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { HomeComponent } from './home/home.component';
+import { TextInputComponent } from './shared/components/inputs/text-input/text-input.component';
+import { EmailInputComponent } from './shared/components/inputs/email-input/email-input.component';
+import { PasswordInputComponent } from './shared/components/inputs/password-input/password-input.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PasswordsFormComponent } from './shared/components/forms/passwords-form/passwords-form.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +26,11 @@ import { HomeComponent } from './home/home.component';
     LoginComponent,
     RegisterComponent,
     ButtonComponent,
-    FormInputComponent,
     HomeComponent,
+    TextInputComponent,
+    EmailInputComponent,
+    PasswordInputComponent,
+    PasswordsFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +39,7 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    FontAwesomeModule,
   ],
   providers: [
     {

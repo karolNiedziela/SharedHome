@@ -1,10 +1,11 @@
+@import "/src/assets/_variables.scss";
+
 .sharedhome-btn {
-  box-shadow: 0 6px 20px rgba(18, 18, 18, 0.2);
   border-radius: 6px;
-  background-color: #3f51b5;
-  color: white;
+  background-color: $l_primary_color;
+  color: $l_white_color;
 }
 
 .sharedhome-btn:hover {
-  background-color: #243281 !important;
+  background-color: $l_primary_color_dark !important;
 }
