@@ -2,28 +2,30 @@ import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, identity, map, Observable } from 'rxjs';
-import { Jwt } from '../models/jwt';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { AuthenticationResponse } from '../models/authenticationResponse';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private jwtSubject: BehaviorSubject<Jwt>;
-  public jwt: Observable<Jwt>;
+  private authenticationResponseSubject: BehaviorSubject<AuthenticationResponse>;
+  public authenticationResponse: Observable<AuthenticationResponse>;
   private identityUrl: string;
 
   constructor(private router: Router, private http: HttpClient) {
-    this.jwtSubject = new BehaviorSubject<Jwt>(null!);
-    this.jwt = this.jwtSubject.asObservable();
+    this.authenticationResponseSubject =
+      new BehaviorSubject<AuthenticationResponse>(null!);
+    this.authenticationResponse =
+      this.authenticationResponseSubject.asObservable();
     this.identityUrl = `${environment.apiUrl}/identity`;
   }
 
-  public get authenticationResultValue(): Jwt {
-    return this.jwtSubject.value;
+  public get authenticationResultValue(): AuthenticationResponse {
+    return this.authenticationResponseSubject.value;
   }
 
-  login(email: string, password: string): Observable<Jwt> {
+  login(email: string, password: string): Observable<AuthenticationResponse> {
     return this.http
       .post<any>(
         `${this.identityUrl}/login`,
@@ -34,9 +36,9 @@ export class AuthenticationService {
         { withCredentials: true }
       )
       .pipe(
-        map((result: Jwt) => {
+        map((result: AuthenticationResponse) => {
           localStorage.setItem('jwt', JSON.stringify(result));
-          this.jwtSubject.next(result);
+          this.authenticationResponseSubject.next(result);
           this.router.navigate(['']);
           return result;
         })
@@ -45,7 +47,7 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('jwt');
-    this.jwtSubject.next(null!);
+    this.authenticationResponseSubject.next(null!);
     this.router.navigate(['/login']);
   }
 }

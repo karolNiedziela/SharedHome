@@ -1,4 +1,4 @@
-import { Jwt } from './core/models/jwt';
+import { AuthenticationResponse } from './core/models/authenticationResponse';
 import { Component } from '@angular/core';
 import { AuthenticationService } from './core/services/authentication.service';
 
@@ -9,11 +9,11 @@ import { AuthenticationService } from './core/services/authentication.service';
 })
 export class AppComponent {
   title = 'sharedhomewebclient';
-  jwt: Jwt = null!;
+  authenticationResponse: AuthenticationResponse = null!;
 
   constructor(private authenticationService: AuthenticationService) {
-    this.authenticationService.jwt.subscribe(
-      (result: Jwt) => (this.jwt = result)
+    this.authenticationService.authenticationResponse.subscribe(
+      (result: AuthenticationResponse) => (this.authenticationResponse = result)
     );
   }
 
