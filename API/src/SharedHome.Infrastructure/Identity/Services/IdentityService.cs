@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.Persons.Repositories;
-using SharedHome.Infrastructure.Identity.Auth;
+using SharedHome.Infrastructure.Authentication;
 using SharedHome.Infrastructure.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Exceptions;
 using SharedHome.Infrastructure.Identity.Models;
@@ -32,7 +32,7 @@ namespace SharedHome.Infrastructure.Identity.Services
             _logger = logger;
         }
 
-        public async Task<Response<string>> RegisterAsync(RegisterUserRequest request)
+        public async Task<Response<string>> RegisterAsync(RegisterRequest request)
         {
             var applicationUser = new ApplicationUser
             {
@@ -66,7 +66,7 @@ namespace SharedHome.Infrastructure.Identity.Services
             return new Response<string>("Thanks for signing up.");
         }
 
-        public async Task<JwtDto> LoginAsync(LoginRequest request)
+        public async Task<AuthenticationResponse> LoginAsync(LoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null)

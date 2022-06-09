@@ -1,11 +1,10 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Shared.Abstractions.Time;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace SharedHome.Infrastructure.Identity.Auth
+namespace SharedHome.Infrastructure.Authentication
 {
     public class AuthManager : IAuthManager
     {
@@ -18,7 +17,7 @@ namespace SharedHome.Infrastructure.Identity.Auth
             _time = time;
         }
 
-        public JwtDto CreateToken(string userId, string email, IEnumerable<string> roles)
+        public AuthenticationResponse CreateToken(string userId, string email, IEnumerable<string> roles)
         {
             var now = _time.CurrentDate();
 
@@ -45,7 +44,7 @@ namespace SharedHome.Infrastructure.Identity.Auth
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return new JwtDto
+            return new AuthenticationResponse
             {
                 AccessToken = accessToken,
                 UserId = userId,

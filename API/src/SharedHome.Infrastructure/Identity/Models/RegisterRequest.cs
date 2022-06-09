@@ -2,7 +2,7 @@
 
 namespace SharedHome.Infrastructure.Identity.Models
 {
-    public class RegisterUserRequest
+    public class RegisterRequest
     {
         [Required(ErrorMessage = "Email is required.")]
         [EmailAddress(ErrorMessage = "Email is not a valid e-mail address.")]

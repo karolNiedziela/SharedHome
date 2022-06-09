@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedHome.Infrastructure.Authentication;
 using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Infrastructure.Identity.Services;
 using SharedHome.Shared.Abstractions.User;
@@ -18,7 +19,7 @@ namespace SharedHome.Api.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserRequest request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var response = await _identityService.RegisterAsync(request);
 
@@ -27,7 +28,7 @@ namespace SharedHome.Api.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<JwtDto>> Login([FromBody] LoginRequest request)
+        public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] LoginRequest request)
         {
             var authenticationResult = await _identityService.LoginAsync(request);
 

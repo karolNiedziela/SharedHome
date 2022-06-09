@@ -1,11 +1,9 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application;
 using SharedHome.Infrastructure.EF;
 using SharedHome.Infrastructure.Identity;
-using SharedHome.Infrastructure.Identity.Auth;
 using System.Reflection;
 
 namespace SharedHome.Infrastructure

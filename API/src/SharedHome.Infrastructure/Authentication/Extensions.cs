@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using SharedHome.Shared.Options;
 using System.Text;
 
-namespace SharedHome.Infrastructure.Identity.Auth
+namespace SharedHome.Infrastructure.Authentication
 {
     public static class Extensions
     {

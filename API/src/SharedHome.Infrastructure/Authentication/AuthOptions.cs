@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Infrastructure.Identity.Auth
+﻿namespace SharedHome.Infrastructure.Authentication
 {
     public class AuthOptions
     {

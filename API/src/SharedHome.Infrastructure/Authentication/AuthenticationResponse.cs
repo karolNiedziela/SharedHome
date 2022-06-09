@@ -1,6 +1,6 @@
-﻿namespace SharedHome.Infrastructure.Identity.Models
+﻿namespace SharedHome.Infrastructure.Authentication
 {
-    public class JwtDto
+    public class AuthenticationResponse
     {
         public string AccessToken { get; set; } = default!;
 
