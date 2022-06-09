@@ -20,20 +20,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  test(): void {
-    alert('działa');
-    this.authenticationService
-      .login('charles@email.com', 'charles1=')
-      .pipe(first())
-      .subscribe((data) => {});
-  }
-
   onSubmit() {
     if (this.loginForm.invalid) {
       console.log('form is invalid');
       return;
     }
 
-    console.log('submitted');
+    const email = this.loginForm.controls['email'].value;
+    const password = this.loginForm.controls['password'].value;
+
+    this.authenticationService
+      .login(email, password)
+      .pipe(first())
+      .subscribe({
+        next: () => {},
+        error: (error) => {
+          console.log('error in logging');
+          console.log(error);
+        },
+      });
   }
 }

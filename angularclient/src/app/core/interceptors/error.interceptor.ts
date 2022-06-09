@@ -20,13 +20,13 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error) => {
         if (
           [401, 403].includes(error.status) &&
-          this.authenticationService.authenticationResultValue
+          this.authenticationService.authenticationResponseValue
         ) {
           this.authenticationService.logout();
         }
 
-        console.log(error);
-        return throwError(() => new Error(error));
+        const errorMessage = error.error.Errors[0];
+        return throwError(() => errorMessage);
       })
     );
   }

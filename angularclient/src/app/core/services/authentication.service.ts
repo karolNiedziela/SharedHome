@@ -1,7 +1,7 @@
 import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AuthenticationResponse } from '../models/authenticationResponse';
 
@@ -10,18 +10,28 @@ import { AuthenticationResponse } from '../models/authenticationResponse';
 })
 export class AuthenticationService {
   private authenticationResponseSubject: BehaviorSubject<AuthenticationResponse>;
+
   public authenticationResponse: Observable<AuthenticationResponse>;
+
   private identityUrl: string;
 
-  constructor(private router: Router, private http: HttpClient) {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.authenticationResponseSubject =
-      new BehaviorSubject<AuthenticationResponse>(null!);
+      new BehaviorSubject<AuthenticationResponse>(
+        JSON.parse(localStorage.getItem('jwt')!)
+      );
+
     this.authenticationResponse =
       this.authenticationResponseSubject.asObservable();
+
     this.identityUrl = `${environment.apiUrl}/identity`;
   }
 
-  public get authenticationResultValue(): AuthenticationResponse {
+  public get authenticationResponseValue(): AuthenticationResponse {
     return this.authenticationResponseSubject.value;
   }
 
@@ -39,7 +49,15 @@ export class AuthenticationService {
         map((result: AuthenticationResponse) => {
           localStorage.setItem('jwt', JSON.stringify(result));
           this.authenticationResponseSubject.next(result);
-          this.router.navigate(['']);
+
+          const returnUrl =
+            this.activatedRoute.snapshot.queryParams['returnUrl'];
+          if (returnUrl) {
+            this.router.navigate([`${returnUrl}`]);
+          } else {
+            this.router.navigate(['/home']);
+          }
+
           return result;
         })
       );
