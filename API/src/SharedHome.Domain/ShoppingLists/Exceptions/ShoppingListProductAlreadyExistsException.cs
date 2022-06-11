@@ -6,14 +6,11 @@ namespace SharedHome.Domain.ShoppingLists.Exceptions
     {
         public override string ErrorCode => "ShoppingListProductAlreadyExists";
 
-        public string ShoppingListName { get; }
-
         public string ProductName { get; }
 
-        public ShoppingListProductAlreadyExistsException(string shoppingListName, string productName) 
-            : base($"Shopping list '{shoppingListName} already has product '{productName}'.")
+        public ShoppingListProductAlreadyExistsException(string productName) 
+            : base($"Shopping list product with name'{productName} already added to list.")
         {
-            ShoppingListName = shoppingListName;
             ProductName = productName;
         }
     }
