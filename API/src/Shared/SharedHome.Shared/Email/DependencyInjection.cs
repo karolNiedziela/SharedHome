@@ -6,7 +6,7 @@ using SharedHome.Shared.Options;
 
 namespace SharedHome.Shared.Email
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddEmail(this IServiceCollection services, IConfiguration configuration)
         {

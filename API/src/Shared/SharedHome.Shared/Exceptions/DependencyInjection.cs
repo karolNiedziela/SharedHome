@@ -4,7 +4,7 @@ using SharedHome.Shared.Abstractions.Exceptions;
 
 namespace SharedHome.Shared.Exceptions
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddErrorHandling(this IServiceCollection services)
         {

@@ -4,7 +4,7 @@ using SharedHome.Shared.Options;
 
 namespace SharedHome.Infrastructure.EF.Initializers
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddInitializer(this IServiceCollection services, IConfiguration configuration)
         {

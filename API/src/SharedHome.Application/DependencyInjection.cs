@@ -8,7 +8,7 @@ using SharedHome.Domain.ShoppingLists.Services;
 
 namespace SharedHome.Application
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {

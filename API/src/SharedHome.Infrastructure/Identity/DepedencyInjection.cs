@@ -8,7 +8,7 @@ using SharedHome.Shared.Authentication;
 
 namespace SharedHome.Infrastructure.Identity
 {
-    public static class Extensions
+    public static class DepedencyInjection
     {
         public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
         {

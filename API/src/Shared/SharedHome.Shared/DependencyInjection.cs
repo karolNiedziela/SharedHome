@@ -12,7 +12,7 @@ using SharedHome.Shared.User;
 
 namespace SharedHome.Shared
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         private const string ApiTitle = "HomeShared API";
         private const string ApiVersion = "v1";
