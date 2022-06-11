@@ -1,5 +1,5 @@
 ﻿using SharedHome.Domain.HouseGroups.Aggregates;
-using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.HouseGroups.Entities;
 
 namespace SharedHome.Tests.Shared.Providers
 {

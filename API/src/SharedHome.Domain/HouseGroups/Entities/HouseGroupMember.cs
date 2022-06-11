@@ -1,6 +1,6 @@
 ﻿using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.HouseGroups.ValueObjects
+namespace SharedHome.Domain.HouseGroups.Entities
 {
     public class HouseGroupMember : Entity
     {

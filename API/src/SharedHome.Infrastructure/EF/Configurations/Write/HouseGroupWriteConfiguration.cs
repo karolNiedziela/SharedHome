@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedHome.Domain.HouseGroups.Aggregates;
-using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.Persons.Aggregates;
 
 namespace SharedHome.Infrastructure.EF.Configurations.Write

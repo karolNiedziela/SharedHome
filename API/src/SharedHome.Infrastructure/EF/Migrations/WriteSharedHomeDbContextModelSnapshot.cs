@@ -206,7 +206,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
             modelBuilder.Entity("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup", b =>
                 {
-                    b.OwnsMany("SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember", "Members", b1 =>
+                    b.OwnsMany("SharedHome.Domain.HouseGroups.Entities.HouseGroupMember", "Members", b1 =>
                         {
                             b1.Property<int>("HouseGroupId")
                                 .HasColumnType("int");
@@ -237,7 +237,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                             b1.HasOne("SharedHome.Domain.Persons.Aggregates.Person", null)
                                 .WithOne()
-                                .HasForeignKey("SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupMember", "PersonId")
+                                .HasForeignKey("SharedHome.Domain.HouseGroups.Entities.HouseGroupMember", "PersonId")
                                 .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
                         });

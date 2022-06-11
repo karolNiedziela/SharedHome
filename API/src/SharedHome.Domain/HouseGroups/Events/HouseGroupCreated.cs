@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.HouseGroups.ValueObjects;
+﻿using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Shared.Abstractions.Domain;
 using System;
 using System.Collections.Generic;

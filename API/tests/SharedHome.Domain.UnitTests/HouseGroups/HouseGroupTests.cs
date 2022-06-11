@@ -1,6 +1,6 @@
 ﻿using SharedHome.Domain.HouseGroups.Events;
 using SharedHome.Domain.HouseGroups.Exceptions;
-using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Linq;

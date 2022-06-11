@@ -2,7 +2,7 @@
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Application.Invitations.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 

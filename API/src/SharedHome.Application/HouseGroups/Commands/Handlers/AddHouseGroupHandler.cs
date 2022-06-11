@@ -3,7 +3,7 @@ using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.HouseGroups.Commands.Handlers

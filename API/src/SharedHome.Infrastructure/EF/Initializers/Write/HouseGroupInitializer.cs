@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.HouseGroups.Aggregates;
-using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Initializers.Write
