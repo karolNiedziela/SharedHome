@@ -1,10 +1,6 @@
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Localization.Routing;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Serilog;
-using SharedHome.Api;
 using SharedHome.Application;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
@@ -31,7 +27,6 @@ try
         {
             options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         })
-        .AddFluentValidation(options => options.RegisterValidatorsFromAssembly(typeof(ApplicationAssemblyReference).Assembly))
         .AddDataAnnotationsLocalization(options =>
         {
             options.DataAnnotationLocalizerProvider = (type, factory) =>
