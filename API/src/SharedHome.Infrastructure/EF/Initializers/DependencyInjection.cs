@@ -8,8 +8,7 @@ namespace SharedHome.Infrastructure.EF.Initializers
     {
         public static IServiceCollection AddInitializer(this IServiceCollection services, IConfiguration configuration)
         {
-            var authOptions = configuration.GetOptions<InitializerOptions>(InitializerOptions.InitializerOptionsName);
-            services.AddSingleton(authOptions);
+            services.Configure<InitializerSettings>(configuration.GetSection(InitializerSettings.SectionName));
 
             services.Scan(s => s.FromCallingAssembly()
                 .AddClasses(c => c.AssignableTo(typeof(IDataInitializer)))

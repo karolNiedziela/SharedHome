@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Email.Options;
 using SharedHome.Shared.Email.Templates;
@@ -10,7 +11,7 @@ namespace SharedHome.Shared.Email
     {
         private readonly Dictionary<string, string> Replacements = new();
 
-        public ConfirmationEmailSender(EmailOptions emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory) 
+        public ConfirmationEmailSender(IOptions<EmailSettings> emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory) 
             : base(emailOptions, logger, localizerFactory)
         {
         }

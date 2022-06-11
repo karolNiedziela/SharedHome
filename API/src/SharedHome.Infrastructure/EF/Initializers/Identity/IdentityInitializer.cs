@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using SharedHome.Infrastructure.Identity;
 using SharedHome.Infrastructure.Identity.Entities;
 
@@ -6,13 +7,13 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
 {
     public class IdentityInitializer : IDataInitializer
     {
-        private readonly InitializerOptions _initializerOptions;
+        private readonly InitializerSettings _initializerSettings;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public IdentityInitializer(InitializerOptions initializerOptions, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public IdentityInitializer(IOptions<InitializerSettings> initializerOptions, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            _initializerOptions = initializerOptions;
+            _initializerSettings = initializerOptions.Value;
             _userManager = userManager;
             _roleManager = roleManager;
         }
@@ -65,7 +66,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
                     NormalizedUserName = InitializerConstants.AdminUserName.ToUpper(),
                 };
 
-                await _userManager.CreateAsync(administrator, _initializerOptions.AdminPassword);
+                await _userManager.CreateAsync(administrator, _initializerSettings.AdminPassword);
 
                 await _userManager.AddToRoleAsync(administrator, AppIdentityConstants.Roles.Administrator);
             }
@@ -85,7 +86,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
                     NormalizedUserName = InitializerConstants.CharlesUserName.ToUpper(),
                 };
 
-                await _userManager.CreateAsync(charles, _initializerOptions.CharlesPassword);
+                await _userManager.CreateAsync(charles, _initializerSettings.CharlesPassword);
 
                 await _userManager.AddToRoleAsync(charles, AppIdentityConstants.Roles.Administrator);
             }
@@ -105,7 +106,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
                     NormalizedUserName = InitializerConstants.FrancUserName.ToUpper(),
                 };
 
-                await _userManager.CreateAsync(franc, _initializerOptions.FrancPassword);
+                await _userManager.CreateAsync(franc, _initializerSettings.FrancPassword);
 
                 await _userManager.AddToRoleAsync(franc, AppIdentityConstants.Roles.Administrator);
             }

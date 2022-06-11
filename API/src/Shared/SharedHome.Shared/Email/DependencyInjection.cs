@@ -10,8 +10,7 @@ namespace SharedHome.Shared.Email
     {
         public static IServiceCollection AddEmail(this IServiceCollection services, IConfiguration configuration)
         {
-            var emailOptions = configuration.GetOptions<EmailOptions>(EmailOptions.Email);
-            services.AddSingleton(emailOptions);
+            services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
 
             services.AddTransient<IIdentityEmailSender, ConfirmationEmailSender>();
 

@@ -1,8 +1,8 @@
 ﻿namespace SharedHome.Infrastructure.EF.Initializers
 {
-    public class InitializerOptions
+    public class InitializerSettings
     {
-        public const string InitializerOptionsName = "Initializer";
+        public const string SectionName = "Initializer";
 
         public string AdminPassword { get; set; } = default!;
 

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Email.Options
 {
-    public class EmailOptions
+    public class EmailSettings
     {
-        public const string Email = "Email";
+        public const string SectionName = "Email";
 
         public string Host { get; set; } = default!;
 
