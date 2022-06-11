@@ -1,5 +1,4 @@
-﻿using SharedHome.Infrastructure.Authentication;
-using SharedHome.Infrastructure.Identity.Models;
+﻿using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Infrastructure.Identity.Services

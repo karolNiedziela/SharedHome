@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SharedHome.Infrastructure.Authentication;
+﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Infrastructure.Identity.Services;
-using SharedHome.Shared.Abstractions.User;
+using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Api.Controllers
 {

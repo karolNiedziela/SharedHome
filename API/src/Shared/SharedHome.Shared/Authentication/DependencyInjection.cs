@@ -2,21 +2,22 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SharedHome.Shared.Abstractions.Authentication;
 using SharedHome.Shared.Options;
 using System.Text;
 
-namespace SharedHome.Infrastructure.Authentication
+namespace SharedHome.Shared.Authentication
 {
-    public static class Extensions
+    public static class DependencyInjection
     {
         public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            var authOptions = configuration.GetOptions<AuthOptions>(AuthOptions.AuthOptionsName);
-            services.AddSingleton(authOptions);
+            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
+            var jwtSettings = configuration.GetOptions<JwtSettings>(JwtSettings.SectionName);
 
-            services.AddScoped<IAuthManager, AuthManager>();
+            services.AddSingleton<IAuthManager, AuthManager>();
 
-            var key = Encoding.UTF8.GetBytes(authOptions.Secret);
+            var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
 
             services.AddAuthentication(options =>
             {
@@ -31,8 +32,10 @@ namespace SharedHome.Infrastructure.Authentication
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidateAudience = true,
+                    ValidAudience = jwtSettings.Audience,
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),

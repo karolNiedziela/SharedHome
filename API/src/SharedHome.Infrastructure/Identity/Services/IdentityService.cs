@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.Persons.Repositories;
-using SharedHome.Infrastructure.Authentication;
 using SharedHome.Infrastructure.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Exceptions;
 using SharedHome.Infrastructure.Identity.Models;
+using SharedHome.Shared.Abstractions.Authentication;
 using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Abstractions.Responses;
@@ -83,9 +83,9 @@ namespace SharedHome.Infrastructure.Identity.Services
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var authenticationResult = _authManager.CreateToken(user.Id, user.Email, userRoles);
+            var authenticationResponse = _authManager.Authenticate(user.Id, user.FirstName, user.LastName, user.Email, userRoles);
 
-            return authenticationResult;
+            return authenticationResponse;
         }
 
         public async Task ConfirmEmailAsync(string code, string email)

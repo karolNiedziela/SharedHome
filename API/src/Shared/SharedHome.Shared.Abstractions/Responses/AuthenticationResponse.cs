@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Infrastructure.Authentication
+﻿namespace SharedHome.Shared.Abstractions.Responses
 {
     public class AuthenticationResponse
     {
@@ -7,6 +7,10 @@
         public long Expiry { get; set; } = default!;
 
         public string UserId { get; set; } = default!;
+
+        public string FirstName { get; set; } = default!;
+
+        public string LastName { get; set; } = default!;
 
         public string Email { get; set; } = default!;
 
