@@ -41,6 +41,8 @@ namespace SharedHome.Shared
                 swagger.OperationFilter<SwaggerExcludeFilter>();
             });
 
+            services.Configure<GeneralSettings>(configuration.GetSection(GeneralSettings.SectionName));
+
             return services;
         }
 

@@ -1,10 +1,5 @@
-﻿using MimeKit;
+﻿using SendGrid.Helpers.Mail;
 using SharedHome.Shared.Abstractions.Email;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Email
 {
@@ -33,7 +28,7 @@ namespace SharedHome.Shared.Email
 
         public static EmailMessage WithRecipients(this EmailMessage emailMessage, IEnumerable<string> recipients)
         {
-            emailMessage.Recipients.AddRange(recipients.Select(recipient => MailboxAddress.Parse(recipient)));
+            emailMessage.ReplyTos.AddRange(recipients.Select(recipient => new EmailAddress(recipient)));
 
             return emailMessage;
         }
