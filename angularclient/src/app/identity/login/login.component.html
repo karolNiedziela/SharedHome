@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="d-flex flex-wrap justify-content-around align-items-center">
       <div class="col-md-6 mt-4 text-center welcome">
@@ -22,16 +22,30 @@
           <a>Forgot password?</a>
         </div>
         <hr class="mt-4" />
-        <!-- <div class="btn identity__link-btn"> -->
         <app-button
           [routerLink]="['/register']"
           class="d-grid col-12 mb-4"
           text="Sign up"
           type="submit"
         ></app-button>
-        <!-- </div> -->
       </div>
     </div>
   </div>
 </div>
+<hr class="mt-4" /> -->
+<form class="row g-3 mb-2 mt-2" [formGroup]="loginForm" (submit)="onSubmit()">
+  <app-email-input formControlName="email"> </app-email-input>
+  <app-password-input formControlName="password"></app-password-input>
+  <app-button class="d-grid col-12" text="Login" type="submit"></app-button>
+</form>
+<div class="col-12 text-center">
+  <a>Forgot password?</a>
+</div>
 <hr class="mt-4" />
+<!-- <div class="btn identity__link-btn"> -->
+<app-button
+  [routerLink]="['/identity/register']"
+  class="d-grid col-12 mb-4"
+  text="Sign up"
+  type="submit"
+></app-button>
