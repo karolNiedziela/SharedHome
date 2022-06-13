@@ -1,9 +1,9 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace SharedHome.Shared.Filters
+namespace SharedHome.Api.Swagger.Filters
 {
-    public class SwaggerExcludeFilter : ISchemaFilter
+    public class SwaggerExcludeSchemaFilter : ISchemaFilter
     {
         private List<string> _excludedProperties = new List<string> { "personId" };
 

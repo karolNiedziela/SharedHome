@@ -1,5 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
-using SharedHome.Shared.Filters;
+using SharedHome.Api.Swagger.Filters;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 
@@ -51,8 +51,8 @@ namespace SharedHome.Api.Extensions
 
                 options.ExampleFilters();
 
-                //options.OperationFilter<SwaggerExcludeFilter>();
-                options.SchemaFilter<SwaggerExcludeFilter>();
+                options.SchemaFilter<SwaggerExcludeSchemaFilter>();
+                options.OperationFilter<SwaggerExcludeOperationFilter>();
             });
 
             services.AddSwaggerExamplesFromAssemblyOf<Program>();
