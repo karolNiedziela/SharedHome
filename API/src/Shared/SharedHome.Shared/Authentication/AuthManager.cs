@@ -22,6 +22,7 @@ namespace SharedHome.Shared.Authentication
 
         public AuthenticationResponse Authenticate(string userId, string firstName, string lastName, string email, IEnumerable<string> roles)
         {
+
             var now = _time.CurrentDate();
 
             var jwtClaims = new List<Claim>
