@@ -43,6 +43,11 @@ namespace SharedHome.Api.Controllers
             return Ok(shoppingLists);
         }
 
+        /// <summary>
+        /// Add new shopping list
+        /// </summary>
+        /// <response code="200">Add new shopping list</response>
+        /// <response code="400">Unable to create shopping list due to validation error</response>
         [HttpPost]
         public async Task<IActionResult> AddShoppingList([FromBody] AddShoppingList command)
         {

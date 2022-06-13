@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using Serilog;
+using SharedHome.Api.Extensions;
 using SharedHome.Application;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
@@ -49,18 +50,13 @@ try
         options.SupportedUICultures = supportedCultures;
     });
 
-    builder.Services.AddCors(options =>
-    {
-        options.AddPolicy(name: "Origin",
-                          policy =>
-                          {
-                              policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200");
-                          });
-    });
 
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddShared(builder.Configuration);
+
+    builder.Services.AddApi();
+
 
     builder.Services.AddRouting(options =>
     {
