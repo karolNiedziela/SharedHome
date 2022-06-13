@@ -34,7 +34,7 @@ namespace SharedHome.Shared.Authentication
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = true,
                     ValidIssuer = jwtSettings.Issuer,
-                    ValidateAudience = true,
+                    ValidateAudience = false,
                     ValidAudience = jwtSettings.Audience,
                     RequireExpirationTime = true,
                     ValidateLifetime = true,

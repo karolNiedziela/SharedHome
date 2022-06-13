@@ -43,7 +43,9 @@ namespace SharedHome.Shared.Authentication
                 claims: jwtClaims,
                 notBefore: now,
                 expires: expires,
-                signingCredentials: signingCredentials
+                signingCredentials: signingCredentials,
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience
             );
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
