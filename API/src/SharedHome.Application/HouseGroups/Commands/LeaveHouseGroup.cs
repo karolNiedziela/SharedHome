@@ -4,12 +4,10 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.HouseGroups.Commands
 {
-    public class LeaveHouseGroup : IAuthorizeRequest, ICommand<Unit>
+    public class LeaveHouseGroup : AuthorizeRequest, ICommand<Unit>
     {
         public int HouseGroupId { get; set; }
 
         public string NewOwnerId { get; set; } = default!;
-
-        public string? PersonId { get; set; }
     }
 }

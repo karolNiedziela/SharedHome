@@ -4,12 +4,10 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public class DeleteShoppingListProduct : IAuthorizeRequest, ICommand<Unit>
+    public class DeleteShoppingListProduct : AuthorizeRequest, ICommand<Unit>
     {
          public int ShoppingListId { get; set; }
 
          public string ProductName { get; set; } = default!;
-
-        public string? PersonId { get; set; }
     }
 }

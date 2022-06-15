@@ -5,10 +5,8 @@ using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.Bills.Queries
 {
-    public class GetMonthlyBillCostByYear : IAuthorizeRequest, IQuery<Response<List<BillMonthlyCostDto>>>
+    public class GetMonthlyBillCostByYear : AuthorizeRequest, IQuery<Response<List<BillMonthlyCostDto>>>
     {
         public int? Year { get; set; }
-
-        public string? PersonId { get; set; }
     }
 }

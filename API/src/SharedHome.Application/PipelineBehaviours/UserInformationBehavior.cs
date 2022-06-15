@@ -16,7 +16,7 @@ namespace SharedHome.Application.PipelineBehaviours
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            if (request is IAuthorizeRequest command)
+            if (request is AuthorizeRequest command)
             {
                 command.PersonId = _currentUser.UserId;
             }

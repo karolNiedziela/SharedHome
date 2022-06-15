@@ -2,7 +2,7 @@
 
 namespace SharedHome.Shared.Abstractions.Queries
 {
-    public class PagedQuery<TResponse> : IPagedQuery<Paged<TResponse>>
+    public class AuthorizedPagedQuery<TResponse> : AuthorizeRequest, IPagedQuery<Paged<TResponse>>
     {
         public int PageNumber { get; set; }
 
