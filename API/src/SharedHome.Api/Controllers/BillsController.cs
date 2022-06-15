@@ -122,9 +122,14 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
-        /// <summary>
-        /// Delete bill
-        /// </summary>
+        [HttpPut]
+        public async Task<IActionResult> UpdateBillAsync([FromBody] UpdateBill command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
         [HttpDelete("{billId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
