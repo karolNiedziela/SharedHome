@@ -14,7 +14,7 @@ namespace SharedHome.Api.Controllers
         /// Returns shopping list by id
         /// </summary>
         /// <returns>Shopping list</returns>
-        [HttpGet("{id:int}")]
+        [HttpGet("{shoppingListId:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(int id)
@@ -151,7 +151,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Delete shopping list
         /// </summary>
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{shoppingListId:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteShoppingList([FromBody] DeleteShoppingList command)

@@ -135,6 +135,9 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Delete bill
+        /// </summary>
         [HttpDelete("{billId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
