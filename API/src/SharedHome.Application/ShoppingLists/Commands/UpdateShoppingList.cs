@@ -4,10 +4,8 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands
 {
-    public class UpdateShoppingList : IAuthorizeRequest, ICommand<Unit>
+    public class UpdateShoppingList : AuthorizeRequest, ICommand<Unit>
     {
-        public string? PersonId { get; set; }
-
         public int Id { get; set; }
 
         public string Name { get; set; } = default!;
