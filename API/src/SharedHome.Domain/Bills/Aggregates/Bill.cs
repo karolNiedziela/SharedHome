@@ -70,6 +70,14 @@ namespace SharedHome.Domain.Bills.Entities
             AddEvent(new BillDateOfPaymentChanged(Id, ServiceProvider, DateOfPayment));
         }
 
+        public void Update(BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, BillCost? cost)
+        {
+            BillType = billType;
+            ServiceProvider = serviceProvider;
+            DateOfPayment = dateOfPayment;
+            Cost = cost;
+        }
+
         private void IsAlreadyPaid()
         {
             if (IsPaid)
