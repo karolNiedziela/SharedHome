@@ -73,8 +73,17 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
+
         [HttpPatch("{billId}/changedateofpayment")]
         public async Task<IActionResult> ChangeBillDateOfPaymentAsync([FromBody] ChangeBillDateOfPayment command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateBillAsync([FromBody] UpdateBill command)
         {
             await Mediator.Send(command);
 
