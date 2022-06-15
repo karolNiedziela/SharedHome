@@ -4,7 +4,7 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Bills.Commands
 {
-    public class AddBill : IAuthorizeRequest, ICommand<Unit>
+    public class AddBill : AuthorizeRequest, ICommand<Unit>
     {
         public int BillType { get; set; }
 
@@ -13,7 +13,5 @@ namespace SharedHome.Application.Bills.Commands
         public DateTime DateOfPayment { get; set; }
 
         public decimal Cost { get; set; }
-
-        public string? PersonId { get; set; }
     }
 }

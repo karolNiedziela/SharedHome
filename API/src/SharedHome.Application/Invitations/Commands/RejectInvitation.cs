@@ -4,10 +4,8 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Invitations.Commands
 {
-    public class RejectInvitation : IAuthorizeRequest, ICommand<Unit>
+    public class RejectInvitation : AuthorizeRequest, ICommand<Unit>
     {
         public int HouseGroupId { get; set; }
-
-        public string? PersonId { get; set; }
     }
 }

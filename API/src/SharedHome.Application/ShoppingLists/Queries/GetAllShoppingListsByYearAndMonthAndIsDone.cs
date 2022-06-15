@@ -5,7 +5,7 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Queries
 {
-    public class GetAllShoppingListsByYearAndMonthAndIsDone : PagedQuery<ShoppingListDto>, IAuthorizeRequest
+    public class GetAllShoppingListsByYearAndMonthAndIsDone :  AuthorizedPagedQuery<ShoppingListDto>
     {
         public int? Year { get; set; }
 
@@ -13,7 +13,5 @@ namespace SharedHome.Application.ShoppingLists.Queries
 
         [BindRequired]
         public bool IsDone { get; set; }
-
-        public string? PersonId { get; set; }
     }
 }

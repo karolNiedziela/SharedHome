@@ -4,12 +4,10 @@ using SharedHome.Shared.Abstractions.Requests;
 
 namespace SharedHome.Application.Bills.Commands
 {
-    public class ChangeBillCost : IAuthorizeRequest, ICommand<Unit>
+    public class ChangeBillCost : AuthorizeRequest, ICommand<Unit>
     {
         public int BillId { get; set; }
 
         public decimal Cost { get; set; }
-
-        public string? PersonId { get; set; }
     }
 }

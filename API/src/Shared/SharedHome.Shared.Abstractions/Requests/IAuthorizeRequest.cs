@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SharedHome.Shared.Abstractions.Requests
 {
-    public interface IAuthorizeRequest
+    public abstract class AuthorizeRequest
     {
         [JsonIgnore]
         [SwaggerExclude]

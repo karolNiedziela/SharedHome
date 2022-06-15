@@ -15,8 +15,12 @@ namespace SharedHome.Api.Controllers
             _identityService = identityService;
         }
 
-        [HttpPost]
-        [Route("register")]
+        /// <summary>
+        /// Register new user
+        /// </summary>
+        [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var response = await _identityService.RegisterAsync(request);
@@ -24,8 +28,13 @@ namespace SharedHome.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("login")]
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <returns>Authentication result</returns>
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] LoginRequest request)
         {
             var authenticationResult = await _identityService.LoginAsync(request);
@@ -33,8 +42,10 @@ namespace SharedHome.Api.Controllers
             return Ok(authenticationResult);
         }
 
-        [HttpGet]
-        [Route("confirmemail")]
+        /// <summary>
+        /// Confirm email address
+        /// </summary>
+        [HttpGet("confirmemail")]
         public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string code)
         {
             if (code is null || string.IsNullOrWhiteSpace(code) || email is null || string.IsNullOrWhiteSpace(email))
