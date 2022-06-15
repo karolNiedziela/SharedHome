@@ -122,7 +122,12 @@ namespace SharedHome.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Update bill
+        /// </summary>
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateBillAsync([FromBody] UpdateBill command)
         {
             await Mediator.Send(command);

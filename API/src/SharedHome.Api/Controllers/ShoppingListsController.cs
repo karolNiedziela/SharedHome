@@ -138,6 +138,17 @@ namespace SharedHome.Api.Controllers
         }
 
         /// <summary>
+        /// Update shopping list
+        /// </summary>
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody]UpdateShoppingList command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        /// <summary>
         /// Delete shopping list
         /// </summary>
         [HttpDelete("{id:int}")]
