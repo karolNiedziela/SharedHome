@@ -6,89 +6,117 @@
   <fa-icon [icon]="barsIcon" class="menu_btn" (click)="toggleMenu()"></fa-icon>
 </div>
 <hr />
-<ul class="nav">
-  <li class="nav-item">
-    <a
-      href="#"
-      class="nav-link"
-      data-bs-toggle="tooltip"
-      data-bs-placement="right"
-      title="Shopping lists"
-      [routerLink]="['/']"
-      [routerLinkActive]="['active']"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <fa-icon [icon]="shoppingListsIcon"></fa-icon>
-      <span class="links_name">Shopping lists</span>
-    </a>
-  </li>
-  <hr />
-  <li class="nav-item">
-    <a
-      href="#"
-      class="nav-link link-dark"
-      data-bs-toggle="tooltip"
-      data-bs-placement="right"
-      title="Bills"
-      [routerLink]="['/bills']"
-      [routerLinkActive]="['active']"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <fa-icon [icon]="billsIcon"></fa-icon>
-      <span class="links_name">Bills</span>
-    </a>
-  </li>
-  <hr />
-  <li class="nav-item">
-    <a
-      href="#"
-      class="nav-link link-dark"
-      data-bs-toggle="tooltip"
-      data-bs-placement="right"
-      title="House group"
-    >
-      <fa-icon [icon]="houseGroupIcon"></fa-icon>
-      <span class="links_name">House group</span>
-    </a>
-  </li>
-  <hr />
-  <li class="nav-item">
-    <a
-      href="#"
-      class="nav-link link-dark"
-      data-bs-toggle="tooltip"
-      data-bs-placement="right"
-      title="Expenses"
-    >
-      <fa-icon [icon]="expensesIcon"></fa-icon>
-      <span class="links_name">Expenses</span>
-    </a>
-  </li>
-  <hr />
-  <li class="nav-item">
-    <a
-      href="#"
-      class="nav-link link-dark"
-      data-bs-toggle="tooltip"
-      data-bs-placement="right"
-      title="Invitations"
-    >
-      <fa-icon [icon]="invitationsIcon"></fa-icon>
-      <span class="links_name">Invitations</span>
-    </a>
-  </li>
-</ul>
-<hr />
-<div class="profile_content">
-  <div class="profile">
-    <div class="profile_name">Karol Niedziela</div>
-  </div>
-  <fa-icon
-    [icon]="logoutIcon"
-    data-bs-toggle="tooltip"
-    data-bs-placement="right"
-    title="Log out"
-    class="logout-icon"
-  ></fa-icon>
+<div class="nav_content">
+  <ul class="nav">
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Shopping lists"
+        [routerLink]="['/']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <fa-icon [icon]="shoppingListsIcon"></fa-icon>
+        <span class="links_name">Shopping lists</span>
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Bills"
+        [routerLink]="['/bills']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <fa-icon [icon]="billsIcon"></fa-icon>
+        <span class="links_name">Bills</span>
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="House group"
+      >
+        <fa-icon [icon]="houseGroupIcon"></fa-icon>
+        <span class="links_name">House group</span>
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Expenses"
+      >
+        <fa-icon [icon]="expensesIcon"></fa-icon>
+        <span class="links_name">Expenses</span>
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Invitations"
+      >
+        <fa-icon [icon]="invitationsIcon"></fa-icon>
+        <span class="links_name">Invitations</span>
+      </a>
+    </li>
+  </ul>
+  <ul class="nav">
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Notifications"
+      >
+        <fa-icon [icon]="notificationsIcon"></fa-icon>
+        <span class="links_name">Notifications</span>
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Settings"
+      >
+        <fa-icon [icon]="settingsIcon"></fa-icon>
+        <span class="links_name">Settings</span>
+      </a>
+    </li>
+    <hr />
+    <li class="nav-item">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        data-bs-toggle="tooltip"
+        data-bs-placement="right"
+        title="Log out"
+      >
+        <fa-icon [icon]="logoutIcon"></fa-icon>
+        <span class="links_name">Log out</span>
+      </a>
+    </li>
+  </ul>
 </div>
-<!-- </div> -->

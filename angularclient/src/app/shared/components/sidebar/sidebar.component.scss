@@ -40,54 +40,40 @@
     color: $l_primary_color;
   }
 
-  ul.nav {
-    margin-bottom: auto;
+  .nav_content {
+    display: flex;
     flex-direction: column;
+    height: 100%;
 
-    .nav-item {
-      position: relative;
-      width: 100%;
-      line-height: 30px;
-      text-align: center;
+    ul {
+      flex-direction: column;
 
-      a {
-        display: flex;
+      .nav-item {
+        position: relative;
+        width: 100%;
+        line-height: 30px;
+        text-align: center;
 
-        fa-icon {
-          text-align: center;
-          min-width: 30px;
-        }
+        a {
+          display: flex;
 
-        .links_name {
-          flex-grow: 1;
-          text-align: center;
-          opacity: 0;
-          pointer-events: none;
+          fa-icon {
+            text-align: center;
+            min-width: 30px;
+          }
+
+          .links_name {
+            flex-grow: 1;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+          }
         }
       }
     }
-  }
 
-  .profile_content {
-    display: flex;
-    justify-content: center;
-
-    .profile_name {
-      opacity: 0;
-    }
-
-    fa-icon {
-      position: absolute;
-      left: 50%;
-      font-size: 20px;
-      text-align: center;
-      min-width: 30px;
-      transform: translateX(-50%);
-    }
-
-    fa-icon:hover {
-      color: $l_primary_color;
-      cursor: pointer;
+    ul:first-child {
+      margin-bottom: auto;
     }
   }
 }
@@ -119,24 +105,6 @@
       }
     }
   }
-
-  .profile_content {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 20px;
-
-    .profile_name {
-      opacity: 1;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    fa-icon {
-      position: unset;
-      left: unset;
-    }
-  }
 }
 
 .nav-link {
@@ -160,4 +128,16 @@
 
 hr {
   color: $l_primary_color;
+}
+
+.tooltip {
+  .tooltip-arrow:before {
+    border-right-color: $l_primary_color;
+  }
+
+  .tooltip-inner {
+    background-color: $l_primary_color_light;
+    color: $l_black_color;
+    font-size: 14px;
+  }
 }

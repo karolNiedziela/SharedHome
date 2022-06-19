@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
   faBars,
+  faBell,
   faCartShopping,
   faChartColumn,
   faEnvelope,
   faFileInvoice,
+  faGear,
   faSignOut,
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
@@ -24,6 +26,8 @@ export class SidebarComponent implements OnInit {
   houseGroupIcon = faUserGroup;
   expensesIcon = faChartColumn;
   invitationsIcon = faEnvelope;
+  notificationsIcon = faBell;
+  settingsIcon = faGear;
   logoutIcon = faSignOut;
 
   private tooltipList = new Array<any>();
@@ -56,7 +60,6 @@ export class SidebarComponent implements OnInit {
   }
 
   hideAllTooltips(): void {
-    this.tooltipList;
     for (const tooltip of this.tooltipList) {
       tooltip.dispose();
     }
