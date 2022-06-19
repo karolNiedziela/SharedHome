@@ -1,0 +1,94 @@
+<!-- <div class="sidebar d-flex flex-column"> -->
+<div class="logo_content">
+  <div class="logo">
+    <div class="logo_name">Shared Home</div>
+  </div>
+  <fa-icon [icon]="barsIcon" class="menu_btn" (click)="toggleMenu()"></fa-icon>
+</div>
+<hr />
+<ul class="nav">
+  <li class="nav-item">
+    <a
+      href="#"
+      class="nav-link"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title="Shopping lists"
+      [routerLink]="['/']"
+      [routerLinkActive]="['active']"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <fa-icon [icon]="shoppingListsIcon"></fa-icon>
+      <span class="links_name">Shopping lists</span>
+    </a>
+  </li>
+  <hr />
+  <li class="nav-item">
+    <a
+      href="#"
+      class="nav-link link-dark"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title="Bills"
+      [routerLink]="['/bills']"
+      [routerLinkActive]="['active']"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <fa-icon [icon]="billsIcon"></fa-icon>
+      <span class="links_name">Bills</span>
+    </a>
+  </li>
+  <hr />
+  <li class="nav-item">
+    <a
+      href="#"
+      class="nav-link link-dark"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title="House group"
+    >
+      <fa-icon [icon]="houseGroupIcon"></fa-icon>
+      <span class="links_name">House group</span>
+    </a>
+  </li>
+  <hr />
+  <li class="nav-item">
+    <a
+      href="#"
+      class="nav-link link-dark"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title="Expenses"
+    >
+      <fa-icon [icon]="expensesIcon"></fa-icon>
+      <span class="links_name">Expenses</span>
+    </a>
+  </li>
+  <hr />
+  <li class="nav-item">
+    <a
+      href="#"
+      class="nav-link link-dark"
+      data-bs-toggle="tooltip"
+      data-bs-placement="right"
+      title="Invitations"
+    >
+      <fa-icon [icon]="invitationsIcon"></fa-icon>
+      <span class="links_name">Invitations</span>
+    </a>
+  </li>
+</ul>
+<hr />
+<div class="profile_content">
+  <div class="profile">
+    <div class="profile_name">Karol Niedziela</div>
+  </div>
+  <fa-icon
+    [icon]="logoutIcon"
+    data-bs-toggle="tooltip"
+    data-bs-placement="right"
+    title="Log out"
+    class="logout-icon"
+  ></fa-icon>
+</div>
+<!-- </div> -->

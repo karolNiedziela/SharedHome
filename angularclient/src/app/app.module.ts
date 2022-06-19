@@ -1,3 +1,4 @@
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { AuthenticationResultInterceptor } from './core/interceptors/authentication-result.interceptor';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { RegisterComponent } from './identity/register/register.component';
 import { ButtonComponent } from './shared/components/button/button.component';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
-import { HomeComponent } from './home/home.component';
 import { TextInputComponent } from './shared/components/inputs/text-input/text-input.component';
 import { EmailInputComponent } from './shared/components/inputs/email-input/email-input.component';
 import { PasswordInputComponent } from './shared/components/inputs/password-input/password-input.component';
@@ -19,6 +19,8 @@ import { PasswordsFormComponent } from './shared/components/forms/passwords-form
 import { EmailConfirmationComponent } from './identity/email-confirmation/email-confirmation.component';
 import { EmailConfirmedComponent } from './identity/email-confirmed/email-confirmed.component';
 import { IdentityComponent } from './identity/identity.component';
+import { BillsComponent } from './bills/bills.component';
+import { ShoppingListsComponent } from './shopping-lists/shopping-lists.component';
 
 @NgModule({
   declarations: [
@@ -27,13 +29,15 @@ import { IdentityComponent } from './identity/identity.component';
     LoginComponent,
     RegisterComponent,
     ButtonComponent,
-    HomeComponent,
     TextInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
     PasswordsFormComponent,
     EmailConfirmationComponent,
     EmailConfirmedComponent,
+    SidebarComponent,
+    BillsComponent,
+    ShoppingListsComponent,
   ],
   imports: [
     BrowserModule,

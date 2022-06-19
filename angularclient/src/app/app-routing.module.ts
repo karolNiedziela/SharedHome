@@ -1,4 +1,5 @@
-import { HomeComponent } from './home/home.component';
+import { ShoppingListsComponent } from './shopping-lists/shopping-lists.component';
+import { BillsComponent } from './bills/bills.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './identity/login/login.component';
@@ -27,7 +28,8 @@ const routes: Routes = [
     path: 'emailconfirmed',
     component: EmailConfirmedComponent,
   },
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: ShoppingListsComponent },
+  { path: 'bills', component: BillsComponent },
 ];
 
 @NgModule({

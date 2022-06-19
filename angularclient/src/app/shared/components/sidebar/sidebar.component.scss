@@ -1,0 +1,163 @@
+@import "/src/assets/_variables.scss";
+
+.sidebar {
+  width: 80px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 4px 8px 12px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.5s ease;
+
+  .logo_content .logo {
+    display: flex;
+    width: 90%;
+    height: 40px;
+    font-size: 25px;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    justify-content: center;
+  }
+
+  .menu_btn {
+    position: absolute;
+    color: $l_black_color;
+    left: 50%;
+    top: 2px;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    cursor: pointer;
+    transform: translateX(-50%);
+    font-size: 20px;
+  }
+
+  .menu_btn:hover {
+    color: $l_primary_color;
+  }
+
+  ul.nav {
+    margin-bottom: auto;
+    flex-direction: column;
+
+    .nav-item {
+      position: relative;
+      width: 100%;
+      line-height: 30px;
+      text-align: center;
+
+      a {
+        display: flex;
+
+        fa-icon {
+          text-align: center;
+          min-width: 30px;
+        }
+
+        .links_name {
+          flex-grow: 1;
+          text-align: center;
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  .profile_content {
+    display: flex;
+    justify-content: center;
+
+    .profile_name {
+      opacity: 0;
+    }
+
+    fa-icon {
+      position: absolute;
+      left: 50%;
+      font-size: 20px;
+      text-align: center;
+      min-width: 30px;
+      transform: translateX(-50%);
+    }
+
+    fa-icon:hover {
+      color: $l_primary_color;
+      cursor: pointer;
+    }
+  }
+}
+
+.sidebar.active {
+  width: 240px;
+
+  .logo_content {
+    .logo {
+      opacity: 1;
+      pointer-events: none;
+      transition: all 0.5s ease;
+    }
+  }
+
+  .menu_btn {
+    left: 90%;
+  }
+
+  ul.nav {
+    .nav-item {
+      a {
+        display: flex;
+
+        .links_name {
+          opacity: 1;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  .profile_content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 20px;
+
+    .profile_name {
+      opacity: 1;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    fa-icon {
+      position: unset;
+      left: unset;
+    }
+  }
+}
+
+.nav-link {
+  transition: none;
+  color: $l_black_color;
+}
+
+.nav-link:hover {
+  background: $l_primary_color_light;
+  color: $l_black_color !important;
+  border-radius: 12px !important;
+}
+
+.nav-link.active {
+  background: $l_primary_color !important;
+  border-radius: 12px !important;
+}
+.nav-link.active {
+  color: $l_white_color !important;
+}
+
+hr {
+  color: $l_primary_color;
+}
