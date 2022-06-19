@@ -1,9 +1,17 @@
 .home_content {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   left: 80px;
   width: calc(100% - 80px);
   transition: all 0.5s ease;
+  padding-top: 10px;
+  padding-left: 15px;
+
+  app-footer {
+    margin-top: auto;
+  }
 }
 
 .sidebar.active ~ .home_content {

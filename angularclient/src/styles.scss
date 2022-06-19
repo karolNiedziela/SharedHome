@@ -12,16 +12,15 @@ html {
   width: 100%;
 }
 
-body {
+body,
+my-app {
   min-height: 100vh;
   width: 100%;
-  overflow: hidden;
   position: relative;
 }
 
 a {
   text-decoration: none;
-  color: $l_white_color;
 }
 
 a:hover {

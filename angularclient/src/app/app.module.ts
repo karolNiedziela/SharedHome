@@ -21,6 +21,7 @@ import { EmailConfirmedComponent } from './identity/email-confirmed/email-confir
 import { IdentityComponent } from './identity/identity.component';
 import { BillsComponent } from './bills/bills.component';
 import { ShoppingListsComponent } from './shopping-lists/shopping-lists.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ShoppingListsComponent } from './shopping-lists/shopping-lists.componen
     SidebarComponent,
     BillsComponent,
     ShoppingListsComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

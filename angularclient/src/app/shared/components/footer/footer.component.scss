@@ -1,0 +1,27 @@
+@import "/src/assets/_variables.scss";
+
+.footer {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 16px 20px 16px 16px;
+  border-top: 1px solid lightgrey;
+
+  &__company {
+    width: 90%;
+  }
+
+  &__icons {
+    width: 10%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 20px;
+  }
+}
+
+a {
+  color: $l_black_color;
+}
