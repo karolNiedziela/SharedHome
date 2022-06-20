@@ -22,6 +22,7 @@ import { IdentityComponent } from './identity/identity.component';
 import { BillsComponent } from './bills/bills.component';
 import { ShoppingListsComponent } from './shopping-lists/shopping-lists.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
     HttpClientModule,
     RouterModule,
     FontAwesomeModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

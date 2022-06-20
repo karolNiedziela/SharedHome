@@ -1,8 +1,8 @@
 import { Component, forwardRef, OnDestroy, OnInit, Self } from '@angular/core';
 import {
   ControlValueAccessor,
-  FormControl,
-  FormGroup,
+  UntypedFormControl,
+  UntypedFormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validators,
@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
   ],
 })
 export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
-  passwordForm!: FormGroup;
+  passwordForm!: UntypedFormGroup;
   subscriptions: Subscription[] = [];
   eyeSlashIcon: any = faEyeSlash;
   eyeIcon: any = faEye;
@@ -40,13 +40,13 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
   confirmPasswordTextField: boolean = false;
 
   constructor() {
-    this.passwordForm = new FormGroup(
+    this.passwordForm = new UntypedFormGroup(
       {
-        password: new FormControl('', [
+        password: new UntypedFormControl('', [
           Validators.required,
           passwordStrengthValidator,
         ]),
-        confirmPassword: new FormControl('', [
+        confirmPassword: new UntypedFormControl('', [
           Validators.required,
           passwordStrengthValidator,
         ]),
@@ -111,7 +111,7 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
     this.confirmPasswordTextField = !this.confirmPasswordTextField;
   }
 
-  validate(_: FormControl) {
+  validate(_: UntypedFormControl) {
     return this.passwordForm.valid ? null : { passwords: { valid: false } };
   }
 
