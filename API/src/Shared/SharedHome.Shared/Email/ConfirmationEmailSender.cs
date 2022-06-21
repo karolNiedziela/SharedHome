@@ -13,8 +13,8 @@ namespace SharedHome.Shared.Email
 
         private readonly Dictionary<string, string> Replacements = new();
 
-        public ConfirmationEmailSender(IOptions<SendGridSettings> sendGridOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralSettings> generalOptions) 
-            : base(sendGridOptions, logger, localizerFactory)
+        public ConfirmationEmailSender(IOptions<EmailSettings> emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralSettings> generalOptions) 
+            : base(emailOptions, logger, localizerFactory)
         {
             _generalSettings = generalOptions.Value;
         }

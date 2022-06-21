@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using SendGrid.Helpers.Mail;
+﻿using MimeKit;
 
 namespace SharedHome.Shared.Abstractions.Email
 {
     public class EmailMessage
     {
-        public List<EmailAddress> ReplyTos { get; set; } = new();
+        public List<MailboxAddress> ReplyTos { get; set; } = new();
 
         public string Subject { get; set; } = default!;
 

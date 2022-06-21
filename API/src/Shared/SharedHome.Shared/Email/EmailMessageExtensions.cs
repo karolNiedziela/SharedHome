@@ -1,4 +1,4 @@
-﻿using SendGrid.Helpers.Mail;
+﻿using MimeKit;
 using SharedHome.Shared.Abstractions.Email;
 
 namespace SharedHome.Shared.Email
@@ -26,9 +26,9 @@ namespace SharedHome.Shared.Email
             return emailMessage;
         }
 
-        public static EmailMessage WithRecipients(this EmailMessage emailMessage, IEnumerable<string> recipients)
+        public static EmailMessage WithRecipients(this EmailMessage emailMessage, IEnumerable<string> replyTos)
         {
-            emailMessage.ReplyTos.AddRange(recipients.Select(recipient => new EmailAddress(recipient)));
+            emailMessage.ReplyTos.AddRange(replyTos.Select(replyTo => MailboxAddress.Parse(replyTo)));
 
             return emailMessage;
         }
