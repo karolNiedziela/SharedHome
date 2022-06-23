@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Shared.Options;
 
 namespace SharedHome.Infrastructure.EF.Initializers
 {

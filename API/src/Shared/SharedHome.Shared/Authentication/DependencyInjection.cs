@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SharedHome.Shared.Abstractions.Authentication;
-using SharedHome.Shared.Options;
+using SharedHome.Shared.Settings;
 using System.Text;
 
 namespace SharedHome.Shared.Authentication
@@ -13,7 +13,7 @@ namespace SharedHome.Shared.Authentication
         public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
-            var jwtSettings = configuration.GetOptions<JwtSettings>(JwtSettings.SectionName);
+            var jwtSettings = configuration.GetSettings<JwtSettings>(JwtSettings.SectionName);
 
             services.AddSingleton<IAuthManager, AuthManager>();
 

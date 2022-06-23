@@ -12,7 +12,7 @@ using SharedHome.Infrastructure.EF.Initializers;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Infrastructure.EF.Repositories;
-using SharedHome.Shared.Options;
+using SharedHome.Shared.Settings;
 
 namespace SharedHome.Infrastructure.EF
 {
@@ -31,7 +31,7 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IInvitationReadService, InvitationReadService>();
             services.AddScoped<IHouseGroupReadService, HouseGroupService>();
 
-            var mySQLOptions = configuration.GetOptions<MySQLOptions>(MySQLOptions.SQLOptionsName);
+            var mySQLOptions = configuration.GetSettings<MySQLSettings>(MySQLSettings.SectionName);
 
             services.AddDbContext<WriteSharedHomeDbContext>(options =>
             {
