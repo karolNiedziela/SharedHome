@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Api.Constants;
 using SharedHome.Application.HouseGroups.Commands;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
@@ -44,7 +45,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Delete  house group
         /// </summary>
-        [HttpDelete("{houseGroupId:int}/members/{personToRemoveId:guid}")]
+        [HttpDelete(ApiRoutes.HouseGroups.RemoveMember)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RemoveHouseGroupMemberAsync([FromBody] RemoveHouseGroupMember command)
@@ -57,7 +58,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Change owner of house group
         /// </summary>
-        [HttpPatch("{houseGroupId:int}/handownerroleover")]
+        [HttpPatch(ApiRoutes.HouseGroups.HandOwnerRoleOver)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> HandOwnerRoleOverAsync([FromBody] HandOwnerRoleOver command)

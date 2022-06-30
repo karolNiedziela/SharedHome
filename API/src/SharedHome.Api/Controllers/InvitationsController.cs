@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Api.Constants;
 using SharedHome.Application.Invitations.Commands;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
@@ -12,7 +13,7 @@ namespace SharedHome.Api.Controllers
         /// Returns invitation by house group id
         /// </summary>
         /// <returns>Invitation</returns>
-        [HttpGet("{houseGroupId:int}")]
+        [HttpGet(ApiRoutes.Invitations.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Response<InvitationDto>>> GetAsync(int houseGroupId)
@@ -61,7 +62,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Accept invitation
         /// </summary>
-        [HttpPatch("accept")]
+        [HttpPatch(ApiRoutes.Invitations.Accept)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AcceptInvitationAsync([FromBody] AcceptInvitation command)
         {
@@ -73,7 +74,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Reject invitation
         /// </summary>
-        [HttpPatch("reject")]
+        [HttpPatch(ApiRoutes.Invitations.Reject)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> RejectInvitationAsync([FromBody] RejectInvitation command)
         {
@@ -85,7 +86,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Delete shopping list
         /// </summary>
-        [HttpDelete("{houseGroupId:int}")]
+        [HttpDelete(ApiRoutes.Invitations.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteInvitationAsync([FromBody] DeleteInvitation command)

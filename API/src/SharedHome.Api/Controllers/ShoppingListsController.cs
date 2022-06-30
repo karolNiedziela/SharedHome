@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedHome.Api.Constants;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
@@ -14,14 +15,14 @@ namespace SharedHome.Api.Controllers
         /// Returns shopping list by id
         /// </summary>
         /// <returns>Shopping list</returns>
-        [HttpGet("{shoppingListId:int}")]
+        [HttpGet(ApiRoutes.ShoppingLists.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(int id)
+        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(int shoppingListId)
         {
             var shoppingList = await Mediator.Send(new GetShoppingList
             {
-                Id = id
+                Id = shoppingListId
             });
 
             if (shoppingList.Data is null)
@@ -49,7 +50,7 @@ namespace SharedHome.Api.Controllers
         /// Returns monthly expenses from year
         /// </summary>
         /// <returns>Months with expenses</returns>
-        [HttpGet("monthlycost")]
+        [HttpGet(ApiRoutes.ShoppingLists.GetMonthlyCost)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Response<List<ShoppingListMonthlyCostDto>>>> GetMonthlyCostByYearAsync([FromQuery] GetMonthlyShoppingListCostsByYear query)
         {
@@ -75,7 +76,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Add shopping list product to shopping list
         /// </summary>
-        [HttpPut("{shoppingListId:int}/products")]
+        [HttpPut(ApiRoutes.ShoppingLists.AddShoppingListProduct)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddShoppingListProduct([FromBody] AddShoppingListProduct command)
@@ -88,7 +89,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Purchase shopping list product
         /// </summary>
-        [HttpPatch("{shoppingListId:int}/products/{productName}/purchase")]
+        [HttpPatch(ApiRoutes.ShoppingLists.PurchaseShoppingList)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PurchaseShoppingListProduct([FromBody] PurchaseProduct command)
@@ -101,7 +102,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Cancel purchase shopping list product
         /// </summary>
-        [HttpPatch("{shoppingListId:int}/products/{productName}/cancelpurchase")]
+        [HttpPatch(ApiRoutes.ShoppingLists.CancelPurchaseOfProduct)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CancePurchaseOfProduct([FromBody] CancelPurchaseOfProduct command)
@@ -114,7 +115,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Change price of shopping list product
         /// </summary>
-        [HttpPatch("{shoppingListId:int}/products/{productName}/changeprice")]
+        [HttpPatch(ApiRoutes.ShoppingLists.ChangePriceOfProduct)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ChangePriceOfProduct([FromBody] ChangePriceOfProduct command)
@@ -127,7 +128,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Set status of shopping list
         /// </summary>
-        [HttpPatch("{shoppingListId:int}/setisdone")]
+        [HttpPatch(ApiRoutes.ShoppingLists.SetIsDone)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SetIsDone([FromBody]SetIsShoppingListDone command)
@@ -151,12 +152,15 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Delete shopping list
         /// </summary>
-        [HttpDelete("{shoppingListId:int}")]
+        [HttpDelete(ApiRoutes.ShoppingLists.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteShoppingList([FromBody] DeleteShoppingList command)
+        public async Task<IActionResult> DeleteShoppingList(int shoppingListId)
         {
-            await Mediator.Send(command);
+            await Mediator.Send(new DeleteShoppingList
+            {
+                ShoppingListId = shoppingListId
+            });
 
             return NoContent();
         }
@@ -164,12 +168,16 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Delete shopping list product
         /// </summary>
-        [HttpDelete("{shoppingListId:int}/products/{productName}")]
+        [HttpDelete(ApiRoutes.ShoppingLists.DeleteShoppingListProduct)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteShoppingListProduct([FromBody] DeleteShoppingListProduct command)
+        public async Task<IActionResult> DeleteShoppingListProduct(int shoppingListId, string productName)
         {
-            await Mediator.Send(command);
+            await Mediator.Send(new DeleteShoppingListProduct
+            {
+                ProductName = productName,
+                ShoppingListId = shoppingListId
+            });
 
             return NoContent();
         }

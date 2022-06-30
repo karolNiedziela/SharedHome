@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Api.Constants;
 using SharedHome.Infrastructure.Identity.Models;
 using SharedHome.Infrastructure.Identity.Services;
 using SharedHome.Shared.Abstractions.Responses;
@@ -18,7 +19,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Register new user
         /// </summary>
-        [HttpPost("register")]
+        [HttpPost(ApiRoutes.Identity.Register)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -32,7 +33,7 @@ namespace SharedHome.Api.Controllers
         /// Login
         /// </summary>
         /// <returns>Authentication result</returns>
-        [HttpPost("login")]
+        [HttpPost(ApiRoutes.Identity.Login)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] LoginRequest request)
@@ -45,7 +46,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Confirm email address
         /// </summary>
-        [HttpGet("confirmemail")]
+        [HttpGet(ApiRoutes.Identity.ConfirmEmail)]
         public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string code)
         {
             if (code is null || string.IsNullOrWhiteSpace(code) || email is null || string.IsNullOrWhiteSpace(email))

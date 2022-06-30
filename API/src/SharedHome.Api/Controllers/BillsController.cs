@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Api.Constants;
 using SharedHome.Application.Bills.Commands;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
@@ -12,7 +13,7 @@ namespace SharedHome.Api.Controllers
         /// Returns bill by id
         /// </summary>
         /// <returns>Bill</returns>
-        [HttpGet("{billId:int}")]
+        [HttpGet(ApiRoutes.Bills.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Response<BillDto>>> GetBillAsync(int billId)
@@ -47,7 +48,7 @@ namespace SharedHome.Api.Controllers
         /// Returns monthly expenses from year
         /// </summary>
         /// <returns>Months with expenses</returns>
-        [HttpGet("monthlycost")]
+        [HttpGet(ApiRoutes.Bills.GetMonthlyCost)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<List<BillMonthlyCostDto>>> GetMonthlyCostByYearAsync([FromQuery] GetMonthlyBillCostByYear query)
         {
@@ -73,7 +74,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Pay for bill
         /// </summary>
-        [HttpPatch("{billId}/pay")]
+        [HttpPatch(ApiRoutes.Bills.PayForBill)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PayForBillAsync([FromBody] PayForBill command)
@@ -86,7 +87,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Change cost of bill
         /// </summary>
-        [HttpPatch("{billId}/changecost")]
+        [HttpPatch(ApiRoutes.Bills.ChangeBillCost)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ChangeBillCostAsync([FromBody] ChangeBillCost command)
@@ -99,7 +100,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Cancel payment of bill
         /// </summary>
-        [HttpPatch("{billId}/cancelpayment")]
+        [HttpPatch(ApiRoutes.Bills.CancelPayment)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CancelBillPaymentAsync([FromBody] CancelBillPayment command)
@@ -112,7 +113,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Change bill date of payment
         /// </summary>
-        [HttpPatch("{billId}/changedateofpayment")]
+        [HttpPatch(ApiRoutes.Bills.ChangeDateOfPayment)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> ChangeBillDateOfPaymentAsync([FromBody] ChangeBillDateOfPayment command)
@@ -138,12 +139,15 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Delete bill
         /// </summary>
-        [HttpDelete("{billId}")]
+        [HttpDelete(ApiRoutes.Bills.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteBillAsync([FromBody] DeleteBill command)
+        public async Task<IActionResult> DeleteBillAsync(int billId)
         {
-            await Mediator.Send(command);
+            await Mediator.Send(new DeleteBill
+            {
+                BillId = billId
+            });
 
             return NoContent();
         }
