@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SharedHome.Infrastructure.EF.Contexts;
@@ -17,6 +19,13 @@ namespace SharedHome.Infrastructure.EF
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
+
+            var webApplication = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+
+            if (webApplication.EnvironmentName == "Test")
+            {
+                return;
+            }
 
             var writeDbContext = scope.ServiceProvider.GetRequiredService<WriteSharedHomeDbContext>();
 
