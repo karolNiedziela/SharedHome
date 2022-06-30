@@ -1,4 +1,5 @@
 import {
+  faCheck,
   faCircleInfo,
   faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 export class ShoppingListsComponent implements OnInit {
   previewIcon = faCircleInfo;
   moreOptionsIcon = faEllipsisVertical;
+  boughtIcon = faCheck;
 
   constructor() {}
 
