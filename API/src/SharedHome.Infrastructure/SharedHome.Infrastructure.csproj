@@ -22,4 +22,8 @@
     <ProjectReference Include="..\SharedHome.Application\SharedHome.Application.csproj" />  
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="SharedHome.IntegrationTests" />
+  </ItemGroup>
+
 </Project>
