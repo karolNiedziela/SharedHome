@@ -1,9 +1,9 @@
-import { environment } from './../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationResponse } from 'app/core/models/authenticationResponse';
+import { environment } from 'environments/environment';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { AuthenticationResponse } from '../models/authenticationResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class AuthenticationService {
 
   public authenticationResponse: Observable<AuthenticationResponse>;
 
-  private identityUrl: string;
+  private identityUrl: string = `${environment.apiUrl}/identity`;
 
   constructor(
     private router: Router,
@@ -27,8 +27,6 @@ export class AuthenticationService {
 
     this.authenticationResponse =
       this.authenticationResponseSubject.asObservable();
-
-    this.identityUrl = `${environment.apiUrl}/identity`;
   }
 
   public get authenticationResponseValue(): AuthenticationResponse {

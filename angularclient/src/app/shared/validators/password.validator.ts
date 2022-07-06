@@ -1,17 +1,16 @@
-import { AbstractControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { ValidatorError } from './../../core/models/validator-error';
+import { AbstractControl } from '@angular/forms';
 
 export function passwordStrengthValidator(
   control: AbstractControl
-): any | null {
+): ValidatorError | null {
   // 6 characters and 1 lowercase
   const passwordRegexp: RegExp = /^.(?=.{6,}$)(?=.*[a-z])/;
   return passwordRegexp.test(control.value)
     ? null
     : {
-        invalidFormat: {
-          message:
-            'Password requires must contain at least 6 characters and one lowercase.',
-        },
+        invalidFormat:
+          'Password requires must contain at least 6 characters and one lowercase.',
       };
 }
 

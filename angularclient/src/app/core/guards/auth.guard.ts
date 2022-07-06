@@ -1,4 +1,3 @@
-import { AuthenticationService } from './../services/authentication.service';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -7,6 +6,7 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
+import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',

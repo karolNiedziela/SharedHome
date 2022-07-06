@@ -1,6 +1,6 @@
-import { AuthenticationResponse } from './core/models/authenticationResponse';
 import { Component } from '@angular/core';
-import { AuthenticationService } from './core/services/authentication.service';
+import { AuthenticationResponse } from './core/models/authenticationResponse';
+import { AuthenticationService } from './modules/identity/services/authentication.service';
 
 @Component({
   selector: 'app-root',

@@ -1,4 +1,3 @@
-import { AuthenticationResponse } from './../models/authenticationResponse';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -6,7 +5,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',

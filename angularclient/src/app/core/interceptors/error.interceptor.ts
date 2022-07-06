@@ -1,4 +1,3 @@
-import { AuthenticationService } from './../services/authentication.service';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -7,6 +6,7 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

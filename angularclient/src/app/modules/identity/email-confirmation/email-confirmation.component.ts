@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from 'app/core/services/authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -28,7 +28,7 @@ export class EmailConfirmationComponent implements OnInit {
       next: () => {
         this.router.navigate(['emailconfirmed']);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.log('error in logging');
         console.log(error);
       },

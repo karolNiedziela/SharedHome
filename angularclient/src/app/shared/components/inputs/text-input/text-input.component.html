@@ -9,6 +9,7 @@
     [ngClass]="{
       'is-invalid': controlDir?.control?.touched && !controlDir.control?.valid
     }"
+    [value]="value"
   />
   <label class="sharedhome__label">{{ labelText }}</label>
   <div
@@ -25,6 +26,10 @@
     <div *ngIf="controlDir.control?.hasError('maxlength')">
       This field can contain maximum
       {{ controlDir.control?.errors?.['maxlength'].requiredLength }} characters.
+    </div>
+
+    <div *ngIf="controlDir.control?.hasError('invalidFormat')">
+      {{ controlDir.control?.errors?.['invalidFormat'] }}
     </div>
   </div>
 </div>

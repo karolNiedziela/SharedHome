@@ -9,6 +9,7 @@ import { Component, Input, OnInit, Self } from '@angular/core';
 export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
+  @Input() value: string = '';
   disabled!: boolean;
 
   onChanged: (value: any) => void = () => {};
