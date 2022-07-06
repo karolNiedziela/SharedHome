@@ -12,10 +12,13 @@
   </div>
   <div class="shopping-lists">
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-6">
+      <div
+        class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+        *ngFor="let shoppingList of shoppingLists"
+      >
         <div class="card shopping-list">
           <div class="card-header">
-            <h3 class="card-title">Biedronka</h3>
+            <h3 class="card-title">{{ shoppingList.name }}</h3>
             <fa-icon
               [icon]="moreOptionsIcon"
               class="shopping-lists__more-options-icon"
@@ -30,244 +33,48 @@
             </ul>
           </div>
           <ul class="list-group list-group-flush shopping-lists__products">
-            <li class="list-group-item product">
+            <li
+              class="list-group-item product"
+              *ngFor="let product of shoppingList.products | slice: 0:3"
+            >
               <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
+                <h4>{{ product.name }}</h4>
+                <h5
+                  class="bought-status"
+                  *ngIf="product.isBought; else notBought"
+                >
                   <fa-icon [icon]="boughtIcon"></fa-icon>
                 </h5>
+                <ng-template #notBought>
+                  <h5 class="not-bought-status">
+                    <fa-icon [icon]="notBoughtIcon"></fa-icon>
+                  </h5>
+                </ng-template>
               </div>
-              <h5>$2.99</h5>
+              <div
+                *ngIf="product?.price != null; then thenBlock; else elseBlock"
+              ></div>
+              <ng-template #thenBlock
+                ><h5>{{ product?.price }} zł</h5></ng-template
+              >
+              <ng-template #elseBlock><h5>No price</h5></ng-template>
               <div class="w-100"></div>
               <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
+              <div>{{ product.quantity }}</div>
             </li>
           </ul>
           <div class="card-footer">
-            <div class="creator-name">Karol Niedziela</div>
+            <div class="creator-name">
+              {{ shoppingList.createdByFirstName }}
+              {{ shoppingList.createdByLastName }}
+            </div>
             <div>Total price:</div>
             <div class="w-100"></div>
-            <div>2 / 3 items bought</div>
-            <h5>$6.18</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-6">
-        <div class="card shopping-list">
-          <div class="card-header">
-            <h3 class="card-title">Biedronka</h3>
-            <fa-icon
-              [icon]="moreOptionsIcon"
-              class="shopping-lists__more-options-icon"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
-            ></fa-icon>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Make done</a></li>
-              <li><a class="dropdown-item" href="#">Edit</a></li>
-              <li><a class="dropdown-item" href="#">Delete</a></li>
-            </ul>
-          </div>
-          <ul class="list-group list-group-flush shopping-lists__products">
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-          </ul>
-          <div class="card-footer">
-            <div class="creator-name">Karol Niedziela</div>
-            <div>Total price:</div>
-            <div class="w-100"></div>
-            <div>2 / 3 items bought</div>
-            <h5>$6.18</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-6">
-        <div class="card shopping-list">
-          <div class="card-header">
-            <h3 class="card-title">Biedronka</h3>
-            <fa-icon
-              [icon]="moreOptionsIcon"
-              class="shopping-lists__more-options-icon"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
-            ></fa-icon>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Make done</a></li>
-              <li><a class="dropdown-item" href="#">Edit</a></li>
-              <li><a class="dropdown-item" href="#">Delete</a></li>
-            </ul>
-          </div>
-          <ul class="list-group list-group-flush shopping-lists__products">
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-          </ul>
-          <div class="card-footer">
-            <div class="creator-name">Karol Niedziela</div>
-            <div>Total price:</div>
-            <div class="w-100"></div>
-            <div>2 / 3 items bought</div>
-            <h5>$6.18</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-12 col-md-6 col-lg-4 col-xl-6">
-        <div class="card shopping-list">
-          <div class="card-header">
-            <h3 class="card-title">Biedronka</h3>
-            <fa-icon
-              [icon]="moreOptionsIcon"
-              class="shopping-lists__more-options-icon"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
-            ></fa-icon>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Make done</a></li>
-              <li><a class="dropdown-item" href="#">Edit</a></li>
-              <li><a class="dropdown-item" href="#">Delete</a></li>
-            </ul>
-          </div>
-          <ul class="list-group list-group-flush shopping-lists__products">
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-            <li class="list-group-item product">
-              <div class="product__name">
-                <h4>Apple Juice</h4>
-                <h5 class="bought-status">
-                  <fa-icon [icon]="boughtIcon"></fa-icon>
-                </h5>
-              </div>
-              <h5>$2.99</h5>
-              <div class="w-100"></div>
-              <div class="quantity">250ml</div>
-              <div>2</div>
-            </li>
-          </ul>
-          <div class="card-footer">
-            <div class="creator-name">Karol Niedziela</div>
-            <div>Total price:</div>
-            <div class="w-100"></div>
-            <div>2 / 3 items bought</div>
-            <h5>$6.18</h5>
+            <div>
+              {{ shoppingList.countBoughtProducts() }} /
+              {{ shoppingList.products?.length }} products bought
+            </div>
+            <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
           </div>
         </div>
       </div>
