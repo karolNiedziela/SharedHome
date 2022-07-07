@@ -48,10 +48,28 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
                 navigation.OwnsOne(product => product.Price, navigation =>
                 {
-                    navigation.Property(price => price.Value)
+                    navigation.Property(price => price.Amount)
                               .HasColumnName("Price")
                               .HasPrecision(12, 4)
                               .IsRequired();
+
+                    navigation.OwnsOne(price => price.Currency, navigation =>
+                    {
+                        navigation.Property(currency => currency.Value)
+                                  .HasColumnName("Currency")
+                                  .IsRequired();
+                    });
+                });
+
+                navigation.OwnsOne(product => product.NetContent, navigation =>
+                {
+                    navigation.Property(netContent => netContent.Value)
+                              .HasColumnName("NetContent")
+                              .IsRequired();
+
+                    navigation.Property(netContent => netContent.Type)
+                              .HasColumnName("NetContentType")
+                              .HasConversion<string>();
                 });
 
                 navigation.Property(product => product.IsBought)

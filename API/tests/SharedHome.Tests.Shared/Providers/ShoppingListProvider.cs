@@ -1,4 +1,5 @@
-﻿using SharedHome.Domain.ShoppingLists.Aggregates;
+﻿using SharedHome.Domain.Shared.ValueObjects;
+using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 
 namespace SharedHome.Tests.Shared.Providers
@@ -13,15 +14,15 @@ namespace SharedHome.Tests.Shared.Providers
             => ShoppingList.Create(ShoppingListName, PersonId, isDone);
 
 
-        public static ShoppingList GetWithProduct(int quantity = 1, ProductPrice? productPrice = null, bool isBought = false)
+        public static ShoppingList GetWithProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false)
         {
             var shoppingList = GetEmpty();
 
-            shoppingList.AddProduct(GetProduct(quantity, productPrice, isBought));
+            shoppingList.AddProduct(GetProduct(quantity, price, netContent, isBought));
 
             return shoppingList;
         }
-        public static ShoppingListProduct GetProduct(int quantity = 1, ProductPrice? productPrice = null, bool isBought = false)
-            => new(ProductName, quantity, productPrice, isBought);
+        public static ShoppingListProduct GetProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false)
+            => new(ProductName, quantity, price, netContent, isBought);
     }
 }

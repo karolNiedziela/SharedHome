@@ -2,6 +2,7 @@
 using NSubstitute;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.Commands.Handlers;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
@@ -36,7 +37,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
-                .Returns(ShoppingListProvider.GetWithProduct(productPrice: 10, isBought: true));
+                .Returns(ShoppingListProvider.GetWithProduct(price: new Money(10m, "PLN"), isBought: true));
 
             await _commandHandler.Handle(command, default);
 

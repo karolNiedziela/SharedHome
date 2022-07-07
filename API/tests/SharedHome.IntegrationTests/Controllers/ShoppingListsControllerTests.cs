@@ -1,6 +1,7 @@
 ﻿using SharedHome.Api.Constants;
 using SharedHome.Application.ShoppingLists.Commands;
 using SharedHome.Application.ShoppingLists.DTO;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.IntegrationTests.Extensions;
 using SharedHome.IntegrationTests.Fixtures;
@@ -69,7 +70,9 @@ namespace SharedHome.IntegrationTests.Controllers
             {
                 ShoppingListId = shoppingList.Id,
                 ProductName = "Product",
-                Quantity = 2
+                Quantity = 2,
+                NetContent = "100",
+                NetContentType = 1
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.AddShoppingListProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString())}";
@@ -89,7 +92,8 @@ namespace SharedHome.IntegrationTests.Controllers
             {
                 Price = 100,
                 ProductName = "Product",
-                ShoppingListId = shoppingList.Id
+                ShoppingListId = shoppingList.Id,
+                Currency = "PLN"
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.PurchaseShoppingList.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
@@ -101,7 +105,7 @@ namespace SharedHome.IntegrationTests.Controllers
         [Fact]
         public async Task Patch_CancePurchaseOfProduct_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetWithProduct(productPrice: 100, isBought: true);
+            var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "PLN"), isBought: true);
             ProviderNew(shoppingList);
 
             Authorize(userId: shoppingList.PersonId);
@@ -121,7 +125,7 @@ namespace SharedHome.IntegrationTests.Controllers
         [Fact]
         public async Task Patch_ChangePriceOfProduct_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetWithProduct(productPrice: 100, isBought: true);
+            var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "PLN"), isBought: true);
             ProviderNew(shoppingList);
 
             Authorize(userId: shoppingList.PersonId);
@@ -130,7 +134,8 @@ namespace SharedHome.IntegrationTests.Controllers
             {
                 Price = 100,
                 ProductName = "Product",
-                ShoppingListId = shoppingList.Id
+                ShoppingListId = shoppingList.Id,
+                Currency = "PLN"
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.ChangePriceOfProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
@@ -186,11 +191,6 @@ namespace SharedHome.IntegrationTests.Controllers
             ProviderNew(shoppingList);
 
             Authorize(userId: shoppingList.PersonId);
-
-            var command = new DeleteShoppingList
-            {
-                ShoppingListId = shoppingList.Id,
-            };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.Delete.Replace("{shoppingListId:int}", shoppingList.Id.ToString())}";
 

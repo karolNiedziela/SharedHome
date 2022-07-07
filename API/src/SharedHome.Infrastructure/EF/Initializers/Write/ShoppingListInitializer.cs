@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists.Constants;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
@@ -25,7 +27,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             await _context.SaveChangesAsync();
         }
 
-        private List<ShoppingList> GetShoppingLists()
+        private static List<ShoppingList> GetShoppingLists()
         {
             var firstShoppingList = ShoppingList.Create("Lidl", InitializerConstants.CharlesUserId);
             firstShoppingList.AddProducts(GetProducts());
@@ -44,11 +46,11 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
         }
 
 
-        private List<ShoppingListProduct> GetProducts()
+        private static List<ShoppingListProduct> GetProducts()
         => new()
         {
             new ShoppingListProduct("Product1", 2),
-            new ShoppingListProduct("Product2", 5, 20),
+            new ShoppingListProduct("Product2", 5, new Money(25m, "PLN"), new NetContent("100", NetContentType.g), true),
             new ShoppingListProduct("Product3", 1),
             new ShoppingListProduct("Product4", 1),
         };

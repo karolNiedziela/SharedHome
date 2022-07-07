@@ -33,6 +33,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 ShoppingListId = 1,
                 ProductName = "Product",
                 Quantity = 1,
+                NetContent = "100",
+                NetContentType = 1
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetEmpty());

@@ -1,4 +1,5 @@
-﻿using SharedHome.Domain.ShoppingLists.Events;
+﻿using SharedHome.Domain.Shared.ValueObjects;
+using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
@@ -74,7 +75,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddEvent(new ShoppingListProductRemoved(Id, productName));
         }
 
-        public void PurchaseProduct(string productName, ProductPrice price)
+        public void PurchaseProduct(string productName, Money price)
         {
             IsAlreadyDone();
 
@@ -84,12 +85,12 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductIsAlreadyBoughtException(productName);
             }
 
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, true));
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, isBought: true));
 
             AddEvent(new ShoppingListProductPurchased(Id, productName, price));
         }
 
-        public void ChangePriceOfProduct(string productName, ProductPrice price)
+        public void ChangePriceOfProduct(string productName, Money price)
         {
             IsAlreadyDone();
 
@@ -99,7 +100,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
 
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, product.IsBought));
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, isBought: product.IsBought));
 
             AddEvent(new ShoppingListProductPriceChanged(Id, productName, price));
         }
@@ -114,7 +115,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
             
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, false));
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, isBought: false));
 
             AddEvent(new ShoppingListProductPurchaseCanceled(Id, productName));
         }

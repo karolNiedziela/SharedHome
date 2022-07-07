@@ -1,9 +1,4 @@
-﻿using SharedHome.Shared.Abstractions.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
@@ -13,7 +8,9 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 
         public Quantity Quantity { get; private set; } = default!;
 
-        public ProductPrice? Price { get; private set; } = default!;
+        public Money? Price { get; private set; } = default!;
+
+        public NetContent? NetContent { get; private set; } = default!;
 
         public bool IsBought { get; private set; } = default!;
 
@@ -22,11 +19,12 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 
         }
 
-        public ShoppingListProduct(ShoppingListProductName name, Quantity quantity, ProductPrice? price = null, bool isBought = false)
+        public ShoppingListProduct(ShoppingListProductName name, Quantity quantity, Money? price = null, NetContent? netContent = null, bool isBought = false)
         {
             Name = name;
             Quantity = quantity;
             Price = price;
+            NetContent = netContent;
             IsBought = isBought;
         }
 
@@ -35,6 +33,7 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
             Name = shoppingListProduct.Name;
             Quantity = shoppingListProduct.Quantity;
             Price = shoppingListProduct.Price;
+            NetContent = shoppingListProduct.NetContent;
             IsBought = shoppingListProduct.IsBought;
         }
     }

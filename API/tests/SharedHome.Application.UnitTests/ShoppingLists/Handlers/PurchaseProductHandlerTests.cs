@@ -33,7 +33,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             {
                 ShoppingListId = 1,
                 ProductName = "Product",
-                Price = 10
+                Price = 10,
+                Currency = "PLN"
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetWithProduct());
@@ -41,7 +42,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             await _commandHandler.Handle(command, default);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList =>
-                shoppingList.Products.First().Price == 10));
+                shoppingList.Products.First().Price!.Amount == 10));
         }
     }
 }

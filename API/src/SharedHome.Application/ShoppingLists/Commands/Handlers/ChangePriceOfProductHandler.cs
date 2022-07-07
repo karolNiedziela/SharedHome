@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
@@ -20,7 +21,9 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 
-            shoppingList.ChangePriceOfProduct(request.ProductName, request.Price);
+            var money = new Money(request.Price, request.Currency);
+
+            shoppingList.ChangePriceOfProduct(request.ProductName, money);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
 

@@ -1,14 +1,13 @@
-﻿using SharedHome.Domain.ShoppingLists.Aggregates;
+﻿using SharedHome.Domain.Shared.Exceptions;
+using SharedHome.Domain.Shared.ValueObjects;
+using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace SharedHome.Domain.UnitTests.ShoppingLists
@@ -65,15 +64,55 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void AddProduct_Throws_ProductPriceBelowZeroException_When_ProductPrice_Is_Lower_Than_Zero()
+        public void AddProduct_Throws_MoneyAmountBelowZeroException_When_ProductPrice_Is_Lower_Than_Zero()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(() 
-                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, -10)));
+                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(-10m, "PLN"))));
 
             exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<ProductPriceBelowZeroException>();
+            exception.ShouldBeOfType<MoneyAmountBelowZeroException>();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void AddProdcut_Throws_InvalidCurrencyException_When_Currency_Is_NullOrEmpty(string currency)
+        {
+            var shoppingList = ShoppingListProvider.GetEmpty();
+
+            var exception = Record.Exception(()
+                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(10m, currency))));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<InvalidCurrencyException>();
+        }
+
+        [Fact]
+        public void Add_Product_Throws_UnsupportedCurrencyException_When_Currency_Is_Not_In_AllowedValues()
+        {
+            var shoppingList = ShoppingListProvider.GetEmpty();
+
+            var exception = Record.Exception(()
+                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(10m, "GBR"))));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<UnsupportedCurrencyException>();
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public void AddProduct_Throws_EmptyNetContentValueException_When_NetContentValue_Is_NullOrEmpty(string netContentValue)
+        {
+            var shoppingList = ShoppingListProvider.GetEmpty();
+
+            var exception = Record.Exception(()
+                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(10m, "PLN"), new NetContent(netContentValue, null))));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<EmptyNetContentValueException>();
         }
 
         [Fact]
@@ -178,7 +217,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty(true);
 
             var exception = Record.Exception(() 
-                => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, 10));
+                => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<ShoppingListAlreadyDoneException>();
@@ -190,7 +229,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(() 
-                => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, 10));
+                => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<ShoppingListProductNotFoundException>();
@@ -201,12 +240,12 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
-            var product = ShoppingListProvider.GetProduct(productPrice: 25, isBought: true);
+            var product = ShoppingListProvider.GetProduct(price: new Money(25m, "PLN"), isBought: true);
             shoppingList.AddProduct(product);
             shoppingList.ClearEvents();
 
             var exception = Record.Exception(() 
-                => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, 10m));
+                => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<ShoppingListProductIsAlreadyBoughtException>();
@@ -221,7 +260,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             shoppingList.AddProduct(product);
             shoppingList.ClearEvents();
 
-            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, 10m);
+            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN"));
 
             shoppingList.Events.Count().ShouldBe(1);
 
@@ -229,7 +268,8 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             @event.ShouldNotBeNull();
 
             @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
-            @event.Price.ShouldBe(10m);
+            @event.Price.Amount.ShouldBe(10m);
+            @event.Price.Currency.Value.ShouldBe("PLN");
         }
 
         [Fact]
@@ -238,7 +278,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty(true);
 
             var exception = Record.Exception(() 
-                => shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, 10m));
+                => shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN")));
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<ShoppingListAlreadyDoneException>();
         }
@@ -249,7 +289,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(() 
-                => shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, 10m));
+                => shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN")));
             exception.ShouldNotBeNull();
 
             exception.ShouldBeOfType<ShoppingListProductNotFoundException>();
@@ -263,7 +303,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var product = ShoppingListProvider.GetProduct();
             shoppingList.AddProduct(product);
             var exception = Record.Exception(() 
-                => shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, 10m));
+                => shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<ShoppingListProductWasNotBoughtException>();
@@ -276,16 +316,17 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var product = ShoppingListProvider.GetProduct();
 
             shoppingList.AddProduct(product);
-            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, 10m);
+            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN"));
             shoppingList.ClearEvents();
 
-            shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, 25m);
+            shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, new Money(25m, "PLN"));
 
             shoppingList.Events.Count().ShouldBe(1);
             var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductPriceChanged;
             @event.ShouldNotBeNull();
             @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
-            @event.Price.ShouldBe(25);
+            @event.Price.Amount.ShouldBe(25);
+            @event.Price.Currency.Value.ShouldBe("PLN");
         }
 
         [Fact]
@@ -333,7 +374,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var product = ShoppingListProvider.GetProduct(isBought: false);
             shoppingList.AddProduct(product);
 
-            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, 10m);
+            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "PLN"));
             shoppingList.ClearEvents();
 
             shoppingList.CancelPurchaseOfProduct(ShoppingListProvider.ProductName);

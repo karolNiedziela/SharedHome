@@ -11,5 +11,7 @@ namespace SharedHome.Application.ShoppingLists.Commands
         public string ProductName { get; set; } = default!;
 
         public decimal Price { get; set; }
+
+        public string Currency { get; set; } = default!;
     }
 }
