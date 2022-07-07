@@ -31,10 +31,17 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
             builder.OwnsOne(bill => bill.Cost, navigation =>
             {
-                navigation.Property(cost => cost.Value)
+                navigation.Property(cost => cost.Amount)
                           .HasColumnName("Cost")
                           .HasPrecision(14, 2)
                           .IsRequired();
+
+                navigation.OwnsOne(money => money.Currency, navigation =>
+                {
+                    navigation.Property(currency => currency.Value)
+                              .HasColumnName("Currency")
+                              .IsRequired();
+                });
 
             });
 

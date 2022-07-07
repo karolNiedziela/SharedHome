@@ -50,7 +50,8 @@ namespace SharedHome.IntegrationTests.Controllers
                 BillType = (int)BillType.Trash,
                 Cost = 100m,
                 DateOfPayment = DateTime.UtcNow,
-                ServiceProviderName = "Bill"
+                ServiceProviderName = "Bill",
+                Currency = "PLN"
             };
 
             await Client.PostAsJsonAsync(endpointAddress, command);

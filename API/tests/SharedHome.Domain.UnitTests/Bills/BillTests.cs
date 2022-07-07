@@ -2,6 +2,7 @@
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -29,7 +30,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         {
             var bill = BillProvider.Get(isPaid: true);
 
-            var exception = Record.Exception(() => bill.PayFor(2500m));
+            var exception = Record.Exception(() => bill.PayFor(new Money(2500m, "PLN")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<BillPaidException>();
@@ -40,16 +41,16 @@ namespace SharedHome.Domain.UnitTests.Bills
         {
             var bill = BillProvider.Get();
 
-            bill.PayFor(1500m);
+            bill.PayFor(new Money(1500m, "PLN"));
 
             bill.IsPaid.ShouldBeTrue();
-            bill.Cost.ShouldBe(1500m);
+            bill.Cost!.Amount.ShouldBe(1500m);
             bill.Events.Count().ShouldBe(1);
 
             var @event = bill.Events.FirstOrDefault() as BillPaid;
             @event.ShouldNotBeNull();
 
-            @event.Cost.ShouldBe(1500m);
+            @event.Cost.Amount.ShouldBe(1500m);
         }
 
         [Fact]
@@ -76,33 +77,22 @@ namespace SharedHome.Domain.UnitTests.Bills
 
             var @event = bill.Events.FirstOrDefault() as BillPaymentCanceled;
             @event.ShouldNotBeNull();
-        }
-
-        [Fact]
-        public void ChangeCost_Throws_MoneyBelowZeroException_When_Value_Is_Lower_Than_Zero()
-        {
-            var bill = BillProvider.Get(isPaid: true);
-
-            var exception = Record.Exception(() => bill.ChangeCost(-200m));
-
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<BillCostBelowZeroException>();
-        }
+        }        
 
         [Fact]
         public void ChangeCost_Adds_BillCostChanged_Event_On_Success()
         {
             var bill = BillProvider.Get(isPaid: true);
 
-            bill.ChangeCost(500m);
+            bill.ChangeCost(new Money(500m, "PLN"));
 
-            bill.Cost.ShouldBe(500m);
+            bill.Cost!.Amount.ShouldBe(500m);
             bill.Events.Count().ShouldBe(1);
 
             var @event = bill.Events.FirstOrDefault() as BillCostChanged;
             @event.ShouldNotBeNull();
 
-            @event.Cost.ShouldBe(500m);
+            @event.Cost.Amount.ShouldBe(500m);
         }
 
         [Fact]

@@ -15,5 +15,7 @@ namespace SharedHome.Application.Bills.Commands
         public DateTime DateOfPayment { get; set; }
 
         public decimal Cost { get; set; }
+
+        public string Currency { get; set; } = default!;
     }
 }

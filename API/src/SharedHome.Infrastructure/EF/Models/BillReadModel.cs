@@ -12,6 +12,8 @@
         
         public decimal? Cost { get; set; }
 
+        public string Currency { get; set; } = default!;
+
         public DateTime DateOfPayment { get; set; }
 
         public string PersonId { get; set; } = default!;

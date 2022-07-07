@@ -2,6 +2,7 @@
 using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.Bills.Entities
@@ -16,7 +17,7 @@ namespace SharedHome.Domain.Bills.Entities
 
         public ServiceProviderName ServiceProvider { get; private set; } = default!;
 
-        public BillCost? Cost { get; private set; }
+        public Money? Cost { get; private set; }
 
         public DateTime DateOfPayment { get; private set; }
 
@@ -27,7 +28,7 @@ namespace SharedHome.Domain.Bills.Entities
 
         }
 
-        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, BillCost? cost = null, bool isPaid = false)
+        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost = null, bool isPaid = false)
         {
             PersonId = personId;
             BillType = billType;
@@ -37,10 +38,10 @@ namespace SharedHome.Domain.Bills.Entities
             IsPaid = isPaid;
         }
 
-        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, BillCost? cost = null, bool isPaid = false) =>
+        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost = null, bool isPaid = false) =>
             new(personId, billType, serviceProvider, dateOfPayment, cost, isPaid);
 
-        public void PayFor(BillCost cost)
+        public void PayFor(Money cost)
         {
             IsAlreadyPaid();
 
@@ -58,7 +59,7 @@ namespace SharedHome.Domain.Bills.Entities
             AddEvent(new BillPaymentCanceled(Id, ServiceProvider, DateOfPayment));
         }
 
-        public void ChangeCost(BillCost cost)
+        public void ChangeCost(Money cost)
         {
             Cost = cost;
             AddEvent(new BillCostChanged(Id, ServiceProvider, Cost));
@@ -70,7 +71,7 @@ namespace SharedHome.Domain.Bills.Entities
             AddEvent(new BillDateOfPaymentChanged(Id, ServiceProvider, DateOfPayment));
         }
 
-        public void Update(BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, BillCost? cost)
+        public void Update(BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost)
         {
             BillType = billType;
             ServiceProvider = serviceProvider;

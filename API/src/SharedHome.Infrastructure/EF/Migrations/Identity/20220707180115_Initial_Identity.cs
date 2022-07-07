@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.EF.Migrations
+namespace SharedHome.Infrastructure.EF.Migrations.Identity
 {
     public partial class Initial_Identity : Migration
     {

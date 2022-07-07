@@ -9,5 +9,7 @@ namespace SharedHome.Application.Bills.Commands
         public int BillId { get; set; }
 
         public decimal Cost { get; set; }
+
+        public string Currency { get; set; } = default!;
     }
 }

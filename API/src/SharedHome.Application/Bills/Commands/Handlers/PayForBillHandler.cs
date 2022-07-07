@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 
 namespace SharedHome.Application.Bills.Commands.Handlers
@@ -20,7 +21,9 @@ namespace SharedHome.Application.Bills.Commands.Handlers
         {
             var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
 
-            bill.PayFor(request.Cost);
+            var money = new Money(request.Cost, request.Currency);
+
+            bill.PayFor(money);
 
             await _billRepository.UpdateAsync(bill);
 

@@ -8,11 +8,11 @@ using SharedHome.Infrastructure.EF.Contexts;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.EF.Migrations
+namespace SharedHome.Infrastructure.EF.Migrations.Write
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    [Migration("20220512160659_Write_Fix_Members")]
-    partial class Write_Fix_Members
+    [Migration("20220707175813_Initial_Write")]
+    partial class Initial_Write
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -163,13 +163,12 @@ namespace SharedHome.Infrastructure.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("SharedHome.Domain.Bills.ValueObjects.BillCost", "Cost", b1 =>
+                    b.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Money", "Cost", b1 =>
                         {
                             b1.Property<int>("BillId")
                                 .HasColumnType("int");
 
-                            b1.Property<decimal?>("Value")
-                                .IsRequired()
+                            b1.Property<decimal>("Amount")
                                 .HasPrecision(14, 2)
                                 .HasColumnType("decimal(14,2)")
                                 .HasColumnName("Cost");
@@ -180,6 +179,27 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("BillId");
+
+                            b1.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Currency", "Currency", b2 =>
+                                {
+                                    b2.Property<int>("MoneyBillId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<string>("Value")
+                                        .IsRequired()
+                                        .HasColumnType("longtext")
+                                        .HasColumnName("Currency");
+
+                                    b2.HasKey("MoneyBillId");
+
+                                    b2.ToTable("Bill");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("MoneyBillId");
+                                });
+
+                            b1.Navigation("Currency")
+                                .IsRequired();
                         });
 
                     b.OwnsOne("SharedHome.Domain.Bills.ValueObjects.ServiceProviderName", "ServiceProvider", b1 =>
@@ -360,7 +380,7 @@ namespace SharedHome.Infrastructure.EF.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ShoppingListId");
 
-                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ProductPrice", "Price", b2 =>
+                            b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.NetContent", "NetContent", b2 =>
                                 {
                                     b2.Property<int>("ShoppingListProductShoppingListId")
                                         .HasColumnType("int");
@@ -368,11 +388,14 @@ namespace SharedHome.Infrastructure.EF.Migrations
                                     b2.Property<int>("ShoppingListProductId")
                                         .HasColumnType("int");
 
-                                    b2.Property<decimal?>("Value")
+                                    b2.Property<string>("Type")
+                                        .HasColumnType("longtext")
+                                        .HasColumnName("NetContentType");
+
+                                    b2.Property<string>("Value")
                                         .IsRequired()
-                                        .HasPrecision(12, 4)
-                                        .HasColumnType("decimal(12,4)")
-                                        .HasColumnName("Price");
+                                        .HasColumnType("longtext")
+                                        .HasColumnName("NetContent");
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
@@ -402,6 +425,51 @@ namespace SharedHome.Infrastructure.EF.Migrations
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
                                 });
 
+                            b1.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Money", "Price", b2 =>
+                                {
+                                    b2.Property<int>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<int>("ShoppingListProductId")
+                                        .HasColumnType("int");
+
+                                    b2.Property<decimal>("Amount")
+                                        .HasPrecision(12, 4)
+                                        .HasColumnType("decimal(12,4)")
+                                        .HasColumnName("Price");
+
+                                    b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
+
+                                    b2.ToTable("ShoppingListProduct");
+
+                                    b2.WithOwner()
+                                        .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
+
+                                    b2.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Currency", "Currency", b3 =>
+                                        {
+                                            b3.Property<int>("MoneyShoppingListProductShoppingListId")
+                                                .HasColumnType("int");
+
+                                            b3.Property<int>("MoneyShoppingListProductId")
+                                                .HasColumnType("int");
+
+                                            b3.Property<string>("Value")
+                                                .IsRequired()
+                                                .HasColumnType("longtext")
+                                                .HasColumnName("Currency");
+
+                                            b3.HasKey("MoneyShoppingListProductShoppingListId", "MoneyShoppingListProductId");
+
+                                            b3.ToTable("ShoppingListProduct");
+
+                                            b3.WithOwner()
+                                                .HasForeignKey("MoneyShoppingListProductShoppingListId", "MoneyShoppingListProductId");
+                                        });
+
+                                    b2.Navigation("Currency")
+                                        .IsRequired();
+                                });
+
                             b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProductName", "Name", b2 =>
                                 {
                                     b2.Property<int>("ShoppingListProductShoppingListId")
@@ -425,6 +493,8 @@ namespace SharedHome.Infrastructure.EF.Migrations
 
                             b1.Navigation("Name")
                                 .IsRequired();
+
+                            b1.Navigation("NetContent");
 
                             b1.Navigation("Price");
 

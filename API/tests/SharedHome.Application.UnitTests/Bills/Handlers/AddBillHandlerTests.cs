@@ -27,7 +27,9 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             var command = new AddBill
             {
                 ServiceProviderName = "Bill",
-                BillType = 2
+                BillType = 2,
+                Cost = 1500m,
+                Currency = "PLN",
             };
 
             await _commandHandler.Handle(command, default);

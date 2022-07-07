@@ -6,6 +6,7 @@ using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var bill = BillProvider.Get(billCost: 100, isPaid: true);
+            var bill = BillProvider.Get(billCost: new Money(100m, "PLN"), isPaid: true);
 
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(bill);
 
@@ -40,14 +41,15 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
                 BillType = 1,
                 Cost = 200,
                 DateOfPayment = bill.DateOfPayment,
-                ServiceProviderName = "PGE"
+                ServiceProviderName = "PGE",
+                Currency = "PLN"
             };
 
             await _commandHandler.Handle(command, default);
 
             await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(x =>
             x.BillType == BillType.Rent &&
-            x.Cost != null ?  x.Cost!.Value == 200 : x.Cost == null &&
+            x.Cost != null ?  x.Cost!.Amount == 200 : x.Cost == null &&
             x.ServiceProvider.Name == "PGE"));
         }
     }

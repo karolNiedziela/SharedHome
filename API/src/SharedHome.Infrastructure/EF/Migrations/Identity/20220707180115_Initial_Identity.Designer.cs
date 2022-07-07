@@ -2,17 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedHome.Infrastructure.EF.Contexts;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.EF.Migrations
+namespace SharedHome.Infrastructure.EF.Migrations.Identity
 {
     [DbContext(typeof(IdentitySharedHomeDbContext))]
-    partial class IdentitySharedHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220707180115_Initial_Identity")]
+    partial class Initial_Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

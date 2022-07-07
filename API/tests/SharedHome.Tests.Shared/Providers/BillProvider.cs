@@ -1,6 +1,7 @@
 ﻿using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Tests.Shared.Providers
 {
@@ -10,7 +11,7 @@ namespace SharedHome.Tests.Shared.Providers
         public const string ServiceProviderName = "ProviderName";
         public static readonly DateTime DateOfPayment = new(2022, 3, 10);
 
-        public static Bill Get(BillType billType = BillType.Rent, BillCost? billCost = null, bool isPaid = false)
+        public static Bill Get(BillType billType = BillType.Rent, Money? billCost = null, bool isPaid = false)
             => Bill.Create(PersonId, billType, ServiceProviderName,
                 DateOfPayment, billCost, isPaid);
 

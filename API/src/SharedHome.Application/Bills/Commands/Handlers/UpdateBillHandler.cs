@@ -5,6 +5,7 @@ using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Helpers;
 
@@ -27,7 +28,9 @@ namespace SharedHome.Application.Bills.Commands.Handlers
 
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
-            bill.Update(billType, request.ServiceProviderName, request.DateOfPayment, request.Cost);
+            var money = new Money(request.Cost, request.Currency);
+
+            bill.Update(billType, request.ServiceProviderName, request.DateOfPayment, money);
 
             await _billRepository.UpdateAsync(bill);
 

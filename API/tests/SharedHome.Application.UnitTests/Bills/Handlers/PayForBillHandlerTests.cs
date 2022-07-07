@@ -36,12 +36,13 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             var command = new PayForBill
             {
                 BillId = 1,
-                Cost = 150
+                Cost = 150,
+                Currency = "PLN"
             };
 
             await _commandHandler.Handle(command, default);
 
-            await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(bill => bill.Cost == 150 &&
+            await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(bill => bill.Cost!.Amount == 150 &&
             bill.IsPaid == true));
         }
     }
