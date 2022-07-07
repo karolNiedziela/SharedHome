@@ -71,8 +71,6 @@ namespace SharedHome.IntegrationTests.Controllers
                 ShoppingListId = shoppingList.Id,
                 ProductName = "Product",
                 Quantity = 2,
-                NetContent = "100",
-                NetContentType = 1
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.AddShoppingListProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString())}";

@@ -99,21 +99,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<UnsupportedCurrencyException>();
-        }
-
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        public void AddProduct_Throws_EmptyNetContentValueException_When_NetContentValue_Is_NullOrEmpty(string netContentValue)
-        {
-            var shoppingList = ShoppingListProvider.GetEmpty();
-
-            var exception = Record.Exception(()
-                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(10m, "PLN"), new NetContent(netContentValue, null))));
-
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<EmptyNetContentValueException>();
-        }
+        }     
 
         [Fact]
         public void AddProduct_Throws_ShoppingListAlreadyDoneException_When_Shopping_List_Is_Marked_As_Done()

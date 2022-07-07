@@ -24,7 +24,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 
             NetContentType? netContentType = request.NetContentType.HasValue ? EnumHelper.ToEnumByIntOrThrow<NetContentType>(request.NetContentType.Value) : null;
-            NetContent? netContent = string.IsNullOrEmpty(request.NetContent) ? null : new NetContent(request.NetContent!, netContentType);
+            var netContent = new NetContent(request.NetContent, netContentType);
 
             var shoppingListProduct = new ShoppingListProduct(request.ProductName, request.Quantity, netContent: netContent);
             shoppingList.AddProduct(shoppingListProduct);

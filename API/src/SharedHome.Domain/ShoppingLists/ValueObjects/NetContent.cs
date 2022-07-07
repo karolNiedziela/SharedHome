@@ -6,7 +6,7 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
     public record NetContent
     {
-        public string Value { get; } = default!;
+        public string? Value { get; }
 
         public NetContentType? Type { get; }
 
@@ -15,13 +15,8 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 
         }
 
-        public NetContent(string value, NetContentType? type)
+        public NetContent(string? value, NetContentType? type)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                throw new EmptyNetContentValueException();
-            }
-
             Value = value;
             Type = type;
         }
