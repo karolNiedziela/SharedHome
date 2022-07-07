@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
 using SharedHome.Application.Bills.Commands;
 using SharedHome.Application.Bills.DTO;
@@ -7,6 +8,7 @@ using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Api.Controllers
 {
+    [Authorize]
     public class BillsController : ApiController
     {
         /// <summary>

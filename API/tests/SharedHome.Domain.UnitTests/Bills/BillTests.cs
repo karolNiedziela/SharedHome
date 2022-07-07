@@ -19,7 +19,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         public void Create_Throws_EmptyServiceProviderNameException_When_Name_Is_NullOrWhiteSpace(string name) 
         {
             var exception = Record.Exception(() 
-                => Bill.Create(BillProvider.PersonId, BillType.Trash, name, DateTime.Now));
+                => Bill.Create(BillProvider.PersonId, BillType.Trash, name, DateTime.Now, new Money(100m, "PLN")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<EmptyServiceProviderNameException>();
