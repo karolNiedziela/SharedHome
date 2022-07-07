@@ -9,7 +9,7 @@ namespace SharedHome.Tests.Shared.Providers
         public const string PersonId = "c2506a12-41d4-4205-aafa-b835ae4bc057";
         public const string ServiceProviderName = "ProviderName";
         public static readonly DateTime DateOfPayment = new(2022, 3, 10);
-        public static readonly Money DefaultBillCost = new(100m, "PLN");
+        public static readonly Money DefaultBillCost = new(100m, "zł");
 
         public static Bill Get(BillType billType = BillType.Rent, Money? billCost = null, bool isPaid = false)
         {

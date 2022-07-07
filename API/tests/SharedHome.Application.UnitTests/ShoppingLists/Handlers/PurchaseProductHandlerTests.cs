@@ -34,7 +34,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 ShoppingListId = 1,
                 ProductName = "Product",
                 Price = 10,
-                Currency = "PLN"
+                Currency = "zł"
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetWithProduct());

@@ -30,7 +30,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var bill = BillProvider.Get(billCost: new Money(100m, "PLN"), isPaid: true);
+            var bill = BillProvider.Get(billCost: new Money(100m, "zł"), isPaid: true);
 
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(bill);
 
@@ -42,7 +42,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
                 Cost = 200,
                 DateOfPayment = bill.DateOfPayment,
                 ServiceProviderName = "PGE",
-                Currency = "PLN"
+                Currency = "zł"
             };
 
             await _commandHandler.Handle(command, default);

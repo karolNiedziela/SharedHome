@@ -6,8 +6,8 @@ namespace SharedHome.Domain.Shared.ValueObjects
     {
         private static readonly HashSet<string> AllowedValues = new()
         {
-            "PLN",
-            "EUR"
+            "zł",
+            "€"
         };
 
         public string Value { get; } = default!;
@@ -24,7 +24,6 @@ namespace SharedHome.Domain.Shared.ValueObjects
                 throw new InvalidCurrencyException();
             }
 
-            value = value.ToUpperInvariant();
             if (!AllowedValues.Contains(value))
             {
                 throw new UnsupportedCurrencyException(value);

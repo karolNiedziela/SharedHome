@@ -29,7 +29,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
                 ServiceProviderName = "Bill",
                 BillType = 2,
                 Cost = 1500m,
-                Currency = "PLN",
+                Currency = "zł",
             };
 
             await _commandHandler.Handle(command, default);

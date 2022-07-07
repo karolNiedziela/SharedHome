@@ -35,11 +35,11 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 ShoppingListId = 1,
                 ProductName = "Product",
                 Price = 25,
-                Currency = "PLN"
+                Currency = "zł"
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
-                .Returns(ShoppingListProvider.GetWithProduct(price: new Money(10m, "PLN"), isBought: true));
+                .Returns(ShoppingListProvider.GetWithProduct(price: new Money(10m, "zł"), isBought: true));
 
             await _commandHandler.Handle(command, default);
 

@@ -50,7 +50,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
         => new()
         {
             new ShoppingListProduct("Product1", 2),
-            new ShoppingListProduct("Product2", 5, new Money(25m, "PLN"), new NetContent("100", NetContentType.g), true),
+            new ShoppingListProduct("Product2", 5, new Money(25m, "zł"), new NetContent("100", NetContentType.g), true),
             new ShoppingListProduct("Product3", 1),
             new ShoppingListProduct("Product4", 1),
         };

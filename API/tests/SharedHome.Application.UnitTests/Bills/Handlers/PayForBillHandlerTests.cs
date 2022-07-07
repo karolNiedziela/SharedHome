@@ -37,7 +37,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             {
                 BillId = 1,
                 Cost = 150,
-                Currency = "PLN"
+                Currency = "zł"
             };
 
             await _commandHandler.Handle(command, default);

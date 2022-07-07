@@ -46,6 +46,8 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Fixture.WriteContext.Bills.Remove(bill);
             Fixture.WriteContext.SaveChanges();
+
+            GC.SuppressFinalize(this);
         }
 
         private void ProviderNew(Bill bill)

@@ -91,7 +91,7 @@ namespace SharedHome.IntegrationTests.Controllers
                 Price = 100,
                 ProductName = "Product",
                 ShoppingListId = shoppingList.Id,
-                Currency = "PLN"
+                Currency = "zł"
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.PurchaseShoppingList.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
@@ -103,7 +103,7 @@ namespace SharedHome.IntegrationTests.Controllers
         [Fact]
         public async Task Patch_CancePurchaseOfProduct_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "PLN"), isBought: true);
+            var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "zł"), isBought: true);
             ProviderNew(shoppingList);
 
             Authorize(userId: shoppingList.PersonId);
@@ -123,7 +123,7 @@ namespace SharedHome.IntegrationTests.Controllers
         [Fact]
         public async Task Patch_ChangePriceOfProduct_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "PLN"), isBought: true);
+            var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "zł"), isBought: true);
             ProviderNew(shoppingList);
 
             Authorize(userId: shoppingList.PersonId);
@@ -133,7 +133,7 @@ namespace SharedHome.IntegrationTests.Controllers
                 Price = 100,
                 ProductName = "Product",
                 ShoppingListId = shoppingList.Id,
-                Currency = "PLN"
+                Currency = "zł"
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.ChangePriceOfProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
@@ -226,6 +226,8 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Fixture.WriteContext.ShoppingLists.Remove(shoppingList);
             Fixture.WriteContext.SaveChanges();
+
+            GC.SuppressFinalize(this);
         }
     }
 }
