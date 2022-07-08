@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from './components/modals/modal/modal.component';
+import { ConfirmationModalComponent } from './components/modals/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ModalComponent } from './components/modals/modal/modal.component';
     SidebarComponent,
     FooterComponent,
     ModalComponent,
+    ConfirmationModalComponent,
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { ModalComponent } from './components/modals/modal/modal.component';
     SidebarComponent,
     FooterComponent,
     ModalComponent,
+    ConfirmationModalComponent,
   ],
 })
 export class SharedModule {}

@@ -11,6 +11,9 @@
     </div>
   </div>
   <div class="btn btn-primary" (click)="openModal()">Open Modal</div>
+  <div class="btn btn-primary" (click)="openConfirmationModal()">
+    Open Confirmation Modal
+  </div>
   <div class="shopping-lists">
     <div class="row">
       <div
@@ -92,3 +95,8 @@
 </div>
 
 <app-modal #modal [modalConfig]="modalConfig"> It works! </app-modal>
+<app-confirmation-modal
+  #confirmationModal
+  [confirmationModalConfig]="confirmationModalConfig"
+  >Works</app-confirmation-modal
+>

@@ -1,5 +1,5 @@
+import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ModalComponent } from './../../shared/components/modals/modal/modal.component';
-import { ModalConfig } from './../../shared/components/modals/modal.config';
 import { ShoppingList } from './models/shopping-list';
 import { ShoppingListsService } from './services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,6 +11,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
+import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-shopping-lists',
@@ -30,9 +32,11 @@ export class ShoppingListsComponent implements OnInit {
 
   public modalConfig: ModalConfig = {
     modalTitle: 'Add shopping list',
-    saveButtonLabel: 'Save',
-    closeButtonLabel: 'Close',
   };
+
+  @ViewChild('confirmationModal')
+  private confirmationModal!: ConfirmationModalComponent;
+  public confirmationModalConfig: ConfirmationModalConfig = {};
 
   constructor(private shoppingListService: ShoppingListsService) {
     const currentYearAndMonth = `${new Date().getFullYear()} ${new Date().getMonth()}`;
@@ -45,7 +49,6 @@ export class ShoppingListsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('init');
     this.shoppingListService
       .getAllByYearAndMonthAndIsDone(2022, 7, false)
       .subscribe((response) => {
@@ -70,5 +73,9 @@ export class ShoppingListsComponent implements OnInit {
 
   openModal() {
     this.modal.open();
+  }
+
+  openConfirmationModal() {
+    this.confirmationModal.open();
   }
 }

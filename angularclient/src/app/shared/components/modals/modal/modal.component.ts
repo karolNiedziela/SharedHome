@@ -6,13 +6,13 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { ModalConfig } from '../modal.config';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ModalConfig } from './modal.config';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  styleUrls: ['../modal.scss', './modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
   @Input() public modalConfig!: ModalConfig;
@@ -23,10 +23,18 @@ export class ModalComponent implements OnInit {
 
   constructor(private modalService: NgbModal) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.modalConfig.closeButtonLabel) {
+      this.modalConfig.closeButtonLabel = 'Close';
+    }
+
+    if (!this.modalConfig.saveButtonLabel) {
+      this.modalConfig.saveButtonLabel = 'Save';
+    }
+  }
 
   async open(): Promise<void> {
-    if (this.modalConfig.onOpen != undefined) {
+    if (this.modalConfig?.onOpen != undefined) {
       const result = await this.modalConfig.onOpen();
 
       this.modalService.open(this.modalContent);
@@ -37,7 +45,7 @@ export class ModalComponent implements OnInit {
   }
 
   async save(): Promise<void> {
-    if (this.modalConfig.onSave != undefined) {
+    if (this.modalConfig?.onSave != undefined) {
       const result = await this.modalConfig.onSave();
 
       this.modalRef.close(result);
@@ -48,7 +56,7 @@ export class ModalComponent implements OnInit {
   }
 
   async close(): Promise<void> {
-    if (this.modalConfig.onClose != undefined) {
+    if (this.modalConfig?.onClose != undefined) {
       const result = await this.modalConfig.onClose();
 
       this.modalRef.close(result);

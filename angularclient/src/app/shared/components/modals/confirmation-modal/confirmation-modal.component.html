@@ -1,6 +1,6 @@
-<ng-template #modal>
+<ng-template #confirmationModal>
   <div class="modal-header">
-    <h5 class="modal-title">{{ modalConfig.modalTitle }}</h5>
+    <h5 class="modal-title">{{ confirmationModalConfig.modalTitle }}</h5>
     <h4>
       <fa-icon
         [icon]="dismissIcon"
@@ -10,7 +10,7 @@
     </h4>
   </div>
   <div class="modal-body">
-    <ng-content></ng-content>
+    {{ confirmationModalConfig.confirmationText }}
   </div>
   <div class="modal-footer">
     <button
@@ -19,10 +19,10 @@
       data-bs-dismiss="modal"
       (click)="close()"
     >
-      {{ modalConfig.closeButtonLabel }}
+      {{ confirmationModalConfig.noButtonText }}
     </button>
     <app-button
-      [text]="modalConfig.saveButtonLabel!"
+      [text]="confirmationModalConfig.yesButtonText!"
       (onButtonClick)="save()"
     ></app-button>
   </div>
