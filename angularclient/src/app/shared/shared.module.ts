@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ModalComponent } from './components/modals/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { CommonModule } from '@angular/common';
     PasswordsFormComponent,
     SidebarComponent,
     FooterComponent,
+    ModalComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +43,7 @@ import { CommonModule } from '@angular/common';
     PasswordsFormComponent,
     SidebarComponent,
     FooterComponent,
+    ModalComponent,
   ],
 })
 export class SharedModule {}

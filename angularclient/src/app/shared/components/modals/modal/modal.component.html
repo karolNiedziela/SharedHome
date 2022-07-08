@@ -1,0 +1,29 @@
+<ng-template #modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalConfig.modalTitle }}</h5>
+    <h4>
+      <fa-icon
+        [icon]="dismissIcon"
+        (click)="dismiss()"
+        class="dismiss-icon"
+      ></fa-icon>
+    </h4>
+  </div>
+  <div class="modal-body">
+    <ng-content></ng-content>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-bs-dismiss="modal"
+      (click)="close()"
+    >
+      {{ modalConfig.closeButtonLabel }}
+    </button>
+    <app-button
+      [text]="modalConfig.saveButtonLabel"
+      (onButtonClick)="save()"
+    ></app-button>
+  </div>
+</ng-template>
