@@ -1,11 +1,14 @@
 ﻿using SharedHome.Shared.Abstractions.Attributes;
 using SharedHome.Shared.Abstractions.Exceptions;
+using System.Net;
 
 namespace SharedHome.Application.Invitations.Exceptions
 {
     public class InvitationAlreadySentException : SharedHomeException
     {
         public override string ErrorCode => "InvitationAlreadySent";
+
+        public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
         [Order]
         public int HouseGroupId { get; }

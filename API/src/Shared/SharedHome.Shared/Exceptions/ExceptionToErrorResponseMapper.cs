@@ -20,13 +20,13 @@ namespace SharedHome.Shared.Exceptions
         public ErrorResponse Map(Exception exception)
             => exception switch
             {
-                SharedHomeException ex => new ErrorResponse(HttpStatusCode.BadRequest, GetFormattedErrors(ex)),
+                SharedHomeException ex => new ErrorResponse(ex.StatusCode, GetFormattedErrors(ex)),
 
                 IdentityException ex => new ErrorResponse(HttpStatusCode.BadRequest, ex.Errors),
 
                 ValidatorException ex => new ErrorResponse(HttpStatusCode.BadRequest, ex.ErrorMessages),
 
-                _ => new ErrorResponse(HttpStatusCode.InternalServerError, "There was an error.")
+                _ => new ErrorResponse(HttpStatusCode.InternalServerError, "An unexpected error occurred.")
             };
 
         private string GetFormattedErrors(SharedHomeException exception)

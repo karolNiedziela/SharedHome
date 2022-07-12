@@ -1,11 +1,14 @@
 ﻿using SharedHome.Shared.Abstractions.Attributes;
 using SharedHome.Shared.Abstractions.Exceptions;
+using System.Net;
 
 namespace SharedHome.Application.HouseGroups.Exceptions
 {
     public class PersonIsNotInHouseGroupException : SharedHomeException
     {
         public override string ErrorCode => "PersonIsNotInHouseGroup";
+
+        public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 
         [Order]
         public string PersonId { get; }
