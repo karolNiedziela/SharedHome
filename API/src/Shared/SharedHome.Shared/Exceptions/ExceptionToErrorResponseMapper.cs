@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using SharedHome.Shared.Abstractions.Attributes;
 using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Abstractions.Responses;
@@ -11,10 +12,12 @@ namespace SharedHome.Shared.Exceptions
     public class ExceptionToErrorResponseMapper : IExceptionToErrorResponseMapper
     {
         private readonly IStringLocalizer _localizer;
+        private readonly ILogger<ExceptionToErrorResponseMapper> _logger;
 
-        public ExceptionToErrorResponseMapper(IStringLocalizerFactory localizerFactory)
+        public ExceptionToErrorResponseMapper(IStringLocalizerFactory localizerFactory, ILogger<ExceptionToErrorResponseMapper> logger)
         {
             _localizer = localizerFactory.Create("SharedHomeExceptionMessage", "SharedHome.Api");
+            _logger = logger;
         }
 
         public ErrorResponse Map(Exception exception)
@@ -23,8 +26,6 @@ namespace SharedHome.Shared.Exceptions
                 SharedHomeException ex => new ErrorResponse(ex.StatusCode, GetFormattedErrors(ex)),
 
                 IdentityException ex => new ErrorResponse(HttpStatusCode.BadRequest, ex.Errors),
-
-                ValidatorException ex => new ErrorResponse(HttpStatusCode.BadRequest, ex.ErrorMessages),
 
                 _ => new ErrorResponse(HttpStatusCode.InternalServerError, "An unexpected error occurred.")
             };
@@ -35,6 +36,7 @@ namespace SharedHome.Shared.Exceptions
 
             if (resourceStringValue.ResourceNotFound)
             {
+                _logger.LogInformation("Resource not found.");
                 return exception.Message;
             }
 

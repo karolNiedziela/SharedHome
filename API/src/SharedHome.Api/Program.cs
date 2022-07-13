@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using Serilog;
+using SharedHome.Api.Constants;
 using SharedHome.Api.Extensions;
 using SharedHome.Application;
 using SharedHome.Infrastructure;
@@ -70,6 +71,11 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseExceptionHandler(ApiRoutes.Errors.ErrorDevelopment);
+    }
+    else
+    {
+        app.UseExceptionHandler(ApiRoutes.Errors.Error);
     }
 
     var localizationOption = app.Services.GetService<IOptions<RequestLocalizationOptions>>();

@@ -2,6 +2,13 @@
 {
     public static class ApiRoutes
     {
+        public static class Errors
+        {
+            public const string Error = "/error";
+
+            public const string ErrorDevelopment = "/error-development";
+        }
+
         public static class ShoppingLists
         {
             public const string Get = "{shoppingListId:int}";

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Shared.Abstractions.Exceptions;
 
@@ -8,7 +9,7 @@ namespace SharedHome.Shared.Exceptions
     {
         public static IServiceCollection AddErrorHandling(this IServiceCollection services)
         {
-            services.AddScoped<GlobalErrorHandlerMiddleware>();
+            services.AddSingleton<ProblemDetailsFactory, SharedHomeProblemDetailsFactory>();
             services.AddScoped<IExceptionToErrorResponseMapper, ExceptionToErrorResponseMapper>();
 
             return services;
@@ -16,8 +17,6 @@ namespace SharedHome.Shared.Exceptions
 
         public static IApplicationBuilder UseErrorHandling(this IApplicationBuilder app)
         {
-            app.UseMiddleware<GlobalErrorHandlerMiddleware>();
-
             return app;
         }
     }
