@@ -39,28 +39,31 @@ export class ShoppingListsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shoppingListService.refreshNeeded.subscribe(() => {
+      this.getAllShoppingLists();
+    });
+
+    this.getAllShoppingLists();
+  }
+
+  private getAllShoppingLists() {
     this.shoppingListService
       .getAllByYearAndMonthAndIsDone(this.year, this.month, false)
-      .subscribe();
-    this.shoppingListService.shoppingLists$.subscribe({
-      next: (response: Paged<ShoppingList>) => {
-        this.shoppingLists = response?.items?.map((item) => {
-          return new ShoppingList(
-            item.id,
-            item.name,
-            item.isDone,
-            item.createdByFirstName,
-            item.createdByLastName,
-            item.products!
-          );
-        });
-      },
-    });
+      .subscribe({
+        next: (response: Paged<ShoppingList>) => {
+          this.shoppingLists = response?.items?.map((item) => {
+            return new ShoppingList(
+              item.id,
+              item.name,
+              item.isDone,
+              item.createdByFirstName,
+              item.createdByLastName,
+              item.products!
+            );
+          });
+        },
+      });
   }
 
   onCurrentYearAndMonthChanged(): void {}
-
-  countBoughtProducts(shoppingList: ShoppingList) {
-    return shoppingList.products?.filter((p) => p.isBought).length as number;
-  }
 }

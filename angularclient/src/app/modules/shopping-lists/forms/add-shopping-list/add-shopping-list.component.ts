@@ -2,7 +2,7 @@ import { tap } from 'rxjs';
 import { AddShoppingList } from './../../models/add-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 
@@ -50,23 +50,14 @@ export class AddShoppingListComponent implements OnInit {
     const addShoppingList: AddShoppingList = {
       name: name,
     };
-    this.shoppingListService
-      .add(addShoppingList)
-      .pipe(
-        tap(() => {
-          this.shoppingListService
-            .getAllByYearAndMonthAndIsDone(this.year, this.month, false)
-            .subscribe();
-        })
-      )
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+    this.shoppingListService.add(addShoppingList).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
 
     this.addShoppingListForm.reset();
 

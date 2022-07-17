@@ -18,17 +18,18 @@ import { Paged } from 'app/core/models/paged';
 })
 export class ShoppingListsService {
   private shoppingListsUrl: string = `${environment.apiUrl}/shoppinglists`;
-  private _shoppingLists: BehaviorSubject<Paged<ShoppingList>> =
-    new BehaviorSubject<Paged<ShoppingList>>(Object.assign([]));
 
-  public shoppingLists$: Observable<Paged<ShoppingList>> =
-    this._shoppingLists.asObservable();
+  private _refreshNeeded = new Subject<void>();
 
   private defaultHttpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
     }),
   };
+
+  get refreshNeeded() {
+    return this._refreshNeeded;
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -48,16 +49,9 @@ export class ShoppingListsService {
     params = params.append('month', month);
     params = params.append('isdone', isDone);
 
-    return this.http
-      .get<Paged<ShoppingList>>(this.shoppingListsUrl, {
-        params: params,
-      })
-      .pipe(
-        map((response: Paged<ShoppingList>) => {
-          this._shoppingLists.next(response);
-          return response;
-        })
-      );
+    return this.http.get<Paged<ShoppingList>>(this.shoppingListsUrl, {
+      params: params,
+    });
   }
 
   getMonthlyCostByYear(year: number): Observable<ShoppingListMonthlyCost[]> {
@@ -67,21 +61,33 @@ export class ShoppingListsService {
   }
 
   add(shoppingList: AddShoppingList): Observable<ShoppingList> {
-    return this.http.post<ShoppingList>(
-      this.shoppingListsUrl,
-      shoppingList,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .post<ShoppingList>(
+        this.shoppingListsUrl,
+        shoppingList,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._refreshNeeded.next();
+        })
+      );
   }
 
   addShoppingListProduct(
     shoppingListProduct: AddShoppingListProduct
   ): Observable<any> {
-    return this.http.put<any>(
-      `${this.shoppingListsUrl}/${shoppingListProduct.shoppingListId}/products`,
-      shoppingListProduct,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .put<any>(
+        `${this.shoppingListsUrl}/${shoppingListProduct.shoppingListId}/products`,
+        shoppingListProduct,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._refreshNeeded.next();
+        })
+      );
   }
 
   purchaseProduct(
