@@ -56,8 +56,6 @@ export class ModalComponent implements OnInit {
     if (this.modalConfig?.onSave != undefined) {
       const result = await this.modalConfig.onSave();
     }
-
-    this.modalRef.close();
   }
 
   async close(): Promise<void> {

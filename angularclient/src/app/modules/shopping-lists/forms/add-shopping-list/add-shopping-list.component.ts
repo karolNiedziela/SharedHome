@@ -1,11 +1,8 @@
+import { tap } from 'rxjs';
+import { AddShoppingList } from './../../models/add-shopping-list';
+import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 
@@ -15,6 +12,8 @@ import { ModalComponent } from 'app/shared/components/modals/modal/modal.compone
   styleUrls: ['./add-shopping-list.component.scss'],
 })
 export class AddShoppingListComponent implements OnInit {
+  @Input() year!: number;
+  @Input() month!: number;
   addShoppingListForm!: FormGroup;
 
   @ViewChild('modal') private modal!: ModalComponent;
@@ -26,13 +25,9 @@ export class AddShoppingListComponent implements OnInit {
     onDismiss: () => this.onDismiss(),
   };
 
-  constructor() {
+  constructor(private shoppingListService: ShoppingListsService) {
     this.addShoppingListForm = new FormGroup({
       name: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(20),
-      ]),
-      test: new FormControl('', [
         Validators.required,
         Validators.maxLength(20),
       ]),
@@ -46,7 +41,36 @@ export class AddShoppingListComponent implements OnInit {
   }
 
   onSave(): void {
+    if (this.addShoppingListForm.invalid) {
+      this.addShoppingListForm.markAllAsTouched();
+      return;
+    }
+
+    const name = this.addShoppingListForm.get('name')?.value;
+    const addShoppingList: AddShoppingList = {
+      name: name,
+    };
+    this.shoppingListService
+      .add(addShoppingList)
+      .pipe(
+        tap(() => {
+          this.shoppingListService
+            .getAllByYearAndMonthAndIsDone(this.year, this.month, false)
+            .subscribe();
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          console.log(result);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+
     this.addShoppingListForm.reset();
+
+    this.modal.close();
   }
 
   onClose(): void {

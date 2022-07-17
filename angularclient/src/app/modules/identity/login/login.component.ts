@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      console.log('form is invalid');
       return;
     }
 
@@ -35,7 +34,6 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: () => {},
         error: (error) => {
-          console.log('error in logging');
           console.log(error);
         },
       });

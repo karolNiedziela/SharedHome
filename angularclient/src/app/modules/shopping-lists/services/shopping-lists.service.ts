@@ -3,7 +3,7 @@ import { PurchaseShoppingListProduct } from './../models/purchase-shopping-list-
 import { AddShoppingList } from './../models/add-shopping-list';
 import { ShoppingListMonthlyCost } from './../models/shopping-list-monthly-cost';
 import { ShoppingList } from './../models/shopping-list';
-import { Observable, map } from 'rxjs';
+import { Observable, map, Subject, BehaviorSubject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
@@ -18,6 +18,11 @@ import { Paged } from 'app/core/models/paged';
 })
 export class ShoppingListsService {
   private shoppingListsUrl: string = `${environment.apiUrl}/shoppinglists`;
+  private _shoppingLists: BehaviorSubject<Paged<ShoppingList>> =
+    new BehaviorSubject<Paged<ShoppingList>>(Object.assign([]));
+
+  public shoppingLists$: Observable<Paged<ShoppingList>> =
+    this._shoppingLists.asObservable();
 
   private defaultHttpOptions = {
     headers: new HttpHeaders({
@@ -43,9 +48,16 @@ export class ShoppingListsService {
     params = params.append('month', month);
     params = params.append('isdone', isDone);
 
-    return this.http.get<Paged<ShoppingList>>(this.shoppingListsUrl, {
-      params: params,
-    });
+    return this.http
+      .get<Paged<ShoppingList>>(this.shoppingListsUrl, {
+        params: params,
+      })
+      .pipe(
+        map((response: Paged<ShoppingList>) => {
+          this._shoppingLists.next(response);
+          return response;
+        })
+      );
   }
 
   getMonthlyCostByYear(year: number): Observable<ShoppingListMonthlyCost[]> {

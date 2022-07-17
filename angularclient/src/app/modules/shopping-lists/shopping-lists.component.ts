@@ -1,5 +1,3 @@
-import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
-import { ModalComponent } from './../../shared/components/modals/modal/modal.component';
 import { ShoppingList } from './models/shopping-list';
 import { ShoppingListsService } from './services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -9,10 +7,9 @@ import {
   faEllipsisVertical,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
-import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { Paged } from 'app/core/models/paged';
 
 @Component({
   selector: 'app-shopping-lists',
@@ -24,12 +21,15 @@ export class ShoppingListsComponent implements OnInit {
   moreOptionsIcon = faEllipsisVertical;
   boughtIcon = faCheck;
   notBoughtIcon = faXmark;
-
+  year: number;
+  month: number;
   shoppingListForm!: FormGroup;
   shoppingLists: ShoppingList[] = [];
 
   constructor(private shoppingListService: ShoppingListsService) {
-    const currentYearAndMonth = `${new Date().getFullYear()} ${new Date().getMonth()}`;
+    this.year = new Date().getFullYear();
+    this.month = new Date().getMonth() + 1;
+    const currentYearAndMonth = `${this.year} ${this.month}`;
     this.shoppingListForm = new FormGroup({
       yearAndMonth: new FormControl(currentYearAndMonth, [
         Validators.required,
@@ -40,9 +40,11 @@ export class ShoppingListsComponent implements OnInit {
 
   ngOnInit(): void {
     this.shoppingListService
-      .getAllByYearAndMonthAndIsDone(2022, 7, false)
-      .subscribe((response) => {
-        this.shoppingLists = response.items.map((item) => {
+      .getAllByYearAndMonthAndIsDone(this.year, this.month, false)
+      .subscribe();
+    this.shoppingListService.shoppingLists$.subscribe({
+      next: (response: Paged<ShoppingList>) => {
+        this.shoppingLists = response?.items?.map((item) => {
           return new ShoppingList(
             item.id,
             item.name,
@@ -52,12 +54,13 @@ export class ShoppingListsComponent implements OnInit {
             item.products!
           );
         });
-        console.log(response);
-        console.log(this.shoppingLists);
-      });
+      },
+    });
   }
 
-  onCurrentYearAndMonthChanged(): void {
-    console.log('hello');
+  onCurrentYearAndMonthChanged(): void {}
+
+  countBoughtProducts(shoppingList: ShoppingList) {
+    return shoppingList.products?.filter((p) => p.isBought).length as number;
   }
 }
