@@ -1,12 +1,14 @@
 import { ControlValueAccessor, ValidatorFn, NgControl } from '@angular/forms';
-import { Component, Input, OnInit, Self } from '@angular/core';
+import { Component, Input, OnInit, Self, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['../../../styles/input.scss'],
+  styleUrls: ['../input.scss'],
 })
-export class TextInputComponent implements OnInit, ControlValueAccessor {
+export class TextInputComponent
+  implements OnInit, ControlValueAccessor, OnDestroy
+{
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
   @Input() value: string = '';
@@ -25,13 +27,24 @@ export class TextInputComponent implements OnInit, ControlValueAccessor {
       ? [control.validator]
       : [];
 
+    this.value = control?.value;
+
     control?.setValidators(validators);
     control?.updateValueAndValidity();
   }
 
-  writeValue(value: any): void {
-    this.controlDir.control?.setValue(value, { emitEvent: false });
+  ngOnDestroy(): void {
+    this.controlDir.control?.clearValidators();
+    this.controlDir.control?.markAsPristine();
   }
+
+  writeValue(value: any): void {
+    if (this.controlDir.control && this.controlDir.control?.value != value) {
+      this.controlDir.control?.setValue(value, { emitEvent: true });
+    }
+    this.value = this.controlDir.control?.value;
+  }
+
   registerOnChange(onChanged: (value: any) => void): void {
     this.onChanged = onChanged;
   }

@@ -1,10 +1,11 @@
 export interface ModalConfig {
   modalTitle: string;
-
   saveButtonLabel?: string;
+  isSaveButtonVisible?: boolean;
   closeButtonLabel?: string;
-  onOpen?(): Promise<boolean> | boolean;
+  isCloseButtonVisible?: boolean;
   onSave?(): Promise<any> | any;
-  onClose?(): Promise<boolean> | boolean;
-  onDismiss?(): boolean;
+  onClose?(): Promise<any> | any;
+  onDismiss?(): void;
+  applyToEachOperation?(): Promise<any> | any;
 }

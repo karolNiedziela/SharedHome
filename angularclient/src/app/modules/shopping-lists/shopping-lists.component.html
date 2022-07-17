@@ -10,10 +10,7 @@
       ></app-text-input>
     </div>
   </div>
-  <div class="btn btn-primary" (click)="openModal()">Open Modal</div>
-  <div class="btn btn-primary" (click)="openConfirmationModal()">
-    Open Confirmation Modal
-  </div>
+  <app-add-shopping-list></app-add-shopping-list>
   <div class="shopping-lists">
     <div class="row">
       <div
@@ -93,10 +90,3 @@
     </div>
   </div>
 </div>
-
-<app-modal #modal [modalConfig]="modalConfig"> It works! </app-modal>
-<app-confirmation-modal
-  #confirmationModal
-  [confirmationModalConfig]="confirmationModalConfig"
-  >Works</app-confirmation-modal
->

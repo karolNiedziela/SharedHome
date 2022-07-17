@@ -1,13 +1,18 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
   Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
   Input,
   OnInit,
+  QueryList,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfig } from './modal.config';
+import { ContentRef } from '@ng-bootstrap/ng-bootstrap/util/popup';
 
 @Component({
   selector: 'app-modal',
@@ -28,28 +33,28 @@ export class ModalComponent implements OnInit {
       this.modalConfig.closeButtonLabel = 'Close';
     }
 
+    if (!this.modalConfig.isCloseButtonVisible) {
+      this.modalConfig.isCloseButtonVisible = true;
+    }
+
     if (!this.modalConfig.saveButtonLabel) {
       this.modalConfig.saveButtonLabel = 'Save';
     }
+
+    if (!this.modalConfig.isSaveButtonVisible) {
+      this.modalConfig.isSaveButtonVisible = true;
+    }
   }
 
-  async open(): Promise<void> {
-    if (this.modalConfig?.onOpen != undefined) {
-      const result = await this.modalConfig.onOpen();
-
-      this.modalService.open(this.modalContent);
-      return;
-    }
-
-    this.modalRef = this.modalService.open(this.modalContent);
+  open(): void {
+    this.modalRef = this.modalService.open(this.modalContent, {
+      beforeDismiss: () => this.beforeDismiss(),
+    });
   }
 
   async save(): Promise<void> {
     if (this.modalConfig?.onSave != undefined) {
       const result = await this.modalConfig.onSave();
-
-      this.modalRef.close(result);
-      return;
     }
 
     this.modalRef.close();
@@ -58,14 +63,20 @@ export class ModalComponent implements OnInit {
   async close(): Promise<void> {
     if (this.modalConfig?.onClose != undefined) {
       const result = await this.modalConfig.onClose();
-
-      this.modalRef.close(result);
-      return;
     }
+
     this.modalRef.close();
   }
 
   dismiss(): void {
+    if (this.modalConfig?.onDismiss != undefined) {
+      const result = this.modalConfig.onDismiss();
+    }
     this.modalRef.dismiss();
+  }
+
+  beforeDismiss(): Promise<boolean> {
+    this.close();
+    return Promise.resolve(true);
   }
 }

@@ -6,6 +6,7 @@
         [icon]="dismissIcon"
         (click)="dismiss()"
         class="dismiss-icon"
+        ngbAutofocus
       ></fa-icon>
     </h4>
   </div>
@@ -14,6 +15,7 @@
   </div>
   <div class="modal-footer">
     <button
+      *ngIf="modalConfig.isCloseButtonVisible"
       type="button"
       class="btn btn-secondary"
       data-bs-dismiss="modal"
@@ -21,8 +23,11 @@
     >
       {{ modalConfig.closeButtonLabel }}
     </button>
+
     <app-button
+      *ngIf="modalConfig.isSaveButtonVisible"
       [text]="modalConfig.saveButtonLabel!"
+      type="button"
       (onButtonClick)="save()"
     ></app-button>
   </div>

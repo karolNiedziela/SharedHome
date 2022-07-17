@@ -9,7 +9,7 @@ import { Component, OnInit, Self } from '@angular/core';
 @Component({
   selector: 'app-email-input',
   templateUrl: './email-input.component.html',
-  styleUrls: ['../../../styles/input.scss'],
+  styleUrls: ['../input.scss'],
 })
 export class EmailInputComponent implements OnInit, ControlValueAccessor {
   labelText: string = 'Email';

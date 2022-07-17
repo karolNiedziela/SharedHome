@@ -1,11 +1,11 @@
-import { Component, forwardRef, OnDestroy, OnInit, Self } from '@angular/core';
+import { Component, forwardRef, OnDestroy } from '@angular/core';
 import {
   ControlValueAccessor,
-  UntypedFormControl,
-  UntypedFormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   Validators,
+  FormGroup,
+  FormControl,
 } from '@angular/forms';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 @Component({
   selector: 'app-passwords-form',
   templateUrl: './passwords-form.component.html',
-  styleUrls: ['../../../styles/input.scss', './passwords-form.component.scss'],
+  styleUrls: ['../../inputs/input.scss', './passwords-form.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -32,7 +32,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
   ],
 })
 export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
-  passwordForm!: UntypedFormGroup;
+  passwordForm!: FormGroup;
   subscriptions: Subscription[] = [];
   eyeSlashIcon: any = faEyeSlash;
   eyeIcon: any = faEye;
@@ -40,13 +40,13 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
   confirmPasswordTextField: boolean = false;
 
   constructor() {
-    this.passwordForm = new UntypedFormGroup(
+    this.passwordForm = new FormGroup(
       {
-        password: new UntypedFormControl('', [
+        password: new FormControl('', [
           Validators.required,
           passwordStrengthValidator,
         ]),
-        confirmPassword: new UntypedFormControl('', [
+        confirmPassword: new FormControl('', [
           Validators.required,
           passwordStrengthValidator,
         ]),
@@ -61,6 +61,7 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
       })
     );
   }
+
   get value(): any {
     return this.passwordForm.value;
   }
@@ -111,11 +112,7 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
     this.confirmPasswordTextField = !this.confirmPasswordTextField;
   }
 
-  validate(_: UntypedFormControl) {
+  validate(_: FormControl) {
     return this.passwordForm.valid ? null : { passwords: { valid: false } };
-  }
-
-  reset() {
-    this.passwordForm.reset();
   }
 }

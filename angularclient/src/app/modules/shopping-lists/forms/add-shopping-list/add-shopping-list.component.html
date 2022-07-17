@@ -1,0 +1,18 @@
+<app-button text="Add shopping list" (click)="openModal()"
+  >Open Modal</app-button
+>
+
+<app-modal #modal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="addShoppingListForm">
+    <app-text-input
+      formControlName="name"
+      labelText="Name"
+      placeholder="Name"
+    ></app-text-input>
+    <app-text-input
+      formControlName="test"
+      labelText="Test"
+      placeholder="Test"
+    ></app-text-input>
+  </div>
+</app-modal>

@@ -28,16 +28,6 @@ export class ShoppingListsComponent implements OnInit {
   shoppingListForm!: FormGroup;
   shoppingLists: ShoppingList[] = [];
 
-  @ViewChild('modal') private modal!: ModalComponent;
-
-  public modalConfig: ModalConfig = {
-    modalTitle: 'Add shopping list',
-  };
-
-  @ViewChild('confirmationModal')
-  private confirmationModal!: ConfirmationModalComponent;
-  public confirmationModalConfig: ConfirmationModalConfig = {};
-
   constructor(private shoppingListService: ShoppingListsService) {
     const currentYearAndMonth = `${new Date().getFullYear()} ${new Date().getMonth()}`;
     this.shoppingListForm = new FormGroup({
@@ -69,13 +59,5 @@ export class ShoppingListsComponent implements OnInit {
 
   onCurrentYearAndMonthChanged(): void {
     console.log('hello');
-  }
-
-  openModal() {
-    this.modal.open();
-  }
-
-  openConfirmationModal() {
-    this.confirmationModal.open();
   }
 }

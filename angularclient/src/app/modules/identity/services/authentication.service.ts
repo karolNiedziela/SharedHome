@@ -53,7 +53,7 @@ export class AuthenticationService {
           if (returnUrl) {
             this.router.navigate([`${returnUrl}`]);
           } else {
-            this.router.navigate(['/home']);
+            this.router.navigate(['']);
           }
 
           return result;
@@ -73,6 +73,6 @@ export class AuthenticationService {
   logout() {
     localStorage.removeItem('jwt');
     this.authenticationResponseSubject.next(null!);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/identity/login']);
   }
 }

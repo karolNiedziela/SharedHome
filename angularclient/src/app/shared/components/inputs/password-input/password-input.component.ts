@@ -6,7 +6,7 @@ import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-password-input',
   templateUrl: './password-input.component.html',
-  styleUrls: ['../../../styles/input.scss', './password-input.component.scss'],
+  styleUrls: ['../input.scss', './password-input.component.scss'],
 })
 export class PasswordInputComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string = 'Password';
