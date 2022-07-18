@@ -24,13 +24,11 @@ namespace SharedHome.Infrastructure.EF.Repositories
                     .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id &&
                         personIds.Contains(shoppingList.PersonId!));
 
-        public async Task<ShoppingList> AddAsync(ShoppingList shoppingList)
+        public async Task AddAsync(ShoppingList shoppingList)
         {
             await _context.ShoppingLists.AddAsync(shoppingList);
 
             await _context.SaveChangesAsync();
-
-            return shoppingList;
         }
 
         public async Task DeleteAsync(ShoppingList shoppingList)

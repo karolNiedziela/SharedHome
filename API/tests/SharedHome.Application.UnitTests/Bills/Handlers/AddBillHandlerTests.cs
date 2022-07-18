@@ -1,10 +1,15 @@
-﻿using MediatR;
+﻿using AutoMapper;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands;
 using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.DTO;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Abstractions.Responses;
+using Shouldly;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,12 +18,15 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     public class AddBillHandlerTests
     {
         private readonly IBillRepository _billRepository;
-        private readonly ICommandHandler<AddBill, Unit> _commandHandler;
+        private readonly IMapper _mapper;
+        private readonly ICommandHandler<AddBill, Response<BillDto>> _commandHandler;
 
         public AddBillHandlerTests()
         {
             _billRepository = Substitute.For<IBillRepository>();
-            _commandHandler = new AddBillHandler(_billRepository);
+            var mapperConfiguration = new MapperConfiguration(config => config.AddMaps(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))));
+            _mapper = new Mapper(mapperConfiguration);
+            _commandHandler = new AddBillHandler(_billRepository, _mapper);
         }
 
         [Fact]
@@ -32,9 +40,11 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
                 Currency = "zł",
             };
 
-            await _commandHandler.Handle(command, default);
+            var response = await _commandHandler.Handle(command, default);
 
             await _billRepository.Received(1).AddAsync(Arg.Any<Bill>());
+
+            response.Data.ShouldNotBeNull();
         }
     }
 }

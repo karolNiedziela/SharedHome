@@ -68,9 +68,9 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddShoppingList([FromBody] AddShoppingList command)
         {
-            await Mediator.Send(command);
+            var response = await Mediator.Send(command);
 
-            return Created("", new { });
+            return CreatedAtAction(nameof(GetShoppingList), new { shoppingListId = response.Data.Id}, response);
         }
 
         /// <summary>

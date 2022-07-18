@@ -37,9 +37,9 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddHouseGroupAsync([FromBody] AddHouseGroup command)
         {
-            await Mediator.Send(command);
+            var response = await Mediator.Send(command);
 
-            return Created("", new { });
+            return CreatedAtAction(nameof(GetAsync), new { }, response);
         }
 
         /// <summary>

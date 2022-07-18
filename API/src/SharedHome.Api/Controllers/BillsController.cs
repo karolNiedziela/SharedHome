@@ -68,9 +68,9 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddBillAsync([FromBody] AddBill command)
         {
-            await Mediator.Send(command);
+            var response = await Mediator.Send(command);
 
-            return Created("", new { });
+            return CreatedAtAction(nameof(GetBillAsync), new { billId = response.Data.Id }, response);
         }
 
         /// <summary>

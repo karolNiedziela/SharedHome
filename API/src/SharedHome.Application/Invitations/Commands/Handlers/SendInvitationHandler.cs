@@ -1,27 +1,32 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
+using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.Invitations.Commands.Handlers
 {
-    public class SendInvitationHandler : ICommandHandler<SendInvitation, Unit>
+    public class SendInvitationHandler : ICommandHandler<SendInvitation, Response<InvitationDto>>
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IInvitationReadService _invitationService;
+        private readonly IMapper _mapper;
 
-        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupReadService houseGroupService, IInvitationReadService invitationService)
+        public SendInvitationHandler(IInvitationRepository invitationRepository, IHouseGroupReadService houseGroupService, IInvitationReadService invitationService, IMapper mapper)
         {
             _invitationRepository = invitationRepository;
             _houseGroupService = houseGroupService;
             _invitationService = invitationService;
+            _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(SendInvitation request, CancellationToken cancellationToken)
+        public async Task<Response<InvitationDto>> Handle(SendInvitation request, CancellationToken cancellationToken)
         {    
             if (!await _houseGroupService.IsPersonInHouseGroup(request.PersonId!, request.HouseGroupId)) 
             {
@@ -37,7 +42,7 @@ namespace SharedHome.Application.Invitations.Commands.Handlers
 
             await _invitationRepository.AddAsync(invitation);
 
-            return Unit.Value;
+            return new Response<InvitationDto>(_mapper.Map<InvitationDto>(invitation));
         }
     }
 }

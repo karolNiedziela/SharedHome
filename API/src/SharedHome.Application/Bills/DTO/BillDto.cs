@@ -12,9 +12,9 @@ namespace SharedHome.Application.Bills.DTO
 
         public string ServiceProvider { get; set; } = default!;
 
-        public decimal Cost { get; set; }
+        public decimal? Cost { get; set; }
 
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; }
 
         public DateTime DateOfPayment { get; set; }
     }

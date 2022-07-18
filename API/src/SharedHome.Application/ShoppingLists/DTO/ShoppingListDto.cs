@@ -1,4 +1,6 @@
-﻿namespace SharedHome.Application.ShoppingLists.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace SharedHome.Application.ShoppingLists.DTO
 {
     public class ShoppingListDto
     {
@@ -8,8 +10,10 @@
 
         public bool IsDone { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CreatedByFirstName { get; set; } = default!;
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CreatedByLastName { get; set; } = default!;
 
         public IEnumerable<ShoppingListProductDto> Products { get; set; } = default!;

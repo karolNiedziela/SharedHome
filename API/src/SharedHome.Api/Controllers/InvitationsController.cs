@@ -53,9 +53,9 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SendInvitationAsync([FromBody] SendInvitation command)
         {
-            await Mediator.Send(command);
+            var response = await Mediator.Send(command);
 
-            return Created("", new { });
+            return CreatedAtAction(nameof(GetAsync), new { houseGroupId = response.Data.HouseGroupId }, response);
         }
 
 

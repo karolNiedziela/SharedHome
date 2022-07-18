@@ -2,6 +2,7 @@
 using SharedHome.Shared.Abstractions.User;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -28,6 +29,36 @@ namespace SharedHome.Shared.User
             }
         }
 
+        public string FirstName
+        {
+            get
+            {
+                var firstName = _context?.User?.FindFirstValue(JwtRegisteredClaimNames.GivenName);
+
+                return string.IsNullOrWhiteSpace(firstName) ? string.Empty : firstName;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                var lastName = _context?.User?.FindFirstValue(JwtRegisteredClaimNames.FamilyName);
+
+                return string.IsNullOrWhiteSpace(lastName) ? string.Empty : lastName;
+            }
+        }
+
+        public string Email
+        {
+            get
+            {
+                var email = _context?.User?.FindFirstValue(ClaimTypes.Email);
+
+                return string.IsNullOrWhiteSpace(email) ? string.Empty : email;
+            }
+        }
+
         public Dictionary<string, IEnumerable<string>> Claims
         {
             get
@@ -35,6 +66,8 @@ namespace SharedHome.Shared.User
                 return _context.User.Claims.GroupBy(c => c.Type)
                     .ToDictionary(x => x.Key, x => x.Select(c => c.Value.ToString()));
             }
-        }   
+        }
+
+      
     }
 }

@@ -37,6 +37,11 @@ try
             };
         });
 
+    builder.Services.AddMvc(options =>
+    {
+        options.SuppressAsyncSuffixInActionNames = false;
+    });
+
     builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
     builder.Services.Configure<RequestLocalizationOptions>(options =>
     {
