@@ -19,7 +19,9 @@ jobs:
         env:
           MYSQL_DATABASE: SharedHomeTests
           MYSQL_HOST: 127.0.0.1
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_USER: root
+          MYSQL_PASSWORD: IntegrationTests
+          MYSQL_ROOT_PASSWORD: IntegrationTests
         ports:
           - 3308:3306  
         options: >- 
