@@ -43,4 +43,4 @@ jobs:
       run: dotnet build --configuration Release API/src/SharedHome.Api
       
     - name: Run integration tests
-      run: dotnet test --configuration Release API/tests/SharedHome.Domain.IntegrationTests
+      run: dotnet test --configuration Release API/tests/SharedHome.IntegrationTests
