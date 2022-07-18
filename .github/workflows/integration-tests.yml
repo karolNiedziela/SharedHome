@@ -19,7 +19,9 @@ jobs:
         env:
           MYSQL_DATABASE: SharedHomeTests
           MYSQL_HOST: 127.0.0.1
-          MYSQL_PASSWORD: IntegrationTests
+          MYSQL_USER: root
+          MYSQL_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: password
         ports:
           - 3308:3306  
         options: >- 
@@ -36,7 +38,12 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
-        
+    
+    - name: Set up MySQL
+      run: |
+        sudo /etc/init.d/mysql start
+        mysql -e 'CREATE DATABASE SharedHomeTests;' -u roout -p IntegrationTests
+    
     - name: Restore dependencies
       run: dotnet restore API/src/SharedHome.Api
       
