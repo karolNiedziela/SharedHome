@@ -18,6 +18,7 @@ try
     .AddJsonFile("appsettings.json")
     .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", true)
     .AddUserSecrets<Program>()
+    .AddEnvironmentVariables()
     .Build();
 
     builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
