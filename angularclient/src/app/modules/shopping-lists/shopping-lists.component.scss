@@ -16,6 +16,19 @@
     font-family: "Open Sans";
   }
 
+  &__details-icon {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(0%, -50%);
+    font-size: 1.5rem;
+  }
+
+  &__details-icon:hover {
+    color: $l_primary_color;
+    cursor: pointer;
+  }
+
   &__more-options-icon {
     position: absolute;
     padding: 10px;

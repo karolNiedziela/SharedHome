@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ShoppingList } from './models/shopping-list';
 import { ShoppingListsService } from './services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -5,6 +6,7 @@ import {
   faCheck,
   faCircleInfo,
   faEllipsisVertical,
+  faTableList,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit } from '@angular/core';
@@ -18,6 +20,7 @@ import { Paged } from 'app/core/models/paged';
 })
 export class ShoppingListsComponent implements OnInit {
   previewIcon = faCircleInfo;
+  detailsIcon = faTableList;
   moreOptionsIcon = faEllipsisVertical;
   boughtIcon = faCheck;
   notBoughtIcon = faXmark;
@@ -26,7 +29,10 @@ export class ShoppingListsComponent implements OnInit {
   shoppingListForm!: FormGroup;
   shoppingLists: ShoppingList[] = [];
 
-  constructor(private shoppingListService: ShoppingListsService) {
+  constructor(
+    private shoppingListService: ShoppingListsService,
+    private router: Router
+  ) {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
     const currentYearAndMonth = `${this.year} ${this.month}`;
@@ -66,4 +72,9 @@ export class ShoppingListsComponent implements OnInit {
   }
 
   onCurrentYearAndMonthChanged(): void {}
+
+  openShoppingList(shoppingListId: number): void {
+    console.log(shoppingListId);
+    this.router.navigate(['shoppinglists', shoppingListId]);
+  }
 }

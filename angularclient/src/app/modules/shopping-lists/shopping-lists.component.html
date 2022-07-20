@@ -21,6 +21,14 @@
           <div class="card-header">
             <h3 class="card-title">{{ shoppingList.name }}</h3>
             <fa-icon
+              [icon]="detailsIcon"
+              class="shopping-lists__details-icon"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="true"
+              (click)="openShoppingList(shoppingList.id)"
+            ></fa-icon>
+            <fa-icon
               [icon]="moreOptionsIcon"
               class="shopping-lists__more-options-icon"
               data-bs-toggle="dropdown"
@@ -33,7 +41,10 @@
               <li><a class="dropdown-item" href="#">Delete</a></li>
             </ul>
           </div>
-          <ul class="list-group list-group-flush shopping-lists__products">
+          <ul
+            class="list-group list-group-flush shopping-lists__products"
+            (click)="openShoppingList(shoppingList.id)"
+          >
             <li
               class="list-group-item product"
               *ngFor="let product of shoppingList.products | slice: 0:3"

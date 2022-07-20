@@ -25,7 +25,7 @@ export class LoginGuard implements CanActivate {
     if (!authenticationResponse) {
       return true;
     } else {
-      this.router.navigate(['']);
+      this.router.navigate(['shoppinglists']);
 
       return false;
     }

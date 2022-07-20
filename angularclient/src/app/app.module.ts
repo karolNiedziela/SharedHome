@@ -3,7 +3,6 @@ import { IdentityModule } from './modules/identity/identity.module';
 import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthenticationResultInterceptor } from './core/interceptors/authentication-result.interceptor';
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +11,7 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgModule } from '@angular/core';
 
 @NgModule({
   declarations: [AppComponent],

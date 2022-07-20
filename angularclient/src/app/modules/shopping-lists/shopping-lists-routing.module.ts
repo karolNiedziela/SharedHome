@@ -1,3 +1,5 @@
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingList } from './models/shopping-list';
 import { AuthGuard } from './../../core/guards/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -6,9 +8,13 @@ import { ShoppingListsComponent } from './shopping-lists.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'shoppinglists',
     component: ShoppingListsComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'shoppinglists/:shoppingListId',
+    component: ShoppingListComponent,
   },
 ];
 

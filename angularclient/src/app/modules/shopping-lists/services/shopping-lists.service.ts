@@ -12,6 +12,7 @@ import { ChangePriceOfProduct } from '../models/change-price-of-product';
 import { SetIsDone } from '../models/set-is-done';
 import { UpdateShoppingList } from '../models/update-shopping-list';
 import { Paged } from 'app/core/models/paged';
+import { ApiResponse } from 'app/core/models/api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +34,8 @@ export class ShoppingListsService {
 
   constructor(private http: HttpClient) {}
 
-  get(shoppingListId: number): Observable<ShoppingList> {
-    return this.http.get<ShoppingList>(
+  get(shoppingListId: number): Observable<ApiResponse<ShoppingList>> {
+    return this.http.get<ApiResponse<ShoppingList>>(
       `${this.shoppingListsUrl}/${shoppingListId}`
     );
   }
