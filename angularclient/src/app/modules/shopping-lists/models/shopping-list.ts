@@ -5,7 +5,7 @@ export class ShoppingList {
   isDone!: boolean;
   createdByFirstName!: string;
   createdByLastName!: string;
-  products?: ShoppingListProduct[];
+  products: ShoppingListProduct[] = [];
 
   constructor(
     id: number,

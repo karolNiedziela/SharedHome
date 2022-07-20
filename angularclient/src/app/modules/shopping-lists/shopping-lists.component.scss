@@ -13,43 +13,22 @@
     border-radius: 20px;
     background-color: $l_white_color;
     box-shadow: 0px 10px 20px $l_primary_color_light;
-    font-family: "Open Sans";
-  }
-
-  &__details-icon {
-    position: absolute;
-    top: 50%;
-    right: 5%;
-    transform: translate(0%, -50%);
-    font-size: 1.5rem;
-  }
-
-  &__details-icon:hover {
-    color: $l_primary_color;
-    cursor: pointer;
-  }
-
-  &__more-options-icon {
-    position: absolute;
-    padding: 10px;
-    top: 50%;
-    right: 0%;
-    transform: translate(0%, -50%);
-    font-size: 1.5rem;
-  }
-
-  &__more-options-icon:hover {
-    color: $l_primary_color;
-    cursor: pointer;
   }
 
   .card-header {
     position: relative;
     display: flex;
     text-align: center;
-    justify-content: left;
+    justify-content: space-between;
     background-color: #ffffff;
     border-bottom: none;
+
+    &__operations {
+      display: flex;
+      margin-left: auto;
+      font-size: 1.5rem;
+      gap: 10px;
+    }
   }
 
   .product {

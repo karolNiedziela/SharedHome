@@ -20,26 +20,31 @@
         <div class="card shopping-list">
           <div class="card-header">
             <h3 class="card-title">{{ shoppingList.name }}</h3>
-            <fa-icon
-              [icon]="detailsIcon"
-              class="shopping-lists__details-icon"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
-              (click)="openShoppingList(shoppingList.id)"
-            ></fa-icon>
-            <fa-icon
-              [icon]="moreOptionsIcon"
-              class="shopping-lists__more-options-icon"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="true"
-            ></fa-icon>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Make done</a></li>
-              <li><a class="dropdown-item" href="#">Edit</a></li>
-              <li><a class="dropdown-item" href="#">Delete</a></li>
-            </ul>
+
+            <div class="card-header__operations">
+              <fa-icon
+                [icon]="detailsIcon"
+                class="shared-home-icon"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Details"
+                aria-haspopup="true"
+                aria-expanded="true"
+                (click)="openShoppingList(shoppingList.id)"
+              ></fa-icon>
+              <fa-icon
+                [icon]="moreOptionsIcon"
+                class="shared-home-icon"
+                data-bs-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="true"
+              ></fa-icon>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Make done</a></li>
+                <li><a class="dropdown-item" href="#">Edit</a></li>
+                <li><a class="dropdown-item" href="#">Delete</a></li>
+              </ul>
+            </div>
           </div>
           <ul
             class="list-group list-group-flush shopping-lists__products"
