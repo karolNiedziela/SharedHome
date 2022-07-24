@@ -1,25 +1,20 @@
-import { ShoppingList } from './../models/shopping-list';
-import { ShoppingListsService } from './../services/shopping-lists.service';
+import { ShoppingList } from '../models/shopping-list';
+import { ShoppingListsService } from '../services/shopping-lists.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import {
-  faCheck,
-  faEllipsisVertical,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 
 @Component({
-  selector: 'app-shopping-list',
-  templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.scss'],
+  selector: 'app-shopping-list-details',
+  templateUrl: './shopping-list-details.component.html',
+  styleUrls: ['./shopping-list-details.component.scss'],
 })
 export class ShoppingListComponent implements OnInit {
-  moreOptionsIcon = faEllipsisVertical;
-  boughtIcon = faCheck;
-  notBoughtIcon = faXmark;
-
   shoppingListId!: number;
-  shoppingList!: ShoppingList;
+  shoppingList?: ShoppingList;
+  headearPopupMenuConfig: PopupMenuConfig = {
+    additionalPopupMenuItems: [{ text: 'Add product', onClick: () => {} }],
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,6 +26,14 @@ export class ShoppingListComponent implements OnInit {
       (params: Params) => (this.shoppingListId = params['shoppingListId'])
     );
 
+    this.shoppingListService.singleShoppingListRefreshNeeded.subscribe(() => {
+      this.getShoppingList();
+    });
+
+    this.getShoppingList();
+  }
+
+  getShoppingList() {
     this.shoppingListService.get(this.shoppingListId).subscribe((response) => {
       this.shoppingList = new ShoppingList(
         response.data.id,

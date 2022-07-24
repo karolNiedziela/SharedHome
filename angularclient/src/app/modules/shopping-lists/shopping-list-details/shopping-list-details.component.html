@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="card shopping-list">
+    <div class="card-header">
+      <h3 class="card-title">{{ shoppingList?.name }}</h3>
+      <app-popup-menu
+        [popupMenuConfig]="headearPopupMenuConfig"
+      ></app-popup-menu>
+    </div>
+    <ul class="list-group list-group-flush shopping-list__products">
+      <li
+        class="'list-group-item"
+        *ngFor="let product of shoppingList?.products"
+      >
+        <app-shopping-list-product
+          [shoppingListProduct]="product"
+          [shoppingListId]="shoppingListId"
+        ></app-shopping-list-product>
+      </li>
+    </ul>
+    <div class="card-footer">
+      <h5>
+        {{ shoppingList?.createdByFirstName }}
+        {{ shoppingList?.createdByLastName }}
+      </h5>
+      <h5>Total price:</h5>
+      <h5>
+        {{ shoppingList?.countBoughtProducts() }} /
+        {{ shoppingList?.products?.length }} products bought
+      </h5>
+      <h5>{{ shoppingList?.countTotalPrice() }} zł</h5>
+    </div>
+  </div>
+</div>

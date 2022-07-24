@@ -20,7 +20,8 @@ import { ApiResponse } from 'app/core/models/api-response';
 export class ShoppingListsService {
   private shoppingListsUrl: string = `${environment.apiUrl}/shoppinglists`;
 
-  private _refreshNeeded = new Subject<void>();
+  private _allShoppingListRefreshNeeded = new Subject<void>();
+  private _singleShoppingListRefreshNeeded = new Subject<void>();
 
   private defaultHttpOptions = {
     headers: new HttpHeaders({
@@ -28,8 +29,12 @@ export class ShoppingListsService {
     }),
   };
 
-  get refreshNeeded() {
-    return this._refreshNeeded;
+  get allShoppingListRefreshNeeded() {
+    return this._allShoppingListRefreshNeeded;
+  }
+
+  get singleShoppingListRefreshNeeded() {
+    return this._singleShoppingListRefreshNeeded;
   }
 
   constructor(private http: HttpClient) {}
@@ -70,7 +75,7 @@ export class ShoppingListsService {
       )
       .pipe(
         tap(() => {
-          this._refreshNeeded.next();
+          this._allShoppingListRefreshNeeded.next();
         })
       );
   }
@@ -86,7 +91,7 @@ export class ShoppingListsService {
       )
       .pipe(
         tap(() => {
-          this._refreshNeeded.next();
+          this._allShoppingListRefreshNeeded.next();
         })
       );
   }
@@ -138,19 +143,31 @@ export class ShoppingListsService {
   }
 
   delete(shoppingListId: number): Observable<any> {
-    return this.http.delete<any>(
-      `${this.shoppingListsUrl}/${shoppingListId}`,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .delete<any>(
+        `${this.shoppingListsUrl}/${shoppingListId}`,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._allShoppingListRefreshNeeded.next();
+        })
+      );
   }
 
   deleteShoppingListProduct(
     shoppingListId: number,
     productName: string
   ): Observable<any> {
-    return this.http.delete<any>(
-      `${this.shoppingListsUrl}/${shoppingListId}/products/${productName}`,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .delete<any>(
+        `${this.shoppingListsUrl}/${shoppingListId}/products/${productName}`,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
   }
 }

@@ -1,29 +1,36 @@
+import { ConfirmationModalComponent } from '../../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
-import { ShoppingList } from './models/shopping-list';
-import { ShoppingListsService } from './services/shopping-lists.service';
+
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  faCheck,
-  faCircleInfo,
-  faEllipsisVertical,
-  faTableList,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit } from '@angular/core';
+import { faList } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
 import { Paged } from 'app/core/models/paged';
+import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
+import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ShoppingList } from '../../models/shopping-list';
+import { ShoppingListsService } from '../../services/shopping-lists.service';
 
 @Component({
-  selector: 'app-shopping-lists',
-  templateUrl: './shopping-lists.component.html',
-  styleUrls: ['./shopping-lists.component.scss'],
+  selector: 'app-shopping-lists-list',
+  templateUrl: './shopping-lists-list.component.html',
+  styleUrls: ['./shopping-lists-list.component.scss'],
 })
 export class ShoppingListsComponent implements OnInit {
-  previewIcon = faCircleInfo;
-  detailsIcon = faTableList;
-  moreOptionsIcon = faEllipsisVertical;
-  boughtIcon = faCheck;
-  notBoughtIcon = faXmark;
+  detailsIcon = faList;
+  popupMenuConfig: PopupMenuConfig = {
+    onDelete: () => {
+      this.deleteShoppingListModal.open();
+    },
+    additionalPopupMenuItems: [{ text: 'Make done', onClick: () => {} }],
+  };
+
+  @ViewChild('deleteShoppingList')
+  private deleteShoppingListModal!: ConfirmationModalComponent;
+  deleteShoppingListModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Delete shopping list',
+    onSave: () => {},
+  };
   year: number;
   month: number;
   shoppingListForm!: FormGroup;
@@ -45,7 +52,7 @@ export class ShoppingListsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.shoppingListService.refreshNeeded.subscribe(() => {
+    this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
       this.getAllShoppingLists();
     });
 
@@ -74,7 +81,6 @@ export class ShoppingListsComponent implements OnInit {
   onCurrentYearAndMonthChanged(): void {}
 
   openShoppingList(shoppingListId: number): void {
-    console.log(shoppingListId);
     this.router.navigate(['shoppinglists', shoppingListId]);
   }
 }

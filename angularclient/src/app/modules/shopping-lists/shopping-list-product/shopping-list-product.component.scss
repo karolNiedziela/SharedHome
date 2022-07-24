@@ -1,0 +1,55 @@
+@import "/src/assets/_variables.scss";
+
+.product {
+  display: grid;
+  grid-template-columns: 8fr 2fr 36px;
+  padding-left: 1rem;
+  row-gap: 10px;
+  grid-template-areas:
+    "item item2 side"
+    "item3 item4 side";
+
+  &:hover {
+    border: 1px solid $l_primary_color_light;
+  }
+
+  &__name {
+    display: flex;
+    grid-area: item;
+    text-align: left;
+
+    & * {
+      padding-right: 10px;
+    }
+
+    .bought-status {
+      color: green;
+    }
+    .not-bought-status {
+      color: red;
+    }
+  }
+
+  &__price {
+    grid-area: item2;
+    text-align: right;
+  }
+
+  &__net-content {
+    grid-area: item3;
+    text-align: left;
+  }
+
+  &__quantity {
+    grid-area: item4;
+    text-align: right;
+  }
+
+  &__more-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: side;
+    font-size: 1.5rem;
+  }
+}

@@ -1,0 +1,24 @@
+<fa-icon
+  [icon]="moreOptionsIcon"
+  class="shared-home-icon"
+  data-bs-toggle="dropdown"
+  aria-haspopup="true"
+  aria-expanded="true"
+></fa-icon>
+<ul class="dropdown-menu">
+  <li
+    *ngFor="
+      let additionalPopupMenuItem of popupMenuConfig.additionalPopupMenuItems
+    "
+  >
+    <div class="dropdown-item" (click)="additionalPopupMenuItem.onClick()">
+      {{ additionalPopupMenuItem.text }}
+    </div>
+  </li>
+  <li *ngIf="popupMenuConfig.isEditVisible">
+    <div class="dropdown-item" (click)="popupMenuConfig.onEdit()">Edit</div>
+  </li>
+  <li *ngIf="popupMenuConfig.isDeleteVisible">
+    <div class="dropdown-item" (click)="popupMenuConfig.onDelete()">Delete</div>
+  </li>
+</ul>

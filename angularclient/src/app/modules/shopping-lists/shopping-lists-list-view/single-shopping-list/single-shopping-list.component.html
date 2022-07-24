@@ -1,0 +1,36 @@
+<div class="card shopping-list">
+  <div class="card-header">
+    <h3 class="card-title">{{ shoppingList.name }}</h3>
+
+    <div class="card-header__operations">
+      <fa-icon
+        [icon]="detailsIcon"
+        class="shared-home-icon"
+        data-bs-toggle="tooltip"
+        data-bs-placement="top"
+        title="Details"
+        aria-haspopup="true"
+        aria-expanded="true"
+        (click)="openShoppingList(shoppingList.id)"
+      ></fa-icon>
+      <app-popup-menu [popupMenuConfig]="popupMenuConfig"></app-popup-menu>
+    </div>
+  </div>
+  <div class="card-footer">
+    <h5>
+      {{ shoppingList.createdByFirstName }}
+      {{ shoppingList.createdByLastName }}
+    </h5>
+    <h5>Total price:</h5>
+    <h5>
+      {{ shoppingList.countBoughtProducts() }} /
+      {{ shoppingList.products.length }} products bought
+    </h5>
+    <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
+  </div>
+</div>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="deleteShoppingListModalConfig"
+  #deleteShoppingList
+></app-confirmation-modal>

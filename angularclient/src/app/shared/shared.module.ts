@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from './components/modals/modal/modal.component';
 import { ConfirmationModalComponent } from './components/modals/confirmation-modal/confirmation-modal.component';
 import { ButtonComponent } from './components/buttons/button/button.component';
+import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ButtonComponent } from './components/buttons/button/button.component';
     FooterComponent,
     ModalComponent,
     ConfirmationModalComponent,
+    PopupMenuComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { ButtonComponent } from './components/buttons/button/button.component';
     FooterComponent,
     ModalComponent,
     ConfirmationModalComponent,
+    PopupMenuComponent,
   ],
 })
 export class SharedModule {}
