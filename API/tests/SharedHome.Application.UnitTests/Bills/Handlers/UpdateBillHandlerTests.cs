@@ -48,7 +48,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             await _commandHandler.Handle(command, default);
 
             await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(x =>
-            x.BillType == BillType.Rent &&
+            x.BillType == BillType.Other &&
             x.Cost != null ?  x.Cost!.Amount == 200 : x.Cost == null &&
             x.ServiceProvider.Name == "PGE"));
         }
