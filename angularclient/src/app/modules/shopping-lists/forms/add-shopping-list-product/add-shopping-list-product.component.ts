@@ -29,11 +29,7 @@ export class AddShoppingListProductComponent implements OnInit {
   ngOnInit(): void {
     this.addShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
-      quantity: new FormControl(1, [
-        Validators.required,
-        Validators.min(1),
-        Validators.max(5),
-      ]),
+      quantity: new FormControl(1, [Validators.required]),
       netContent: new FormControl(''),
       netContenType: new FormControl(null),
     });

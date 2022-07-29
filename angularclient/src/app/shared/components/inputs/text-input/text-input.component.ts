@@ -1,4 +1,9 @@
-import { ControlValueAccessor, ValidatorFn, NgControl } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  ValidatorFn,
+  NgControl,
+  Validators,
+} from '@angular/forms';
 import { Component, Input, OnInit, Self, OnDestroy } from '@angular/core';
 
 @Component({
@@ -12,6 +17,8 @@ export class TextInputComponent
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
   @Input() value: string = '';
+  @Input() isRequired: boolean = false;
+
   disabled!: boolean;
 
   onChanged: (value: any) => void = () => {};
@@ -31,6 +38,7 @@ export class TextInputComponent
 
     control?.setValidators(validators);
     control?.updateValueAndValidity();
+    console.log(this.isRequired);
   }
 
   ngOnDestroy(): void {

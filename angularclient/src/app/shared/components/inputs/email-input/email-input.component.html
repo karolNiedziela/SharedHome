@@ -9,7 +9,12 @@
       'is-invalid': controlDir?.control?.touched && !controlDir.control?.valid
     }"
   />
-  <label class="sharedhome__label">{{ labelText }}</label>
+  <label class="sharedhome__label"
+    >{{ labelText }}
+    <span *ngIf="isRequired" class="required" aria-required="true">
+      *
+    </span></label
+  >
   <div
     class="invalid-feedback"
     *ngIf="controlDir?.control?.touched && !controlDir.control?.valid"

@@ -4,7 +4,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Component, OnInit, Self } from '@angular/core';
+import { Component, Input, OnInit, Self } from '@angular/core';
 
 @Component({
   selector: 'app-email-input',
@@ -12,6 +12,7 @@ import { Component, OnInit, Self } from '@angular/core';
   styleUrls: ['../input.scss'],
 })
 export class EmailInputComponent implements OnInit, ControlValueAccessor {
+  @Input() isRequired: boolean = false;
   labelText: string = 'Email';
   placeholder: string = 'Email';
 

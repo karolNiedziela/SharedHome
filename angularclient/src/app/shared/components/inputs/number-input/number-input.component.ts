@@ -12,6 +12,7 @@ export class NumberInputComponent
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
   @Input() value: number = 0;
+  @Input() isRequired: boolean = false;
   disabled!: boolean;
 
   onChanged: (value: any) => void = () => {};
