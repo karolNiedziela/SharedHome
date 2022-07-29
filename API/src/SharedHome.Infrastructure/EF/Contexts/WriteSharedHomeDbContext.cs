@@ -1,15 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.ShoppingLists.Aggregates;
-using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Infrastructure.EF.Configurations.Write;
-using SharedHome.Infrastructure.EF.Extensions;
-using SharedHome.Infrastructure.EF.Lookups;
 using SharedHome.Shared.Abstractions.Domain;
 using SharedHome.Shared.Abstractions.Time;
 using System.Reflection;
