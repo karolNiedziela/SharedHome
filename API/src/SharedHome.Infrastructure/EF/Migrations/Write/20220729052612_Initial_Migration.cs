@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SharedHome.Infrastructure.EF.Migrations.Write
 {
-    public partial class Initial_Write : Migration
+    public partial class Initial_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,8 +54,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     IsPaid = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    BillType = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BillType = table.Column<int>(type: "int", nullable: false),
                     ServiceProviderName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Currency = table.Column<string>(type: "longtext", nullable: true)
@@ -114,8 +113,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Status = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    InvitationStatus = table.Column<int>(type: "int", nullable: false),
                     HouseGroupId = table.Column<int>(type: "int", nullable: false),
                     RequestedByPersonId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -189,8 +187,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     Price = table.Column<decimal>(type: "decimal(12,4)", precision: 12, scale: 4, nullable: true),
                     NetContent = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    NetContentType = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    NetContentType = table.Column<int>(type: "int", nullable: true),
                     IsBought = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false)
                 },
                 constraints: table =>

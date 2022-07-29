@@ -8,8 +8,8 @@ namespace SharedHome.Domain.Invitations.Constants
 {
     public enum InvitationStatus
     {
-        Pending,
-        Accepted,
-        Rejected
+        Pending = 1,
+        Accepted = 2,
+        Rejected = 3
     }
 }

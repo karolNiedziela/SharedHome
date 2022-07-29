@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string Status { get; set; } = default!;
+        public int Status { get; set; }
 
         public HouseGroupReadModel HouseGroup { get; set; } = default!;
 

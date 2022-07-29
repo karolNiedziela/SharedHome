@@ -62,14 +62,14 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                 });
 
                 navigation.OwnsOne(product => product.NetContent, navigation =>
-                {
+                {                    
                     navigation.Property(netContent => netContent.Value)
                               .HasColumnName("NetContent")
                               .IsRequired();
 
                     navigation.Property(netContent => netContent.Type)
                               .HasColumnName("NetContentType")
-                              .HasConversion<string>();
+                              .HasConversion<int>();
                 });
 
                 navigation.Property(product => product.IsBought)

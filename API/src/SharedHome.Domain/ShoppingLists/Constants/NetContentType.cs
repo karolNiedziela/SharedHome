@@ -2,10 +2,10 @@
 {
     public enum NetContentType
     {
-        kg,
-        dag,
-        g,
-        l,
-        ml
+        kg = 1,
+        dag = 2,
+        g = 3,
+        l = 4,
+        ml = 5
     }
 }

@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string BillType { get; set; } = default!;
+        public int BillType { get; set; }
 
         public string ServiceProviderName { get; set; } = default!;
 

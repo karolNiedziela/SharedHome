@@ -20,7 +20,8 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                    .HasDefaultValue(false);
 
             builder.Property(bill => bill.BillType)
-                   .HasConversion<string>();
+                   .HasColumnName("BillType")
+                   .HasConversion<int>();
 
             builder.OwnsOne(bill => bill.ServiceProvider, navigation =>
             {

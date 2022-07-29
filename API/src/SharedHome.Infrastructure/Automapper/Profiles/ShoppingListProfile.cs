@@ -15,7 +15,8 @@ namespace SharedHome.Infrastructure.Automapper.Profiles
             CreateMap<ShoppingListReadModel, ShoppingListDto>()
                 .ForMember(dest => dest.CreatedByFirstName, opt => opt.MapFrom(src => src.Person.FirstName))          
                 .ForMember(dest => dest.CreatedByLastName, opt => opt.MapFrom(src => src.Person.LastName));
-            CreateMap<ShoppingListProductReadModel, ShoppingListProductDto>();
+            CreateMap<ShoppingListProductReadModel, ShoppingListProductDto>()
+                .ForMember(dest => dest.NetContentType, opt => opt.MapFrom(src => src.NetContentType == null ? null : src.NetContentType!.ToString()));
         }
     }
 }

@@ -11,8 +11,8 @@ using SharedHome.Infrastructure.EF.Contexts;
 namespace SharedHome.Infrastructure.EF.Migrations.Write
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    [Migration("20220707175813_Initial_Write")]
-    partial class Initial_Write
+    [Migration("20220729052612_Initial_Migration")]
+    partial class Initial_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +27,9 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("BillType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("BillType")
+                        .HasColumnType("int")
+                        .HasColumnName("BillType");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -96,9 +96,9 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
+                        .HasColumnName("InvitationStatus");
 
                     b.HasKey("Id");
 
@@ -388,8 +388,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                                     b2.Property<int>("ShoppingListProductId")
                                         .HasColumnType("int");
 
-                                    b2.Property<string>("Type")
-                                        .HasColumnType("longtext")
+                                    b2.Property<int?>("Type")
+                                        .HasColumnType("int")
                                         .HasColumnName("NetContentType");
 
                                     b2.Property<string>("Value")

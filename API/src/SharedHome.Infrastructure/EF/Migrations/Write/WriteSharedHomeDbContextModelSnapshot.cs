@@ -25,9 +25,9 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("BillType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("BillType")
+                        .HasColumnType("int")
+                        .HasColumnName("BillType");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -94,9 +94,9 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("Status")
+                        .HasColumnType("int")
+                        .HasColumnName("InvitationStatus");
 
                     b.HasKey("Id");
 
@@ -386,8 +386,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                                     b2.Property<int>("ShoppingListProductId")
                                         .HasColumnType("int");
 
-                                    b2.Property<string>("Type")
-                                        .HasColumnType("longtext")
+                                    b2.Property<int?>("Type")
+                                        .HasColumnType("int")
                                         .HasColumnName("NetContentType");
 
                                     b2.Property<string>("Value")

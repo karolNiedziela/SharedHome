@@ -14,7 +14,7 @@
 
         public string? NetContent { get; set; }
 
-        public string? NetContentType { get; set; }
+        public int? NetContentType { get; set; }
 
         public bool IsBought { get; set; }
 

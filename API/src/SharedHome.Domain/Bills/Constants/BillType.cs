@@ -2,13 +2,13 @@
 {
     public enum BillType
     {
-        Other = 0,
-        Rent,
-        Gas,
-        Electricity,
-        Trash,
-        Phone,
-        Internet,
-        Water,
+        Other = 1,
+        Rent = 2,
+        Gas = 3,
+        Electricity = 4,
+        Trash = 5,
+        Phone = 6,
+        Internet = 7,
+        Water = 8,
     }
 }

@@ -15,7 +15,8 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
             builder.HasKey(invitation => invitation.Id);
 
             builder.Property(invitation => invitation.Status)
-                   .HasConversion<string>();
+                   .HasColumnName("InvitationStatus")
+                   .HasConversion<int>();
 
             builder.HasOne<Person>().WithMany().HasForeignKey(invitation => invitation.RequestedByPersonId);
 

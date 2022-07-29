@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Shared.Abstractions.Queries;
 
-namespace SharedHome.Infrastructure.EF
+namespace SharedHome.Infrastructure.EF.Extensions
 {
-    public static class Extensions
+    public static class QueryableExtensions
     {
         public static async Task<Paged<T>> PaginateAsync<T>(this IQueryable<T> data, int page, int items)
         {

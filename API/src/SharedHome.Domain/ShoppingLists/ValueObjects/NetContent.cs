@@ -6,9 +6,9 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
     public record NetContent
     {
-        public string? Value { get; }
+        public string? Value { get; private set; }
 
-        public NetContentType? Type { get; }
+        public NetContentType? Type { get; private set; }
 
         private NetContent()
         {

@@ -29,7 +29,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
                 InvitationStatus.Pending;
 
             var invitations = await _invitations
-                .Where(invitation => invitation.Status == invitationStatus.ToString() &&
+                .Where(invitation => invitation.Status == (int)invitationStatus &&
                 invitation.RequestedToPersonId == request.PersonId)
                 .ToListAsync();
 
