@@ -1,0 +1,31 @@
+<div class="form-floating">
+  <input
+    type="text"
+    class="form-control sharedhome__input register__input"
+    [placeholder]="placeholder"
+    (input)="onChanged($any($event.target).value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    [ngClass]="{
+      'is-invalid': controlDir.control?.touched && !controlDir.control?.valid
+    }"
+    [value]="value"
+  />
+  <label class="sharedhome__label">{{ labelText }}</label>
+  <div
+    class="invalid-feedback"
+    *ngIf="controlDir?.control?.touched && !controlDir.control?.valid"
+  >
+    <div *ngIf="controlDir.control?.errors?.['required']">
+      This field is required.
+    </div>
+    <div *ngIf="controlDir.control?.hasError('min')">
+      This field value must be higher or equal to
+      {{ controlDir.control?.errors?.['min'].min }}.
+    </div>
+    <div *ngIf="controlDir.control?.hasError('max')">
+      This field value must be lower or equal to
+      {{ controlDir.control?.errors?.['max'].max}}.
+    </div>
+  </div>
+</div>

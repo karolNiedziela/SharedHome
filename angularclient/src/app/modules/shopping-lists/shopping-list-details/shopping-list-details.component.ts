@@ -1,8 +1,9 @@
 import { ShoppingList } from '../models/shopping-list';
 import { ShoppingListsService } from '../services/shopping-lists.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
+import { AddShoppingListProductComponent } from '../forms/add-shopping-list-product/add-shopping-list-product.component';
 
 @Component({
   selector: 'app-shopping-list-details',
@@ -12,8 +13,17 @@ import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-me
 export class ShoppingListComponent implements OnInit {
   shoppingListId!: number;
   shoppingList?: ShoppingList;
+  @ViewChild('addShoppingListProductForm')
+  addShoppingListProductForm!: AddShoppingListProductComponent;
   headearPopupMenuConfig: PopupMenuConfig = {
-    additionalPopupMenuItems: [{ text: 'Add product', onClick: () => {} }],
+    additionalPopupMenuItems: [
+      {
+        text: 'Add product',
+        onClick: () => {
+          this.addShoppingListProductForm.modal.open();
+        },
+      },
+    ],
   };
 
   constructor(

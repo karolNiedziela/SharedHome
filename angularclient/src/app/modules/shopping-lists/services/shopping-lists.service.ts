@@ -91,7 +91,7 @@ export class ShoppingListsService {
       )
       .pipe(
         tap(() => {
-          this._allShoppingListRefreshNeeded.next();
+          this._singleShoppingListRefreshNeeded.next();
         })
       );
   }

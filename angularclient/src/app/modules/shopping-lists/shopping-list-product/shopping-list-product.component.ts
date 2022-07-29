@@ -1,3 +1,4 @@
+import { NetContentType } from './../enums/net-content-type';
 import { ShoppingListsService } from './../services/shopping-lists.service';
 import { ShoppingListProduct } from './../models/shopping-list-product';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
@@ -14,6 +15,8 @@ import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmati
 export class ShoppingListProductComponent implements OnInit {
   @Input() shoppingListProduct?: ShoppingListProduct;
   @Input() shoppingListId!: number;
+
+  public netContentType: typeof NetContentType = NetContentType;
 
   @ViewChild('deleteShoppingListProduct')
   private deleteShoppingListProductModal!: ConfirmationModalComponent;

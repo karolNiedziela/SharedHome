@@ -28,7 +28,8 @@
   <h5 class="product__item product__net-content">
     <div *ngIf="shoppingListProduct?.netContent != null; else emptyNetContent">
       {{ shoppingListProduct?.netContent }}
-      {{ shoppingListProduct?.netContentType }} &nbsp;
+      {{ shoppingListProduct?.netContentType | enumAsString: netContentType }}
+      &nbsp;
     </div>
     <ng-template #emptyNetContent> &nbsp; </ng-template>
   </h5>

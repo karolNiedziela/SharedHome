@@ -1,0 +1,22 @@
+<div class="form-floating">
+  <div class="dropdown shared__home form-control">
+    <span
+      class="dropdown-toggle"
+      id="dropdownMenuLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+    </span>
+    {{ enumType[selectedValue] }}
+    <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
+      <li
+        class="dropdown-item"
+        *ngFor="let key of keys"
+        (click)="setValue(key)"
+      >
+        {{ key }}
+      </li>
+    </ul>
+  </div>
+  <label class="sharedhome__label">{{ labelText }}</label>
+</div>

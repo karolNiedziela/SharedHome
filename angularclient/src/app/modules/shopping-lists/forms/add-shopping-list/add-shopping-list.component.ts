@@ -1,8 +1,7 @@
-import { tap } from 'rxjs';
 import { AddShoppingList } from './../../models/add-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 
@@ -25,7 +24,9 @@ export class AddShoppingListComponent implements OnInit {
     onDismiss: () => this.onDismiss(),
   };
 
-  constructor(private shoppingListService: ShoppingListsService) {
+  constructor(private shoppingListService: ShoppingListsService) {}
+
+  ngOnInit(): void {
     this.addShoppingListForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
@@ -33,8 +34,6 @@ export class AddShoppingListComponent implements OnInit {
       ]),
     });
   }
-
-  ngOnInit(): void {}
 
   openModal(): void {
     this.modal.open();

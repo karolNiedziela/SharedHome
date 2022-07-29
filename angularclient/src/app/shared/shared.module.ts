@@ -13,6 +13,9 @@ import { ModalComponent } from './components/modals/modal/modal.component';
 import { ConfirmationModalComponent } from './components/modals/confirmation-modal/confirmation-modal.component';
 import { ButtonComponent } from './components/buttons/button/button.component';
 import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.component';
+import { NumberInputComponent } from './components/inputs/number-input/number-input.component';
+import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
+import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +29,9 @@ import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.com
     ModalComponent,
     ConfirmationModalComponent,
     PopupMenuComponent,
+    NumberInputComponent,
+    SingleSelectComponent,
+    EnumAsStringPipe,
   ],
   imports: [
     CommonModule,
@@ -42,6 +48,7 @@ import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.com
     ReactiveFormsModule,
     ButtonComponent,
     TextInputComponent,
+    NumberInputComponent,
     EmailInputComponent,
     PasswordInputComponent,
     PasswordsFormComponent,
@@ -50,6 +57,8 @@ import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.com
     ModalComponent,
     ConfirmationModalComponent,
     PopupMenuComponent,
+    SingleSelectComponent,
+    EnumAsStringPipe,
   ],
 })
 export class SharedModule {}

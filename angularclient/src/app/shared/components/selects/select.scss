@@ -1,0 +1,23 @@
+@import "/src/assets/_variables.scss";
+
+.form-control {
+  text-align: left;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-toggle::after {
+  position: absolute;
+  right: 20px;
+  bottom: 45%;
+}
+
+.dropdown-toggle:hover::after {
+  color: $l_primary_color_light !important;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
