@@ -48,5 +48,12 @@
 
 <app-purchase-shopping-list-product
   [shoppingListId]="shoppingListId"
+  [productName]="shoppingListProduct!.name"
   #purchaseShoppingListProductForm
 ></app-purchase-shopping-list-product>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="cancelPurchaseShoppingListProductModalConfig"
+  #cancelPurchaseShoppingListProduct
+>
+</app-confirmation-modal>

@@ -9,10 +9,10 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AddShoppingListProduct } from '../models/add-shopping-list-product';
 import { ChangePriceOfProduct } from '../models/change-price-of-product';
-import { SetIsDone } from '../models/set-is-done';
 import { UpdateShoppingList } from '../models/update-shopping-list';
 import { Paged } from 'app/core/models/paged';
 import { ApiResponse } from 'app/core/models/api-response';
+import { MarkAsDone } from '../models/mark-as-done';
 
 @Injectable({
   providedIn: 'root',
@@ -99,21 +99,33 @@ export class ShoppingListsService {
   purchaseProduct(
     purchaseProduct: PurchaseShoppingListProduct
   ): Observable<any> {
-    return this.http.patch<any>(
-      `${this.shoppingListsUrl}/${purchaseProduct.shoppingListId}/products/${purchaseProduct.productName}/purchase`,
-      purchaseProduct,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .patch<any>(
+        `${this.shoppingListsUrl}/${purchaseProduct.shoppingListId}/products/${purchaseProduct.productName}/purchase`,
+        purchaseProduct,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
   }
 
   cancelPurchaseOfProduct(
     cancelPurchase: CancelPurchaseOfProduct
   ): Observable<any> {
-    return this.http.patch<any>(
-      `${this.shoppingListsUrl}/${cancelPurchase.shoppingListId}/products/${cancelPurchase.productName}/cancelpurchase`,
-      cancelPurchase,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .patch<any>(
+        `${this.shoppingListsUrl}/${cancelPurchase.shoppingListId}/products/${cancelPurchase.productName}/cancelpurchase`,
+        cancelPurchase,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
   }
 
   changePriceOfProduct(
@@ -126,12 +138,18 @@ export class ShoppingListsService {
     );
   }
 
-  setIsDone(setIsDone: SetIsDone): Observable<any> {
-    return this.http.patch<any>(
-      `${this.shoppingListsUrl}/${setIsDone.shoppingListId}/setisdone`,
-      setIsDone,
-      this.defaultHttpOptions
-    );
+  markAsDone(markAsDone: MarkAsDone): Observable<any> {
+    return this.http
+      .patch<any>(
+        `${this.shoppingListsUrl}/${markAsDone.shoppingListId}/setisdone`,
+        markAsDone,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
   }
 
   update(shoppingList: UpdateShoppingList): Observable<any> {

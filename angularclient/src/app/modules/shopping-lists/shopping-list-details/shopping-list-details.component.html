@@ -1,6 +1,12 @@
 <div class="container-fluid">
-  <div class="card shopping-list">
-    <div class="card-header">
+  <div
+    class="card shopping-list"
+    [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+  >
+    <div
+      class="card-header"
+      [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+    >
       <h3 class="card-title">{{ shoppingList?.name }}</h3>
       <app-popup-menu
         [popupMenuConfig]="headearPopupMenuConfig"
@@ -17,7 +23,10 @@
         ></app-shopping-list-product>
       </li>
     </ul>
-    <div class="card-footer">
+    <div
+      class="card-footer"
+      [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+    >
       <h5>
         {{ shoppingList?.createdByFirstName }}
         {{ shoppingList?.createdByLastName }}
@@ -36,3 +45,9 @@
   [shoppingListId]="shoppingListId"
   #addShoppingListProductForm
 ></app-add-shopping-list-product>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="markAsDoneModalConfig"
+  #markAsDoneModal
+>
+</app-confirmation-modal>

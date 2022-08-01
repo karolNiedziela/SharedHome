@@ -21,7 +21,7 @@ export class SingleShoppingListComponent implements OnInit {
     onDelete: () => {
       this.deleteShoppingListModal.open();
     },
-    additionalPopupMenuItems: [{ text: 'Make done', onClick: () => {} }],
+    additionalPopupMenuItems: [{ text: 'Mark as done', onClick: () => {} }],
   };
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;

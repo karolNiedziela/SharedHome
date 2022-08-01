@@ -1,3 +1,6 @@
+import { MarkAsDone } from './../models/mark-as-done';
+import { ConfirmationModalConfig } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ConfirmationModalComponent } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ShoppingList } from '../models/shopping-list';
 import { ShoppingListsService } from '../services/shopping-lists.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -23,7 +26,23 @@ export class ShoppingListComponent implements OnInit {
           this.addShoppingListProductForm.modal.open();
         },
       },
+      {
+        text: 'Mark as done',
+        onClick: () => {
+          this.markAsDoneModal.open();
+        },
+      },
     ],
+  };
+
+  @ViewChild('markAsDoneModal')
+  markAsDoneModal!: ConfirmationModalComponent;
+  markAsDoneModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Mark shopping list as done',
+    confirmationText: 'Are you sure to mark this shopping list as done?',
+    onSave: () => {
+      this.markAsDone(true);
+    },
   };
 
   constructor(
@@ -53,6 +72,19 @@ export class ShoppingListComponent implements OnInit {
         response.data.createdByLastName,
         response.data.products!
       );
+    });
+  }
+
+  markAsDone(isDone: boolean): void {
+    const markAsDone: MarkAsDone = {
+      shoppingListId: this.shoppingListId,
+      isDone: isDone,
+    };
+    this.shoppingListService.markAsDone(markAsDone).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        console.log(error);
+      },
     });
   }
 }

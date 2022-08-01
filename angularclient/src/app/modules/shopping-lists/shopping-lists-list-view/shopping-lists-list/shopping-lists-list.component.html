@@ -1,26 +1,36 @@
-<div class="row justify-content-center">
-  <div class="col-xs-12 col-12 col-md-4 mb-3" [formGroup]="shoppingListForm">
-    <app-text-input
-      formControlName="yearAndMonth"
-      labelText="Year and month"
-      placeholder="Year and Month"
-      [value]="shoppingListForm.get('yearAndMonth')?.value"
-      (change)="onCurrentYearAndMonthChanged()"
-    ></app-text-input>
-  </div>
-</div>
-<app-add-shopping-list [year]="year" [month]="month"></app-add-shopping-list>
-<div class="shopping-lists">
-  <div class="row">
-    <div
-      class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-      *ngFor="let shoppingList of shoppingLists"
-    >
-      <app-single-shopping-list
-        [shoppingList]="shoppingList"
-      ></app-single-shopping-list>
+<div class="shopping-lists-list-view">
+  <div class="row justify-content-center">
+    <div class="col-xs-12 col-12 col-md-4 mb-3" [formGroup]="shoppingListForm">
+      <app-text-input
+        formControlName="yearAndMonth"
+        labelText="Year and month"
+        placeholder="Year and Month"
+        [value]="shoppingListForm.get('yearAndMonth')?.value"
+        (change)="onCurrentYearAndMonthChanged()"
+      ></app-text-input>
     </div>
   </div>
+  <app-add-shopping-list [year]="year" [month]="month"></app-add-shopping-list>
+  <div class="shopping-lists">
+    <div class="row">
+      <div
+        class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+        *ngFor="let shoppingList of shoppingLists"
+      >
+        <app-single-shopping-list
+          [shoppingList]="shoppingList"
+        ></app-single-shopping-list>
+      </div>
+    </div>
+  </div>
+  <ul class="nav nav-pills nav-justified">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#">Done</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Undone</a>
+    </li>
+  </ul>
 </div>
 
 <app-confirmation-modal

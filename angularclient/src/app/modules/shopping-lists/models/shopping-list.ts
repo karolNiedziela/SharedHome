@@ -28,7 +28,7 @@ export class ShoppingList {
 
   countTotalPrice() {
     return this.products?.reduce(
-      (sum, product) => sum + product.price! ?? 0,
+      (sum, product) => sum + product.price! * product.quantity ?? 0,
       0
     );
   }

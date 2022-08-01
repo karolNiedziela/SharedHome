@@ -1,5 +1,5 @@
 <app-modal #purchaseShoppingListProductModal [modalConfig]="modalConfig">
-  <div class="row g-3" [formGroup]="buyShoppingListProductForm">
+  <div class="row g-3" [formGroup]="purchaseShoppingListProductForm">
     <div *ngIf="errorMessages.length > 0" class="col-md-12">
       <div
         *ngFor="let errorMessage of errorMessages"
@@ -14,5 +14,6 @@
       placeholder="Price"
       [isRequired]="true"
     ></app-number-input>
+    <app-currency-select formControlName="currency"> </app-currency-select>
   </div>
 </app-modal>

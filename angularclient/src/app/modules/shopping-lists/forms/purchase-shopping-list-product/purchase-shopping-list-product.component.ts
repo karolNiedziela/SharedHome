@@ -1,3 +1,6 @@
+import { ShoppingListsService } from './../../services/shopping-lists.service';
+import { UserService } from './../../../../core/services/user.service';
+import { PurchaseShoppingListProduct } from './../../models/purchase-shopping-list-product';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
@@ -19,20 +22,54 @@ export class PurchaseShoppingListProductComponent implements OnInit {
     onDismiss: () => this.onDismiss(),
   };
 
-  public buyShoppingListProductForm!: FormGroup;
+  public purchaseShoppingListProductForm!: FormGroup;
 
   public errorMessages: string[] = [];
 
-  constructor() {}
+  constructor(
+    private shoppingListService: ShoppingListsService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.buyShoppingListProductForm = new FormGroup({
+    this.purchaseShoppingListProductForm = new FormGroup({
       price: new FormControl(null, [Validators.required]),
-      currency: new FormControl('', [Validators.required]),
+      currency: new FormControl(this.userService.currentUser.defaultCurrency, [
+        Validators.required,
+      ]),
     });
   }
 
-  onSave(): void {}
+  onSave(): void {
+    if (this.purchaseShoppingListProductForm.invalid) {
+      this.purchaseShoppingListProductForm.markAllAsTouched();
+      return;
+    }
+
+    const price = this.purchaseShoppingListProductForm.get('price')?.value;
+    const currency =
+      this.purchaseShoppingListProductForm.get('currency')?.value;
+
+    const purchaseShoppingListProduct: PurchaseShoppingListProduct = {
+      shoppingListId: this.shoppingListId,
+      productName: this.productName,
+      price: price,
+      currency: currency,
+    };
+
+    this.shoppingListService
+      .purchaseProduct(purchaseShoppingListProduct)
+      .subscribe({
+        next: (response) => {
+          this.resetForm();
+
+          this.modal.close();
+        },
+        error: (error) => {
+          this.errorMessages = error;
+        },
+      });
+  }
 
   onClose(): void {
     this.resetForm();

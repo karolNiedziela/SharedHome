@@ -1,3 +1,5 @@
+import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
+import { AdditionalPopupMenuItem } from './../../../shared/components/menus/popup-menu/popup-menu.config';
 import { NetContentType } from './../enums/net-content-type';
 import { ShoppingListsService } from './../services/shopping-lists.service';
 import { ShoppingListProduct } from './../models/shopping-list-product';
@@ -21,6 +23,7 @@ export class ShoppingListProductComponent implements OnInit {
 
   @ViewChild('purchaseShoppingListProductForm')
   purchaseShoppingListProductForm!: PurchaseShoppingListProductComponent;
+
   @ViewChild('deleteShoppingListProduct')
   private deleteShoppingListProductModal!: ConfirmationModalComponent;
   deleteShoppingListProductModalConfig: ConfirmationModalConfig = {
@@ -29,25 +32,31 @@ export class ShoppingListProductComponent implements OnInit {
       this.deleteShoppingListProduct();
     },
   };
+
+  @ViewChild('cancelPurchaseShoppingListProduct')
+  private cancelPurchaseShoppingListProductModal!: ConfirmationModalComponent;
+  cancelPurchaseShoppingListProductModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Cancel purchase of shopping list product',
+    confirmationText: 'Are you sure to cancel purchase?',
+    onSave: () => {
+      this.cancelPurchaseOfShoppingListProduct();
+    },
+  };
+
   boughtIcon = faCheck;
   notBoughtIcon = faXmark;
-  productPopupMenuConfig: PopupMenuConfig = {
-    onDelete: () => {
-      this.deleteShoppingListProductModal.open();
-    },
-    additionalPopupMenuItems: [
-      {
-        text: 'Purchase',
-        onClick: () => {
-          this.purchaseShoppingListProductForm.modal.open();
-        },
-      },
-    ],
-  };
+  productPopupMenuConfig!: PopupMenuConfig;
 
   constructor(private shoppingListService: ShoppingListsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.productPopupMenuConfig = {
+      onDelete: () => {
+        this.deleteShoppingListProductModal.open();
+      },
+      additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
+    };
+  }
 
   deleteShoppingListProduct() {
     this.shoppingListService
@@ -63,5 +72,43 @@ export class ShoppingListProductComponent implements OnInit {
           console.log(error);
         },
       });
+  }
+
+  cancelPurchaseOfShoppingListProduct() {
+    const cancelShoppingListProduct: CancelPurchaseOfProduct = {
+      shoppingListId: this.shoppingListId,
+      productName: this.shoppingListProduct!.name,
+    };
+    this.shoppingListService
+      .cancelPurchaseOfProduct(cancelShoppingListProduct)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+  }
+
+  private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
+    const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
+    if (this.shoppingListProduct?.isBought) {
+      additionalPopupMenuItems.push({
+        text: 'Cancel purchase',
+        onClick: () => {
+          this.cancelPurchaseShoppingListProductModal.open();
+        },
+      });
+    } else {
+      additionalPopupMenuItems.push({
+        text: 'Purchase',
+        onClick: () => {
+          this.purchaseShoppingListProductForm.modal.open();
+        },
+      });
+    }
+
+    return additionalPopupMenuItems;
   }
 }

@@ -63,6 +63,7 @@ import { CurrencySelectComponent } from './components/selects/currency-select/cu
     PopupMenuComponent,
     SingleSelectComponent,
     EnumAsStringPipe,
+    CurrencySelectComponent,
   ],
 })
 export class SharedModule {}

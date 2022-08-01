@@ -18,12 +18,6 @@ import { ShoppingListsService } from '../../services/shopping-lists.service';
 })
 export class ShoppingListsComponent implements OnInit {
   detailsIcon = faList;
-  popupMenuConfig: PopupMenuConfig = {
-    onDelete: () => {
-      this.deleteShoppingListModal.open();
-    },
-    additionalPopupMenuItems: [{ text: 'Make done', onClick: () => {} }],
-  };
 
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;

@@ -21,7 +21,7 @@ export class AppComponent {
     );
 
     translateService.addLangs(['en', 'pl']);
-    translateService.setDefaultLang('en');
+    translateService.setDefaultLang('pl');
   }
 
   logout() {

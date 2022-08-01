@@ -1,4 +1,4 @@
-export interface SetIsDone {
+export interface MarkAsDone {
   shoppingListId: number;
   isDone: boolean;
 }
