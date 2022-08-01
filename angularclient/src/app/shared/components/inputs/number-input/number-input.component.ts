@@ -1,10 +1,22 @@
-import { Component, Input, OnDestroy, OnInit, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl, ValidatorFn } from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Self,
+} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NgControl,
+  ValidatorFn,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['../input.scss'],
+  styleUrls: ['../input.scss', './number-input.component.scss'],
 })
 export class NumberInputComponent
   implements OnInit, ControlValueAccessor, OnDestroy
@@ -18,32 +30,35 @@ export class NumberInputComponent
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
-  constructor(@Self() public controlDir: NgControl) {
+  get control(): AbstractControl<any, any> | null {
+    return this.controlDir.control;
+  }
+
+  constructor(@Self() @Optional() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
 
   ngOnInit(): void {
-    const control = this.controlDir.control;
-    let validators: ValidatorFn[] = control?.validator
-      ? [control.validator]
+    let validators: ValidatorFn[] = this.control?.validator
+      ? [this.control.validator]
       : [];
 
-    this.value = control?.value;
+    this.value = this.control?.value;
 
-    control?.setValidators(validators);
-    control?.updateValueAndValidity();
+    this.control?.setValidators(validators);
+    this.control?.updateValueAndValidity();
   }
 
   ngOnDestroy(): void {
-    this.controlDir.control?.clearValidators();
-    this.controlDir.control?.markAsPristine();
+    this.control?.clearValidators();
+    this.control?.markAsPristine();
   }
 
   writeValue(value: any): void {
-    if (this.controlDir.control && this.controlDir.control?.value != value) {
-      this.controlDir.control?.setValue(value, { emitEvent: true });
+    if (this.control && this.control?.value != value) {
+      this.control?.setValue(value, { emitEvent: true });
     }
-    this.value = this.controlDir.control?.value;
+    this.value = this.control?.value;
   }
 
   registerOnChange(onChanged: (value: any) => void): void {

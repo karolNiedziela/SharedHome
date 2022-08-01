@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { PasswordsFormComponent } from './components/forms/passwords-form/passwords-form.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,7 @@ import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.com
 import { NumberInputComponent } from './components/inputs/number-input/number-input.component';
 import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
+import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
     NumberInputComponent,
     SingleSelectComponent,
     EnumAsStringPipe,
+    CurrencySelectComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +42,7 @@ import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   exports: [
     CommonModule,

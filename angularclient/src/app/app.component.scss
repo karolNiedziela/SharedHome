@@ -1,4 +1,4 @@
-.home_content {
+.sharedhome_content {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -7,15 +7,17 @@
   width: calc(100% - 80px);
   transition: all 0.5s ease;
   padding-top: 10px;
-  padding-left: 15px;
-  padding-right: 10px;
+
+  .container-fluid {
+    width: 95%;
+  }
 
   app-footer {
     margin-top: auto;
   }
 }
 
-.sidebar.active ~ .home_content {
+.sidebar.active ~ .sharedhome_content {
   left: 240px;
   width: calc(100% - 240px);
 }

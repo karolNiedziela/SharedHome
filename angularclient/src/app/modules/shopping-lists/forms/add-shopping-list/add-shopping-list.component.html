@@ -1,4 +1,7 @@
-<app-button text="Add shopping list" (click)="openModal()"></app-button>
+<app-button
+  [text]="'shopping-lists.addshoppinglist' | translate"
+  (click)="openModal()"
+></app-button>
 
 <app-modal #modal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="addShoppingListForm">

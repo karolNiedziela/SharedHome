@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { ShoppingListsRoutingModule } from './shopping-lists-routing.module';
@@ -7,6 +8,7 @@ import { ShoppingListsComponent } from './shopping-lists-list-view/shopping-list
 import { SingleShoppingListComponent } from './shopping-lists-list-view/single-shopping-list/single-shopping-list.component';
 import { ShoppingListProductComponent } from './shopping-list-product/shopping-list-product.component';
 import { AddShoppingListProductComponent } from './forms/add-shopping-list-product/add-shopping-list-product.component';
+import { PurchaseShoppingListProductComponent } from './forms/purchase-shopping-list-product/purchase-shopping-list-product.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { AddShoppingListProductComponent } from './forms/add-shopping-list-produ
     SingleShoppingListComponent,
     ShoppingListProductComponent,
     AddShoppingListProductComponent,
+    PurchaseShoppingListProductComponent,
   ],
-  imports: [SharedModule, ShoppingListsRoutingModule],
+  imports: [SharedModule, ShoppingListsRoutingModule, TranslateModule],
 })
 export class ShoppingListsModule {}

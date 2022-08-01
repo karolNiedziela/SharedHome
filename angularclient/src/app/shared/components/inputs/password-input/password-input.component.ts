@@ -1,5 +1,17 @@
-import { ControlValueAccessor, NgControl, ValidatorFn } from '@angular/forms';
-import { Component, Input, OnInit, Self, AfterViewInit } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NgControl,
+  ValidatorFn,
+} from '@angular/forms';
+import {
+  Component,
+  Input,
+  OnInit,
+  Self,
+  AfterViewInit,
+  Optional,
+} from '@angular/core';
 import { passwordStrengthValidator } from 'app/shared/validators/password.validator';
 import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,19 +30,22 @@ export class PasswordInputComponent implements OnInit, ControlValueAccessor {
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
-  constructor(@Self() public controlDir: NgControl) {
+  get control(): AbstractControl<any, any> | null {
+    return this.controlDir.control;
+  }
+
+  constructor(@Self() @Optional() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
 
   ngOnInit(): void {
-    const control = this.controlDir.control;
-    let validators: ValidatorFn[] = control?.validator
-      ? [control.validator]
+    let validators: ValidatorFn[] = this.control?.validator
+      ? [this.control.validator]
       : [];
 
     validators.push(passwordStrengthValidator);
-    control?.setValidators(validators);
-    control?.updateValueAndValidity();
+    this.control?.setValidators(validators);
+    this.control?.updateValueAndValidity();
   }
 
   writeValue(value: string): void {

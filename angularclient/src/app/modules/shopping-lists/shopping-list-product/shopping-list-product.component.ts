@@ -6,6 +6,7 @@ import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { PurchaseShoppingListProductComponent } from '../forms/purchase-shopping-list-product/purchase-shopping-list-product.component';
 
 @Component({
   selector: 'app-shopping-list-product',
@@ -18,6 +19,8 @@ export class ShoppingListProductComponent implements OnInit {
 
   public netContentType: typeof NetContentType = NetContentType;
 
+  @ViewChild('purchaseShoppingListProductForm')
+  purchaseShoppingListProductForm!: PurchaseShoppingListProductComponent;
   @ViewChild('deleteShoppingListProduct')
   private deleteShoppingListProductModal!: ConfirmationModalComponent;
   deleteShoppingListProductModalConfig: ConfirmationModalConfig = {
@@ -32,7 +35,14 @@ export class ShoppingListProductComponent implements OnInit {
     onDelete: () => {
       this.deleteShoppingListProductModal.open();
     },
-    additionalPopupMenuItems: [{ text: 'Buy', onClick: () => {} }],
+    additionalPopupMenuItems: [
+      {
+        text: 'Purchase',
+        onClick: () => {
+          this.purchaseShoppingListProductForm.modal.open();
+        },
+      },
+    ],
   };
 
   constructor(private shoppingListService: ShoppingListsService) {}

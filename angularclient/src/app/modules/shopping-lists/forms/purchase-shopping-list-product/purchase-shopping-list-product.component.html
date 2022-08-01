@@ -1,0 +1,18 @@
+<app-modal #purchaseShoppingListProductModal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="buyShoppingListProductForm">
+    <div *ngIf="errorMessages.length > 0" class="col-md-12">
+      <div
+        *ngFor="let errorMessage of errorMessages"
+        class="sharedhome-errormessage"
+      >
+        {{ errorMessage }}
+      </div>
+    </div>
+    <app-number-input
+      formControlName="price"
+      labelText="Price"
+      placeholder="Price"
+      [isRequired]="true"
+    ></app-number-input>
+  </div>
+</app-modal>

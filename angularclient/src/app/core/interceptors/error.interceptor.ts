@@ -1,3 +1,4 @@
+import { ErrorResponse } from './../models/error-response';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -25,9 +26,10 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.authenticationService.logout();
         }
 
-        console.log(error);
-        const errorMessage = error.error.Errors[0];
-        return throwError(() => errorMessage);
+        const errorResponse = error.error as ErrorResponse;
+
+        console.log(errorResponse);
+        return throwError(() => errorResponse.errors);
       })
     );
   }

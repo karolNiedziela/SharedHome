@@ -4,6 +4,14 @@
 
 <app-modal #addShoppingListProductModal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="addShoppingListProductForm">
+    <div *ngIf="errorMessages.length > 0" class="col-md-12">
+      <div
+        *ngFor="let errorMessage of errorMessages"
+        class="sharedhome-errormessage"
+      >
+        {{ errorMessage }}
+      </div>
+    </div>
     <app-text-input
       formControlName="productName"
       labelText="Product Name"
@@ -17,15 +25,19 @@
       [value]="addShoppingListProductForm.get('quantity')?.value"
       [isRequired]="true"
     ></app-number-input>
-    <app-text-input
-      formControlName="netContent"
-      labelText="Net Content"
-      placeholder="Net Content"
-    ></app-text-input>
-    <app-single-select
-      formControlName="netContenType"
-      labelText="Net Content Type"
-      [enumType]="netContentType"
-    ></app-single-select>
+    <div class="col-md-6">
+      <app-text-input
+        formControlName="netContent"
+        labelText="Net Content"
+        placeholder="Net Content"
+      ></app-text-input>
+    </div>
+    <div class="col md-6">
+      <app-single-select
+        formControlName="netContenType"
+        labelText="Net Content Type"
+        [enumType]="netContentType"
+      ></app-single-select>
+    </div>
   </div>
 </app-modal>

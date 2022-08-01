@@ -1,3 +1,4 @@
+import { ErrorResponse } from './../../../../core/models/error-response';
 import { NetContentType } from './../../enums/net-content-type';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
@@ -23,6 +24,8 @@ export class AddShoppingListProductComponent implements OnInit {
   public addShoppingListProductForm!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
+
+  public errorMessages: string[] = [];
 
   constructor(private shoppingListService: ShoppingListsService) {}
 
@@ -56,29 +59,33 @@ export class AddShoppingListProductComponent implements OnInit {
       netContentType: netContenType,
     };
 
-    console.log(addShoppingListProduct);
-
     this.shoppingListService
       .addShoppingListProduct(addShoppingListProduct)
       .subscribe({
         next: (response) => {
           console.log(response);
+          this.resetForm();
+
+          this.modal.close();
         },
         error: (error) => {
+          console.log('From form');
           console.log(error);
+          this.errorMessages = error;
         },
       });
-
-    this.addShoppingListProductForm.reset();
-
-    this.modal.close();
   }
 
   onClose(): void {
-    this.addShoppingListProductForm.reset();
+    this.resetForm();
   }
 
   onDismiss(): void {
-    this.addShoppingListProductForm.reset();
+    this.resetForm();
+  }
+
+  private resetForm() {
+    this.addShoppingListProductForm.reset({ quantity: 1 });
+    this.errorMessages = [];
   }
 }

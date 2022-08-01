@@ -12,6 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +30,13 @@ import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.mod
     AppRoutingModule,
     IdentityModule,
     NgbModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
   providers: [
     {
@@ -39,3 +49,7 @@ import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.mod
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

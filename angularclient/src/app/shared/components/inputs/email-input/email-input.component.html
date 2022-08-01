@@ -6,7 +6,7 @@
     (input)="onChanged($any($event.target).value)"
     (blur)="onTouched()"
     [ngClass]="{
-      'is-invalid': controlDir?.control?.touched && !controlDir.control?.valid
+      'is-invalid': control?.touched && !control?.valid
     }"
   />
   <label class="sharedhome__label"
@@ -15,14 +15,9 @@
       *
     </span></label
   >
-  <div
-    class="invalid-feedback"
-    *ngIf="controlDir?.control?.touched && !controlDir.control?.valid"
-  >
-    <div *ngIf="controlDir.control?.errors?.['required']">
-      This field is required.
-    </div>
-    <div *ngIf="controlDir.control?.hasError('email')">
+  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
+    <div *ngIf="control?.errors?.['required']">This field is required.</div>
+    <div *ngIf="control?.hasError('email')">
       Please provide a valid email adress.
     </div>
   </div>

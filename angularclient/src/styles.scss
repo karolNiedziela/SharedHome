@@ -48,3 +48,11 @@ a:hover {
 .dropdown-item:hover {
   background-color: $l_primary_color_light !important;
 }
+
+/*
+----------- Errors -----------
+*/
+
+.sharedhome-errormessage {
+  color: $l_error_color;
+}

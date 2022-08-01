@@ -1,10 +1,11 @@
 import {
+  AbstractControl,
   ControlValueAccessor,
   NgControl,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Component, Input, OnInit, Self } from '@angular/core';
+import { Component, Input, OnInit, Optional, Self } from '@angular/core';
 
 @Component({
   selector: 'app-email-input',
@@ -19,18 +20,22 @@ export class EmailInputComponent implements OnInit, ControlValueAccessor {
   onChanged: (value: string) => void = () => {};
   onTouched: () => void = () => {};
 
-  constructor(@Self() public controlDir: NgControl) {
+  get control(): AbstractControl<any, any> | null {
+    return this.controlDir.control;
+  }
+
+  constructor(@Self() @Optional() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
+
   ngOnInit(): void {
-    const control = this.controlDir.control;
-    let validators: ValidatorFn[] = control?.validator
-      ? [control.validator]
+    let validators: ValidatorFn[] = this.control?.validator
+      ? [this.control.validator]
       : [];
 
     validators.push(Validators.email);
-    control?.setValidators(validators);
-    control?.updateValueAndValidity();
+    this.control?.setValidators(validators);
+    this.control?.updateValueAndValidity();
   }
 
   writeValue(value: string): void {

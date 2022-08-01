@@ -1,13 +1,13 @@
 <div class="form-floating">
   <input
-    type="text"
+    type="number"
     class="form-control sharedhome__input register__input"
     [placeholder]="placeholder"
     (input)="onChanged($any($event.target).value)"
     (blur)="onTouched()"
     [disabled]="disabled"
     [ngClass]="{
-      'is-invalid': controlDir.control?.touched && !controlDir.control?.valid
+      'is-invalid': control?.touched && !control?.valid
     }"
     [value]="value"
   />
@@ -15,20 +15,15 @@
     >{{ labelText }}
     <span *ngIf="isRequired" class="required" aria-required="true"> * </span>
   </label>
-  <div
-    class="invalid-feedback"
-    *ngIf="controlDir?.control?.touched && !controlDir.control?.valid"
-  >
-    <div *ngIf="controlDir.control?.errors?.['required']">
-      This field is required.
-    </div>
-    <div *ngIf="controlDir.control?.hasError('min')">
+  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
+    <div *ngIf="control?.errors?.['required']">This field is required.</div>
+    <div *ngIf="control?.hasError('min')">
       This field value must be higher or equal to
-      {{ controlDir.control?.errors?.['min'].min }}.
+      {{ control?.errors?.['min'].min }}.
     </div>
-    <div *ngIf="controlDir.control?.hasError('max')">
+    <div *ngIf="control?.hasError('max')">
       This field value must be lower or equal to
-      {{ controlDir.control?.errors?.['max'].max}}.
+      {{ control?.errors?.['max'].max}}.
     </div>
   </div>
 </div>

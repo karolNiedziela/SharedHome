@@ -2,9 +2,16 @@ import {
   ControlValueAccessor,
   ValidatorFn,
   NgControl,
-  Validators,
+  AbstractControl,
 } from '@angular/forms';
-import { Component, Input, OnInit, Self, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Self,
+  OnDestroy,
+  Optional,
+} from '@angular/core';
 
 @Component({
   selector: 'app-text-input',
@@ -24,21 +31,23 @@ export class TextInputComponent
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
-  constructor(@Self() public controlDir: NgControl) {
+  get control(): AbstractControl<any, any> | null {
+    return this.controlDir.control;
+  }
+
+  constructor(@Self() @Optional() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
 
   ngOnInit(): void {
-    const control = this.controlDir.control;
-    let validators: ValidatorFn[] = control?.validator
-      ? [control.validator]
+    let validators: ValidatorFn[] = this.control?.validator
+      ? [this.control.validator]
       : [];
 
-    this.value = control?.value;
+    this.value = this.control?.value;
 
-    control?.setValidators(validators);
-    control?.updateValueAndValidity();
-    console.log(this.isRequired);
+    this.control?.setValidators(validators);
+    this.control?.updateValueAndValidity();
   }
 
   ngOnDestroy(): void {
