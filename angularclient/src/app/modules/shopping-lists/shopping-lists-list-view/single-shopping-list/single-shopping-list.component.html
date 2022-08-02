@@ -1,5 +1,11 @@
-<div class="card shopping-list">
-  <div class="card-header">
+<div
+  class="card shopping-list"
+  [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+>
+  <div
+    class="card-header"
+    [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+  >
     <h3 class="card-title">{{ shoppingList.name }}</h3>
 
     <div class="card-header__operations">
@@ -16,7 +22,10 @@
       <app-popup-menu [popupMenuConfig]="popupMenuConfig"></app-popup-menu>
     </div>
   </div>
-  <div class="card-footer">
+  <div
+    class="card-footer"
+    [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+  >
     <h5>
       {{ shoppingList.createdByFirstName }}
       {{ shoppingList.createdByLastName }}

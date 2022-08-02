@@ -18,6 +18,7 @@ import { NumberInputComponent } from './components/inputs/number-input/number-in
 import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
+import { DefaultTabComponent } from './components/tabs/default-tab/default-tab.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CurrencySelectComponent } from './components/selects/currency-select/cu
     SingleSelectComponent,
     EnumAsStringPipe,
     CurrencySelectComponent,
+    DefaultTabComponent,
   ],
   imports: [
     CommonModule,
@@ -64,6 +66,7 @@ import { CurrencySelectComponent } from './components/selects/currency-select/cu
     SingleSelectComponent,
     EnumAsStringPipe,
     CurrencySelectComponent,
+    DefaultTabComponent,
   ],
 })
 export class SharedModule {}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import {
   faBars,
   faBell,
@@ -10,6 +10,7 @@ import {
   faSignOut,
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
+import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 
 declare var bootstrap: any;
 
@@ -19,7 +20,7 @@ declare var bootstrap: any;
   styleUrls: ['./sidebar.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   barsIcon = faBars;
   shoppingListsIcon = faCartShopping;
   billsIcon = faFileInvoice;
@@ -32,10 +33,14 @@ export class SidebarComponent implements OnInit {
 
   private tooltipList = new Array<any>();
 
-  constructor() {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.enableTooltip();
+  }
+
+  ngOnDestroy(): void {
+    this.hideAllTooltips();
   }
 
   toggleMenu(): void {
@@ -53,7 +58,9 @@ export class SidebarComponent implements OnInit {
     );
 
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-      return new bootstrap.Tooltip(tooltipTriggerEl);
+      return new bootstrap.Tooltip(tooltipTriggerEl, {
+        trigger: 'hover',
+      });
     });
 
     this.tooltipList.push(...tooltipList);
@@ -64,5 +71,9 @@ export class SidebarComponent implements OnInit {
       tooltip.dispose();
     }
     this.tooltipList = new Array<any>();
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 }

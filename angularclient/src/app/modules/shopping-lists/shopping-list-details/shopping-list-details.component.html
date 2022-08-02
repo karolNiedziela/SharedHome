@@ -9,7 +9,7 @@
     >
       <h3 class="card-title">{{ shoppingList?.name }}</h3>
       <app-popup-menu
-        [popupMenuConfig]="headearPopupMenuConfig"
+        [popupMenuConfig]="headerPopupMenuConfig"
       ></app-popup-menu>
     </div>
     <ul class="list-group list-group-flush shopping-list__products">
@@ -20,6 +20,7 @@
         <app-shopping-list-product
           [shoppingListProduct]="product"
           [shoppingListId]="shoppingListId"
+          [isDone]="shoppingList!.isDone"
         ></app-shopping-list-product>
       </li>
     </ul>
@@ -49,5 +50,11 @@
 <app-confirmation-modal
   [confirmationModalConfig]="markAsDoneModalConfig"
   #markAsDoneModal
+>
+</app-confirmation-modal>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="markAsUndoneModalConfig"
+  #markAsUndoneModal
 >
 </app-confirmation-modal>

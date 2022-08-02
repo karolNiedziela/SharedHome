@@ -1,0 +1,13 @@
+<ul class="nav nav-pills nav-justified">
+  <li
+    class="nav-item"
+    *ngFor="let tabItem of tabConfig?.tabItems; let i = index"
+  >
+    <span
+      class="nav-link tab-item"
+      [ngClass]="{ active: tabItem.isActive }"
+      (click)="onTabSelected(i)"
+      >{{ tabItem.text }}
+    </span>
+  </li>
+</ul>

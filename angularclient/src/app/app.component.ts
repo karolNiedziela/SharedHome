@@ -24,10 +24,6 @@ export class AppComponent {
     translateService.setDefaultLang('pl');
   }
 
-  logout() {
-    this.authenticationService.logout();
-  }
-
   switchLanguages(lang: string) {
     this.translateService.use(lang);
   }

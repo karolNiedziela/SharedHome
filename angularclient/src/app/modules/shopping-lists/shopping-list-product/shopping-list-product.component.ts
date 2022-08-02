@@ -18,6 +18,7 @@ import { PurchaseShoppingListProductComponent } from '../forms/purchase-shopping
 export class ShoppingListProductComponent implements OnInit {
   @Input() shoppingListProduct?: ShoppingListProduct;
   @Input() shoppingListId!: number;
+  @Input() isDone!: boolean;
 
   public netContentType: typeof NetContentType = NetContentType;
 
@@ -93,6 +94,10 @@ export class ShoppingListProductComponent implements OnInit {
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
+    if (this.isDone) {
+      return additionalPopupMenuItems;
+    }
+
     if (this.shoppingListProduct?.isBought) {
       additionalPopupMenuItems.push({
         text: 'Cancel purchase',

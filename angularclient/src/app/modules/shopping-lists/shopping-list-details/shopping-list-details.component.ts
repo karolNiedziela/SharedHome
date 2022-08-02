@@ -5,7 +5,10 @@ import { ShoppingList } from '../models/shopping-list';
 import { ShoppingListsService } from '../services/shopping-lists.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
+import {
+  AdditionalPopupMenuItem,
+  PopupMenuConfig,
+} from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { AddShoppingListProductComponent } from '../forms/add-shopping-list-product/add-shopping-list-product.component';
 
 @Component({
@@ -18,22 +21,7 @@ export class ShoppingListComponent implements OnInit {
   shoppingList?: ShoppingList;
   @ViewChild('addShoppingListProductForm')
   addShoppingListProductForm!: AddShoppingListProductComponent;
-  headearPopupMenuConfig: PopupMenuConfig = {
-    additionalPopupMenuItems: [
-      {
-        text: 'Add product',
-        onClick: () => {
-          this.addShoppingListProductForm.modal.open();
-        },
-      },
-      {
-        text: 'Mark as done',
-        onClick: () => {
-          this.markAsDoneModal.open();
-        },
-      },
-    ],
-  };
+  headerPopupMenuConfig!: PopupMenuConfig;
 
   @ViewChild('markAsDoneModal')
   markAsDoneModal!: ConfirmationModalComponent;
@@ -42,6 +30,16 @@ export class ShoppingListComponent implements OnInit {
     confirmationText: 'Are you sure to mark this shopping list as done?',
     onSave: () => {
       this.markAsDone(true);
+    },
+  };
+
+  @ViewChild('markAsUndoneModal')
+  markAsUndoneModal!: ConfirmationModalComponent;
+  markAsUndoneModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Mark shopping list as undone',
+    confirmationText: 'Are you sure to mark this shopping list as undone?',
+    onSave: () => {
+      this.markAsDone(false);
     },
   };
 
@@ -60,6 +58,8 @@ export class ShoppingListComponent implements OnInit {
     });
 
     this.getShoppingList();
+
+    this.headerPopupMenuConfig = {};
   }
 
   getShoppingList() {
@@ -72,6 +72,12 @@ export class ShoppingListComponent implements OnInit {
         response.data.createdByLastName,
         response.data.products!
       );
+
+      this.headerPopupMenuConfig = {
+        isEditVisible: !this.shoppingList.isDone,
+        isDeleteVisible: true,
+        additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
+      };
     });
   }
 
@@ -86,5 +92,34 @@ export class ShoppingListComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
+    const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
+    console.log(this.shoppingList?.isDone);
+    if (this.shoppingList?.isDone) {
+      additionalPopupMenuItems.push({
+        text: 'Mark as undone',
+        onClick: () => {
+          this.markAsUndoneModal.open();
+        },
+      });
+    } else {
+      additionalPopupMenuItems.push({
+        text: 'Add product',
+        onClick: () => {
+          this.addShoppingListProductForm.modal.open();
+        },
+      });
+
+      additionalPopupMenuItems.push({
+        text: 'Mark as done',
+        onClick: () => {
+          this.markAsDoneModal.open();
+        },
+      });
+    }
+
+    return additionalPopupMenuItems;
   }
 }

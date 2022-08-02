@@ -1,3 +1,4 @@
+import { TabConfig } from './../../../../shared/components/tabs/default-tab/tab.config';
 import { ConfirmationModalComponent } from '../../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 
@@ -6,10 +7,16 @@ import { faList } from '@fortawesome/free-solid-svg-icons';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
 import { Paged } from 'app/core/models/paged';
-import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ShoppingList } from '../../models/shopping-list';
 import { ShoppingListsService } from '../../services/shopping-lists.service';
+import {
+  debounce,
+  debounceTime,
+  switchMap,
+  distinctUntilChanged,
+  map,
+} from 'rxjs';
 
 @Component({
   selector: 'app-shopping-lists-list',
@@ -25,8 +32,27 @@ export class ShoppingListsComponent implements OnInit {
     modalTitle: 'Delete shopping list',
     onSave: () => {},
   };
+  tabConfig: TabConfig = {
+    tabItems: [
+      {
+        text: 'Undone',
+        onClick: () => {
+          this.getAllShoppingLists(this.year, this.month, false);
+        },
+        isActive: true,
+      },
+      {
+        text: 'Done',
+        onClick: () => {
+          this.getAllShoppingLists(this.year, this.month, true);
+        },
+      },
+    ],
+  };
+
   year: number;
   month: number;
+  isDone: boolean = false;
   shoppingListForm!: FormGroup;
   shoppingLists: ShoppingList[] = [];
 
@@ -47,15 +73,19 @@ export class ShoppingListsComponent implements OnInit {
 
   ngOnInit(): void {
     this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
-      this.getAllShoppingLists();
+      this.getAllShoppingLists(this.year, this.month, this.isDone);
     });
 
-    this.getAllShoppingLists();
+    this.getAllShoppingLists(this.year, this.month, this.isDone);
   }
 
-  private getAllShoppingLists() {
+  private getAllShoppingLists(
+    year: number,
+    month: number,
+    isDone: boolean = false
+  ) {
     this.shoppingListService
-      .getAllByYearAndMonthAndIsDone(this.year, this.month, false)
+      .getAllByYearAndMonthAndIsDone(year, month, isDone)
       .subscribe({
         next: (response: Paged<ShoppingList>) => {
           this.shoppingLists = response?.items?.map((item) => {
@@ -72,7 +102,19 @@ export class ShoppingListsComponent implements OnInit {
       });
   }
 
-  onCurrentYearAndMonthChanged(): void {}
+  onCurrentYearAndMonthChanged(): void {
+    if (this.shoppingListForm.invalid) {
+      return;
+    }
+    const yearAndMonth: string =
+      this.shoppingListForm.get('yearAndMonth')?.value;
+
+    const yearAndMonthSplitted = yearAndMonth.split(' ');
+    this.year = +yearAndMonthSplitted[0];
+    this.month = +yearAndMonthSplitted[1];
+
+    this.getAllShoppingLists(this.year, this.month, this.isDone);
+  }
 
   openShoppingList(shoppingListId: number): void {
     this.router.navigate(['shoppinglists', shoppingListId]);
