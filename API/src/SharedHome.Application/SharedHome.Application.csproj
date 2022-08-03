@@ -8,6 +8,7 @@
 
   <ItemGroup>
 	  <ProjectReference Include="..\SharedHome.Domain\SharedHome.Domain.csproj" />
+	  <ProjectReference Include="..\SharedHome.Identity\SharedHome.Identity.csproj" />
 	  <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
 	  <ProjectReference Include="..\Shared\SharedHome.Shared\SharedHome.Shared.csproj" />
   </ItemGroup>
@@ -16,6 +17,10 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Authentication\Services\" />
   </ItemGroup>
 
 </Project>

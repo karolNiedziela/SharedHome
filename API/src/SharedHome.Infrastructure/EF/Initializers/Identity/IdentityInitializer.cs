@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using SharedHome.Infrastructure.Identity;
-using SharedHome.Infrastructure.Identity.Entities;
+using SharedHome.Identity;
+using SharedHome.Identity.Entities;
 
 namespace SharedHome.Infrastructure.EF.Initializers.Identity
 {

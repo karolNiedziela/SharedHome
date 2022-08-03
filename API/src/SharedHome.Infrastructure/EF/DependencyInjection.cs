@@ -13,12 +13,13 @@ using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Infrastructure.EF.Repositories;
 using SharedHome.Shared.Settings;
+using SharedHome.Identity.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddMySQL(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMySharedHomeSQL(this IServiceCollection services, IConfiguration configuration)
         {
             // Repositories
             services.AddScoped<IShoppingListRepository, ShoppingListRepository>();

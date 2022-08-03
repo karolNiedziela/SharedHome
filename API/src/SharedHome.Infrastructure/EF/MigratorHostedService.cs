@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SharedHome.Identity.EF.Contexts;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF
@@ -29,15 +29,15 @@ namespace SharedHome.Infrastructure.EF
 
             var writeDbContext = scope.ServiceProvider.GetRequiredService<WriteSharedHomeDbContext>();
 
-            await writeDbContext.Database.MigrateAsync();
+            await writeDbContext.Database.MigrateAsync(default);
 
             var readDbContext = scope.ServiceProvider.GetRequiredService<ReadSharedHomeDbContext>();
 
-            await readDbContext.Database.MigrateAsync();
+            await readDbContext.Database.MigrateAsync(default);
 
             var identityDbContext = scope.ServiceProvider.GetRequiredService<IdentitySharedHomeDbContext>();
 
-            await identityDbContext.Database.MigrateAsync();
+            await identityDbContext.Database.MigrateAsync(default);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)

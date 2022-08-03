@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
-using SharedHome.Infrastructure.Identity.Models;
-using SharedHome.Infrastructure.Identity.Services;
+using SharedHome.Application.Authentication.Commands.ConfirmEmail;
+using SharedHome.Application.Authentication.Commands.Register;
+using SharedHome.Application.Authentication.Models;
+using SharedHome.Application.Authentication.Queries.Login;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Api.Controllers
@@ -9,13 +11,6 @@ namespace SharedHome.Api.Controllers
 
     public class IdentityController : ApiController
     {
-        private readonly IIdentityService _identityService;
-
-        public IdentityController(IIdentityService identityService)
-        {
-            _identityService = identityService;
-        }
-
         /// <summary>
         /// Register new user
         /// </summary>
@@ -24,7 +19,8 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var response = await _identityService.RegisterAsync(request);
+            var command = new RegisterCommand(request.Email, request.FirstName, request.LastName, request.Password);
+            var response = await Mediator.Send(command);
 
             return Ok(response);
         }
@@ -38,7 +34,8 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] LoginRequest request)
         {
-            var authenticationResult = await _identityService.LoginAsync(request);
+            var query = new LoginQuery(request.Email, request.Password);
+            var authenticationResult = await Mediator.Send(query);
 
             return Ok(authenticationResult);
         }
@@ -54,7 +51,8 @@ namespace SharedHome.Api.Controllers
                 return BadRequest();
             }
 
-            await _identityService.ConfirmEmailAsync(code, email);
+            var command = new ConfirmEmailCommand(email, code);
+            await Mediator.Send(command);
 
             return Ok();
         }

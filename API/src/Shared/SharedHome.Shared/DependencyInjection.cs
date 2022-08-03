@@ -5,6 +5,7 @@ using SharedHome.Shared.Abstractions.Time;
 using SharedHome.Shared.Abstractions.User;
 using SharedHome.Shared.Email;
 using SharedHome.Shared.Exceptions;
+using SharedHome.Shared.MySQL;
 using SharedHome.Shared.Time;
 using SharedHome.Shared.User;
 
@@ -15,6 +16,7 @@ namespace SharedHome.Shared
         public static IServiceCollection AddShared(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEmail(configuration);
+            services.AddMySQL(configuration);
 
             services.AddErrorHandling();
 

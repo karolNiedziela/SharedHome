@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Infrastructure.EF.Contexts;
-using SharedHome.Infrastructure.Identity.Entities;
+using SharedHome.Identity.Entities;
+using SharedHome.Identity.EF.Contexts;
 using SharedHome.Infrastructure.Identity.Services;
 using SharedHome.Shared.Authentication;
+using SharedHome.Identity.EF;
 
-namespace SharedHome.Infrastructure.Identity
+namespace SharedHome.Identity
 {
     public static class DepedencyInjection
     {
-        public static IServiceCollection AddIdentity(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSharedHomeIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -37,6 +38,8 @@ namespace SharedHome.Infrastructure.Identity
             services.AddAuth(configuration);
 
             services.AddScoped<IIdentityService, IdentityService>();
+
+            services.AddIdentitySQL(configuration);
 
             return services;
         }

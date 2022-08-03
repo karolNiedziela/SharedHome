@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 
-namespace SharedHome.Infrastructure.Identity
+namespace SharedHome.Identity
 {
     public class MultilanguageIdentityErrorDescriber : IdentityErrorDescriber
     {

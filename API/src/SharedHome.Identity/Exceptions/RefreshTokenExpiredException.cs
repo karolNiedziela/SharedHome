@@ -1,7 +1,7 @@
 ﻿using SharedHome.Shared.Abstractions.Exceptions;
 using System.Net;
 
-namespace SharedHome.Infrastructure.Identity.Exceptions
+namespace SharedHome.Identity.Exceptions
 {
     public class RefreshTokenExpiredException : SharedHomeException
     {

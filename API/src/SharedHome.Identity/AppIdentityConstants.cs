@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Infrastructure.Identity
+﻿namespace SharedHome.Identity
 {
     public static class AppIdentityConstants
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SharedHome.Infrastructure.Identity.Entities;
+using SharedHome.Identity.Entities;
 
-namespace SharedHome.Infrastructure.EF.Contexts
+namespace SharedHome.Identity.EF.Contexts
 {
-    internal class IdentitySharedHomeDbContext : IdentityDbContext<ApplicationUser>
+    public class IdentitySharedHomeDbContext : IdentityDbContext<ApplicationUser>
     {
         public IdentitySharedHomeDbContext(DbContextOptions<IdentitySharedHomeDbContext> options) : base(options)
         {

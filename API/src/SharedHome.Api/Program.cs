@@ -4,6 +4,7 @@ using Serilog;
 using SharedHome.Api.Constants;
 using SharedHome.Api.Extensions;
 using SharedHome.Application;
+using SharedHome.Identity;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
 using System.Globalization;
@@ -57,7 +58,7 @@ try
         options.SupportedUICultures = supportedCultures;
     });
 
-
+    builder.Services.AddSharedHomeIdentity(builder.Configuration);
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddShared(builder.Configuration);

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedHome.Infrastructure.Identity.Entities
+namespace SharedHome.Identity.Entities
 {
     public class ApplicationUser : IdentityUser
     {
