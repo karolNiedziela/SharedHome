@@ -58,6 +58,7 @@ namespace SharedHome.Shared.Authentication
                 LastName = lastName,
                 UserId = userId,
                 Expiry = new DateTimeOffset(expires).ToUnixTimeMilliseconds(),
+                Roles = roles
             }; ;
         }
     }

@@ -4,7 +4,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using SharedHome.Shared.Abstractions.Email;
+using SharedHome.Shared.Constants;
 using SharedHome.Shared.Email.Options;
+using System.Reflection;
 
 namespace SharedHome.Shared.Email
 {
@@ -20,7 +22,7 @@ namespace SharedHome.Shared.Email
         {
             _emailSettings = emailOptions.Value;
             _logger = logger;
-            _localizer = localizerFactory.Create("EmailTemplates", "SharedHome.Api");
+            _localizer = localizerFactory.Create(Resources.EmailTemplates, Assembly.GetEntryAssembly()!.GetName().Name!);
         }
 
         public async Task SendAsync(EmailMessage emailMessage)

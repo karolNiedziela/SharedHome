@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using SharedHome.Shared.Abstractions.Attributes;
 using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Constants;
 using System.Net;
 using System.Reflection;
 
@@ -16,7 +17,7 @@ namespace SharedHome.Shared.Exceptions
 
         public ExceptionToErrorResponseMapper(IStringLocalizerFactory localizerFactory, ILogger<ExceptionToErrorResponseMapper> logger)
         {
-            _localizer = localizerFactory.Create("SharedHomeExceptionMessage", "SharedHome.Api");
+            _localizer = localizerFactory.Create(Resources.SharedHomeExceptionMessage, Assembly.GetEntryAssembly()!.GetName().Name!);
             _logger = logger;
         }
 

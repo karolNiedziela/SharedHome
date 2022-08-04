@@ -7,7 +7,9 @@ using SharedHome.Application;
 using SharedHome.Identity;
 using SharedHome.Infrastructure;
 using SharedHome.Shared;
+using SharedHome.Shared.Constants;
 using System.Globalization;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 try
@@ -35,7 +37,7 @@ try
         {
             options.DataAnnotationLocalizerProvider = (type, factory) =>
             {
-                return factory.Create("DataAnnotationMessage", "SharedHome.Api"); ;
+                return factory.Create(Resources.DataAnnotationMessage, Assembly.GetEntryAssembly()!.GetName().Name!);
             };
         });
 

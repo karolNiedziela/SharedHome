@@ -19,8 +19,4 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Authentication\Services\" />
-  </ItemGroup>
-
 </Project>

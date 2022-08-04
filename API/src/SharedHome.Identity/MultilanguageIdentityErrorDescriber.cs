@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using SharedHome.Shared.Constants;
+using System.Reflection;
 
 namespace SharedHome.Identity
 {
@@ -9,7 +11,7 @@ namespace SharedHome.Identity
 
         public MultilanguageIdentityErrorDescriber(IStringLocalizerFactory localizerFactory)
         {
-            _localizer = localizerFactory.Create("IdentityExceptionMessage", "SharedHome.Api");
+            _localizer = localizerFactory.Create(Resources.IdentityExceptionMessage, Assembly.GetEntryAssembly()!.GetName().Name!);
         }
 
         public override IdentityError DefaultError() 
