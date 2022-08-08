@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.ShoppingLists.Commands;
-using SharedHome.Application.ShoppingLists.Commands.Handlers;
+using SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
@@ -16,7 +15,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly ICommandHandler<DeleteShoppingListProduct, Unit> _commandHandler;
+        private readonly ICommandHandler<DeleteShoppingListProductCommand, Unit> _commandHandler;
 
         public DeleteShoppingListProductHandlerTests()
         {
@@ -28,7 +27,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         [Fact]
         public async Task DeleteShoppingListProduct_Should_Call_Repository_On_Success()
         {
-            var command = new DeleteShoppingListProduct
+            var command = new DeleteShoppingListProductCommand
             {
                 ShoppingListId = 0,
                 ProductName = "Product"

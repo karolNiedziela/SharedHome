@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.ShoppingLists.Commands;
-using SharedHome.Application.ShoppingLists.Commands.Handlers;
+using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
@@ -16,7 +15,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly ICommandHandler<UpdateShoppingList, Unit> _commandHandler;
+        private readonly ICommandHandler<UpdateShoppingListCommand, Unit> _commandHandler;
 
         public UpdateShoppingListHandlerTests()
         {
@@ -30,7 +29,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
-            var command = new UpdateShoppingList
+            var command = new UpdateShoppingListCommand
             {
                 Name = "TestName"
             };

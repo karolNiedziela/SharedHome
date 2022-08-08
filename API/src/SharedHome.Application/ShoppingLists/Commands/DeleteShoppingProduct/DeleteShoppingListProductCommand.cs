@@ -2,9 +2,9 @@
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Requests;
 
-namespace SharedHome.Application.ShoppingLists.Commands
+namespace SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct
 {
-    public class DeleteShoppingListProduct : AuthorizeRequest, ICommand<Unit>
+    public class DeleteShoppingListProductCommand : AuthorizeRequest, ICommand<Unit>
     {
          public int ShoppingListId { get; set; }
 

@@ -1,8 +1,7 @@
 ﻿using Mapster;
 using MapsterMapper;
 using NSubstitute;
-using SharedHome.Application.ShoppingLists.Commands;
-using SharedHome.Application.ShoppingLists.Commands.Handlers;
+using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
@@ -20,7 +19,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
-        private readonly ICommandHandler<AddShoppingList, Response<ShoppingListDto>> _commandHandler;
+        private readonly ICommandHandler<AddShoppingListCommand, Response<ShoppingListDto>> _commandHandler;
 
         public AddShoppingListHandlerTests()
         {
@@ -34,7 +33,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var command = new AddShoppingList
+            var command = new AddShoppingListCommand
             {
                 Name = "ShoppingList"
             };

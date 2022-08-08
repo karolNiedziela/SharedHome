@@ -1,26 +1,29 @@
 ﻿using MediatR;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 
-namespace SharedHome.Application.ShoppingLists.Commands.Handlers
+namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProduct
 {
-    public class DeleteShoppingListProductHandler : ICommandHandler<DeleteShoppingListProduct, Unit>
+    public class PurchaseProductHandler : ICommandHandler<PurchaseProductCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
 
-        public DeleteShoppingListProductHandler(IShoppingListRepository shoppingListRepository, IShoppingListService shoppingListService)
+        public PurchaseProductHandler(IShoppingListRepository shoppingListRepository, IShoppingListService shoppingListService)
         {
             _shoppingListRepository = shoppingListRepository;
             _shoppingListService = shoppingListService;
         }
 
-        public async Task<Unit> Handle(DeleteShoppingListProduct request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(PurchaseProductCommand request, CancellationToken cancellationToken)
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 
-            shoppingList.RemoveProduct(request.ProductName);
+            var money = new Money(request.Price, request.Currency);
+
+            shoppingList.PurchaseProduct(request.ProductName, money);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
 

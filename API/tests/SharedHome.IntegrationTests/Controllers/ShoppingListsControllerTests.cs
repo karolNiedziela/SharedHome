@@ -1,5 +1,11 @@
 ﻿using SharedHome.Api.Constants;
-using SharedHome.Application.ShoppingLists.Commands;
+using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
+using SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts;
+using SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct;
+using SharedHome.Application.ShoppingLists.Commands.ChangePriceOfProduct;
+using SharedHome.Application.ShoppingLists.Commands.PurchaseProduct;
+using SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone;
+using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
@@ -9,6 +15,7 @@ using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Json;
@@ -49,7 +56,7 @@ namespace SharedHome.IntegrationTests.Controllers
         {
             Authorize(userId: ShoppingListProvider.PersonId);
 
-            var command = new AddShoppingList
+            var command = new AddShoppingListCommand
             {
                 Name = "ShoppingList"
             };
@@ -66,11 +73,17 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Authorize(userId: shoppingList.PersonId);
 
-            var command = new AddShoppingListProduct
+            var command = new AddShoppingListProductsCommand
             {
                 ShoppingListId = shoppingList.Id,
-                ProductName = "Product",
-                Quantity = 2,
+                Products = new List<AddShoppingListProductDto>
+                {
+                    new AddShoppingListProductDto
+                    {
+                        ProductName = "Product",
+                        Quantity = 2,
+                    }
+                }
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.AddShoppingListProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString())}";
@@ -86,7 +99,7 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Authorize(userId: shoppingList.PersonId);
 
-            var command = new PurchaseProduct
+            var command = new PurchaseProductCommand
             {
                 Price = 100,
                 ProductName = "Product",
@@ -108,7 +121,7 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Authorize(userId: shoppingList.PersonId);
 
-            var command = new CancelPurchaseOfProduct
+            var command = new CancelPurchaseOfProductCommand
             {
                 ProductName = "Product",
                 ShoppingListId = shoppingList.Id
@@ -128,7 +141,7 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Authorize(userId: shoppingList.PersonId);
 
-            var command = new ChangePriceOfProduct
+            var command = new ChangePriceOfProductCommand
             {
                 Price = 100,
                 ProductName = "Product",
@@ -150,7 +163,7 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Authorize(userId: shoppingList.PersonId);
 
-            var command = new SetIsShoppingListDone
+            var command = new SetIsShoppingListDoneCommand
             {
                 IsDone = true,
                 ShoppingListId = shoppingList.Id
@@ -170,7 +183,7 @@ namespace SharedHome.IntegrationTests.Controllers
 
             Authorize(userId: shoppingList.PersonId);
 
-            var command = new UpdateShoppingList
+            var command = new UpdateShoppingListCommand
             {
                 Id = shoppingList.Id,
                 Name = "NewShoppingList"

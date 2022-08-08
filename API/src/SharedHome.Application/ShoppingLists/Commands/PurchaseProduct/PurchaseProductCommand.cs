@@ -2,9 +2,9 @@
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Requests;
 
-namespace SharedHome.Application.ShoppingLists.Commands
+namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProduct
 {
-    public class PurchaseProduct : AuthorizeRequest, ICommand<Unit>
+    public class PurchaseProductCommand : AuthorizeRequest, ICommand<Unit>
     {
         public int ShoppingListId { get; set; }
 

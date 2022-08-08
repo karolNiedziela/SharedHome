@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.ShoppingLists.Commands;
-using SharedHome.Application.ShoppingLists.Commands.Handlers;
+using SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
@@ -16,7 +15,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly ICommandHandler<SetIsShoppingListDone, Unit> _commandHandler;
+        private readonly ICommandHandler<SetIsShoppingListDoneCommand, Unit> _commandHandler;
 
         public SetIsShoppingListDoneHandlerTests()
         {
@@ -28,7 +27,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         [Fact]
         public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success_WhenPersonIsInHouseGroupAndIsDoneTrue()
         {            
-            var command = new SetIsShoppingListDone
+            var command = new SetIsShoppingListDoneCommand
             {
                 ShoppingListId = 0,
                 IsDone = true,
@@ -46,7 +45,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         [Fact]
         public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success()
         {
-            var command = new SetIsShoppingListDone
+            var command = new SetIsShoppingListDoneCommand
             {
                 ShoppingListId = 0,
                 IsDone = false,

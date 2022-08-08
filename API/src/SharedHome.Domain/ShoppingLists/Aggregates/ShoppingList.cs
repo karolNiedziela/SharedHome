@@ -59,7 +59,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         public void AddProducts(IEnumerable<ShoppingListProduct>? products)
         {
-            if (products is null || products.Count() == 0) return; 
+            if (products is null || !products.Any()) return; 
 
             IsAlreadyDone();
 

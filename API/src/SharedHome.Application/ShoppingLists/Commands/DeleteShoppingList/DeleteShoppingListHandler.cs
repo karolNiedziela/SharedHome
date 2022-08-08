@@ -3,9 +3,9 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 
-namespace SharedHome.Application.ShoppingLists.Commands.Handlers
+namespace SharedHome.Application.ShoppingLists.Commands.DeleteShoppingList
 {
-    public class DeleteShoppingListHandler : ICommandHandler<DeleteShoppingList, Unit>
+    public class DeleteShoppingListHandler : ICommandHandler<DeleteShoppingListCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
             _shoppingListService = shoppingListService;
         }
 
-        public async Task<Unit> Handle(DeleteShoppingList request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteShoppingListCommand request, CancellationToken cancellationToken)
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 

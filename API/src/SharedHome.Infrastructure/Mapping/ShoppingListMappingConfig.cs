@@ -1,8 +1,10 @@
 ﻿using Mapster;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists.Constants;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Infrastructure.EF.Models;
+using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Infrastructure.Mapping
 {
@@ -28,6 +30,19 @@ namespace SharedHome.Infrastructure.Mapping
 
             config.NewConfig<ShoppingListProductReadModel, ShoppingListProductDto>()
                 .Map(dest => dest.NetContentType, src => src.NetContentType == null ? null : src.NetContentType!.ToString());
+
+            config.NewConfig<AddShoppingListProductDto, ShoppingListProduct>()
+                .ConstructUsing(src => 
+                new ShoppingListProduct(src.ProductName, 
+                    src.Quantity, 
+                    null,
+                    new NetContent(src.NetContent, 
+                        src.NetContentType.HasValue ?
+                        EnumHelper.ToEnumByIntOrThrow<NetContentType>(src.NetContentType.Value) :
+                        null),
+                    false
+                    )
+                );
         }
     }
 }

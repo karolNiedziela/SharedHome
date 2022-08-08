@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.ShoppingLists.Commands;
-using SharedHome.Application.ShoppingLists.Commands.Handlers;
+using SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
@@ -18,7 +17,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly ICommandHandler<CancelPurchaseOfProduct, Unit> _commandHandler;
+        private readonly ICommandHandler<CancelPurchaseOfProductCommand, Unit> _commandHandler;
 
         public CancelPurchaseofProductHandlerTests()
         {
@@ -30,7 +29,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var command = new CancelPurchaseOfProduct
+            var command = new CancelPurchaseOfProductCommand
             {
                 ShoppingListId = 1,
                 ProductName = "Product"

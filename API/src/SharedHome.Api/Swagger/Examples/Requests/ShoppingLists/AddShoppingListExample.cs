@@ -1,13 +1,14 @@
 ﻿using SharedHome.Application.ShoppingLists.Commands;
+using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using Swashbuckle.AspNetCore.Filters;
 
 namespace SharedHome.Api.Swagger.Examples.Requests.ShoppingLists
 {
-    public class AddShoppingListExample : IExamplesProvider<AddShoppingList>
+    public class AddShoppingListExample : IExamplesProvider<AddShoppingListCommand>
     {
-        public AddShoppingList GetExamples()
+        public AddShoppingListCommand GetExamples()
         {
-            return new AddShoppingList
+            return new AddShoppingListCommand
             {
                 Name = "Lidl"
             };

@@ -4,7 +4,7 @@ using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 
-namespace SharedHome.Application.ShoppingLists.Commands.Services
+namespace SharedHome.Application.ShoppingLists.Services
 {
     public class ShoppingListService : IShoppingListService
     {

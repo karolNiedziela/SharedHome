@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application.Bills.Services;
 using SharedHome.Application.PipelineBehaviours;
-using SharedHome.Application.ShoppingLists.Commands.Services;
+using SharedHome.Application.ShoppingLists.Services;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.ShoppingLists.Services;
 

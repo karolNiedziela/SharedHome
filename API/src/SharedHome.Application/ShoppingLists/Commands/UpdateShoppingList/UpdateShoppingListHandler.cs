@@ -3,9 +3,9 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 
-namespace SharedHome.Application.ShoppingLists.Commands.Handlers
+namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList
 {
-    public class UpdateShoppingListHandler : ICommandHandler<UpdateShoppingList, Unit>
+    public class UpdateShoppingListHandler : ICommandHandler<UpdateShoppingListCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
             _shoppingListService = shoppingListService;
         }
 
-        public async Task<Unit> Handle(UpdateShoppingList request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateShoppingListCommand request, CancellationToken cancellationToken)
         {
             var shoppingList = await _shoppingListService.GetAsync(request.Id, request.PersonId!);
 
