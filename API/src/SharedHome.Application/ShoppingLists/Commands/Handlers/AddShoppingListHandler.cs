@@ -1,9 +1,12 @@
 ﻿using MapsterMapper;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists.Constants;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 {
@@ -22,7 +25,14 @@ namespace SharedHome.Application.ShoppingLists.Commands.Handlers
 
         public async Task<Response<ShoppingListDto>> Handle(AddShoppingList request, CancellationToken cancellationToken)
         {
-            var shoppingList = ShoppingList.Create(request.Name, request.PersonId!);
+            var products = request.Products.Select(p => new ShoppingListProduct(p.ProductName,
+                                                                                p.Quantity,
+                                                                                netContent: new NetContent(p.NetContent,
+                                                                                                           p.NetContentType.HasValue ? 
+                                                                                                            EnumHelper.ToEnumByIntOrThrow<NetContentType>(p.NetContentType.Value) :
+                                                                                                            null)))
+                .ToHashSet();
+            var shoppingList = ShoppingList.Create(request.Name, request.PersonId!, products: products);
 
             await _shoppingListRepository.AddAsync(shoppingList);
             //await _messageBroker.PublishAsync(new ShoppingListCreated(shoppingList.Name), cancellationToken);

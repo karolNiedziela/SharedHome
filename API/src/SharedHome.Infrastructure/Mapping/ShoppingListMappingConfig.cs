@@ -14,6 +14,7 @@ namespace SharedHome.Infrastructure.Mapping
                 .Map(dest => dest.Name, src => src.Name.Name);
 
             config.NewConfig<ShoppingListProduct, ShoppingListProductDto>()
+                .Map(dest => dest.Name, src => src.Name.Value)
                 .Map(dest => dest.Quantity, src => src.Quantity.Value)
                 .Map(dest => dest.Price, src => src.Price == null ? null : (decimal?)src.Price!.Amount)
                 .Map(dest => dest.Currency, src => src.Price == null ? null : src.Price!.Currency)

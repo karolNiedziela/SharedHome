@@ -26,15 +26,17 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         }
 
-        private ShoppingList(ShoppingListName name, string personId, bool isDone = false)
+        private ShoppingList(ShoppingListName name, string personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
         {
             Name = name;
             PersonId = personId;
             IsDone = isDone;
+
+            AddProducts(products);
         }
 
-        public static ShoppingList Create(ShoppingListName name, string personId, bool isDone = false)
-            => new (name, personId, isDone);
+        public static ShoppingList Create(ShoppingListName name, string personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
+            => new (name, personId, isDone, products);
 
         public void ChangeName(ShoppingListName shoppingListName)
         {
@@ -55,8 +57,10 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddEvent(new ShoppingListProductAdded(Id, product.Name));
         }
 
-        public void AddProducts(IEnumerable<ShoppingListProduct> products)
+        public void AddProducts(IEnumerable<ShoppingListProduct>? products)
         {
+            if (products is null || products.Count() == 0) return; 
+
             IsAlreadyDone();
 
             foreach (var product in products)
