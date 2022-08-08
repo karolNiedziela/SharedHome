@@ -13,7 +13,7 @@ namespace SharedHome.Application.PipelineBehaviours
     {
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
 
-        private static List<Type> _requestsToSkip = new() { typeof(ConfirmEmailCommand), typeof(RegisterCommand), typeof(LoginQuery)}; 
+        private static readonly List<string> _requestsNotForSerialization = new() { typeof(ConfirmEmailCommand).Name, typeof(RegisterCommand).Name, typeof(LoginQuery).Name };
 
         public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
         {
@@ -23,16 +23,17 @@ namespace SharedHome.Application.PipelineBehaviours
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var requestName = typeof(TRequest).Name;
-            if (_requestsToSkip.Any(x => x is TRequest))
-            {
-                return await next();
-            }
+
+            var isRequestNotForSerialization = _requestsNotForSerialization.Any(x => x == requestName);
 
             var uniqueId = Guid.NewGuid().ToString();
-            var requestJson = JsonSerializer.Serialize(request, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
+
+            var requestJson = isRequestNotForSerialization ? 
+                string.Empty :
+                 JsonSerializer.Serialize(request, new JsonSerializerOptions
+                 {
+                     WriteIndented = true
+                 });
             _logger.LogInformation("Begin Request Id: {uniqueId}, " +
                 "Request name: {RequestName}, " +
                 "Request json: {requestJson}", 
@@ -44,16 +45,19 @@ namespace SharedHome.Application.PipelineBehaviours
             timer.Start();
 
             var response = await next();
-            var responseJson = JsonSerializer.Serialize(response, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
+
+            var responseJson = isRequestNotForSerialization ? 
+                string.Empty :
+                JsonSerializer.Serialize(response, new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
 
             timer.Stop();
 
             _logger.LogInformation("End Request Id: {uniqueId}, " +
                 "Request name: {RequestName}, " +
-                "Rotal request time {elapsedMs}[ms], " +
+                "Total request time {elapsedMs}[ms], " +
                 "Response json: {responseJson}", 
                 uniqueId, 
                 requestName,
