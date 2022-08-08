@@ -16,6 +16,9 @@ namespace SharedHome.Application.ShoppingLists.DTO
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CreatedByLastName { get; set; } = default!;
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string CreatedByFullName { get; set; } = default!;
+
         public IEnumerable<ShoppingListProductDto> Products { get; set; } = default!;
     }
 }

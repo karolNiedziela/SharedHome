@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
@@ -27,7 +27,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
                 .SingleOrDefaultAsync(invitation => invitation.HouseGroupId == request.HouseGroupId &&
                 invitation.RequestedToPersonId == request.PersonId);
 
-            return new Response<InvitationDto>(_mapper.Map<InvitationDto>(invitation));
+            return new Response<InvitationDto>(_mapper.Map<InvitationDto>(invitation!));
         }
     }
 }

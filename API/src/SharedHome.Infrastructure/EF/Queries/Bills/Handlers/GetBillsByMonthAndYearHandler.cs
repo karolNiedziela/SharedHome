@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
@@ -29,7 +29,7 @@ namespace SharedHome.Infrastructure.EF.Queries.HouseGroups.Handlers
                 .Where(houseGroup => houseGroup.Members.Any(member => member.PersonId == request.PersonId))
                 .FirstOrDefaultAsync();
 
-            return new Response<HouseGroupDto>(_mapper.Map<HouseGroupDto>(houseGroup));
+            return new Response<HouseGroupDto>(_mapper.Map<HouseGroupDto>(houseGroup!));
         }
     }
 }

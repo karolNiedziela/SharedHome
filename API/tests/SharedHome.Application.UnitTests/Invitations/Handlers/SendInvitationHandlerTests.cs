@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Mapster;
+using MapsterMapper;
 using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Exceptions;
@@ -33,8 +34,9 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationRepository = Substitute.For<IInvitationRepository>();
             _houseGroupService = Substitute.For<IHouseGroupReadService>();
             _invitationService = Substitute.For<IInvitationReadService>();
-            var mapperConfiguration = new MapperConfiguration(config => config.AddMaps(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))));
-            _mapper = new Mapper(mapperConfiguration);
+            var config = new TypeAdapterConfig();
+            config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
+            _mapper = new Mapper(config);
             _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _mapper);
         }
 

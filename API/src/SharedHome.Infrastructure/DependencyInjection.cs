@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application;
 using SharedHome.Infrastructure.EF;
-using System.Reflection;
+using SharedHome.Infrastructure.Mapping;
 
 namespace SharedHome.Infrastructure
 {
@@ -13,7 +13,7 @@ namespace SharedHome.Infrastructure
         {
             services.AddMediatR(new[] { typeof(ApplicationAssemblyReference).Assembly, typeof(InfrastructureAssemblyReference).Assembly });
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddMappings();
 
             services.AddMySharedHomeSQL(configuration);
 

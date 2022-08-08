@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Mapster;
+using MapsterMapper;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands;
 using SharedHome.Application.Bills.Commands.Handlers;
@@ -24,8 +25,9 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         public AddBillHandlerTests()
         {
             _billRepository = Substitute.For<IBillRepository>();
-            var mapperConfiguration = new MapperConfiguration(config => config.AddMaps(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))));
-            _mapper = new Mapper(mapperConfiguration);
+            var config = new TypeAdapterConfig();
+            config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
+            _mapper = new Mapper(config);
             _commandHandler = new AddBillHandler(_billRepository, _mapper);
         }
 

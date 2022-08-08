@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MapsterMapper;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;

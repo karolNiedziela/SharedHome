@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;

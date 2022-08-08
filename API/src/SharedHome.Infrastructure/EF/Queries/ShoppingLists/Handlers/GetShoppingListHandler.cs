@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.DTO;
@@ -35,7 +35,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                     .Include(shoppingList => shoppingList.Products)
                     .SingleOrDefaultAsync(shoppingList => shoppingList.Id == request.Id && houseGroupPersonIds.Contains(shoppingList.PersonId!));
 
-                return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingListFromHouseGroup));
+                return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingListFromHouseGroup!));
             }
 
             var shoppingList = await _shoppingLists
@@ -43,7 +43,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 .Include(shoppingList => shoppingList.Products)
                 .SingleOrDefaultAsync(shoppingList => shoppingList.Id == request.Id && shoppingList.PersonId == request.PersonId);
 
-            return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList));
+            return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList!));
         }
     }
 }

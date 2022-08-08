@@ -7,7 +7,7 @@ using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Application.HouseGroups.DTO;
-using AutoMapper;
+using MapsterMapper;
 
 namespace SharedHome.Application.HouseGroups.Commands.Handlers
 {

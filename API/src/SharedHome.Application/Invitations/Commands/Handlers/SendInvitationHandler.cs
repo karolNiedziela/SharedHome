@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Dto;

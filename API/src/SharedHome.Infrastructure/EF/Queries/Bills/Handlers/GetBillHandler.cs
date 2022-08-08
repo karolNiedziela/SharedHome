@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
@@ -32,13 +32,13 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                 var billsFromHouseGroup = await _bills
                     .SingleOrDefaultAsync(bill => bill.Id == request.Id && houseGroupPersonIds.Contains(bill.PersonId!));
 
-                return new Response<BillDto>(_mapper.Map<BillDto>(billsFromHouseGroup));
+                return new Response<BillDto>(_mapper.Map<BillDto>(billsFromHouseGroup!));
             }
 
             var bill = await _bills
                 .SingleOrDefaultAsync(bill => bill.PersonId == request.PersonId && bill.Id == request.Id);
 
-            return new Response<BillDto>(_mapper.Map<BillDto>(bill));
+            return new Response<BillDto>(_mapper.Map<BillDto>(bill!));
         }
     }
 }

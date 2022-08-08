@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Mapster;
+using MapsterMapper;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands;
 using SharedHome.Application.HouseGroups.Commands.Handlers;
@@ -30,8 +31,9 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
             _houseGroupService = Substitute.For<IHouseGroupReadService>();
-            var mapperConfiguration = new MapperConfiguration(config => config.AddMaps(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))));
-            _mapper =  new Mapper(mapperConfiguration);
+            var config = new TypeAdapterConfig();
+            config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
+            _mapper = new Mapper(config);
             _commandHandler = new AddHouseGroupHandler(_houseGroupRepository, _houseGroupService, _mapper);
         }
 
