@@ -26,7 +26,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.ShoppingLists.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList([FromQuery] int shoppingListId)
+        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(int shoppingListId)
         {
             var shoppingList = await Mediator.Send(new GetShoppingList
             {
