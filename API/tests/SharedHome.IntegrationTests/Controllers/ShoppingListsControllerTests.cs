@@ -80,7 +80,7 @@ namespace SharedHome.IntegrationTests.Controllers
                 {
                     new AddShoppingListProductDto
                     {
-                        ProductName = "Product",
+                        Name = "Product",
                         Quantity = 2,
                     }
                 }

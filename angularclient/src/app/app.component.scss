@@ -2,19 +2,22 @@
   position: absolute;
   display: flex;
   flex-direction: column;
-  height: 100%;
   left: 80px;
+  height: 100%;
   width: calc(100% - 80px);
   transition: all 0.5s ease;
   padding-top: 10px;
 
   .container-fluid {
     width: 95%;
-    height: 100%;
   }
 
   app-footer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
     margin-top: auto;
+    justify-content: flex-end;
   }
 }
 

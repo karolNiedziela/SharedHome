@@ -8,7 +8,7 @@ import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
-import { PurchaseShoppingListProductComponent } from '../forms/purchase-shopping-list-product/purchase-shopping-list-product.component';
+import { PurchaseShoppingListProductComponent } from '../modals/purchase-shopping-list-product/purchase-shopping-list-product.component';
 
 @Component({
   selector: 'app-shopping-list-product',

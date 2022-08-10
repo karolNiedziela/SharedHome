@@ -2,13 +2,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { ShoppingListsRoutingModule } from './shopping-lists-routing.module';
-import { AddShoppingListComponent } from './forms/add-shopping-list/add-shopping-list.component';
 import { ShoppingListComponent } from './shopping-list-details/shopping-list-details.component';
 import { ShoppingListsComponent } from './shopping-lists-list-view/shopping-lists-list/shopping-lists-list.component';
 import { SingleShoppingListComponent } from './shopping-lists-list-view/single-shopping-list/single-shopping-list.component';
 import { ShoppingListProductComponent } from './shopping-list-product/shopping-list-product.component';
-import { AddShoppingListProductComponent } from './forms/add-shopping-list-product/add-shopping-list-product.component';
-import { PurchaseShoppingListProductComponent } from './forms/purchase-shopping-list-product/purchase-shopping-list-product.component';
+import { AddShoppingListComponent } from './modals/add-shopping-list/add-shopping-list.component';
+import { AddShoppingListProductComponent } from './modals/add-shopping-list-product/add-shopping-list-product.component';
+import { PurchaseShoppingListProductComponent } from './modals/purchase-shopping-list-product/purchase-shopping-list-product.component';
+import { AddShoppingListProductFormComponent } from './forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PurchaseShoppingListProductComponent } from './forms/purchase-shopping-
     ShoppingListProductComponent,
     AddShoppingListProductComponent,
     PurchaseShoppingListProductComponent,
+    AddShoppingListProductFormComponent,
   ],
   imports: [SharedModule, ShoppingListsRoutingModule, TranslateModule],
 })

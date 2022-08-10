@@ -28,7 +28,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         const errorResponse = error.error as ErrorResponse;
 
-        console.log(errorResponse);
         return throwError(() => errorResponse.errors);
       })
     );

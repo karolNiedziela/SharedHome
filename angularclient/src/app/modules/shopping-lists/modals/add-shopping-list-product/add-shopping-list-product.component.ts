@@ -1,4 +1,3 @@
-import { ErrorResponse } from './../../../../core/models/error-response';
 import { NetContentType } from './../../enums/net-content-type';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
@@ -69,7 +68,6 @@ export class AddShoppingListProductComponent implements OnInit {
           this.modal.close();
         },
         error: (error) => {
-          console.log('From form');
           console.log(error);
           this.errorMessages = error;
         },

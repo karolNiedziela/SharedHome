@@ -2,7 +2,7 @@
 {
     public class AddShoppingListProductDto
     {
-        public string ProductName { get; set; } = default!;
+        public string Name { get; set; } = default!;
 
         public int Quantity { get; set; }
 

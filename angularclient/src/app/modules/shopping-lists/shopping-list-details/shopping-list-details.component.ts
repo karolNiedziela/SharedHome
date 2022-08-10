@@ -9,7 +9,7 @@ import {
   AdditionalPopupMenuItem,
   PopupMenuConfig,
 } from 'app/shared/components/menus/popup-menu/popup-menu.config';
-import { AddShoppingListProductComponent } from '../forms/add-shopping-list-product/add-shopping-list-product.component';
+import { AddShoppingListProductComponent } from '../modals/add-shopping-list-product/add-shopping-list-product.component';
 
 @Component({
   selector: 'app-shopping-list-details',
@@ -96,7 +96,6 @@ export class ShoppingListComponent implements OnInit {
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
-    console.log(this.shoppingList?.isDone);
     if (this.shoppingList?.isDone) {
       additionalPopupMenuItems.push({
         text: 'Mark as undone',

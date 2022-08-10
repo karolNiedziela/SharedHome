@@ -49,6 +49,8 @@ export class ModalComponent implements OnInit {
   open(): void {
     this.modalRef = this.modalService.open(this.modalContent, {
       beforeDismiss: () => this.beforeDismiss(),
+      backdrop: 'static',
+      keyboard: false,
     });
   }
 
