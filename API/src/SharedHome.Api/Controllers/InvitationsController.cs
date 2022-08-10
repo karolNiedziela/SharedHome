@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
-using SharedHome.Application.Invitations.Commands;
+using SharedHome.Application.Invitations.Commands.AcceptInvitation;
+using SharedHome.Application.Invitations.Commands.DeleteInvitation;
+using SharedHome.Application.Invitations.Commands.RejectInvitation;
+using SharedHome.Application.Invitations.Commands.SendInvitation;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
 using SharedHome.Shared.Abstractions.Responses;
@@ -51,7 +54,7 @@ namespace SharedHome.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> SendInvitationAsync([FromBody] SendInvitation command)
+        public async Task<IActionResult> SendInvitationAsync([FromBody] SendInvitationCommand command)
         {
             var response = await Mediator.Send(command);
 
@@ -64,7 +67,7 @@ namespace SharedHome.Api.Controllers
         /// </summary>
         [HttpPatch(ApiRoutes.Invitations.Accept)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> AcceptInvitationAsync([FromBody] AcceptInvitation command)
+        public async Task<IActionResult> AcceptInvitationAsync([FromBody] AcceptInvitationCommand command)
         {
             await Mediator.Send(command);
 
@@ -76,7 +79,7 @@ namespace SharedHome.Api.Controllers
         /// </summary>
         [HttpPatch(ApiRoutes.Invitations.Reject)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> RejectInvitationAsync([FromBody] RejectInvitation command)
+        public async Task<IActionResult> RejectInvitationAsync([FromBody] RejectInvitationCommand command)
         {
             await Mediator.Send(command);
 
@@ -89,7 +92,7 @@ namespace SharedHome.Api.Controllers
         [HttpDelete(ApiRoutes.Invitations.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteInvitationAsync([FromBody] DeleteInvitation command)
+        public async Task<IActionResult> DeleteInvitationAsync([FromBody] DeleteInvitationCommand command)
         {
             await Mediator.Send(command);
 

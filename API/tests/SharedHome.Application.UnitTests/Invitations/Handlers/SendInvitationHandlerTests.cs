@@ -1,10 +1,8 @@
 ﻿using Mapster;
 using MapsterMapper;
-using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Exceptions;
-using SharedHome.Application.Invitations.Commands;
-using SharedHome.Application.Invitations.Commands.Handlers;
+using SharedHome.Application.Invitations.Commands.SendInvitation;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.ReadServices;
@@ -27,7 +25,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IInvitationReadService _invitationService;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
-        private readonly ICommandHandler<SendInvitation, Response<InvitationDto>> _commandHandler;
+        private readonly ICommandHandler<SendInvitationCommand, Response<InvitationDto>> _commandHandler;
 
         public SendInvitationHandlerTests()
         {
@@ -47,7 +45,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 .Returns(false);
 
             var exception = await Record.ExceptionAsync(() => 
-                _commandHandler.Handle(new SendInvitation(), default));
+                _commandHandler.Handle(new SendInvitationCommand(), default));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<PersonIsNotInHouseGroupException>();
@@ -63,7 +61,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 .Returns(true);
 
             var exception = await Record.ExceptionAsync(() =>
-                _commandHandler.Handle(new SendInvitation(), default));
+                _commandHandler.Handle(new SendInvitationCommand(), default));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvitationAlreadySentException>();
@@ -78,7 +76,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(false);
 
-            var command = new SendInvitation
+            var command = new SendInvitationCommand
             {
                 HouseGroupId = 1,
                 PersonId = "personId",

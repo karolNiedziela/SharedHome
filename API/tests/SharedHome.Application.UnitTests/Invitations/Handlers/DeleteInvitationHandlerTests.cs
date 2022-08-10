@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Invitations.Commands;
-using SharedHome.Application.Invitations.Commands.Handlers;
+using SharedHome.Application.Invitations.Commands.DeleteInvitation;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
@@ -14,7 +13,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     public class DeleteInvitationHandlerTests
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly ICommandHandler<DeleteInvitation, Unit> _commandHandler;
+        private readonly ICommandHandler<DeleteInvitationCommand, Unit> _commandHandler;
 
         public DeleteInvitationHandlerTests()
         {
@@ -30,7 +29,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(invitation);
 
-            var command = new DeleteInvitation
+            var command = new DeleteInvitationCommand
             {
                 HouseGroupId = 1,
                 PersonId = "personId"

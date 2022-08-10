@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.HouseGroups.Commands;
-using SharedHome.Application.HouseGroups.Commands.Handlers;
+using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
@@ -16,7 +15,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class RemoveHouseGroupMemberHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<RemoveHouseGroupMember, Unit> _commandHandler;
+        private readonly ICommandHandler<RemoveHouseGroupMemberCommand, Unit> _commandHandler;
 
         public RemoveHouseGroupMemberHandlerTests()
         {
@@ -31,7 +30,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
 
             var personToRemoveId = HouseGroupProvider.PersonId + "0";
 
-            var command = new RemoveHouseGroupMember
+            var command = new RemoveHouseGroupMemberCommand
             {
                 HouseGroupId = 1,
                 PersonId = HouseGroupProvider.PersonId,

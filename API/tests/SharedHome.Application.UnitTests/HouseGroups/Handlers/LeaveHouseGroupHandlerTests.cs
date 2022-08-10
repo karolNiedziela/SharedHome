@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.HouseGroups.Commands;
-using SharedHome.Application.HouseGroups.Commands.Handlers;
+using SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
@@ -15,7 +14,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class LeaveHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<LeaveHouseGroup, Unit> _commandHandler;
+        private readonly ICommandHandler<LeaveHouseGroupCommand, Unit> _commandHandler;
 
         public LeaveHouseGroupHandlerTests()
         {
@@ -30,7 +29,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
 
             _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(houseGroup);
 
-            var command = new LeaveHouseGroup
+            var command = new LeaveHouseGroupCommand
             {
                 HouseGroupId = HouseGroupProvider.HouseGroupId,
                 PersonId = HouseGroupProvider.PersonId
@@ -48,7 +47,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
 
             _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(houseGroup);
 
-            var command = new LeaveHouseGroup
+            var command = new LeaveHouseGroupCommand
             {
                 HouseGroupId = HouseGroupProvider.HouseGroupId,
                 PersonId = HouseGroupProvider.PersonId,

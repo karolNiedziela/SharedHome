@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Bills.Commands;
-using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.Commands.CancelBillPayment;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
@@ -17,7 +16,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<CancelBillPayment, Unit> _commandHandler;
+        private readonly ICommandHandler<CancelBillPaymentCommand, Unit> _commandHandler;
 
         public CancelBillPaymentHandlerTests()
         {
@@ -33,7 +32,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
 
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(bill);
 
-            var command = new CancelBillPayment
+            var command = new CancelBillPaymentCommand
             {
                 BillId = 1,
                 PersonId = "personId"

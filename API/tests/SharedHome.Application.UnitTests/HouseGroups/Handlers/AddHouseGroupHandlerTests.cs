@@ -1,8 +1,7 @@
 ﻿using Mapster;
 using MapsterMapper;
 using NSubstitute;
-using SharedHome.Application.HouseGroups.Commands;
-using SharedHome.Application.HouseGroups.Commands.Handlers;
+using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Aggregates;
@@ -24,7 +23,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
-        private readonly ICommandHandler<AddHouseGroup, Response<HouseGroupDto>> _commandHandler;
+        private readonly ICommandHandler<AddHouseGroupCommand, Response<HouseGroupDto>> _commandHandler;
         
 
         public AddHouseGroupHandlerTests()
@@ -40,7 +39,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Throw_PersonIsAlreadyInHouseGroupException_When_Person_Is_Already_In_HouseGroup()
         {
-            var command = new AddHouseGroup
+            var command = new AddHouseGroupCommand
             {
                 PersonId = "personId"
             };
@@ -56,7 +55,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var command = new AddHouseGroup
+            var command = new AddHouseGroupCommand
             {
                 PersonId = "personId",
             };

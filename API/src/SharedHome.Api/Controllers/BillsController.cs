@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
-using SharedHome.Application.Bills.Commands;
+using SharedHome.Application.Bills.Commands.AddBill;
+using SharedHome.Application.Bills.Commands.CancelBillPayment;
+using SharedHome.Application.Bills.Commands.ChangeBillCost;
+using SharedHome.Application.Bills.Commands.ChangeBillDateOfPayment;
+using SharedHome.Application.Bills.Commands.DeleteBill;
+using SharedHome.Application.Bills.Commands.PayForBill;
+using SharedHome.Application.Bills.Commands.UpdateBill;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
 using SharedHome.Shared.Abstractions.Responses;
@@ -66,7 +72,7 @@ namespace SharedHome.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddBillAsync([FromBody] AddBill command)
+        public async Task<IActionResult> AddBillAsync([FromBody] AddBillCommand command)
         {
             var response = await Mediator.Send(command);
 
@@ -79,7 +85,7 @@ namespace SharedHome.Api.Controllers
         [HttpPatch(ApiRoutes.Bills.PayForBill)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PayForBillAsync([FromBody] PayForBill command)
+        public async Task<IActionResult> PayForBillAsync([FromBody] PayForBillCommand command)
         {
             await Mediator.Send(command);
 
@@ -92,7 +98,7 @@ namespace SharedHome.Api.Controllers
         [HttpPatch(ApiRoutes.Bills.ChangeBillCost)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ChangeBillCostAsync([FromBody] ChangeBillCost command)
+        public async Task<IActionResult> ChangeBillCostAsync([FromBody] ChangeBillCostCommand command)
         {
             await Mediator.Send(command);
 
@@ -105,7 +111,7 @@ namespace SharedHome.Api.Controllers
         [HttpPatch(ApiRoutes.Bills.CancelPayment)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CancelBillPaymentAsync([FromBody] CancelBillPayment command)
+        public async Task<IActionResult> CancelBillPaymentAsync([FromBody] CancelBillPaymentCommand command)
         {
             await Mediator.Send(command);
 
@@ -118,7 +124,7 @@ namespace SharedHome.Api.Controllers
         [HttpPatch(ApiRoutes.Bills.ChangeDateOfPayment)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> ChangeBillDateOfPaymentAsync([FromBody] ChangeBillDateOfPayment command)
+        public async Task<IActionResult> ChangeBillDateOfPaymentAsync([FromBody] ChangeBillDateOfPaymentCommand command)
         {
             await Mediator.Send(command);
 
@@ -131,7 +137,7 @@ namespace SharedHome.Api.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateBillAsync([FromBody] UpdateBill command)
+        public async Task<IActionResult> UpdateBillAsync([FromBody] UpdateBillCommand command)
         {
             await Mediator.Send(command);
 
@@ -146,7 +152,7 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteBillAsync(int billId)
         {
-            await Mediator.Send(new DeleteBill
+            await Mediator.Send(new DeleteBillCommand
             {
                 BillId = billId
             });

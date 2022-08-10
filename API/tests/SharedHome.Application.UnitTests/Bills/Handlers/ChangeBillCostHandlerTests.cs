@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Bills.Commands;
-using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.Commands.ChangeBillCost;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
@@ -17,7 +16,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<ChangeBillCost, Unit> _commandHandler;
+        private readonly ICommandHandler<ChangeBillCostCommand, Unit> _commandHandler;
 
         public ChangeBillCostHandlerTests()
         {
@@ -34,7 +33,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(bill);
 
-            var command = new ChangeBillCost
+            var command = new ChangeBillCostCommand
             {
                 BillId = 1,
                 Cost = 2000,

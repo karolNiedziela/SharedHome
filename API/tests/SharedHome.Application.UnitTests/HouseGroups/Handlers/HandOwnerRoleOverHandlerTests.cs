@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.HouseGroups.Commands;
-using SharedHome.Application.HouseGroups.Commands.Handlers;
-using SharedHome.Application.HouseGroups.Extensions;
+using SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
@@ -16,7 +14,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class HandOwnerRoleOverHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<HandOwnerRoleOver, Unit> _commandHandler;
+        private readonly ICommandHandler<HandOwnerRoleOverCommand, Unit> _commandHandler;
 
         public HandOwnerRoleOverHandlerTests()
         {
@@ -31,7 +29,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
 
             var newOwnerPersonId = HouseGroupProvider.PersonId + "0";
 
-            var command = new HandOwnerRoleOver
+            var command = new HandOwnerRoleOverCommand
             {
                 HouseGroupId = 1,
                 PersonId = HouseGroupProvider.PersonId,

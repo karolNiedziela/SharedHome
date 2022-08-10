@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Invitations.Commands;
-using SharedHome.Application.Invitations.Commands.Handlers;
+using SharedHome.Application.Invitations.Commands.AcceptInvitation;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Aggregates;
@@ -18,7 +17,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<AcceptInvitation, Unit> _commandHandler;
+        private readonly ICommandHandler<AcceptInvitationCommand, Unit> _commandHandler;
 
         public AcceptInvitationHandlerTests()
         {
@@ -30,7 +29,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var command = new AcceptInvitation
+            var command = new AcceptInvitationCommand
             {
                 PersonId = "AcceptPersonId",
                 HouseGroupId = 1,

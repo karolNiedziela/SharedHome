@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Bills.Commands;
-using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.Commands.UpdateBill;
 using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
@@ -12,13 +11,13 @@ using SharedHome.Tests.Shared.Providers;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SharedHome.Application.UnitTests.Bills.Handlers
+namespace SharedHome.Application.UnitTests.Bills.AddHouseGroup
 {
     public class UpdateBillHandlerTests
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<UpdateBill, Unit> _commandHandler;
+        private readonly ICommandHandler<UpdateBillCommand, Unit> _commandHandler;
 
         public UpdateBillHandlerTests()
         {
@@ -34,7 +33,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
 
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(bill);
 
-            var command = new UpdateBill
+            var command = new UpdateBillCommand
             {
                 Id = 0,
                 PersonId = BillProvider.PersonId,

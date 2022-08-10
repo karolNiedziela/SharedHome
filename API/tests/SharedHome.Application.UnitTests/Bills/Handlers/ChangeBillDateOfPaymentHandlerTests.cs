@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Bills.Commands;
-using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.Commands.ChangeBillDateOfPayment;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
@@ -17,7 +16,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<ChangeBillDateOfPayment, Unit> _commandHandler;
+        private readonly ICommandHandler<ChangeBillDateOfPaymentCommand, Unit> _commandHandler;
 
         public ChangeBillDateOfPaymentHandlerTests()
         {
@@ -34,7 +33,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                  .Returns(bill);
 
-            var command = new ChangeBillDateOfPayment
+            var command = new ChangeBillDateOfPaymentCommand
             {
                 BillId = 1,
                 DateOfPayment = new DateTime(2021, 10, 10)

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
-using SharedHome.Application.HouseGroups.Commands;
+using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
+using SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver;
+using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
 using SharedHome.Shared.Abstractions.Responses;
@@ -35,7 +37,7 @@ namespace SharedHome.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddHouseGroupAsync([FromBody] AddHouseGroup command)
+        public async Task<IActionResult> AddHouseGroupAsync([FromBody] AddHouseGroupCommand command)
         {
             var response = await Mediator.Send(command);
 
@@ -48,7 +50,7 @@ namespace SharedHome.Api.Controllers
         [HttpDelete(ApiRoutes.HouseGroups.RemoveMember)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> RemoveHouseGroupMemberAsync([FromBody] RemoveHouseGroupMember command)
+        public async Task<IActionResult> RemoveHouseGroupMemberAsync([FromBody] RemoveHouseGroupMemberCommand command)
         {
             await Mediator.Send(command);
 
@@ -61,7 +63,7 @@ namespace SharedHome.Api.Controllers
         [HttpPatch(ApiRoutes.HouseGroups.HandOwnerRoleOver)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> HandOwnerRoleOverAsync([FromBody] HandOwnerRoleOver command)
+        public async Task<IActionResult> HandOwnerRoleOverAsync([FromBody] HandOwnerRoleOverCommand command)
         {
             await Mediator.Send(command);
 

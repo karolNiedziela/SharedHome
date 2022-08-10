@@ -1,8 +1,7 @@
 ﻿using Mapster;
 using MapsterMapper;
 using NSubstitute;
-using SharedHome.Application.Bills.Commands;
-using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.Commands.AddBill;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
@@ -20,7 +19,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;
-        private readonly ICommandHandler<AddBill, Response<BillDto>> _commandHandler;
+        private readonly ICommandHandler<AddBillCommand, Response<BillDto>> _commandHandler;
 
         public AddBillHandlerTests()
         {
@@ -34,7 +33,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var command = new AddBill
+            var command = new AddBillCommand
             {
                 ServiceProviderName = "Bill",
                 BillType = 2,

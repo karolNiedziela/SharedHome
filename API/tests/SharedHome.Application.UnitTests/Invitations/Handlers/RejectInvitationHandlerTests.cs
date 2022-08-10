@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Invitations.Commands;
-using SharedHome.Application.Invitations.Commands.Handlers;
+using SharedHome.Application.Invitations.Commands.RejectInvitation;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
@@ -15,7 +14,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     public class RejectInvitationHandlerTests
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly ICommandHandler<RejectInvitation, Unit> _commandHandler;
+        private readonly ICommandHandler<RejectInvitationCommand, Unit> _commandHandler;
 
         public RejectInvitationHandlerTests()
         {
@@ -31,7 +30,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(invitation);
 
-            var command = new RejectInvitation
+            var command = new RejectInvitationCommand
             {
                 HouseGroupId = 1,
                 PersonId = "personId"

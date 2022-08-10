@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Bills.Commands;
-using SharedHome.Application.Bills.Commands.Handlers;
+using SharedHome.Application.Bills.Commands.DeleteBill;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
@@ -16,7 +15,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<DeleteBill, Unit> _commandHandler;
+        private readonly ICommandHandler<DeleteBillCommand, Unit> _commandHandler;
 
         public DeleteBillHandlerTests()
         {
@@ -33,7 +32,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
               .Returns(bill);
 
-            var command = new DeleteBill
+            var command = new DeleteBillCommand
             {
                 BillId = 1                
             };
