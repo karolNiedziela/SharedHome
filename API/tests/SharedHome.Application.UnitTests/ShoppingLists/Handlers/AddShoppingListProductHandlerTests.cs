@@ -44,7 +44,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 {
                     new AddShoppingListProductDto
                     {
-                         ProductName = "Product",
+                         Name = "Product",
                          Quantity = 1,
                          NetContent = "100",
                          NetContentType = 1
