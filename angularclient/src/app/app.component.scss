@@ -1,27 +1,30 @@
-.sharedhome_content {
-  position: absolute;
+.app {
   display: flex;
-  flex-direction: column;
-  left: 80px;
   height: 100%;
-  width: calc(100% - 80px);
-  transition: all 0.5s ease;
-  padding-top: 10px;
+  width: 100%;
 
   .container-fluid {
-    width: 95%;
-  }
-
-  app-footer {
-    position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: auto;
-    justify-content: flex-end;
+    flex: 1;
+    width: 100%;
+    overflow-y: scroll;
+    flex: 1;
   }
 }
 
-.sidebar.active ~ .sharedhome_content {
-  left: 240px;
-  width: calc(100% - 240px);
+.sharedhome-content {
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  padding-top: 1rem;
+  flex: 1;
+}
+
+app-footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  justify-content: flex-end;
 }

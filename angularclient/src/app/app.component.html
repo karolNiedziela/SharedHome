@@ -1,4 +1,4 @@
-<app-sidebar
+<!-- <app-sidebar
   *ngIf="authenticationResponse"
   class="sidebar d-flex flex-column"
 ></app-sidebar>
@@ -7,4 +7,13 @@
   <div class="container-fluid"><router-outlet></router-outlet></div>
 
   <app-footer *ngIf="authenticationResponse"></app-footer>
+</div> -->
+<div class="app">
+  <app-sidebar class="sidebar" *ngIf="authenticationResponse"></app-sidebar>
+  <div class="container-fluid">
+    <div class="sharedhome-content">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer *ngIf="authenticationResponse"></app-footer>
+  </div>
 </div>

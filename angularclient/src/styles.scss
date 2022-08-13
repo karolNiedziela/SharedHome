@@ -8,15 +8,14 @@
 }
 
 html {
-  min-height: 100%;
+  height: 100%;
   width: 100%;
 }
 
 body,
 my-app {
-  min-height: 100vh;
   width: 100%;
-  position: relative;
+  height: 100%;
   font-family: "Open Sans" !important;
 }
 

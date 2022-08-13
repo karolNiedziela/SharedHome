@@ -1,6 +1,6 @@
 <div class="shopping-lists-list-view">
-  <div class="row justify-content-center">
-    <div class="col-xs-12 col-12 col-md-4 mb-3" [formGroup]="shoppingListForm">
+  <div class="row justify-content-center g-1">
+    <div class="col-xs-12 col-12 col-md-4" [formGroup]="shoppingListForm">
       <app-text-input
         formControlName="yearAndMonth"
         labelText="Year and month"
@@ -11,16 +11,14 @@
     </div>
   </div>
   <app-add-shopping-list [year]="year" [month]="month"></app-add-shopping-list>
-  <div class="shopping-lists">
-    <div class="row">
-      <div
-        class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-        *ngFor="let shoppingList of shoppingLists"
-      >
-        <app-single-shopping-list
-          [shoppingList]="shoppingList"
-        ></app-single-shopping-list>
-      </div>
+  <div class="shopping-lists row">
+    <div
+      class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+      *ngFor="let shoppingList of shoppingLists"
+    >
+      <app-single-shopping-list
+        [shoppingList]="shoppingList"
+      ></app-single-shopping-list>
     </div>
   </div>
   <app-default-tab class="bottom-tab" [tabConfig]="tabConfig"></app-default-tab>

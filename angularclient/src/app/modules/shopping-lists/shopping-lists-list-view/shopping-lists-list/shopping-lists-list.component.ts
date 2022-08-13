@@ -4,20 +4,12 @@ import { Router } from '@angular/router';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
 import { Paged } from 'app/core/models/paged';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ShoppingList } from '../../models/shopping-list';
 import { ShoppingListsService } from '../../services/shopping-lists.service';
-import {
-  debounce,
-  debounceTime,
-  switchMap,
-  distinctUntilChanged,
-  map,
-} from 'rxjs';
-
 @Component({
   selector: 'app-shopping-lists-list',
   templateUrl: './shopping-lists-list.component.html',
