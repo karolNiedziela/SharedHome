@@ -1,0 +1,15 @@
+@import "/src/assets/_variables.scss";
+
+.sharedhome-circle-btn {
+  background-color: $l_primary_color;
+  color: $l_white_color;
+  box-shadow: none;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sharedhome-circle-btn:hover {
+  background-color: $l_primary_color_dark !important;
+}

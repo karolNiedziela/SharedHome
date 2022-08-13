@@ -19,6 +19,7 @@ import { SingleSelectComponent } from './components/selects/single-select/single
 import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
 import { DefaultTabComponent } from './components/tabs/default-tab/default-tab.component';
+import { CircleButtonComponent } from './components/buttons/circle-button/circle-button.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DefaultTabComponent } from './components/tabs/default-tab/default-tab.c
     EnumAsStringPipe,
     CurrencySelectComponent,
     DefaultTabComponent,
+    CircleButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { DefaultTabComponent } from './components/tabs/default-tab/default-tab.c
     EnumAsStringPipe,
     CurrencySelectComponent,
     DefaultTabComponent,
+    CircleButtonComponent,
   ],
 })
 export class SharedModule {}
