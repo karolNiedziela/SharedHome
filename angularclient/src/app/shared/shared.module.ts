@@ -18,7 +18,6 @@ import { NumberInputComponent } from './components/inputs/number-input/number-in
 import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
-import { DefaultTabComponent } from './components/tabs/default-tab/default-tab.component';
 import { CircleButtonComponent } from './components/buttons/circle-button/circle-button.component';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { CircleButtonComponent } from './components/buttons/circle-button/circle
     SingleSelectComponent,
     EnumAsStringPipe,
     CurrencySelectComponent,
-    DefaultTabComponent,
     CircleButtonComponent,
   ],
   imports: [
@@ -68,7 +66,6 @@ import { CircleButtonComponent } from './components/buttons/circle-button/circle
     SingleSelectComponent,
     EnumAsStringPipe,
     CurrencySelectComponent,
-    DefaultTabComponent,
     CircleButtonComponent,
   ],
 })

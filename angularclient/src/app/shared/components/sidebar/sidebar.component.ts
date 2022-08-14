@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   faBars,
@@ -19,7 +20,7 @@ declare var bootstrap: any;
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   barsIcon = faBars;
   shoppingListsIcon = faCartShopping;
   billsIcon = faFileInvoice;
@@ -30,9 +31,16 @@ export class SidebarComponent {
   settingsIcon = faGear;
   logoutIcon = faSignOut;
 
-  private tooltipList = new Array<any>();
-
   constructor(private authenticationService: AuthenticationService) {}
+
+  ngOnInit(): void {
+    const navItems = document.querySelectorAll('.nav-item');
+    Array.from(navItems).map((x) =>
+      x.addEventListener('click', () => {
+        this.toggleMenu();
+      })
+    );
+  }
 
   toggleMenu(): void {
     let sidebar = document.querySelector('.sidebar');

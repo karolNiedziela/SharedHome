@@ -41,13 +41,15 @@ export class AddShoppingListProductFormComponent implements OnInit {
     const netContentType =
       this.addShoppingListProductForm.get('netContentType')?.value;
 
-    return {
+    const shoppingListProduct: ShoppingListProduct = {
       name: productName,
       quantity: quantity,
       netContent: netContent,
       netContentType: netContentType,
       isBought: false,
     };
+
+    return shoppingListProduct;
   }
 
   removeProduct() {

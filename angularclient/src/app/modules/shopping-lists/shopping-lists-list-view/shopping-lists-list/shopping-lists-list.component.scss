@@ -4,9 +4,31 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 100%;
   margin: 0 auto;
   gap: 10px;
+}
+
+.operations {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  &:last-child {
+    margin-right: auto;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    & > div {
+      max-width: 150px;
+    }
+  }
 }
 
 .bottom-tab {

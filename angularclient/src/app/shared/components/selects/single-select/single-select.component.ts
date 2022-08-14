@@ -1,11 +1,18 @@
-import { Component, forwardRef, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getEnumKeys } from 'app/core/utils/enum.utils';
 
 @Component({
   selector: 'app-single-select',
   templateUrl: './single-select.component.html',
-  styleUrls: ['../select.scss'],
+  styleUrls: ['../select.scss', './single-select.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -17,6 +24,7 @@ import { getEnumKeys } from 'app/core/utils/enum.utils';
 export class SingleSelectComponent implements OnInit, ControlValueAccessor {
   @Input() labelText!: string;
   @Input() enumType!: any;
+  @Output() selectedChanged: EventEmitter<any> = new EventEmitter<any>();
   selectedValue!: number;
   keys: string[] = [];
 
@@ -46,5 +54,7 @@ export class SingleSelectComponent implements OnInit, ControlValueAccessor {
 
     this.onChanged(this.selectedValue);
     this.onTouched();
+
+    this.selectedChanged.emit(this.selectedValue);
   }
 }

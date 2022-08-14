@@ -52,7 +52,7 @@ export class AddShoppingListProductComponent implements OnInit {
 
     const addShoppingListProduct: AddShoppingListProduct = {
       shoppingListId: this.shoppingListId,
-      productName: productName,
+      name: productName,
       quantity: quantity,
       netContent: netContent,
       netContentType: netContenType,

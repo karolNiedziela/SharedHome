@@ -1,10 +1,17 @@
-import { TabConfig } from './../../../../shared/components/tabs/default-tab/tab.config';
+import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
+import { ShoppingListStatus } from './../../enums/shopping-list-status';
 import { ConfirmationModalComponent } from '../../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  AfterViewInit,
+} from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
 import { Paged } from 'app/core/models/paged';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
@@ -15,8 +22,12 @@ import { ShoppingListsService } from '../../services/shopping-lists.service';
   templateUrl: './shopping-lists-list.component.html',
   styleUrls: ['./shopping-lists-list.component.scss'],
 })
-export class ShoppingListsComponent implements OnInit {
+export class ShoppingListsComponent implements OnInit, AfterViewInit {
   detailsIcon = faList;
+
+  public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
+  @ViewChild('statusSelect')
+  private statusSelect!: SingleSelectComponent;
 
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;
@@ -24,26 +35,9 @@ export class ShoppingListsComponent implements OnInit {
     modalTitle: 'Delete shopping list',
     onSave: () => {},
   };
-  tabConfig: TabConfig = {
-    tabItems: [
-      {
-        text: 'Undone',
-        onClick: () => {
-          this.getAllShoppingLists(this.year, this.month, false);
-        },
-        isActive: true,
-      },
-      {
-        text: 'Done',
-        onClick: () => {
-          this.getAllShoppingLists(this.year, this.month, true);
-        },
-      },
-    ],
-  };
 
-  year: number;
-  month: number;
+  year!: number;
+  month!: number;
   isDone: boolean = false;
   shoppingListForm!: FormGroup;
   shoppingLists: ShoppingList[] = [];
@@ -51,7 +45,9 @@ export class ShoppingListsComponent implements OnInit {
   constructor(
     private shoppingListService: ShoppingListsService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
     const currentYearAndMonth = `${this.year} ${this.month}`;
@@ -60,15 +56,22 @@ export class ShoppingListsComponent implements OnInit {
         Validators.required,
         yearAndMonthFormat,
       ]),
+      status: new FormControl(ShoppingListStatus['To done']),
     });
-  }
 
-  ngOnInit(): void {
     this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
       this.getAllShoppingLists(this.year, this.month, this.isDone);
     });
 
     this.getAllShoppingLists(this.year, this.month, this.isDone);
+  }
+
+  ngAfterViewInit(): void {
+    this.statusSelect.selectedChanged.subscribe(
+      (selectedValue: number | undefined) => {
+        this.onStatusChange(selectedValue!);
+      }
+    );
   }
 
   private getAllShoppingLists(
@@ -94,16 +97,26 @@ export class ShoppingListsComponent implements OnInit {
       });
   }
 
-  onCurrentYearAndMonthChanged(): void {
+  onCurrentYearAndMonthChange(): void {
     if (this.shoppingListForm.invalid) {
       return;
     }
+
     const yearAndMonth: string =
       this.shoppingListForm.get('yearAndMonth')?.value;
 
     const yearAndMonthSplitted = yearAndMonth.split(' ');
     this.year = +yearAndMonthSplitted[0];
     this.month = +yearAndMonthSplitted[1];
+
+    this.getAllShoppingLists(this.year, this.month, this.isDone);
+  }
+
+  onStatusChange(selectedStatus: number): void {
+    if (this.shoppingListForm.invalid) {
+      return;
+    }
+    this.isDone = selectedStatus == 0;
 
     this.getAllShoppingLists(this.year, this.month, this.isDone);
   }
