@@ -57,7 +57,11 @@ export class SingleShoppingListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.headerPopupMenuConfig = {};
+    this.headerPopupMenuConfig = {
+      onDelete: () => {
+        this.deleteShoppingListModal.open();
+      },
+    };
     this.headerPopupMenuConfig.additionalPopupMenuItems =
       this.getAdditionalPopupMenuItems();
   }

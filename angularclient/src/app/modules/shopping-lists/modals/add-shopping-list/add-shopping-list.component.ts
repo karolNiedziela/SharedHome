@@ -1,17 +1,10 @@
+import { AddManyShoppingListProductsFormComponent } from './../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 import { AddShoppingList } from './../../models/add-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-  ComponentRef,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { AddShoppingListProductFormComponent } from '../../forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
 
 @Component({
@@ -24,10 +17,8 @@ export class AddShoppingListComponent implements OnInit {
   @Input() month!: number;
   addShoppingListForm!: FormGroup;
 
-  @ViewChild('container', { read: ViewContainerRef })
-  container!: ViewContainerRef;
-
-  productComponents: ComponentRef<AddShoppingListProductFormComponent>[] = [];
+  @ViewChild('addManyShoppingListProducts')
+  addManyShoppingListProducts!: AddManyShoppingListProductsFormComponent;
 
   @ViewChild('modal') private modal!: ModalComponent;
 
@@ -54,21 +45,17 @@ export class AddShoppingListComponent implements OnInit {
   }
 
   onSave(): void {
+    this.addManyShoppingListProducts.markAllAsTouchedOnSave();
+
     if (this.addShoppingListForm.invalid) {
       this.addShoppingListForm.markAllAsTouched();
-      this.productComponents.map((p) => {
-        if (p.instance.addShoppingListProductForm.invalid) {
-          p.instance.addShoppingListProductForm.markAllAsTouched();
-        }
-      });
       return;
     }
 
     const name = this.addShoppingListForm.get('name')?.value;
 
-    const products: ShoppingListProduct[] = this.productComponents.map((p) => {
-      return p.instance.getProduct();
-    });
+    const products: ShoppingListProduct[] =
+      this.addManyShoppingListProducts.getProducts();
 
     const addShoppingList: AddShoppingList = {
       name: name,
@@ -78,8 +65,7 @@ export class AddShoppingListComponent implements OnInit {
     this.shoppingListService.add(addShoppingList).subscribe(
       (response) => {
         console.log(response);
-        this.addShoppingListForm.reset();
-        this.productComponents.map((x) => x.destroy());
+        this.resetForm();
 
         this.modal.close();
       },
@@ -90,36 +76,15 @@ export class AddShoppingListComponent implements OnInit {
   }
 
   onClose(): void {
-    this.addShoppingListForm.reset();
-    this.productComponents.map((x) => x.destroy());
+    this.resetForm();
   }
 
   onDismiss(): void {
+    this.resetForm();
+  }
+
+  private resetForm(): void {
     this.addShoppingListForm.reset();
-    this.productComponents.map((x) => x.destroy());
-  }
-
-  addProduct() {
-    const product = this.container.createComponent(
-      AddShoppingListProductFormComponent
-    );
-    product.instance.uniqueKey = this.productComponents.length + 1;
-    product.instance.delete.subscribe((uniqueKey: number) => {
-      this.removeProduct(uniqueKey);
-    });
-
-    this.productComponents.push(product);
-  }
-
-  removeProduct(uniqueKey: number) {
-    const productComponent: ComponentRef<AddShoppingListProductFormComponent> =
-      this.productComponents.find((pc) => pc.instance.uniqueKey == uniqueKey)!;
-    const productComponentIndex =
-      this.productComponents.indexOf(productComponent);
-
-    if (productComponentIndex !== -1) {
-      this.container.remove(this.productComponents.indexOf(productComponent));
-      this.productComponents.splice(productComponentIndex, 1);
-    }
+    this.addManyShoppingListProducts.ngOnDestroy();
   }
 }

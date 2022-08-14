@@ -4,16 +4,15 @@ import { AddShoppingListProduct } from './../../models/add-shopping-list-product
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   Component,
-  ComponentRef,
+  ComponentFactoryResolver,
   Input,
   OnInit,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
-import { AddShoppingListProductFormComponent } from '../../forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
+import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 
 @Component({
   selector: 'app-add-shopping-list-product',
@@ -29,16 +28,14 @@ export class AddShoppingListProductComponent implements OnInit {
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
   };
-  @ViewChild('container', { read: ViewContainerRef })
-  container!: ViewContainerRef;
+  @ViewChild('addManyShoppingListProducts')
+  addManyShoppingListProducts!: AddManyShoppingListProductsFormComponent;
 
   public addShoppingListProductForm!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
 
   public errorMessages: string[] = [];
-
-  productComponents: ComponentRef<AddShoppingListProductFormComponent>[] = [];
 
   constructor(private shoppingListService: ShoppingListsService) {}
 
@@ -52,6 +49,8 @@ export class AddShoppingListProductComponent implements OnInit {
   }
 
   onSave(): void {
+    this.addManyShoppingListProducts.markAllAsTouchedOnSave();
+
     if (this.addShoppingListProductForm.invalid) {
       this.addShoppingListProductForm.markAllAsTouched();
       return;
@@ -72,11 +71,11 @@ export class AddShoppingListProductComponent implements OnInit {
       isBought: false,
     };
 
-    const products: ShoppingListProduct[] = this.productComponents.map((p) => {
-      return p.instance.getProduct();
-    });
-
+    const products: ShoppingListProduct[] = [];
     products.push(firstShoppingListProduct);
+
+    products.push(...this.addManyShoppingListProducts.getProducts());
+    this.addManyShoppingListProducts.getProducts();
 
     const addShoppingListProduct: AddShoppingListProduct = {
       shoppingListId: this.shoppingListId,
@@ -107,34 +106,10 @@ export class AddShoppingListProductComponent implements OnInit {
     this.resetForm();
   }
 
-  addProduct() {
-    const product = this.container.createComponent(
-      AddShoppingListProductFormComponent
-    );
-    product.instance.uniqueKey = this.productComponents.length + 1;
-    product.instance.delete.subscribe((uniqueKey: number) => {
-      this.removeProduct(uniqueKey);
-    });
-
-    this.productComponents.push(product);
-  }
-
-  removeProduct(uniqueKey: number) {
-    const productComponent: ComponentRef<AddShoppingListProductFormComponent> =
-      this.productComponents.find((pc) => pc.instance.uniqueKey == uniqueKey)!;
-    const productComponentIndex =
-      this.productComponents.indexOf(productComponent);
-
-    if (productComponentIndex !== -1) {
-      this.container.remove(this.productComponents.indexOf(productComponent));
-      this.productComponents.splice(productComponentIndex, 1);
-    }
-  }
-
   private resetForm() {
     this.addShoppingListProductForm.reset();
     this.addShoppingListProductForm.patchValue({ quantity: 1 });
-    this.productComponents.map((x) => x.destroy());
+    this.addManyShoppingListProducts.ngOnDestroy();
     this.errorMessages = [];
   }
 }

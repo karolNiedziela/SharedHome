@@ -3,7 +3,7 @@ import { ConfirmationModalConfig } from './../../../shared/components/modals/con
 import { ConfirmationModalComponent } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ShoppingList } from '../models/shopping-list';
 import { ShoppingListsService } from '../services/shopping-lists.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AdditionalPopupMenuItem,
@@ -43,9 +43,19 @@ export class ShoppingListComponent implements OnInit {
     },
   };
 
+  @ViewChild('deleteShoppingList')
+  private deleteShoppingListModal!: ConfirmationModalComponent;
+  deleteShoppingListModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Delete shopping list',
+    onSave: () => {
+      this.deleteShoppingList(this.shoppingListId);
+    },
+  };
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private shoppingListService: ShoppingListsService
+    private shoppingListService: ShoppingListsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +86,9 @@ export class ShoppingListComponent implements OnInit {
       this.headerPopupMenuConfig = {
         isEditVisible: !this.shoppingList.isDone,
         isDeleteVisible: true,
+        onDelete: () => {
+          this.deleteShoppingListModal.open();
+        },
         additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
       };
     });
@@ -120,5 +133,17 @@ export class ShoppingListComponent implements OnInit {
     }
 
     return additionalPopupMenuItems;
+  }
+
+  private deleteShoppingList(shoppingListId: number): void {
+    this.shoppingListService.delete(shoppingListId).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.router.navigate(['shoppinglists']);
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
   }
 }
