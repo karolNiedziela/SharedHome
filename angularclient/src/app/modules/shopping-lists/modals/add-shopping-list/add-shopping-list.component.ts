@@ -78,16 +78,15 @@ export class AddShoppingListComponent implements OnInit {
     this.shoppingListService.add(addShoppingList).subscribe(
       (response) => {
         console.log(response);
+        this.addShoppingListForm.reset();
+        this.productComponents.map((x) => x.destroy());
+
+        this.modal.close();
       },
       (error) => {
         console.log(error);
       }
     );
-
-    this.addShoppingListForm.reset();
-    this.productComponents.map((x) => x.destroy());
-
-    this.modal.close();
   }
 
   onClose(): void {

@@ -1,44 +1,37 @@
-<div class="container-fluid">
+<div
+  class="card shopping-list"
+  [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+>
   <div
-    class="card shopping-list"
+    class="card-header"
     [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
   >
-    <div
-      class="card-header"
-      [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
-    >
-      <h3 class="card-title">{{ shoppingList?.name }}</h3>
-      <app-popup-menu
-        [popupMenuConfig]="headerPopupMenuConfig"
-      ></app-popup-menu>
-    </div>
-    <ul class="list-group list-group-flush shopping-list__products">
-      <li
-        class="'list-group-item"
-        *ngFor="let product of shoppingList?.products"
-      >
-        <app-shopping-list-product
-          [shoppingListProduct]="product"
-          [shoppingListId]="shoppingListId"
-          [isDone]="shoppingList!.isDone"
-        ></app-shopping-list-product>
-      </li>
-    </ul>
-    <div
-      class="card-footer"
-      [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
-    >
-      <h5>
-        {{ shoppingList?.createdByFirstName }}
-        {{ shoppingList?.createdByLastName }}
-      </h5>
-      <h5>Total price:</h5>
-      <h5>
-        {{ shoppingList?.countBoughtProducts() }} /
-        {{ shoppingList?.products?.length }} products bought
-      </h5>
-      <h5>{{ shoppingList?.countTotalPrice() }} zł</h5>
-    </div>
+    <h3 class="card-title">{{ shoppingList?.name }}</h3>
+    <app-popup-menu [popupMenuConfig]="headerPopupMenuConfig"></app-popup-menu>
+  </div>
+  <ul class="list-group list-group-flush shopping-list__products">
+    <li class="'list-group-item" *ngFor="let product of shoppingList?.products">
+      <app-shopping-list-product
+        [shoppingListProduct]="product"
+        [shoppingListId]="shoppingListId"
+        [isDone]="shoppingList!.isDone"
+      ></app-shopping-list-product>
+    </li>
+  </ul>
+  <div
+    class="card-footer"
+    [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+  >
+    <h5>
+      {{ shoppingList?.createdByFirstName }}
+      {{ shoppingList?.createdByLastName }}
+    </h5>
+    <h5>Total price:</h5>
+    <h5>
+      {{ shoppingList?.countBoughtProducts() }} /
+      {{ shoppingList?.products?.length }} products bought
+    </h5>
+    <h5>{{ shoppingList?.countTotalPrice() }} zł</h5>
   </div>
 </div>
 

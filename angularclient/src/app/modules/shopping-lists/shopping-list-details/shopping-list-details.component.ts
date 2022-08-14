@@ -86,7 +86,7 @@ export class ShoppingListComponent implements OnInit {
       shoppingListId: this.shoppingListId,
       isDone: isDone,
     };
-    this.shoppingListService.markAsDone(markAsDone).subscribe({
+    this.shoppingListService.markAsDone(markAsDone, true).subscribe({
       next: (response) => {},
       error: (error) => {
         console.log(error);

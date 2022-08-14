@@ -2,9 +2,18 @@ import { NetContentType } from './../../enums/net-content-type';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentRef,
+  Input,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { AddShoppingListProductFormComponent } from '../../forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
+import { ShoppingListProduct } from '../../models/shopping-list-product';
 
 @Component({
   selector: 'app-add-shopping-list-product',
@@ -20,11 +29,16 @@ export class AddShoppingListProductComponent implements OnInit {
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
   };
+  @ViewChild('container', { read: ViewContainerRef })
+  container!: ViewContainerRef;
+
   public addShoppingListProductForm!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
 
   public errorMessages: string[] = [];
+
+  productComponents: ComponentRef<AddShoppingListProductFormComponent>[] = [];
 
   constructor(private shoppingListService: ShoppingListsService) {}
 
@@ -47,15 +61,26 @@ export class AddShoppingListProductComponent implements OnInit {
       this.addShoppingListProductForm.get('productName')?.value;
     const quantity = this.addShoppingListProductForm.get('quantity')?.value;
     const netContent = this.addShoppingListProductForm.get('netContent')?.value;
-    const netContenType =
+    const netContentType =
       this.addShoppingListProductForm.get('netContenType')?.value;
 
-    const addShoppingListProduct: AddShoppingListProduct = {
-      shoppingListId: this.shoppingListId,
+    const firstShoppingListProduct: ShoppingListProduct = {
       name: productName,
       quantity: quantity,
       netContent: netContent,
-      netContentType: netContenType,
+      netContentType: netContentType,
+      isBought: false,
+    };
+
+    const products: ShoppingListProduct[] = this.productComponents.map((p) => {
+      return p.instance.getProduct();
+    });
+
+    products.push(firstShoppingListProduct);
+
+    const addShoppingListProduct: AddShoppingListProduct = {
+      shoppingListId: this.shoppingListId,
+      products: products,
     };
 
     this.shoppingListService
@@ -82,8 +107,34 @@ export class AddShoppingListProductComponent implements OnInit {
     this.resetForm();
   }
 
+  addProduct() {
+    const product = this.container.createComponent(
+      AddShoppingListProductFormComponent
+    );
+    product.instance.uniqueKey = this.productComponents.length + 1;
+    product.instance.delete.subscribe((uniqueKey: number) => {
+      this.removeProduct(uniqueKey);
+    });
+
+    this.productComponents.push(product);
+  }
+
+  removeProduct(uniqueKey: number) {
+    const productComponent: ComponentRef<AddShoppingListProductFormComponent> =
+      this.productComponents.find((pc) => pc.instance.uniqueKey == uniqueKey)!;
+    const productComponentIndex =
+      this.productComponents.indexOf(productComponent);
+
+    if (productComponentIndex !== -1) {
+      this.container.remove(this.productComponents.indexOf(productComponent));
+      this.productComponents.splice(productComponentIndex, 1);
+    }
+  }
+
   private resetForm() {
-    this.addShoppingListProductForm.reset({ quantity: 1 });
+    this.addShoppingListProductForm.reset();
+    this.addShoppingListProductForm.patchValue({ quantity: 1 });
+    this.productComponents.map((x) => x.destroy());
     this.errorMessages = [];
   }
 }

@@ -3,9 +3,13 @@ import { ShoppingList } from './../../models/shopping-list';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { faCheck, faList, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
+import {
+  AdditionalPopupMenuItem,
+  PopupMenuConfig,
+} from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { MarkAsDone } from '../../models/mark-as-done';
 
 @Component({
   selector: 'app-single-shopping-list',
@@ -17,12 +21,6 @@ export class SingleShoppingListComponent implements OnInit {
   detailsIcon = faList;
   boughtIcon = faCheck;
   notBoughtIcon = faXmark;
-  popupMenuConfig: PopupMenuConfig = {
-    onDelete: () => {
-      this.deleteShoppingListModal.open();
-    },
-    additionalPopupMenuItems: [{ text: 'Mark as done', onClick: () => {} }],
-  };
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;
   deleteShoppingListModalConfig: ConfirmationModalConfig = {
@@ -31,13 +29,38 @@ export class SingleShoppingListComponent implements OnInit {
       this.deleteShoppingList(this.shoppingList.id);
     },
   };
+  headerPopupMenuConfig!: PopupMenuConfig;
+
+  @ViewChild('markAsDoneModal')
+  markAsDoneModal!: ConfirmationModalComponent;
+  markAsDoneModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Mark shopping list as done',
+    confirmationText: 'Are you sure to mark this shopping list as done?',
+    onSave: () => {
+      this.markAsDone(true);
+    },
+  };
+
+  @ViewChild('markAsUndoneModal')
+  markAsUndoneModal!: ConfirmationModalComponent;
+  markAsUndoneModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Mark shopping list as undone',
+    confirmationText: 'Are you sure to mark this shopping list as undone?',
+    onSave: () => {
+      this.markAsDone(false);
+    },
+  };
 
   constructor(
     private router: Router,
     private shoppingListService: ShoppingListsService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.headerPopupMenuConfig = {};
+    this.headerPopupMenuConfig.additionalPopupMenuItems =
+      this.getAdditionalPopupMenuItems();
+  }
 
   openShoppingList(shoppingListId: number): void {
     this.router.navigate(['shoppinglists', shoppingListId]);
@@ -52,5 +75,39 @@ export class SingleShoppingListComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  markAsDone(isDone: boolean): void {
+    const markAsDone: MarkAsDone = {
+      shoppingListId: this.shoppingList.id,
+      isDone: isDone,
+    };
+    this.shoppingListService.markAsDone(markAsDone, false).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
+    const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
+    if (this.shoppingList?.isDone) {
+      additionalPopupMenuItems.push({
+        text: 'Mark as undone',
+        onClick: () => {
+          this.markAsUndoneModal.open();
+        },
+      });
+    } else {
+      additionalPopupMenuItems.push({
+        text: 'Mark as done',
+        onClick: () => {
+          this.markAsDoneModal.open();
+        },
+      });
+    }
+
+    return additionalPopupMenuItems;
   }
 }

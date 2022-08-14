@@ -19,7 +19,9 @@
         aria-expanded="true"
         (click)="openShoppingList(shoppingList.id)"
       ></fa-icon>
-      <app-popup-menu [popupMenuConfig]="popupMenuConfig"></app-popup-menu>
+      <app-popup-menu
+        [popupMenuConfig]="headerPopupMenuConfig"
+      ></app-popup-menu>
     </div>
   </div>
   <div
@@ -43,3 +45,15 @@
   [confirmationModalConfig]="deleteShoppingListModalConfig"
   #deleteShoppingList
 ></app-confirmation-modal>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="markAsDoneModalConfig"
+  #markAsDoneModal
+>
+</app-confirmation-modal>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="markAsUndoneModalConfig"
+  #markAsUndoneModal
+>
+</app-confirmation-modal>

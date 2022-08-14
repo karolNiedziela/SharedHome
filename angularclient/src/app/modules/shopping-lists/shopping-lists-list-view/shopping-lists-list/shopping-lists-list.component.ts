@@ -1,20 +1,11 @@
 import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
 import { ShoppingListStatus } from './../../enums/shopping-list-status';
-import { ConfirmationModalComponent } from '../../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
-
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
 import { Paged } from 'app/core/models/paged';
-import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ShoppingList } from '../../models/shopping-list';
 import { ShoppingListsService } from '../../services/shopping-lists.service';
 @Component({
@@ -28,13 +19,6 @@ export class ShoppingListsComponent implements OnInit, AfterViewInit {
   public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
   @ViewChild('statusSelect')
   private statusSelect!: SingleSelectComponent;
-
-  @ViewChild('deleteShoppingList')
-  private deleteShoppingListModal!: ConfirmationModalComponent;
-  deleteShoppingListModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Delete shopping list',
-    onSave: () => {},
-  };
 
   year!: number;
   month!: number;
@@ -56,7 +40,7 @@ export class ShoppingListsComponent implements OnInit, AfterViewInit {
         Validators.required,
         yearAndMonthFormat,
       ]),
-      status: new FormControl(ShoppingListStatus['To done']),
+      status: new FormControl(ShoppingListStatus['To do']),
     });
 
     this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {

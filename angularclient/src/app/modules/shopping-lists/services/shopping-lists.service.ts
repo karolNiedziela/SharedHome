@@ -81,12 +81,12 @@ export class ShoppingListsService {
   }
 
   addShoppingListProduct(
-    shoppingListProduct: AddShoppingListProduct
+    addShoppingListProducts: AddShoppingListProduct
   ): Observable<any> {
     return this.http
       .put<any>(
-        `${this.shoppingListsUrl}/${shoppingListProduct.shoppingListId}/products`,
-        shoppingListProduct,
+        `${this.shoppingListsUrl}/${addShoppingListProducts.shoppingListId}/products`,
+        addShoppingListProducts,
         this.defaultHttpOptions
       )
       .pipe(
@@ -138,7 +138,10 @@ export class ShoppingListsService {
     );
   }
 
-  markAsDone(markAsDone: MarkAsDone): Observable<any> {
+  markAsDone(
+    markAsDone: MarkAsDone,
+    isSingleRefresh: boolean
+  ): Observable<any> {
     return this.http
       .patch<any>(
         `${this.shoppingListsUrl}/${markAsDone.shoppingListId}/setisdone`,
@@ -147,7 +150,9 @@ export class ShoppingListsService {
       )
       .pipe(
         tap(() => {
-          this._singleShoppingListRefreshNeeded.next();
+          isSingleRefresh
+            ? this._singleShoppingListRefreshNeeded.next()
+            : this._allShoppingListRefreshNeeded.next();
         })
       );
   }
