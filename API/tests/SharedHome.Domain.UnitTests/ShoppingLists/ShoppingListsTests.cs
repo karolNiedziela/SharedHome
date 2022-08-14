@@ -1,6 +1,7 @@
 ﻿using SharedHome.Domain.Shared.Exceptions;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists.Constants;
 using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
@@ -406,6 +407,24 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             shoppingList.Events.Count().ShouldBe(1);
             var @event = shoppingList.Events.FirstOrDefault() as ShoppingListUndone;
             @event.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void UpdateProduct_Update_ShoppingListProduct_On_Success()
+        {
+            var shoppingList = ShoppingListProvider.GetWithProduct(netContent: new NetContent("500", NetContentType.g));
+
+            var product = shoppingList.Products.First();
+
+            var quantityBeforeChanged = product.Quantity.Value;
+
+            shoppingList.UpdateProduct(new ShoppingListProduct(product.Name, 2, netContent: new NetContent("300", NetContentType.g)), ShoppingListProvider.ProductName);
+
+            quantityBeforeChanged.ShouldBe(1);
+
+            product.Name.Value.ShouldBe(ShoppingListProvider.ProductName);
+            product.Quantity.Value.ShouldBe(2);
+            product.NetContent!.Value.ShouldBe("300");
         }
     }
 }

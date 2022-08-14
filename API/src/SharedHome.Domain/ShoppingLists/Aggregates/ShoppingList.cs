@@ -139,9 +139,16 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddEvent(new ShoppingListUndone(Id));
         }
 
-        public void Update(string shoppingListName)
+        public void Update(ShoppingListName shoppingListName)
         {
             Name = shoppingListName;
+        }
+
+        public void UpdateProduct(ShoppingListProduct shoppingListProduct, string previousName)
+        {
+            var product = GetProduct(previousName);
+
+            product.Update(shoppingListProduct);
         }
 
         private ShoppingListProduct GetProduct(string productName)

@@ -25,6 +25,8 @@
 
             public const string SetIsDone = "{shoppingListId:int}/setisdone";
 
+            public const string UpdateShoppingListProduct = "{shoppingListId:int}/products/{productName}/update";
+
             public const string Delete = "{shoppingListId:int}";
 
             public const string DeleteShoppingListProduct = "{shoppingListId:int}/products/{productName}";
