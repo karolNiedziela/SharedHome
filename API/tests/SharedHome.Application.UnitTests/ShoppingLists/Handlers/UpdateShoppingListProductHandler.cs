@@ -32,8 +32,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new UpdateShoppingListProductCommand
             {
-                Name = ShoppingListProvider.ProductName,
-                PreviousName = ShoppingListProvider.ProductName,
+                CurrentProductName = ShoppingListProvider.ProductName,
+                NewProductName = ShoppingListProvider.ProductName,
                 Quantity = 2,
                 NetContent = "300"
             };

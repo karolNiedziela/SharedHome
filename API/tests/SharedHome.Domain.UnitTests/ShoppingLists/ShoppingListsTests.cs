@@ -199,6 +199,20 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
+        public void RemoveProducts_Remove_Products_With_Given_ProductNames()
+        {
+            var shoppingList = ShoppingListProvider.GetEmpty();
+            shoppingList.AddProduct(new ShoppingListProduct("Produkt1", 1));
+            shoppingList.AddProduct(new ShoppingListProduct("Produkt2", 1));
+            shoppingList.AddProduct(new ShoppingListProduct("Produkt3", 1));
+
+            shoppingList.RemoveProducts(new[] { "Produkt1", "Produkt3" });
+
+            shoppingList.Products.Count().ShouldBe(1);
+            shoppingList.Products.First().Name.Value.ShouldBe("Produkt2");
+        }
+
+        [Fact]
         public void PurchaseProduct_Throws_ShoppingListAlreadyDoneException_When_Shopping_List_Is_Marked_As_Done()
         {
             var shoppingList = ShoppingListProvider.GetEmpty(true);

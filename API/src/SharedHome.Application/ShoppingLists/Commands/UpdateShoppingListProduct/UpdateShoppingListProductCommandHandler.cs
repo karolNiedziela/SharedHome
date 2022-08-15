@@ -28,11 +28,11 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
                 EnumHelper.ToEnumByIntOrThrow<NetContentType>(request.NetContentType.Value) :
                 null;
 
-            var shoppingListProduct = new ShoppingListProduct(request.Name,
+            var shoppingListProduct = new ShoppingListProduct(request.NewProductName,
                                                               request.Quantity,
                                                               netContent: new NetContent(request.NetContent, netContentType));
 
-            shoppingList.UpdateProduct(shoppingListProduct, request.PreviousName);
+            shoppingList.UpdateProduct(shoppingListProduct, request.CurrentProductName);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
 

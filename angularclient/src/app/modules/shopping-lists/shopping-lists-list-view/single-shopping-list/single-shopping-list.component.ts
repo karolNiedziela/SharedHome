@@ -10,6 +10,8 @@ import {
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { MarkAsDone } from '../../models/mark-as-done';
+import { EditShoppingListModalComponent } from '../../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-single-shopping-list',
@@ -17,6 +19,8 @@ import { MarkAsDone } from '../../models/mark-as-done';
   styleUrls: ['./single-shopping-list.component.scss'],
 })
 export class SingleShoppingListComponent implements OnInit {
+  shoppingList$: BehaviorSubject<ShoppingList> =
+    new BehaviorSubject<ShoppingList>(null!);
   @Input() shoppingList!: ShoppingList;
   detailsIcon = faList;
   boughtIcon = faCheck;
@@ -51,6 +55,9 @@ export class SingleShoppingListComponent implements OnInit {
     },
   };
 
+  @ViewChild('editShoppingListModal')
+  private editShoppingListModal!: EditShoppingListModalComponent;
+
   constructor(
     private router: Router,
     private shoppingListService: ShoppingListsService
@@ -61,9 +68,18 @@ export class SingleShoppingListComponent implements OnInit {
       onDelete: () => {
         this.deleteShoppingListModal.open();
       },
+      onEdit: () => {
+        this.editShoppingListModal.openModal();
+      },
     };
-    this.headerPopupMenuConfig.additionalPopupMenuItems =
-      this.getAdditionalPopupMenuItems();
+
+    this.shoppingList$.next(this.shoppingList);
+
+    this.headerPopupMenuConfig = {
+      isEditVisible: !this.shoppingList.isDone,
+      isDeleteVisible: !this.shoppingList.isDone,
+      additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
+    };
   }
 
   openShoppingList(shoppingListId: number): void {

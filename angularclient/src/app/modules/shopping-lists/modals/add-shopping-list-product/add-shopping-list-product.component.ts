@@ -2,13 +2,7 @@ import { NetContentType } from './../../enums/net-content-type';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  Component,
-  ComponentFactoryResolver,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
@@ -83,7 +77,7 @@ export class AddShoppingListProductComponent implements OnInit {
     };
 
     this.shoppingListService
-      .addShoppingListProduct(addShoppingListProduct)
+      .addShoppingListProducts(addShoppingListProduct)
       .subscribe({
         next: (response) => {
           console.log(response);

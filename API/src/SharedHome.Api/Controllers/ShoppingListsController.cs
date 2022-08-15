@@ -5,6 +5,7 @@ using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts;
 using SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct;
 using SharedHome.Application.ShoppingLists.Commands.ChangePriceOfProduct;
+using SharedHome.Application.ShoppingLists.Commands.DeleteManyShoppingListProducts;
 using SharedHome.Application.ShoppingLists.Commands.DeleteShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct;
 using SharedHome.Application.ShoppingLists.Commands.PurchaseProduct;
@@ -197,6 +198,16 @@ namespace SharedHome.Api.Controllers
                 ProductName = productName,
                 ShoppingListId = shoppingListId
             });
+
+            return NoContent();
+        }
+
+        [HttpDelete(ApiRoutes.ShoppingLists.DeleteManyShoppingListProducts)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteManyShoppingListProducts([FromBody]DeleteManyShoppingListProductsCommand command)
+        {
+            await Mediator.Send(command);
 
             return NoContent();
         }

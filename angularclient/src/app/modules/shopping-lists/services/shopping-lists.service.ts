@@ -13,6 +13,7 @@ import { UpdateShoppingList } from '../models/update-shopping-list';
 import { Paged } from 'app/core/models/paged';
 import { ApiResponse } from 'app/core/models/api-response';
 import { MarkAsDone } from '../models/mark-as-done';
+import { UpdateShoppingListProduct } from '../models/update-shopping-list-product';
 
 @Injectable({
   providedIn: 'root',
@@ -80,7 +81,7 @@ export class ShoppingListsService {
       );
   }
 
-  addShoppingListProduct(
+  addShoppingListProducts(
     addShoppingListProducts: AddShoppingListProduct
   ): Observable<any> {
     return this.http
@@ -157,12 +158,35 @@ export class ShoppingListsService {
       );
   }
 
-  update(shoppingList: UpdateShoppingList): Observable<any> {
-    return this.http.put<any>(
-      this.shoppingListsUrl,
-      shoppingList,
-      this.defaultHttpOptions
-    );
+  update(
+    shoppingList: UpdateShoppingList,
+    isSingleRefresh: boolean
+  ): Observable<any> {
+    return this.http
+      .put<any>(this.shoppingListsUrl, shoppingList, this.defaultHttpOptions)
+      .pipe(
+        tap(() => {
+          isSingleRefresh
+            ? this._singleShoppingListRefreshNeeded.next()
+            : this._allShoppingListRefreshNeeded.next();
+        })
+      );
+  }
+
+  updateShoppingListProduct(
+    updateShoppingListProduct: UpdateShoppingListProduct
+  ): Observable<any> {
+    return this.http
+      .put<any>(
+        `${this.shoppingListsUrl}/${updateShoppingListProduct.shoppingListId}/products/${updateShoppingListProduct.currentProductName}/update`,
+        updateShoppingListProduct,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
   }
 
   delete(shoppingListId: number): Observable<any> {
@@ -187,6 +211,25 @@ export class ShoppingListsService {
         `${this.shoppingListsUrl}/${shoppingListId}/products/${productName}`,
         this.defaultHttpOptions
       )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
+  }
+
+  deleteShoppingListProducts(
+    shoppingListId: number,
+    productNames: string[]
+  ): Observable<any> {
+    return this.http
+      .delete<any>(`${this.shoppingListsUrl}/${shoppingListId}/products`, {
+        headers: this.defaultHttpOptions.headers,
+        body: {
+          shoppingListId: shoppingListId,
+          productNames: productNames,
+        },
+      })
       .pipe(
         tap(() => {
           this._singleShoppingListRefreshNeeded.next();

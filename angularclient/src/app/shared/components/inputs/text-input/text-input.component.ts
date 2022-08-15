@@ -23,7 +23,6 @@ export class TextInputComponent
 {
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
-  @Input() value: string = '';
   @Input() isRequired: boolean = false;
 
   disabled!: boolean;
@@ -44,8 +43,6 @@ export class TextInputComponent
       ? [this.control.validator]
       : [];
 
-    this.value = this.control?.value;
-
     this.control?.setValidators(validators);
     this.control?.updateValueAndValidity();
   }
@@ -57,9 +54,8 @@ export class TextInputComponent
 
   writeValue(value: any): void {
     if (this.controlDir.control && this.controlDir.control?.value != value) {
-      this.controlDir.control?.setValue(value, { emitEvent: true });
+      this.controlDir.control?.setValue(value, { emitEvent: false });
     }
-    this.value = this.controlDir.control?.value;
   }
 
   registerOnChange(onChanged: (value: any) => void): void {

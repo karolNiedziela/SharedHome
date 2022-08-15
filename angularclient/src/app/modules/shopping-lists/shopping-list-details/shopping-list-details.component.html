@@ -7,11 +7,27 @@
     [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
   >
     <h3 class="card-title">{{ shoppingList?.name }}</h3>
-    <app-popup-menu [popupMenuConfig]="headerPopupMenuConfig"></app-popup-menu>
+    <div
+      *ngIf="
+        shoppingListProductNamesSelected.length == 0;
+        then headerPopup;
+        else multipleSelectHeader
+      "
+    ></div>
+    <ng-template #headerPopup>
+      <app-popup-menu [popupMenuConfig]="headerPopupMenuConfig"></app-popup-menu
+    ></ng-template>
+    <ng-template #multipleSelectHeader>
+      <app-popup-menu
+        [popupMenuConfig]="multipleItemsSelectedPopupMenuConfig"
+      ></app-popup-menu
+    ></ng-template>
   </div>
   <ul class="list-group list-group-flush shopping-list__products">
-    <li class="'list-group-item" *ngFor="let product of shoppingList?.products">
+    <li *ngFor="let product of shoppingList?.products">
       <app-shopping-list-product
+        #product
+        class="single-product"
         [shoppingListProduct]="product"
         [shoppingListId]="shoppingListId"
         [isDone]="shoppingList!.isDone"
@@ -56,3 +72,15 @@
   [confirmationModalConfig]="deleteShoppingListModalConfig"
   #deleteShoppingList
 ></app-confirmation-modal>
+
+<app-edit-shopping-list-modal
+  #editShoppingListModal
+  [shoppingList$]="shoppingList$"
+  [isSingleRefresh]="true"
+></app-edit-shopping-list-modal>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="deleteSelectedProductsModalConfig"
+  #deleteSelectedProductsModal
+>
+</app-confirmation-modal>

@@ -16,7 +16,11 @@ namespace SharedHome.Api
 
         public static IServiceCollection AddApi(this IServiceCollection services)
         {
-            services.AddControllers()
+            services.AddControllers(
+                options =>
+                {
+                    options.SuppressAsyncSuffixInActionNames = false;
+                })
                .AddJsonOptions(options =>
                {
                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -27,12 +31,7 @@ namespace SharedHome.Api
                    {
                        return factory.Create(Resources.DataAnnotationMessage, Assembly.GetEntryAssembly()!.GetName().Name!);
                    };
-               });
-
-            services.AddMvc(options =>
-            {
-                options.SuppressAsyncSuffixInActionNames = false;
-            });
+               });          
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Requests;
 
@@ -9,9 +8,9 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
     {
         public int ShoppingListId { get; set; }
 
-        public string PreviousName { get; set; } = default!;
+        public string CurrentProductName { get; set; } = default!;
 
-        public string Name { get; set; } = default!;
+        public string NewProductName { get; set; } = default!;
 
         public int Quantity { get; set; }
 

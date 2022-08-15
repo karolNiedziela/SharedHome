@@ -11,6 +11,8 @@ import { AddShoppingListProductComponent } from './modals/add-shopping-list-prod
 import { PurchaseShoppingListProductComponent } from './modals/purchase-shopping-list-product/purchase-shopping-list-product.component';
 import { AddShoppingListProductFormComponent } from './forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 import { AddManyShoppingListProductsFormComponent } from './forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
+import { EditShoppingListModalComponent } from './modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
+import { EditShoppingListProductModalComponent } from './modals/edit-shopping-list-product-modal/edit-shopping-list-product-modal.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { AddManyShoppingListProductsFormComponent } from './forms/add-many-shopp
     PurchaseShoppingListProductComponent,
     AddShoppingListProductFormComponent,
     AddManyShoppingListProductsFormComponent,
+    EditShoppingListModalComponent,
+    EditShoppingListProductModalComponent,
   ],
   imports: [SharedModule, ShoppingListsRoutingModule, TranslateModule],
 })

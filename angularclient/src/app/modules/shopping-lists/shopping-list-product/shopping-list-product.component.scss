@@ -12,6 +12,9 @@
   &:hover {
     border: 1px solid $l_primary_color_light;
   }
+  &.selected {
+    border: 1px solid $l_primary_color_light;
+  }
 
   &__name {
     display: flex;

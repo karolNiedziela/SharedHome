@@ -1,9 +1,11 @@
+import { EditShoppingListModalComponent } from './../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
+import { BehaviorSubject } from 'rxjs';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
 import { AdditionalPopupMenuItem } from './../../../shared/components/menus/popup-menu/popup-menu.config';
 import { NetContentType } from './../enums/net-content-type';
 import { ShoppingListsService } from './../services/shopping-lists.service';
 import { ShoppingListProduct } from './../models/shopping-list-product';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
@@ -19,6 +21,9 @@ export class ShoppingListProductComponent implements OnInit {
   @Input() shoppingListProduct?: ShoppingListProduct;
   @Input() shoppingListId!: number;
   @Input() isDone!: boolean;
+
+  shoppingListProduct$: BehaviorSubject<ShoppingListProduct> =
+    new BehaviorSubject<ShoppingListProduct>(null!);
 
   public netContentType: typeof NetContentType = NetContentType;
 
@@ -44,19 +49,31 @@ export class ShoppingListProductComponent implements OnInit {
     },
   };
 
+  @ViewChild('editShoppingListProduct')
+  private editShoppingListProductModal!: EditShoppingListModalComponent;
+
   boughtIcon = faCheck;
   notBoughtIcon = faXmark;
   productPopupMenuConfig!: PopupMenuConfig;
 
-  constructor(private shoppingListService: ShoppingListsService) {}
+  constructor(
+    private shoppingListService: ShoppingListsService,
+    public element: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.productPopupMenuConfig = {
+      isHidden: this.isDone,
       onDelete: () => {
         this.deleteShoppingListProductModal.open();
       },
+      onEdit: () => {
+        this.editShoppingListProductModal.openModal();
+      },
       additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
     };
+
+    this.shoppingListProduct$.next(this.shoppingListProduct!);
   }
 
   deleteShoppingListProduct() {

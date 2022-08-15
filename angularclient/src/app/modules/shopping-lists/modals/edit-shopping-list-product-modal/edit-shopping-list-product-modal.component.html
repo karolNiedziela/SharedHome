@@ -1,17 +1,5 @@
-<!-- <app-button text="Add shopping list product" (click)="openModal()"
-  >Open Modal</app-button
-> -->
-
-<app-modal #addShoppingListProductModal [modalConfig]="modalConfig">
-  <div class="row g-3" [formGroup]="addShoppingListProductForm">
-    <div *ngIf="errorMessages.length > 0" class="col-md-12">
-      <div
-        *ngFor="let errorMessage of errorMessages"
-        class="sharedhome-errormessage"
-      >
-        {{ errorMessage }}
-      </div>
-    </div>
+<app-modal #editShoppingListProductModal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="editShoppingListProductForm">
     <app-text-input
       formControlName="productName"
       labelText="Product Name"
@@ -33,13 +21,10 @@
     </div>
     <div class="col md-6">
       <app-single-select
-        formControlName="netContenType"
+        formControlName="netContentType"
         labelText="Net Content Type"
         [enumType]="netContentType"
       ></app-single-select>
     </div>
   </div>
-  <app-add-many-shopping-list-products-form
-    #addManyShoppingListProducts
-  ></app-add-many-shopping-list-products-form>
 </app-modal>

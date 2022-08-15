@@ -1,27 +1,44 @@
+import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
 import { MarkAsDone } from './../models/mark-as-done';
 import { ConfirmationModalConfig } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ConfirmationModalComponent } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ShoppingList } from '../models/shopping-list';
 import { ShoppingListsService } from '../services/shopping-lists.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  QueryList,
+  ViewChildren,
+  AfterViewInit,
+} from '@angular/core';
 import {
   AdditionalPopupMenuItem,
   PopupMenuConfig,
 } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { AddShoppingListProductComponent } from '../modals/add-shopping-list-product/add-shopping-list-product.component';
+import { EditShoppingListModalComponent } from '../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list-details',
   templateUrl: './shopping-list-details.component.html',
   styleUrls: ['./shopping-list-details.component.scss'],
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListComponent implements OnInit, AfterViewInit {
   shoppingListId!: number;
-  shoppingList?: ShoppingList;
+  shoppingList$: BehaviorSubject<ShoppingList> =
+    new BehaviorSubject<ShoppingList>(null!);
+
+  shoppingListProductNamesSelected: string[] = [];
+
+  @ViewChildren('product') products!: QueryList<ShoppingListProductComponent>;
+
   @ViewChild('addShoppingListProductForm')
   addShoppingListProductForm!: AddShoppingListProductComponent;
-  headerPopupMenuConfig!: PopupMenuConfig;
+  headerPopupMenuConfig: PopupMenuConfig = {};
+  multipleItemsSelectedPopupMenuConfig: PopupMenuConfig = {};
 
   @ViewChild('markAsDoneModal')
   markAsDoneModal!: ConfirmationModalComponent;
@@ -52,6 +69,23 @@ export class ShoppingListComponent implements OnInit {
     },
   };
 
+  @ViewChild('editShoppingListModal')
+  private editShoppingListModal!: EditShoppingListModalComponent;
+
+  @ViewChild('deleteSelectedProductsModal')
+  deleteSelectedProductsModal!: ConfirmationModalComponent;
+  deleteSelectedProductsModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Delete shopping list products',
+    confirmationText: '',
+    onSave: () => {
+      this.deleteSelectedProducts();
+    },
+  };
+
+  get shoppingList(): ShoppingList | null {
+    return this.shoppingList$?.value as ShoppingList;
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private shoppingListService: ShoppingListsService,
@@ -68,29 +102,72 @@ export class ShoppingListComponent implements OnInit {
     });
 
     this.getShoppingList();
+  }
 
-    this.headerPopupMenuConfig = {};
+  ngAfterViewInit(): void {
+    this.headerPopupMenuConfig = {
+      isEditVisible: !this.shoppingList?.isDone,
+      isDeleteVisible: !this.shoppingList?.isDone,
+      onDelete: () => {
+        this.deleteShoppingListModal.open();
+      },
+      onEdit: () => {
+        this.editShoppingListModal.openModal();
+      },
+      additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
+    };
+
+    this.multipleItemsSelectedPopupMenuConfig = {
+      isEditVisible: false,
+      isDeleteVisible: false,
+      additionalPopupMenuItems: [
+        {
+          text: 'Deselect',
+          onClick: () => {
+            this.deselectProducts();
+          },
+        },
+        {
+          text: 'Delete selected',
+          onClick: () => {
+            this.openDeleteSelectedProductsModal();
+          },
+        },
+      ],
+    };
+
+    this.products.changes.subscribe(
+      (c: QueryList<ShoppingListProductComponent>) => {
+        c.toArray().forEach((product) => {
+          const productHtmlElement =
+            product.element.nativeElement.querySelector(
+              '.product'
+            ) as HTMLElement;
+
+          productHtmlElement.addEventListener('click', (e) => {
+            const targetHtmlElement = e.target as HTMLElement;
+            if (!['svg', 'path'].includes(targetHtmlElement.nodeName)) {
+              productHtmlElement.classList.toggle('selected');
+              this.onProductSelect(product);
+            }
+          });
+        });
+      }
+    );
   }
 
   getShoppingList() {
     this.shoppingListService.get(this.shoppingListId).subscribe((response) => {
-      this.shoppingList = new ShoppingList(
-        response.data.id,
-        response.data.name,
-        response.data.isDone,
-        response.data.createdByFirstName,
-        response.data.createdByLastName,
-        response.data.products!
+      this.shoppingList$?.next(
+        new ShoppingList(
+          response.data.id,
+          response.data.name,
+          response.data.isDone,
+          response.data.createdByFirstName,
+          response.data.createdByLastName,
+          response.data.products!
+        )
       );
-
-      this.headerPopupMenuConfig = {
-        isEditVisible: !this.shoppingList.isDone,
-        isDeleteVisible: true,
-        onDelete: () => {
-          this.deleteShoppingListModal.open();
-        },
-        additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
-      };
     });
   }
 
@@ -118,7 +195,7 @@ export class ShoppingListComponent implements OnInit {
       });
     } else {
       additionalPopupMenuItems.push({
-        text: 'Add product',
+        text: 'Add products',
         onClick: () => {
           this.addShoppingListProductForm.modal.open();
         },
@@ -145,5 +222,50 @@ export class ShoppingListComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+
+  private onProductSelect(product: ShoppingListProductComponent): void {
+    const index = this.shoppingListProductNamesSelected.indexOf(
+      product.shoppingListProduct!.name
+    );
+    if (index > -1) {
+      this.shoppingListProductNamesSelected.splice(index, 1);
+      return;
+    }
+
+    this.shoppingListProductNamesSelected.push(
+      product.shoppingListProduct!.name
+    );
+  }
+
+  private deselectProducts(): void {
+    this.shoppingListProductNamesSelected = [];
+    document
+      .querySelectorAll('.product.selected')
+      .forEach((productSelected) => {
+        productSelected.classList.remove('selected');
+      });
+  }
+
+  openDeleteSelectedProductsModal(): void {
+    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete ${this.shoppingListProductNamesSelected.join(
+      ', '
+    )}?`;
+
+    this.deleteSelectedProductsModal.open();
+  }
+
+  private deleteSelectedProducts(): void {
+    this.shoppingListService
+      .deleteShoppingListProducts(
+        this.shoppingListId,
+        this.shoppingListProductNamesSelected
+      )
+      .subscribe({
+        next: () => {
+          this.shoppingListProductNamesSelected = [];
+        },
+        error: () => {},
+      });
   }
 }

@@ -57,3 +57,9 @@
   #markAsUndoneModal
 >
 </app-confirmation-modal>
+
+<app-edit-shopping-list-modal
+  #editShoppingListModal
+  [shoppingList$]="shoppingList$"
+  [isSingleRefresh]="false"
+></app-edit-shopping-list-modal>

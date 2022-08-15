@@ -79,6 +79,16 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddEvent(new ShoppingListProductRemoved(Id, productName));
         }
 
+        public void RemoveProducts(IEnumerable<string> productNames)
+        {
+            IsAlreadyDone();
+
+            foreach (var productName in productNames)
+            {
+                RemoveProduct(productName);
+            }
+        }
+
         public void PurchaseProduct(string productName, Money price)
         {
             IsAlreadyDone();
@@ -144,9 +154,9 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             Name = shoppingListName;
         }
 
-        public void UpdateProduct(ShoppingListProduct shoppingListProduct, string previousName)
+        public void UpdateProduct(ShoppingListProduct shoppingListProduct, string currentProductName)
         {
-            var product = GetProduct(previousName);
+            var product = GetProduct(currentProductName);
 
             product.Update(shoppingListProduct);
         }

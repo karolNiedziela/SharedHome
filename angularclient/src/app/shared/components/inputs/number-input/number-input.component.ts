@@ -23,7 +23,6 @@ export class NumberInputComponent
 {
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
-  @Input() value: number = 0;
   @Input() isRequired: boolean = false;
   disabled!: boolean;
 
@@ -43,8 +42,6 @@ export class NumberInputComponent
       ? [this.control.validator]
       : [];
 
-    this.value = this.control?.value;
-
     this.control?.setValidators(validators);
     this.control?.updateValueAndValidity();
   }
@@ -59,8 +56,6 @@ export class NumberInputComponent
       this.control?.setValue(value, { emitEvent: true });
       return;
     }
-
-    this.value = this.control?.value;
   }
 
   registerOnChange(onChanged: (value: any) => void): void {

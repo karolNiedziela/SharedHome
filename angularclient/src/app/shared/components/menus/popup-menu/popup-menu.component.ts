@@ -15,6 +15,10 @@ export class PopupMenuComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    if (this.popupMenuConfig.isHidden == null) {
+      this.popupMenuConfig.isHidden = false;
+    }
+
     if (this.popupMenuConfig.isEditVisible == null) {
       this.popupMenuConfig.isEditVisible = true;
     }

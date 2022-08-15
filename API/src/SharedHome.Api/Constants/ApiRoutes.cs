@@ -30,6 +30,8 @@
             public const string Delete = "{shoppingListId:int}";
 
             public const string DeleteShoppingListProduct = "{shoppingListId:int}/products/{productName}";
+
+            public const string DeleteManyShoppingListProducts = "{shoppingListId:int}/products";
         }
 
         public static class Bills
