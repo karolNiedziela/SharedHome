@@ -132,11 +132,17 @@ export class ShoppingListsService {
   changePriceOfProduct(
     changePriceOfProduct: ChangePriceOfProduct
   ): Observable<any> {
-    return this.http.patch<any>(
-      `${this.shoppingListsUrl}/${changePriceOfProduct.shoppingListId}/products/${changePriceOfProduct.productName}/changeprice`,
-      changePriceOfProduct,
-      this.defaultHttpOptions
-    );
+    return this.http
+      .patch<any>(
+        `${this.shoppingListsUrl}/${changePriceOfProduct.shoppingListId}/products/${changePriceOfProduct.productName}/changeprice`,
+        changePriceOfProduct,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
   }
 
   markAsDone(

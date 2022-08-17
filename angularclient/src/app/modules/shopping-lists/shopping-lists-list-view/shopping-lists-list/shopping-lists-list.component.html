@@ -27,7 +27,7 @@
   <div class="shopping-lists row">
     <div
       class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-      *ngFor="let shoppingList of shoppingLists"
+      *ngFor="let shoppingList of shoppingLists$ | async"
     >
       <app-single-shopping-list
         [shoppingList]="shoppingList"

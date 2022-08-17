@@ -22,9 +22,6 @@ export class ShoppingListProductComponent implements OnInit {
   @Input() shoppingListId!: number;
   @Input() isDone!: boolean;
 
-  shoppingListProduct$: BehaviorSubject<ShoppingListProduct> =
-    new BehaviorSubject<ShoppingListProduct>(null!);
-
   public netContentType: typeof NetContentType = NetContentType;
 
   @ViewChild('purchaseShoppingListProductForm')
@@ -72,8 +69,6 @@ export class ShoppingListProductComponent implements OnInit {
       },
       additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
     };
-
-    this.shoppingListProduct$.next(this.shoppingListProduct!);
   }
 
   deleteShoppingListProduct() {

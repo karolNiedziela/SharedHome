@@ -1,7 +1,7 @@
-export interface Paged<Type> {
+export interface Paged<T> {
   currentPage: number;
   pageSize: number;
   totalPages: number;
   totalItems: number;
-  items: Type[];
+  items: T[];
 }

@@ -2,7 +2,14 @@ import { UpdateShoppingListProduct } from './../../models/update-shopping-list-p
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { BehaviorSubject } from 'rxjs';
 import { Modalable } from './../../../../core/models/modalable';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,10 +22,10 @@ import { ShoppingListProduct } from '../../models/shopping-list-product';
   styleUrls: ['./edit-shopping-list-product-modal.component.scss'],
 })
 export class EditShoppingListProductModalComponent
-  implements Modalable, OnInit
+  implements Modalable, OnInit, OnChanges
 {
   @Input() shoppingListId!: number;
-  @Input() shoppingListProduct$!: BehaviorSubject<ShoppingListProduct>;
+  @Input() shoppingListProduct?: ShoppingListProduct;
 
   @ViewChild('editShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {
@@ -27,8 +34,6 @@ export class EditShoppingListProductModalComponent
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
   };
-
-  shoppingListProduct!: ShoppingListProduct;
 
   editShoppingListProductForm!: FormGroup;
 
@@ -44,11 +49,15 @@ export class EditShoppingListProductModalComponent
       netContentType: new FormControl(null),
     });
 
-    this.shoppingListProduct$.asObservable().subscribe((res) => {
-      this.shoppingListProduct = res;
+    this.setFormValues();
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['shoppingListProduct']) {
+      console.log('changes');
+      console.log(changes);
       this.setFormValues();
-    });
+    }
   }
 
   openModal(): void {
@@ -71,14 +80,12 @@ export class EditShoppingListProductModalComponent
 
     const updateShoppingListProduct: UpdateShoppingListProduct = {
       shoppingListId: this.shoppingListId,
-      currentProductName: this.shoppingListProduct.name,
+      currentProductName: this.shoppingListProduct!.name,
       newProductName: productName,
       quantity: quantity,
       netContent: netContent,
       netContentType: netContentType,
     };
-
-    console.log(updateShoppingListProduct);
 
     this.shoppingListService
       .updateShoppingListProduct(updateShoppingListProduct)
@@ -105,12 +112,14 @@ export class EditShoppingListProductModalComponent
       return;
     }
 
-    this.editShoppingListProductForm.patchValue({
+    this.editShoppingListProductForm?.patchValue({
       productName: this.shoppingListProduct.name,
       quantity: this.shoppingListProduct.quantity,
       netContent: this.shoppingListProduct.netContent,
       netContentType: this.shoppingListProduct.netContentType,
     });
+
+    console.log(this.editShoppingListProductForm);
   }
 
   private resetForm(): void {

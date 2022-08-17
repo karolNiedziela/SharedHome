@@ -19,8 +19,6 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./single-shopping-list.component.scss'],
 })
 export class SingleShoppingListComponent implements OnInit {
-  shoppingList$: BehaviorSubject<ShoppingList> =
-    new BehaviorSubject<ShoppingList>(null!);
   @Input() shoppingList!: ShoppingList;
   detailsIcon = faList;
   boughtIcon = faCheck;
@@ -64,20 +62,17 @@ export class SingleShoppingListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.headerPopupMenuConfig = {
-      onDelete: () => {
-        this.deleteShoppingListModal.open();
-      },
-      onEdit: () => {
-        this.editShoppingListModal.openModal();
-      },
-    };
-
-    this.shoppingList$.next(this.shoppingList);
+    this.headerPopupMenuConfig = {};
 
     this.headerPopupMenuConfig = {
       isEditVisible: !this.shoppingList.isDone,
+      onEdit: () => {
+        this.editShoppingListModal.openModal();
+      },
       isDeleteVisible: !this.shoppingList.isDone,
+      onDelete: () => {
+        this.deleteShoppingListModal.open();
+      },
       additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
     };
   }

@@ -28,10 +28,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ShoppingListComponent implements OnInit, AfterViewInit {
   shoppingListId!: number;
-  shoppingList$: BehaviorSubject<ShoppingList> =
-    new BehaviorSubject<ShoppingList>(null!);
-
   shoppingListProductNamesSelected: string[] = [];
+
+  shoppingList?: ShoppingList;
 
   @ViewChildren('product') products!: QueryList<ShoppingListProductComponent>;
 
@@ -81,10 +80,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       this.deleteSelectedProducts();
     },
   };
-
-  get shoppingList(): ShoppingList | null {
-    return this.shoppingList$?.value as ShoppingList;
-  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -158,16 +153,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
 
   getShoppingList() {
     this.shoppingListService.get(this.shoppingListId).subscribe((response) => {
-      this.shoppingList$?.next(
-        new ShoppingList(
-          response.data.id,
-          response.data.name,
-          response.data.isDone,
-          response.data.createdByFirstName,
-          response.data.createdByLastName,
-          response.data.products!
-        )
-      );
+      this.shoppingList = new ShoppingList(response.data);
     });
   }
 

@@ -7,19 +7,8 @@ export class ShoppingList {
   createdByLastName!: string;
   products: ShoppingListProduct[] = [];
 
-  constructor(
-    id: number,
-    name: string,
-    isDone: boolean,
-    createdByFirstName: string,
-    createdByLastName: string,
-    products: ShoppingListProduct[]
-  ) {
-    this.id = id;
-    this.name = name;
-    (this.isDone = isDone), (this.createdByFirstName = createdByFirstName);
-    this.createdByLastName = createdByLastName;
-    this.products = products;
+  constructor(shoppingList?: ShoppingList) {
+    Object.assign(this, shoppingList ?? {});
   }
 
   countBoughtProducts() {

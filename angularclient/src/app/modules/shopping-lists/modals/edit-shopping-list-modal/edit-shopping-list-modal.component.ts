@@ -8,22 +8,22 @@ import {
   Component,
   Input,
   OnInit,
+  OnChanges,
+  SimpleChanges,
   ViewChild,
-  AfterViewInit,
 } from '@angular/core';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-edit-shopping-list-modal',
   templateUrl: './edit-shopping-list-modal.component.html',
   styleUrls: ['./edit-shopping-list-modal.component.scss'],
 })
-export class EditShoppingListModalComponent implements Modalable, OnInit {
-  @Input() shoppingList$!: BehaviorSubject<ShoppingList>;
+export class EditShoppingListModalComponent
+  implements Modalable, OnInit, OnChanges
+{
+  @Input() shoppingList!: ShoppingList;
   @Input() isSingleRefresh!: boolean;
-
-  shoppingList!: ShoppingList;
   editShoppingListForm!: FormGroup;
 
   @ViewChild('modal')
@@ -46,11 +46,13 @@ export class EditShoppingListModalComponent implements Modalable, OnInit {
       ]),
     });
 
-    this.shoppingList$.asObservable().subscribe((res) => {
-      this.shoppingList = res;
+    this.setFormValues();
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['shoppingList']) {
       this.setFormValues();
-    });
+    }
   }
 
   openModal(): void {
@@ -100,7 +102,7 @@ export class EditShoppingListModalComponent implements Modalable, OnInit {
       return;
     }
 
-    this.editShoppingListForm.patchValue({ name: this.shoppingList.name });
+    this.editShoppingListForm?.patchValue({ name: this.shoppingList.name });
   }
 
   private resetForm(): void {

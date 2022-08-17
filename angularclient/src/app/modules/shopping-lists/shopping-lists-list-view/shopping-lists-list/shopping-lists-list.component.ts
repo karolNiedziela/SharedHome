@@ -1,9 +1,17 @@
+import { Subscription } from 'rxjs/internal/Subscription';
+import { map, Observable, of, tap } from 'rxjs';
 import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
 import { ShoppingListStatus } from './../../enums/shopping-list-status';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
 import { Paged } from 'app/core/models/paged';
 import { ShoppingList } from '../../models/shopping-list';
@@ -13,18 +21,21 @@ import { ShoppingListsService } from '../../services/shopping-lists.service';
   templateUrl: './shopping-lists-list.component.html',
   styleUrls: ['./shopping-lists-list.component.scss'],
 })
-export class ShoppingListsComponent implements OnInit, AfterViewInit {
+export class ShoppingListsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   detailsIcon = faList;
-
   public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
+
   @ViewChild('statusSelect')
   private statusSelect!: SingleSelectComponent;
-
   year!: number;
   month!: number;
   isDone: boolean = false;
   shoppingListForm!: FormGroup;
-  shoppingLists: ShoppingList[] = [];
+  paged$!: Observable<Paged<ShoppingList>>;
+  shoppingLists$!: Observable<ShoppingList[]>;
+  singleRefreshSubscription!: Subscription;
 
   constructor(
     private shoppingListService: ShoppingListsService,
@@ -43,9 +54,10 @@ export class ShoppingListsComponent implements OnInit, AfterViewInit {
       status: new FormControl(ShoppingListStatus['To do']),
     });
 
-    this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
-      this.getAllShoppingLists(this.year, this.month, this.isDone);
-    });
+    this.singleRefreshSubscription =
+      this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
+        this.getAllShoppingLists(this.year, this.month, this.isDone);
+      });
 
     this.getAllShoppingLists(this.year, this.month, this.isDone);
   }
@@ -58,27 +70,26 @@ export class ShoppingListsComponent implements OnInit, AfterViewInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.singleRefreshSubscription.unsubscribe();
+  }
+
   private getAllShoppingLists(
     year: number,
     month: number,
     isDone: boolean = false
   ) {
-    this.shoppingListService
+    this.shoppingLists$ = this.shoppingListService
       .getAllByYearAndMonthAndIsDone(year, month, isDone)
-      .subscribe({
-        next: (response: Paged<ShoppingList>) => {
-          this.shoppingLists = response?.items?.map((item) => {
-            return new ShoppingList(
-              item.id,
-              item.name,
-              item.isDone,
-              item.createdByFirstName,
-              item.createdByLastName,
-              item.products!
-            );
-          });
-        },
-      });
+      .pipe(
+        map((response: Paged<ShoppingList>) => {
+          this.paged$ = of(response);
+          const shoppingLists: ShoppingList[] = response.items.map(
+            (item) => new ShoppingList(item)
+          );
+          return shoppingLists;
+        })
+      );
   }
 
   onCurrentYearAndMonthChange(): void {
