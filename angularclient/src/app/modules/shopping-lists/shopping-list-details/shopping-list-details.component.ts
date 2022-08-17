@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/internal/Subscription';
 import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
 import { MarkAsDone } from './../models/mark-as-done';
 import { ConfirmationModalConfig } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.config';
@@ -12,6 +13,7 @@ import {
   QueryList,
   ViewChildren,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import {
   AdditionalPopupMenuItem,
@@ -26,11 +28,13 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './shopping-list-details.component.html',
   styleUrls: ['./shopping-list-details.component.scss'],
 })
-export class ShoppingListComponent implements OnInit, AfterViewInit {
+export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   shoppingListId!: number;
   shoppingListProductNamesSelected: string[] = [];
 
   shoppingList?: ShoppingList;
+
+  productsSubscription!: Subscription;
 
   @ViewChildren('product') products!: QueryList<ShoppingListProductComponent>;
 
@@ -131,7 +135,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
       ],
     };
 
-    this.products.changes.subscribe(
+    this.productsSubscription = this.products.changes.subscribe(
       (c: QueryList<ShoppingListProductComponent>) => {
         c.toArray().forEach((product) => {
           const productHtmlElement =
@@ -149,6 +153,10 @@ export class ShoppingListComponent implements OnInit, AfterViewInit {
         });
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.productsSubscription.unsubscribe();
   }
 
   getShoppingList() {

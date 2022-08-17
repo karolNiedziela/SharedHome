@@ -36,6 +36,7 @@ export class ShoppingListsComponent
   paged$!: Observable<Paged<ShoppingList>>;
   shoppingLists$!: Observable<ShoppingList[]>;
   singleRefreshSubscription!: Subscription;
+  statusSelectSubscription!: Subscription;
 
   constructor(
     private shoppingListService: ShoppingListsService,
@@ -63,7 +64,7 @@ export class ShoppingListsComponent
   }
 
   ngAfterViewInit(): void {
-    this.statusSelect.selectedChanged.subscribe(
+    this.statusSelectSubscription = this.statusSelect.selectedChanged.subscribe(
       (selectedValue: number | undefined) => {
         this.onStatusChange(selectedValue!);
       }
@@ -72,6 +73,7 @@ export class ShoppingListsComponent
 
   ngOnDestroy(): void {
     this.singleRefreshSubscription.unsubscribe();
+    this.statusSelectSubscription.unsubscribe();
   }
 
   private getAllShoppingLists(

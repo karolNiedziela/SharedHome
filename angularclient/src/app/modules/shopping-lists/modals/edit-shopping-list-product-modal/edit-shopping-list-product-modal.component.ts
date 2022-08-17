@@ -48,14 +48,10 @@ export class EditShoppingListProductModalComponent
       netContent: new FormControl(''),
       netContentType: new FormControl(null),
     });
-
-    this.setFormValues();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['shoppingListProduct']) {
-      console.log('changes');
-      console.log(changes);
       this.setFormValues();
     }
   }
@@ -118,8 +114,6 @@ export class EditShoppingListProductModalComponent
       netContent: this.shoppingListProduct.netContent,
       netContentType: this.shoppingListProduct.netContentType,
     });
-
-    console.log(this.editShoppingListProductForm);
   }
 
   private resetForm(): void {

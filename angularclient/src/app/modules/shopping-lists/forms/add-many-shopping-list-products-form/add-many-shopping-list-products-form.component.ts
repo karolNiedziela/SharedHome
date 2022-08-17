@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/internal/Subscription';
 import {
   Component,
   ComponentRef,
@@ -17,6 +18,8 @@ import { AddShoppingListProductFormComponent } from '../add-shopping-list-produc
 export class AddManyShoppingListProductsFormComponent
   implements OnInit, OnDestroy
 {
+  productInstanceSubscription!: Subscription;
+
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef;
 
@@ -28,6 +31,8 @@ export class AddManyShoppingListProductsFormComponent
 
   ngOnDestroy(): void {
     this.productComponents.map((x) => x.destroy());
+    if (this.productInstanceSubscription)
+      this.productInstanceSubscription.unsubscribe();
   }
 
   addProduct() {
@@ -35,9 +40,11 @@ export class AddManyShoppingListProductsFormComponent
       AddShoppingListProductFormComponent
     );
     product.instance.uniqueKey = this.productComponents.length + 1;
-    product.instance.delete.subscribe((uniqueKey: number) => {
-      this.removeProduct(uniqueKey);
-    });
+    this.productInstanceSubscription = product.instance.delete.subscribe(
+      (uniqueKey: number) => {
+        this.removeProduct(uniqueKey);
+      }
+    );
 
     this.productComponents.push(product);
   }
