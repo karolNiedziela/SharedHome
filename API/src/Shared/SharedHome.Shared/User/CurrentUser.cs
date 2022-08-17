@@ -33,7 +33,7 @@ namespace SharedHome.Shared.User
         {
             get
             {
-                var firstName = _context?.User?.FindFirstValue(JwtRegisteredClaimNames.GivenName);
+                var firstName = _context?.User?.FindFirstValue(ClaimTypes.GivenName);
 
                 return string.IsNullOrWhiteSpace(firstName) ? string.Empty : firstName;
             }
@@ -43,7 +43,7 @@ namespace SharedHome.Shared.User
         {
             get
             {
-                var lastName = _context?.User?.FindFirstValue(JwtRegisteredClaimNames.FamilyName);
+                var lastName = _context?.User?.FindFirstValue(ClaimTypes.Surname);
 
                 return string.IsNullOrWhiteSpace(lastName) ? string.Empty : lastName;
             }

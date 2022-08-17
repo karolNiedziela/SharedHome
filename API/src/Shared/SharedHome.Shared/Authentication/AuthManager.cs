@@ -28,8 +28,8 @@ namespace SharedHome.Shared.Authentication
             {
                 new(JwtRegisteredClaimNames.Sub, userId),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new(JwtRegisteredClaimNames.GivenName, firstName),
-                new(JwtRegisteredClaimNames.FamilyName, lastName),
+                new(ClaimTypes.GivenName, firstName),
+                new(ClaimTypes.Surname, lastName),
                 new(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeMilliseconds().ToString()),
                 new(ClaimTypes.Email, email),
                 new(ClaimTypes.Role, string.Join(",", roles))
