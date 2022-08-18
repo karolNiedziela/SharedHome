@@ -1,5 +1,6 @@
 <app-modal #editShoppingListProductModal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="editShoppingListProductForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="productName"
       labelText="Product Name"

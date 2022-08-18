@@ -23,6 +23,8 @@ export class SingleShoppingListComponent implements OnInit {
   detailsIcon = faList;
   boughtIcon = faCheck;
   notBoughtIcon = faXmark;
+  errorMessages: string[] = [];
+
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;
   deleteShoppingListModalConfig: ConfirmationModalConfig = {
@@ -82,14 +84,7 @@ export class SingleShoppingListComponent implements OnInit {
   }
 
   deleteShoppingList(shoppingListId: number): void {
-    this.shoppingListService.delete(shoppingListId).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.shoppingListService.delete(shoppingListId).subscribe();
   }
 
   markAsDone(isDone: boolean): void {
@@ -97,12 +92,7 @@ export class SingleShoppingListComponent implements OnInit {
       shoppingListId: this.shoppingList.id,
       isDone: isDone,
     };
-    this.shoppingListService.markAsDone(markAsDone, false).subscribe({
-      next: (response) => {},
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.shoppingListService.markAsDone(markAsDone, false).subscribe();
   }
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {

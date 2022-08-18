@@ -1,6 +1,5 @@
 import { UpdateShoppingListProduct } from './../../models/update-shopping-list-product';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
-import { BehaviorSubject } from 'rxjs';
 import { Modalable } from './../../../../core/models/modalable';
 import {
   Component,
@@ -35,6 +34,8 @@ export class EditShoppingListProductModalComponent
     onDismiss: () => this.onDismiss(),
   };
 
+  errorMessages: string[] = [];
+
   editShoppingListProductForm!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
@@ -48,6 +49,8 @@ export class EditShoppingListProductModalComponent
       netContent: new FormControl(''),
       netContentType: new FormControl(null),
     });
+
+    this.setFormValues();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -91,8 +94,8 @@ export class EditShoppingListProductModalComponent
 
           this.modal.close();
         },
-        error: (err) => {
-          console.log(err);
+        error: (error: string[]) => {
+          this.errorMessages = error;
         },
       });
   }

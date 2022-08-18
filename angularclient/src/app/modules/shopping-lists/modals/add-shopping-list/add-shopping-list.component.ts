@@ -16,6 +16,7 @@ export class AddShoppingListComponent implements OnInit {
   @Input() year!: number;
   @Input() month!: number;
   addShoppingListForm!: FormGroup;
+  errorMessages: string[] = [];
 
   @ViewChild('addManyShoppingListProducts')
   addManyShoppingListProducts!: AddManyShoppingListProductsFormComponent;
@@ -63,14 +64,13 @@ export class AddShoppingListComponent implements OnInit {
     };
 
     this.shoppingListService.add(addShoppingList).subscribe(
-      (response) => {
-        console.log(response);
+      () => {
         this.resetForm();
 
         this.modal.close();
       },
-      (error) => {
-        console.log(error);
+      (error: string[]) => {
+        this.errorMessages = error;
       }
     );
   }

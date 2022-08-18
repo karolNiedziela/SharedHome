@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs/internal/Subscription';
-import { map, Observable, of, tap } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
 import { ShoppingListStatus } from './../../enums/shopping-list-status';
 import { Router } from '@angular/router';

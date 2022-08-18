@@ -30,7 +30,7 @@ export class AddManyShoppingListProductsFormComponent
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.productComponents.map((x) => x.destroy());
+    this.clearProducts();
     if (this.productInstanceSubscription)
       this.productInstanceSubscription.unsubscribe();
   }

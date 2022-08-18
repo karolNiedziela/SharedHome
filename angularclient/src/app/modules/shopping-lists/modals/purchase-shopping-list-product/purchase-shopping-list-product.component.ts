@@ -1,3 +1,4 @@
+import { ErrorResponse } from './../../../../core/models/error-response';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { UserService } from './../../../../core/services/user.service';
 import { PurchaseShoppingListProduct } from './../../models/purchase-shopping-list-product';
@@ -60,13 +61,13 @@ export class PurchaseShoppingListProductComponent implements OnInit {
     this.shoppingListService
       .purchaseProduct(purchaseShoppingListProduct)
       .subscribe({
-        next: (response) => {
+        next: () => {
           this.resetForm();
 
           this.modal.close();
         },
-        error: (error) => {
-          this.errorMessages = error;
+        error: (error: ErrorResponse) => {
+          this.errorMessages = error.errors;
         },
       });
   }

@@ -5,6 +5,7 @@
 
 <app-modal #modal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="addShoppingListForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="name"
       labelText="Name"

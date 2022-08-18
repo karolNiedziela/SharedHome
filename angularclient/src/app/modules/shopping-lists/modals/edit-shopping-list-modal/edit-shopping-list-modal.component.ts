@@ -25,6 +25,7 @@ export class EditShoppingListModalComponent
   @Input() shoppingList!: ShoppingList;
   @Input() isSingleRefresh!: boolean;
   editShoppingListForm!: FormGroup;
+  errorMessages: string[] = [];
 
   @ViewChild('modal')
   private editShoppingListModal!: ModalComponent;
@@ -77,14 +78,12 @@ export class EditShoppingListModalComponent
       .update(updateShoppingList, this.isSingleRefresh)
       .subscribe({
         next: (response) => {
-          console.log(response);
-
           this.resetForm();
 
           this.editShoppingListModal.close();
         },
-        error: (error) => {
-          console.log(error);
+        error: (error: string[]) => {
+          this.errorMessages = error;
         },
       });
   }

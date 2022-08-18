@@ -14,6 +14,7 @@ import {
   ViewChildren,
   AfterViewInit,
   OnDestroy,
+  AfterViewChecked,
 } from '@angular/core';
 import {
   AdditionalPopupMenuItem,
@@ -21,14 +22,15 @@ import {
 } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { AddShoppingListProductComponent } from '../modals/add-shopping-list-product/add-shopping-list-product.component';
 import { EditShoppingListModalComponent } from '../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list-details',
   templateUrl: './shopping-list-details.component.html',
   styleUrls: ['./shopping-list-details.component.scss'],
 })
-export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ShoppingListComponent
+  implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked
+{
   shoppingListId!: number;
   shoppingListProductNamesSelected: string[] = [];
 
@@ -104,6 +106,29 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.productsSubscription = this.products.changes.subscribe(
+      (c: QueryList<ShoppingListProductComponent>) => {
+        c.toArray().forEach((product) => {
+          const productHtmlElement =
+            product.element.nativeElement.querySelector(
+              '.product'
+            ) as HTMLElement;
+
+          if (!this.shoppingList?.isDone) {
+            productHtmlElement.addEventListener('click', (e) => {
+              const targetHtmlElement = e.target as HTMLElement;
+              if (!['svg', 'path'].includes(targetHtmlElement.nodeName)) {
+                productHtmlElement.classList.toggle('selected');
+                this.onProductSelect(product);
+              }
+            });
+          }
+        });
+      }
+    );
+  }
+
+  ngAfterViewChecked(): void {
     this.headerPopupMenuConfig = {
       isEditVisible: !this.shoppingList?.isDone,
       isDeleteVisible: !this.shoppingList?.isDone,
@@ -121,7 +146,11 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       isDeleteVisible: false,
       additionalPopupMenuItems: [
         {
-          text: 'Deselect',
+          text: 'Purchase selected',
+          onClick: () => {},
+        },
+        {
+          text: 'Deselect all',
           onClick: () => {
             this.deselectProducts();
           },
@@ -134,25 +163,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       ],
     };
-
-    this.productsSubscription = this.products.changes.subscribe(
-      (c: QueryList<ShoppingListProductComponent>) => {
-        c.toArray().forEach((product) => {
-          const productHtmlElement =
-            product.element.nativeElement.querySelector(
-              '.product'
-            ) as HTMLElement;
-
-          productHtmlElement.addEventListener('click', (e) => {
-            const targetHtmlElement = e.target as HTMLElement;
-            if (!['svg', 'path'].includes(targetHtmlElement.nodeName)) {
-              productHtmlElement.classList.toggle('selected');
-              this.onProductSelect(product);
-            }
-          });
-        });
-      }
-    );
   }
 
   ngOnDestroy(): void {
@@ -170,12 +180,15 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       shoppingListId: this.shoppingListId,
       isDone: isDone,
     };
-    this.shoppingListService.markAsDone(markAsDone, true).subscribe({
-      next: (response) => {},
-      error: (error) => {
-        console.log(error);
-      },
-    });
+    this.shoppingListService.markAsDone(markAsDone, true).subscribe();
+  }
+
+  openDeleteSelectedProductsModal(): void {
+    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete ${this.shoppingListProductNamesSelected.join(
+      ', '
+    )}?`;
+
+    this.deleteSelectedProductsModal.open();
   }
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
@@ -208,12 +221,8 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private deleteShoppingList(shoppingListId: number): void {
     this.shoppingListService.delete(shoppingListId).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
         this.router.navigate(['shoppinglists']);
-      },
-      error: (error) => {
-        console.log(error);
       },
     });
   }
@@ -239,14 +248,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       .forEach((productSelected) => {
         productSelected.classList.remove('selected');
       });
-  }
-
-  openDeleteSelectedProductsModal(): void {
-    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete ${this.shoppingListProductNamesSelected.join(
-      ', '
-    )}?`;
-
-    this.deleteSelectedProductsModal.open();
   }
 
   private deleteSelectedProducts(): void {

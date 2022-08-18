@@ -1,12 +1,5 @@
 import { ShoppingListProduct } from './../../models/shopping-list-product';
-import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  Input,
-  ComponentRef,
-} from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NetContentType } from '../../enums/net-content-type';
 

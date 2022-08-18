@@ -29,7 +29,6 @@ export class EmailConfirmationComponent implements OnInit {
         this.router.navigate(['emailconfirmed']);
       },
       error: (error: any) => {
-        console.log('error in logging');
         console.log(error);
       },
     });

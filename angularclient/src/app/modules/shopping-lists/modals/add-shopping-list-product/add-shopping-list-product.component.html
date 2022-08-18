@@ -4,14 +4,7 @@
 
 <app-modal #addShoppingListProductModal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="addShoppingListProductForm">
-    <div *ngIf="errorMessages.length > 0" class="col-md-12">
-      <div
-        *ngFor="let errorMessage of errorMessages"
-        class="sharedhome-errormessage"
-      >
-        {{ errorMessage }}
-      </div>
-    </div>
+    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="productName"
       labelText="Product Name"

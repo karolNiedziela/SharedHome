@@ -19,6 +19,7 @@ import { SingleSelectComponent } from './components/selects/single-select/single
 import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
 import { CircleButtonComponent } from './components/buttons/circle-button/circle-button.component';
+import { ErrorComponent } from './components/errors/error/error.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CircleButtonComponent } from './components/buttons/circle-button/circle
     EnumAsStringPipe,
     CurrencySelectComponent,
     CircleButtonComponent,
+    ErrorComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { CircleButtonComponent } from './components/buttons/circle-button/circle
     EnumAsStringPipe,
     CurrencySelectComponent,
     CircleButtonComponent,
+    ErrorComponent,
   ],
 })
 export class SharedModule {}

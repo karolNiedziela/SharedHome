@@ -1,5 +1,4 @@
 import { EditShoppingListModalComponent } from './../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
-import { BehaviorSubject } from 'rxjs';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
 import { AdditionalPopupMenuItem } from './../../../shared/components/menus/popup-menu/popup-menu.config';
 import { NetContentType } from './../enums/net-content-type';
@@ -77,14 +76,7 @@ export class ShoppingListProductComponent implements OnInit {
         this.shoppingListId,
         this.shoppingListProduct!.name
       )
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+      .subscribe();
   }
 
   cancelPurchaseOfShoppingListProduct() {
@@ -94,14 +86,7 @@ export class ShoppingListProductComponent implements OnInit {
     };
     this.shoppingListService
       .cancelPurchaseOfProduct(cancelShoppingListProduct)
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
+      .subscribe();
   }
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {

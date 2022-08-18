@@ -80,13 +80,11 @@ export class AddShoppingListProductComponent implements OnInit {
       .addShoppingListProducts(addShoppingListProduct)
       .subscribe({
         next: (response) => {
-          console.log(response);
           this.resetForm();
 
           this.modal.close();
         },
-        error: (error) => {
-          console.log(error);
+        error: (error: string[]) => {
           this.errorMessages = error;
         },
       });

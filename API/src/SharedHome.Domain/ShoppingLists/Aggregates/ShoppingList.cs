@@ -156,7 +156,13 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         public void UpdateProduct(ShoppingListProduct shoppingListProduct, string currentProductName)
         {
+            if (_products.Any(p => p.Name == shoppingListProduct.Name))
+            {
+                throw new ShoppingListProductAlreadyExistsException(shoppingListProduct.Name);
+            }
+
             var product = GetProduct(currentProductName);
+
 
             product.Update(shoppingListProduct);
         }
