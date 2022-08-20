@@ -33,7 +33,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             var command = new UpdateShoppingListProductCommand
             {
                 CurrentProductName = ShoppingListProvider.ProductName,
-                NewProductName = ShoppingListProvider.ProductName,
+                NewProductName = "NewProductName",
                 Quantity = 2,
                 NetContent = "300"
             };

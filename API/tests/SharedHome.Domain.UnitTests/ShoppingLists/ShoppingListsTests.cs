@@ -457,11 +457,11 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             var quantityBeforeChanged = product.Quantity.Value;
 
-            shoppingList.UpdateProduct(new ShoppingListProduct(product.Name, 2, netContent: new NetContent("300", NetContentType.g)), ShoppingListProvider.ProductName);
+            shoppingList.UpdateProduct(new ShoppingListProduct("NewProductName", 2, netContent: new NetContent("300", NetContentType.g)), ShoppingListProvider.ProductName);
 
             quantityBeforeChanged.ShouldBe(1);
 
-            product.Name.Value.ShouldBe(ShoppingListProvider.ProductName);
+            product.Name.Value.ShouldBe("NewProductName");
             product.Quantity.Value.ShouldBe(2);
             product.NetContent!.Value.ShouldBe("300");
         }
