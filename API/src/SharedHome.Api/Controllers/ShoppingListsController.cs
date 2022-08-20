@@ -9,6 +9,7 @@ using SharedHome.Application.ShoppingLists.Commands.DeleteManyShoppingListProduc
 using SharedHome.Application.ShoppingLists.Commands.DeleteShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct;
 using SharedHome.Application.ShoppingLists.Commands.PurchaseProduct;
+using SharedHome.Application.ShoppingLists.Commands.PurchaseProducts;
 using SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone;
 using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduct;
@@ -99,7 +100,7 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Purchase shopping list product
         /// </summary>
-        [HttpPatch(ApiRoutes.ShoppingLists.PurchaseShoppingList)]
+        [HttpPatch(ApiRoutes.ShoppingLists.PurchaseShoppingListProduct)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> PurchaseShoppingListProduct([FromBody] PurchaseProductCommand command)
@@ -107,6 +108,16 @@ namespace SharedHome.Api.Controllers
             await Mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpPut(ApiRoutes.ShoppingLists.PurchaseShoppingListProducts)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> PurchaseShoppingListProducts([FromBody] PurchaseProductsCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
 
         /// <summary>

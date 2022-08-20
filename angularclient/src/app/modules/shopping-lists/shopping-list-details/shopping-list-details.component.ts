@@ -1,3 +1,4 @@
+import { PurchaseShoppingListProductsModalComponent } from './../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
 import { MarkAsDone } from './../models/mark-as-done';
@@ -14,7 +15,6 @@ import {
   ViewChildren,
   AfterViewInit,
   OnDestroy,
-  AfterViewChecked,
 } from '@angular/core';
 import {
   AdditionalPopupMenuItem,
@@ -28,9 +28,7 @@ import { EditShoppingListModalComponent } from '../modals/edit-shopping-list-mod
   templateUrl: './shopping-list-details.component.html',
   styleUrls: ['./shopping-list-details.component.scss'],
 })
-export class ShoppingListComponent
-  implements OnInit, AfterViewInit, OnDestroy, AfterViewChecked
-{
+export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   shoppingListId!: number;
   shoppingListProductNamesSelected: string[] = [];
 
@@ -87,6 +85,9 @@ export class ShoppingListComponent
     },
   };
 
+  @ViewChild('purchaseShoppingListProductsModal')
+  purchaseProductsModal!: PurchaseShoppingListProductsModalComponent;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private shoppingListService: ShoppingListsService,
@@ -126,9 +127,7 @@ export class ShoppingListComponent
         });
       }
     );
-  }
 
-  ngAfterViewChecked(): void {
     this.headerPopupMenuConfig = {
       isEditVisible: !this.shoppingList?.isDone,
       isDeleteVisible: !this.shoppingList?.isDone,
@@ -147,7 +146,9 @@ export class ShoppingListComponent
       additionalPopupMenuItems: [
         {
           text: 'Purchase selected',
-          onClick: () => {},
+          onClick: () => {
+            this.purchaseProductsModal.openModal();
+          },
         },
         {
           text: 'Deselect all',
@@ -239,6 +240,22 @@ export class ShoppingListComponent
     this.shoppingListProductNamesSelected.push(
       product.shoppingListProduct!.name
     );
+
+    if (product.shoppingListProduct!.isBought) {
+      const purchaseSelectedIndex =
+        this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems?.findIndex(
+          (x) => x.text == 'Purchase selected'
+        )!;
+      if (purchaseSelectedIndex > -1) {
+        this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems!.splice(
+          purchaseSelectedIndex,
+          1
+        );
+        return;
+      }
+
+      console.log(index);
+    }
   }
 
   private deselectProducts(): void {

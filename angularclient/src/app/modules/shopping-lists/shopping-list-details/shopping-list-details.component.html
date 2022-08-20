@@ -9,7 +9,8 @@
     <h3 class="card-title">{{ shoppingList?.name }}</h3>
     <div
       *ngIf="
-        shoppingListProductNamesSelected.length == 0;
+        !shoppingListProductNamesSelected ||
+          shoppingListProductNamesSelected.length == 0;
         then headerPopup;
         else multipleSelectHeader
       "
@@ -84,3 +85,9 @@
   #deleteSelectedProductsModal
 >
 </app-confirmation-modal>
+
+<app-purchase-shopping-list-products-modal
+  #purchaseShoppingListProductsModal
+  [shoppingListId]="shoppingListId"
+  [shoppingListProductNames]="shoppingListProductNamesSelected"
+></app-purchase-shopping-list-products-modal>

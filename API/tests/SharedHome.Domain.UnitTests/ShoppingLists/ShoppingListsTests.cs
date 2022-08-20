@@ -274,6 +274,31 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
+        public void PurchaseProducts_Set_Price_And_Is_Bought_To_True()
+        {
+            var shoppingList = ShoppingListProvider.GetEmpty();
+
+            shoppingList.AddProducts(new[]
+            {
+                new ShoppingListProduct("Product", 1),
+                new ShoppingListProduct("Product2", 1),
+            });
+
+            shoppingList.PurchaseProducts(new Dictionary<string, Money>
+            {
+                { "Product", new Money(20, "zł") },
+                { "Product2", new Money(30, "zł") },
+            });
+
+            shoppingList.Products.First().IsBought.ShouldBeTrue();
+            shoppingList.Products.First().Price!.Amount.ShouldBe(20);
+            shoppingList.Products.First().Price!.Currency.Value.ShouldBe("zł");
+            shoppingList.Products.Last().IsBought.ShouldBeTrue();
+            shoppingList.Products.Last().Price!.Amount.ShouldBe(30);
+            shoppingList.Products.Last().Price!.Currency.Value.ShouldBe("zł");
+        }
+
+        [Fact]
         public void ChangePriceOfProduct_Throws_ShoppingListAlreadyDoneException_When_Shopping_List_Is_Marked_As_Done()
         {
             var shoppingList = ShoppingListProvider.GetEmpty(true);

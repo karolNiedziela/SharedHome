@@ -104,6 +104,16 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddEvent(new ShoppingListProductPurchased(Id, productName, price));
         }
 
+        public void PurchaseProducts(Dictionary<string, Money> priceByProductNames)
+        {
+            IsAlreadyDone();
+
+            foreach (var pricebyProductName in priceByProductNames)
+            {
+               PurchaseProduct(pricebyProductName.Key, pricebyProductName.Value);
+            }
+        }
+
         public void ChangePriceOfProduct(string productName, Money price)
         {
             IsAlreadyDone();

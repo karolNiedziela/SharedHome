@@ -17,7 +17,9 @@
 
             public const string AddShoppingListProduct = "{shoppingListId:int}/products";
 
-            public const string PurchaseShoppingList = "{shoppingListId:int}/products/{productName}/purchase";
+            public const string PurchaseShoppingListProduct = "{shoppingListId:int}/products/{productName}/purchase";
+
+            public const string PurchaseShoppingListProducts = "{shoppingListId:int}/products/purchase";
 
             public const string CancelPurchaseOfProduct = "{shoppingListId:int}/products/{productName}/cancelpurchase";
 

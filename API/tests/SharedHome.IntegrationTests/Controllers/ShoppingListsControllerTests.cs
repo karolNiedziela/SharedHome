@@ -107,7 +107,7 @@ namespace SharedHome.IntegrationTests.Controllers
                 Currency = "zł"
             };
 
-            var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.PurchaseShoppingList.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
+            var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.PurchaseShoppingListProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
 
             var response = await Client.PatchAsJsonAsync(endpointAddress, command);
             response.StatusCode.ShouldBe(HttpStatusCode.OK);

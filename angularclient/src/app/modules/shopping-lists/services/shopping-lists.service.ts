@@ -1,3 +1,4 @@
+import { PurchaseShoppingListProducts } from './../models/purchase-shopping-list-products';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
 import { PurchaseShoppingListProduct } from './../models/purchase-shopping-list-product';
 import { AddShoppingList } from './../models/add-shopping-list';
@@ -104,6 +105,22 @@ export class ShoppingListsService {
       .patch<any>(
         `${this.shoppingListsUrl}/${purchaseProduct.shoppingListId}/products/${purchaseProduct.productName}/purchase`,
         purchaseProduct,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._singleShoppingListRefreshNeeded.next();
+        })
+      );
+  }
+
+  purchaseProducts(
+    purchaseProducts: PurchaseShoppingListProducts
+  ): Observable<any> {
+    return this.http
+      .put<any>(
+        `${this.shoppingListsUrl}/${purchaseProducts.shoppingListId}/products/purchase`,
+        purchaseProducts,
         this.defaultHttpOptions
       )
       .pipe(
