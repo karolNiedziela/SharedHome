@@ -8,17 +8,17 @@ namespace SharedHome.Shared.Abstractions.Domain
 {
     public abstract class Entity
     {
-        private readonly List<IEvent> _events = new();
+        private readonly List<IDomainEvent> _events = new();
 
         public DateTime CreatedAt { get; set; }
 
         public DateTime ModifiedAt { get; set; }
 
-        public IEnumerable<IEvent> Events => _events;
+        public IEnumerable<IDomainEvent> Events => _events;
 
         public void ClearEvents() => _events.Clear();
 
-        protected void AddEvent(IEvent @event)
+        protected void AddEvent(IDomainEvent @event)
         {
             if (!_events.Any())
             {

@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.HouseGroups.Events
 {
-    public record HouseGroupCreated(int HouseGroupId) : IEvent;
+    public record HouseGroupCreated(int HouseGroupId) : IDomainEvent;
 }

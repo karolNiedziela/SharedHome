@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.HouseGroups.Events
 {
-    public record InvitationCreated(int HouseGroupId, Guid PersonId) : IEvent;
+    public record InvitationCreated(int HouseGroupId, Guid PersonId) : IDomainEvent;
 }

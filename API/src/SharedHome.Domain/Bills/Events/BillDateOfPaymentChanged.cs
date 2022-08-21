@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Bills.Events
 {
-    public record BillDateOfPaymentChanged(int BillId, ServiceProviderName ServiceProviderName, DateTime DateOfPayment) : IEvent;
+    public record BillDateOfPaymentChanged(int BillId, ServiceProviderName ServiceProviderName, DateTime DateOfPayment) : IDomainEvent;
 }

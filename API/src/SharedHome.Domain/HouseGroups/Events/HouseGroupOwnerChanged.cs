@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.HouseGroups.Events
 {
-    public record HouseGroupOwnerChanged(int HouseGroupId, HouseGroupMember OldOwner, HouseGroupMember NewOwner) : IEvent;
+    public record HouseGroupOwnerChanged(int HouseGroupId, HouseGroupMember OldOwner, HouseGroupMember NewOwner) : IDomainEvent;
 }

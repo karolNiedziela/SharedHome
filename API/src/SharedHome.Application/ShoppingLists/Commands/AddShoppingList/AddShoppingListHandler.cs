@@ -12,13 +12,13 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
-        //private readonly IMessageBroker _messageBroker;
+        //private readonly IDomainEventDispatcher _eventDispatcher;
 
         public AddShoppingListHandler(IShoppingListRepository shoppingListRepository, IMapper mapper)
         {
             _shoppingListRepository = shoppingListRepository;
             _mapper = mapper;
-            //_messageBroker = messageBroker;
+            //_eventDispatcher = eventDispatcher;
         }
 
         public async Task<Response<ShoppingListDto>> Handle(AddShoppingListCommand request, CancellationToken cancellationToken)
@@ -28,6 +28,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
             var shoppingList = ShoppingList.Create(request.Name, request.PersonId!, products: products);
 
             await _shoppingListRepository.AddAsync(shoppingList);
+            //await _eventDispatcher.Dispatch(new ShoppingListCreated(shoppingList.Name));
             //await _messageBroker.PublishAsync(new ShoppingListCreated(shoppingList.Name), cancellationToken);
 
             return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList));

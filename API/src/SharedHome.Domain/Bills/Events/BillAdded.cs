@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Bills.Events
 {
-    public record BillAdded(int Id, ServiceProviderName ServiceProviderName) : IEvent;
+    public record BillAdded(int Id, ServiceProviderName ServiceProviderName) : IDomainEvent;
 }

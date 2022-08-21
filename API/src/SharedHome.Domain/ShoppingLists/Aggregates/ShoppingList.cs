@@ -33,6 +33,8 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             IsDone = isDone;
 
             AddProducts(products);
+
+            AddEvent(new ShoppingListCreated(name));
         }
 
         public static ShoppingList Create(ShoppingListName name, string personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
@@ -54,7 +56,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
             _products.Add(product);
 
-            AddEvent(new ShoppingListProductAdded(Id, product.Name));
+            //AddEvent(new ShoppingListProductAdded(Id, product.Name));
         }
 
         public void AddProducts(IEnumerable<ShoppingListProduct>? products)
