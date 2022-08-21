@@ -3,6 +3,8 @@
   [formGroup]="registerForm"
   (submit)="onSubmit()"
 >
+  <app-error [errorMessages]="errorMessages"></app-error>
+  <div *ngIf="information">{{ information }}</div>
   <app-email-input
     formControlName="email"
     [isRequired]="true"

@@ -36,6 +36,11 @@ namespace SharedHome.Application.Authentication.Commands.ConfirmEmail
                 throw new InvalidCredentialsException();
             }
 
+            if (user.EmailConfirmed)
+            {
+                return Unit.Value;
+            }
+
             var token = _identityService.Decode(request.Code);
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (!result.Succeeded)

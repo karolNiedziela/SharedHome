@@ -66,7 +66,7 @@
 
             public const string Login = "login";
 
-            public const string ConfirmEmail = "confiremail";
+            public const string ConfirmEmail = "confirmemail";
         }
 
         public static class Invitations

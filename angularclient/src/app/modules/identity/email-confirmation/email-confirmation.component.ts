@@ -8,6 +8,8 @@ import { AuthenticationService } from '../services/authentication.service';
   styleUrls: ['./email-confirmation.component.scss'],
 })
 export class EmailConfirmationComponent implements OnInit {
+  errorMessages: string[] = [];
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -18,8 +20,6 @@ export class EmailConfirmationComponent implements OnInit {
     const email = this.activatedRoute.snapshot.queryParams['email'];
     const code = this.activatedRoute.snapshot.queryParams['code'];
 
-    console.log(`Email : ${email}`);
-    console.log(`Code : ${code}`);
     if (!email || !code) {
       this.router.navigate(['']);
     }
@@ -28,8 +28,8 @@ export class EmailConfirmationComponent implements OnInit {
       next: () => {
         this.router.navigate(['emailconfirmed']);
       },
-      error: (error: any) => {
-        console.log(error);
+      error: (error: string[]) => {
+        this.errorMessages = error;
       },
     });
   }

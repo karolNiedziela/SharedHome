@@ -39,7 +39,9 @@ export class EmailInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: string): void {
-    this.controlDir.control?.setValue(value);
+    if (this.control && this.control?.value != value) {
+      this.controlDir.control?.setValue(value);
+    }
   }
 
   registerOnChange(onChanged: (value: any) => void): void {

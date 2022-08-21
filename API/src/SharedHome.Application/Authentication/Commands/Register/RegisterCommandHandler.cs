@@ -43,7 +43,7 @@ namespace SharedHome.Application.Authentication.Commands.Register
 
             if (!result.Succeeded)
             {
-                throw new IdentityException(_identityService.MapIdentityErrorToIEnumerableString(result.Errors));
+                throw new IdentityException(_identityService.MapIdentityErrorToIEnumerableString(result.Errors.Where(x => x.Code != "DuplicateUserName")));
             }
             _logger.LogInformation("User with id '{userId}' created.", applicationUser.Id);
 

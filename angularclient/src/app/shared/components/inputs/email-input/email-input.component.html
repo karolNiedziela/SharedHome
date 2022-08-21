@@ -8,6 +8,7 @@
     [ngClass]="{
       'is-invalid': control?.touched && !control?.valid
     }"
+    [value]="control?.value"
   />
   <label class="sharedhome__label"
     >{{ labelText }}

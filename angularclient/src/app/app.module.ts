@@ -15,6 +15,7 @@ import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.mod
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,6 +38,7 @@ import { HttpClient } from '@angular/common/http';
         deps: [HttpClient],
       },
     }),
+    ToastrModule.forRoot(),
   ],
   providers: [
     {

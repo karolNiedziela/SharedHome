@@ -1,3 +1,4 @@
+import { Register } from './../models/register';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -59,6 +60,10 @@ export class AuthenticationService {
           return result;
         })
       );
+  }
+
+  register(register: Register): Observable<any> {
+    return this.http.post<any>(`${this.identityUrl}/register`, register);
   }
 
   confirmEmail(email: string, code: string): Observable<any> {
