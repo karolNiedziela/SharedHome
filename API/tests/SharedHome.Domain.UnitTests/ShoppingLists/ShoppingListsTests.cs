@@ -2,7 +2,6 @@
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Constants;
-using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
@@ -128,18 +127,17 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void AddProduct_Adds_ShoppingListProductAdded_On_Success()
+        public void AddProduct_Should_Add_Product_To_ShoppingList()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
             var product = ShoppingListProvider.GetProduct();
 
             shoppingList.AddProduct(product);
 
-            shoppingList.Events.Count().ShouldBe(1);
-
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductAdded;
-            @event.ShouldNotBeNull();
-            @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
+            shoppingList.Products.Count().ShouldBe(1);
+            var addedProduct = shoppingList.Products.First();
+            addedProduct.Name.Value.ShouldBe("Product");
+            addedProduct.Quantity.Value.ShouldBe(1);
         }
 
         [Fact]
@@ -182,20 +180,15 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void RemoveProduct_Adds_ShoppingListProductRemoved_On_Success()
+        public void RemoveProduct_Should_Remove_Product_From_ShoppingList()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
             var product = ShoppingListProvider.GetProduct();
             shoppingList.AddProduct(product);
-            shoppingList.ClearEvents();
 
             shoppingList.RemoveProduct(ShoppingListProvider.ProductName);
 
-            shoppingList.Events.Count().ShouldBe(1);
-
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductRemoved;
-            @event.ShouldNotBeNull();
-            @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
+            shoppingList.Products.Count().ShouldBe(0);
         }
 
         [Fact]
@@ -243,7 +236,6 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             var product = ShoppingListProvider.GetProduct(price: new Money(25m, "zł"), isBought: true);
             shoppingList.AddProduct(product);
-            shoppingList.ClearEvents();
 
             var exception = Record.Exception(() 
                 => shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł")));
@@ -253,24 +245,19 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void PurchaseProduct_Adds_ShoppingListProductPurchased_On_Success()
+        public void PurchaseProduct_Should_Change_IsBought_To_True()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var product = ShoppingListProvider.GetProduct();
             shoppingList.AddProduct(product);
-            shoppingList.ClearEvents();
 
             shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł"));
 
-            shoppingList.Events.Count().ShouldBe(1);
-
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductPurchased;
-            @event.ShouldNotBeNull();
-
-            @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
-            @event.Price.Amount.ShouldBe(10m);
-            @event.Price.Currency.Value.ShouldBe("zł");
+            var purchasedProduct = shoppingList.Products.First();
+            purchasedProduct.IsBought.ShouldBeTrue();
+            purchasedProduct.Price!.Amount.ShouldBe(10m);
+            purchasedProduct.Price.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
@@ -336,23 +323,19 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void ChangePriceOfProduct_Adds_ShoppingListProductPriceChanged_On_Success()
+        public void ChangePriceOfProduct_Should_Change_Price()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
             var product = ShoppingListProvider.GetProduct();
 
             shoppingList.AddProduct(product);
             shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł"));
-            shoppingList.ClearEvents();
 
             shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, new Money(25m, "zł"));
 
-            shoppingList.Events.Count().ShouldBe(1);
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductPriceChanged;
-            @event.ShouldNotBeNull();
-            @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
-            @event.Price.Amount.ShouldBe(25);
-            @event.Price.Currency.Value.ShouldBe("zł");
+            var changedPriceProduct = shoppingList.Products.First();
+            changedPriceProduct.Price!.Amount.ShouldBe(25m);
+            changedPriceProduct.Price!.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
@@ -394,22 +377,20 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void CancelPurchaseOfProduct_Adds_ShoppingListProductPurchaseCanceled_On_Success()
+        public void CancelPurchaseOfProduct_Should_Change_IsBought_To_False_And_Clear_Price()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
             var product = ShoppingListProvider.GetProduct(isBought: false);
             shoppingList.AddProduct(product);
 
-            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł"));
-            shoppingList.ClearEvents();
+            shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł"));            
 
             shoppingList.CancelPurchaseOfProduct(ShoppingListProvider.ProductName);
 
-            shoppingList.Events.Count().ShouldBe(1);
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListProductPurchaseCanceled;
+            var canceledProduct = shoppingList.Products.First();
 
-            @event.ShouldNotBeNull();
-            @event.ProductName.ShouldBe(ShoppingListProvider.ProductName);
+            canceledProduct.Price.ShouldBeNull();
+            canceledProduct.IsBought.ShouldBeFalse();
         }
 
         [Fact]
@@ -424,28 +405,23 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         }
 
         [Fact]
-        public void MakeListDone_Adds_ShoppingListDone_On_Success()
+        public void MakeListDone_Should_Set_IsDone_To_True()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             shoppingList.MakeListDone();
 
-            shoppingList.IsDone.ShouldBeTrue();
-            shoppingList.Events.Count().ShouldBe(1);
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListDone;
-            @event.ShouldNotBeNull();
+            shoppingList.IsDone.ShouldBeTrue();           
         }
 
         [Fact]
-        public void UndoListDone_Adds_ShoppingListUndone_On_Success()
+        public void UndoListDone_Should_Set_IsDone_To_False()
         {
             var shoppingList = ShoppingListProvider.GetEmpty(isDone: false);
 
             shoppingList.UndoListDone();
+
             shoppingList.IsDone.ShouldBeFalse();
-            shoppingList.Events.Count().ShouldBe(1);
-            var @event = shoppingList.Events.FirstOrDefault() as ShoppingListUndone;
-            @event.ShouldNotBeNull();
         }
 
         [Fact]

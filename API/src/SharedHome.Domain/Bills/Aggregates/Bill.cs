@@ -1,5 +1,4 @@
 ﻿using SharedHome.Domain.Bills.Constants;
-using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Bills.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
@@ -46,8 +45,7 @@ namespace SharedHome.Domain.Bills.Entities
             IsAlreadyPaid();
 
             Cost = cost;
-            IsPaid = true;
-            AddEvent(new BillPaid(Id, ServiceProvider, Cost, DateOfPayment));
+            IsPaid = true;            
         }
 
         public void CancelPayment()
@@ -56,19 +54,16 @@ namespace SharedHome.Domain.Bills.Entities
 
             Cost = null;
             IsPaid = false;
-            AddEvent(new BillPaymentCanceled(Id, ServiceProvider, DateOfPayment));
         }
 
         public void ChangeCost(Money cost)
         {
-            Cost = cost;
-            AddEvent(new BillCostChanged(Id, ServiceProvider, Cost));
+            Cost = cost;            
         }
 
         public void ChangeDateOfPayment(DateTime dateOfPayment)
         {
-            DateOfPayment = dateOfPayment;
-            AddEvent(new BillDateOfPaymentChanged(Id, ServiceProvider, DateOfPayment));
+            DateOfPayment = dateOfPayment;            
         }
 
         public void Update(BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost)

@@ -1,5 +1,4 @@
 ﻿using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
@@ -33,8 +32,6 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             IsDone = isDone;
 
             AddProducts(products);
-
-            AddEvent(new ShoppingListCreated(name));
         }
 
         public static ShoppingList Create(ShoppingListName name, string personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
@@ -55,8 +52,6 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             }
 
             _products.Add(product);
-
-            //AddEvent(new ShoppingListProductAdded(Id, product.Name));
         }
 
         public void AddProducts(IEnumerable<ShoppingListProduct>? products)
@@ -77,8 +72,6 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
             var product = GetProduct(productName);
             _products.Remove(product);
-
-            AddEvent(new ShoppingListProductRemoved(Id, productName));
         }
 
         public void RemoveProducts(IEnumerable<string> productNames)
@@ -102,8 +95,6 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             }
 
             product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, isBought: true));
-
-            AddEvent(new ShoppingListProductPurchased(Id, productName, price));
         }
 
         public void PurchaseProducts(Dictionary<string, Money> priceByProductNames)
@@ -127,8 +118,6 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             }
 
             product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, isBought: product.IsBought));
-
-            AddEvent(new ShoppingListProductPriceChanged(Id, productName, price));
         }
 
         public void CancelPurchaseOfProduct(string productName)
@@ -142,23 +131,17 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             }
             
             product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, isBought: false));
-
-            AddEvent(new ShoppingListProductPurchaseCanceled(Id, productName));
         }
 
         public void MakeListDone()
         {
             IsAlreadyDone();
-            IsDone = true;
-
-            AddEvent(new ShoppingListDone(Id));
+            IsDone = true;            
         }
 
         public void UndoListDone()
         {
             IsDone = false;
-
-            AddEvent(new ShoppingListUndone(Id));
         }
 
         public void Update(ShoppingListName shoppingListName)

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedHome.Domain.ShoppingLists.Events
+namespace SharedHome.Application.ShoppingLists.Events
 {
-    public record ShoppingListCreated(string ShoppingListName) : IEvent;    
+    public record ShoppingListProductPurchaseCanceled(int ShoppingListId, string ProductName) : IDomainEvent;
 }

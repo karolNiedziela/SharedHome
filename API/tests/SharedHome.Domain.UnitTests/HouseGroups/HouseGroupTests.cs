@@ -1,6 +1,5 @@
-﻿using SharedHome.Domain.HouseGroups.Events;
+﻿using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
-using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Linq;
@@ -42,16 +41,11 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         }
 
         [Fact]
-        public void AddMember_Adds_HouseGroupMemberAdded_OnSuccess()
+        public void AddMember_Should_Add_HouseGroupMember()
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
             houseGroup.Members.Count().ShouldBe(1);
-            houseGroup.Events.Count().ShouldBe(1);
-
-            var @event = houseGroup.Events.FirstOrDefault() as HouseGroupMemberAdded;
-            @event.ShouldNotBeNull();
-            @event.HouseGroupMember.HouseGroupId.ShouldBe(houseGroup.Id);
         }
 
         [Fact]
@@ -90,7 +84,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         }
 
         [Fact]
-        public void RemoveMember_Adds_HouseGroupMemberRemoved_On_Success()
+        public void RemoveMember_Should_Remove_HouseGroupMember()
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
@@ -105,11 +99,6 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             houseGroup.RemoveMember(HouseGroupProvider.PersonId, memberToRemoveId);
 
             houseGroup.Members.Count().ShouldBe(1);
-            houseGroup.Events.Count().ShouldBe(1);
-
-            var @event = houseGroup.Events.FirstOrDefault() as HouseGroupMemberRemoved;
-            @event.ShouldNotBeNull();
-            @event.RemovedMemberId.ShouldBe(memberToRemoveId);
         }
 
         [Fact]
@@ -125,7 +114,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         }
 
         [Fact]
-        public void HandOwnerRoleOver_Adds_HouseGroupOwnerChanged_On_Success()
+        public void HandOwnerRoleOver_Should_Change_Owner_Of_HouseGroup()
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
@@ -135,15 +124,15 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
                 HouseGroupProvider.HouseGroupId, 
                 secondPersonId, 
                 false));
-            houseGroup.ClearEvents();
+
+            var oldOwnerId = houseGroup.Members.First(x => x.IsOwner).PersonId;
 
             houseGroup.HandOwnerRoleOver(HouseGroupProvider.PersonId, secondPersonId);
 
-            houseGroup.Events.Count().ShouldBe(1);
-            var @event = houseGroup.Events.FirstOrDefault() as HouseGroupOwnerChanged;
-            @event.ShouldNotBeNull();
-            @event.OldOwner.IsOwner.ShouldBeFalse();
-            @event.NewOwner.IsOwner.ShouldBeTrue();
+            oldOwnerId.ShouldBe(HouseGroupProvider.PersonId);
+            
+            var newOwnerId = houseGroup.Members.First(x => x.IsOwner).PersonId;
+            newOwnerId.ShouldBe("");
         }
 
         [Fact]

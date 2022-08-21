@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.Events;
-using SharedHome.Domain.ShoppingLists.Events;
+using SharedHome.Application.ShoppingLists.Events;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 {

@@ -1,6 +1,5 @@
-﻿using SharedHome.Domain.HouseGroups.Events;
+﻿using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
-using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.HouseGroups.Aggregates
@@ -39,8 +38,6 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             }
 
             _members.Add(houseGroupMember);
-
-            AddEvent(new HouseGroupMemberAdded(Id, houseGroupMember));
         }
 
         public void RemoveMember(string requestedById, string memberToRemoveId)
@@ -54,8 +51,6 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             var memberToRemove = GetMember(memberToRemoveId);
 
             _members.Remove(memberToRemove);
-
-            AddEvent(new HouseGroupMemberRemoved(Id, memberToRemoveId));
         }
 
         // Change owner of house group, only current owner can give this status to another member
@@ -77,8 +72,6 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
             var newOwnerIndex = _members.FindIndex(hm => hm.PersonId == newOwnerPersonid);
             _members[newOwnerIndex] = memberNewOwner;
-
-            AddEvent(new HouseGroupOwnerChanged(Id, memberOldOwner, memberNewOwner));
         }
 
         public void Leave(string personId, string? newOwnerPersonId = null)
@@ -131,6 +124,6 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
         }
         
         private bool ShouldProcessForOwner(string personId)
-            => IsOwner(personId) && _members.Count() > 1;
+            => IsOwner(personId) && _members.Count > 1;
     }
 }

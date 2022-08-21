@@ -1,12 +1,10 @@
 ﻿using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
-using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace SharedHome.Domain.UnitTests.Bills
@@ -37,7 +35,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         }
 
         [Fact]
-        public void PayFor_Adds_BillPaid_Event_On_Success()
+        public void PayFor_Should_Set_Cost_And_IsPaid_To_True()
         {
             var bill = BillProvider.Get();
 
@@ -45,12 +43,7 @@ namespace SharedHome.Domain.UnitTests.Bills
 
             bill.IsPaid.ShouldBeTrue();
             bill.Cost!.Amount.ShouldBe(1500m);
-            bill.Events.Count().ShouldBe(1);
-
-            var @event = bill.Events.FirstOrDefault() as BillPaid;
-            @event.ShouldNotBeNull();
-
-            @event.Cost.Amount.ShouldBe(1500m);
+            bill.Cost!.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
@@ -65,51 +58,35 @@ namespace SharedHome.Domain.UnitTests.Bills
         }
 
         [Fact]
-        public void CancelPayment_Adds_BillPaymentCanceled_Event_On_Success()
+        public void CancelPayment_Should_Clear_Cost_And_Set_IsPaid_To_False()
         {
             var bill = BillProvider.Get(isPaid: true);
 
             bill.CancelPayment();
 
             bill.IsPaid.ShouldBeFalse();
-            bill.Cost.ShouldBeNull();
-            bill.Events.Count().ShouldBe(1);
-
-            var @event = bill.Events.FirstOrDefault() as BillPaymentCanceled;
-            @event.ShouldNotBeNull();
+            bill.Cost.ShouldBeNull();            
         }        
 
         [Fact]
-        public void ChangeCost_Adds_BillCostChanged_Event_On_Success()
+        public void ChangeCost_Should_Change_Cost()
         {
             var bill = BillProvider.Get(isPaid: true);
 
             bill.ChangeCost(new Money(500m, "zł"));
 
             bill.Cost!.Amount.ShouldBe(500m);
-            bill.Events.Count().ShouldBe(1);
-
-            var @event = bill.Events.FirstOrDefault() as BillCostChanged;
-            @event.ShouldNotBeNull();
-
-            @event.Cost.Amount.ShouldBe(500m);
+            bill.Cost!.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
-        public void ChangeDateOfPayments_Adds_BillDateOfPaymentChanged_Event_On_Success()
+        public void ChangeDateOfPayments_Should_Change_DateOfPayment()
         {
             var bill = BillProvider.Get(isPaid: true);
 
             bill.ChangeDateOfPayment(new DateTime(2022, 5, 10));
 
             bill.DateOfPayment.ShouldBe(new DateTime(2022, 5, 10));
-            bill.Events.Count().ShouldBe(1);
-
-            var @event = bill.Events.FirstOrDefault() as BillDateOfPaymentChanged;
-            @event.ShouldNotBeNull();
-
-            @event.DateOfPayment.ShouldBe(new DateTime(2022, 5, 10));
         }
-       
     }
 }

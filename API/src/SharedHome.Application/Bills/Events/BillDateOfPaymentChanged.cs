@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedHome.Domain.Bills.Events
+namespace SharedHome.Application.Bills.Events
 {
     public record BillDateOfPaymentChanged(int BillId, ServiceProviderName ServiceProviderName, DateTime DateOfPayment) : IDomainEvent;
 }

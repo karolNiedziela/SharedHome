@@ -2,7 +2,7 @@
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.Bills.Events
+namespace SharedHome.Application.Bills.Events
 {
     public record BillCostChanged(int BillId, ServiceProviderName ServiceProviderName, Money Cost) : IDomainEvent;
 }
