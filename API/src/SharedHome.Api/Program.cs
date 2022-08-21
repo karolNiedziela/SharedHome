@@ -1,5 +1,7 @@
 using Microsoft.Extensions.Options;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using SharedHome.Api;
 using SharedHome.Api.Constants;
 using SharedHome.Application;
@@ -18,6 +20,8 @@ try
     .AddUserSecrets<Program>()
     .AddEnvironmentVariables()
     .Build();
+
+    var seqUri = configuration.GetValue<string>("Seq:Uri");
 
     builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
           .ReadFrom.Configuration(configuration));

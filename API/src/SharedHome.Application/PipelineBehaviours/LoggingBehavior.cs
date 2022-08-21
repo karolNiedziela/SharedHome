@@ -34,9 +34,9 @@ namespace SharedHome.Application.PipelineBehaviours
                  {
                      WriteIndented = true
                  });
-            _logger.LogInformation("Begin Request Id: {uniqueId}, " +
+            _logger.LogInformation("Begin Request Id: {UniqueId}, " +
                 "Request name: {RequestName}, " +
-                "Request json: {requestJson}", 
+                "Request json: {RequestJson}", 
                 uniqueId, 
                 requestName, 
                 requestJson);
@@ -55,10 +55,10 @@ namespace SharedHome.Application.PipelineBehaviours
 
             timer.Stop();
 
-            _logger.LogInformation("End Request Id: {uniqueId}, " +
+            _logger.LogInformation("End Request Id: {UniqueId}, " +
                 "Request name: {RequestName}, " +
-                "Total request time {elapsedMs}[ms], " +
-                "Response json: {responseJson}", 
+                "Total request time {ElapsedMs}[ms], " +
+                "Response json: {ResponseJson}", 
                 uniqueId, 
                 requestName,
                 timer.ElapsedMilliseconds,
