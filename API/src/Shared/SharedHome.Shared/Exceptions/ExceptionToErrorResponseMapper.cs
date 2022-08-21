@@ -36,8 +36,7 @@ namespace SharedHome.Shared.Exceptions
             var resourceStringValue = _localizer.GetString(exception.ErrorCode);
 
             if (resourceStringValue.ResourceNotFound)
-            {
-                _logger.LogInformation("Resource not found.");
+            {               
                 return exception.Message;
             }
 
