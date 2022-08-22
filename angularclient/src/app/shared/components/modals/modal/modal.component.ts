@@ -1,18 +1,14 @@
+import { LoadingService } from './../../../../core/services/loading.service';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
   Component,
-  ContentChild,
-  ContentChildren,
-  ElementRef,
   Input,
   OnInit,
-  QueryList,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfig } from './modal.config';
-import { ContentRef } from '@ng-bootstrap/ng-bootstrap/util/popup';
 
 @Component({
   selector: 'app-modal',
@@ -26,7 +22,10 @@ export class ModalComponent implements OnInit {
 
   dismissIcon = faXmark;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    private modalService: NgbModal,
+    public loadingService: LoadingService
+  ) {}
 
   ngOnInit(): void {
     if (!this.modalConfig.closeButtonLabel) {

@@ -1,7 +1,9 @@
+import { LoadingService } from './core/services/loading.service';
 import { Component } from '@angular/core';
 import { AuthenticationResponse } from './core/models/authenticationResponse';
 import { AuthenticationService } from './modules/identity/services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +16,12 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   title = 'sharedhomewebclient';
   authenticationResponse: AuthenticationResponse = null!;
+  loading$: Observable<boolean> = this.loader.loading$;
 
   constructor(
     private authenticationService: AuthenticationService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    public loader: LoadingService
   ) {
     this.authenticationService.authenticationResponse.subscribe(
       (result: AuthenticationResponse) => (this.authenticationResponse = result)

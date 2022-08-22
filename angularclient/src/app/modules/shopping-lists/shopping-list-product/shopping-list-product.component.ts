@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../core/services/loading.service';
 import { EditShoppingListModalComponent } from './../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
 import { AdditionalPopupMenuItem } from './../../../shared/components/menus/popup-menu/popup-menu.config';

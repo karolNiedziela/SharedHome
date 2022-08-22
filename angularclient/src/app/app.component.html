@@ -8,6 +8,9 @@
 
   <app-footer *ngIf="authenticationResponse"></app-footer>
 </div> -->
+<!-- <ng-container *ngIf="loading$ | async">
+  <app-loading-spinner></app-loading-spinner>
+</ng-container> -->
 <div class="app">
   <app-sidebar class="sidebar" *ngIf="authenticationResponse"></app-sidebar>
   <div class="container-fluid">

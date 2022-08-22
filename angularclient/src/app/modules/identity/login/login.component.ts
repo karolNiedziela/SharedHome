@@ -1,4 +1,3 @@
-import { ErrorResponse } from './../../../core/models/error-response';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { first } from 'rxjs';
@@ -14,14 +13,14 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessages: string[] = [];
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService) {}
+
+  ngOnInit(): void {
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl(''),
     });
   }
-
-  ngOnInit(): void {}
 
   onSubmit() {
     if (this.loginForm.invalid) {

@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../core/services/loading.service';
 import { PurchaseShoppingListProductsModalComponent } from './../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
@@ -91,7 +92,8 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private shoppingListService: ShoppingListsService,
-    private router: Router
+    private router: Router,
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {

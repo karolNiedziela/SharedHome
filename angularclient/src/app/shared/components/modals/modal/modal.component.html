@@ -6,6 +6,7 @@
         [icon]="dismissIcon"
         (click)="dismiss()"
         class="dismiss-icon"
+        *ngIf="!(loadingService.loading$ | async)"
         ngbAutofocus
       ></fa-icon>
     </h4>
@@ -14,21 +15,26 @@
     <ng-content></ng-content>
   </div>
   <div class="modal-footer">
-    <button
-      *ngIf="modalConfig.isCloseButtonVisible"
-      type="button"
-      class="btn btn-secondary"
-      data-bs-dismiss="modal"
-      (click)="close()"
-    >
-      {{ modalConfig.closeButtonLabel }}
-    </button>
+    <span *ngIf="!(loadingService.loading$ | async)">
+      <button
+        *ngIf="modalConfig.isCloseButtonVisible"
+        type="button"
+        class="btn btn-secondary me-2"
+        data-bs-dismiss="modal"
+        (click)="close()"
+      >
+        {{ modalConfig.closeButtonLabel }}
+      </button>
 
-    <app-button
-      *ngIf="modalConfig.isSaveButtonVisible"
-      [text]="modalConfig.saveButtonLabel!"
-      type="button"
-      (onButtonClick)="save()"
-    ></app-button>
+      <app-button
+        *ngIf="modalConfig.isSaveButtonVisible"
+        [text]="modalConfig.saveButtonLabel!"
+        type="button"
+        (onButtonClick)="save()"
+      ></app-button>
+    </span>
+    <ng-container *ngIf="loadingService.loading$ | async">
+      <app-loading-spinner></app-loading-spinner>
+    </ng-container>
   </div>
 </ng-template>

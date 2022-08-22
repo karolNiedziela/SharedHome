@@ -1,3 +1,4 @@
+import { LoadingService } from './../../../../core/services/loading.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { map, Observable, of } from 'rxjs';
 import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
@@ -40,7 +41,8 @@ export class ShoppingListsComponent
 
   constructor(
     private shoppingListService: ShoppingListsService,
-    private router: Router
+    private router: Router,
+    public loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {

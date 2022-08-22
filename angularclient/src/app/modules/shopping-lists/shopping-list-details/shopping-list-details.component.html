@@ -1,4 +1,8 @@
+<ng-container *ngIf="loadingService.loading$ | async">
+  <app-loading-spinner></app-loading-spinner>
+</ng-container>
 <div
+  *ngIf="!(loadingService.loading$ | async)"
   class="card shopping-list"
   [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
 >

@@ -20,6 +20,7 @@ import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
 import { CircleButtonComponent } from './components/buttons/circle-button/circle-button.component';
 import { ErrorComponent } from './components/errors/error/error.component';
+import { LoadingSpinnerComponent } from './components/spinners/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ErrorComponent } from './components/errors/error/error.component';
     CurrencySelectComponent,
     CircleButtonComponent,
     ErrorComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +72,7 @@ import { ErrorComponent } from './components/errors/error/error.component';
     CurrencySelectComponent,
     CircleButtonComponent,
     ErrorComponent,
+    LoadingSpinnerComponent,
   ],
 })
 export class SharedModule {}

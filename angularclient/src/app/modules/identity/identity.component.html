@@ -4,9 +4,15 @@
       <div class="col-md-6 mt-4 text-center welcome">
         <div class="welcome__app-name">Shared home</div>
       </div>
-      <div class="identity col-md-5 ps-4 pe-4">
+      <div
+        class="identity col-md-5 ps-4 pe-4"
+        *ngIf="!(loadingService.loading$ | async)"
+      >
         <router-outlet></router-outlet>
       </div>
+      <ng-container *ngIf="loadingService.loading$ | async">
+        <app-loading-spinner></app-loading-spinner>
+      </ng-container>
     </div>
   </div>
 </div>

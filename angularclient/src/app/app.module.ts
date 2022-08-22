@@ -1,3 +1,4 @@
+import { SpinnerInterceptor } from './core/interceptors/spinner.interceptor';
 import { BillsModule } from './modules/bills/bills.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { SharedModule } from './shared/shared.module';
@@ -47,6 +48,7 @@ import { ToastrModule } from 'ngx-toastr';
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
