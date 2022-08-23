@@ -39,6 +39,8 @@ export class ShoppingListsComponent
   singleRefreshSubscription!: Subscription;
   statusSelectSubscription!: Subscription;
 
+  loading$!: Observable<boolean>;
+
   constructor(
     private shoppingListService: ShoppingListsService,
     private router: Router,

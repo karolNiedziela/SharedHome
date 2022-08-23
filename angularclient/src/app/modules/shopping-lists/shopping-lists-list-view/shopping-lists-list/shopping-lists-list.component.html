@@ -23,9 +23,7 @@
       [month]="month"
     ></app-add-shopping-list>
   </div>
-  <ng-container *ngIf="loadingService.loading$ | async">
-    <app-loading-spinner></app-loading-spinner>
-  </ng-container>
+
   <div class="shopping-lists row">
     <div
       class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
