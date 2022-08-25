@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .spinner-border {
@@ -14,20 +15,22 @@
   height: 3rem;
 }
 
-// .overlay {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   z-index: 2;
-//   background-color: rgba(0, 0, 0, 0.8);
-//   backdrop-filter: blur(2px);
-// }
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0 auto;
 
-.overlay {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  letter-spacing: 0.15em; /* Adjust as needed */
+  animation: typing 1s steps(40, end);
+  animation-iteration-count: infinite;
+}
+
+/* The typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 10%;
+  }
 }

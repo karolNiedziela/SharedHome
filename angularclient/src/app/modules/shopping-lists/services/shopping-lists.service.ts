@@ -42,9 +42,20 @@ export class ShoppingListsService {
   constructor(private http: HttpClient) {}
 
   get(shoppingListId: number): Observable<ApiResponse<ShoppingList>> {
-    return this.http.get<ApiResponse<ShoppingList>>(
-      `${this.shoppingListsUrl}/${shoppingListId}`
-    );
+    return this.http
+      .get<ApiResponse<ShoppingList>>(
+        `${this.shoppingListsUrl}/${shoppingListId}`
+      )
+      .pipe(
+        map((response: ApiResponse<ShoppingList>) => {
+          const shoppingListResponse: ApiResponse<ShoppingList> = {
+            data: new ShoppingList(response.data),
+            message: response.message,
+          };
+
+          return shoppingListResponse;
+        })
+      );
   }
 
   getAllByYearAndMonthAndIsDone(
@@ -57,9 +68,23 @@ export class ShoppingListsService {
     params = params.append('month', month);
     params = params.append('isdone', isDone);
 
-    return this.http.get<Paged<ShoppingList>>(this.shoppingListsUrl, {
-      params: params,
-    });
+    return this.http
+      .get<Paged<ShoppingList>>(this.shoppingListsUrl, {
+        params: params,
+      })
+      .pipe(
+        map((response: Paged<ShoppingList>) => {
+          const paged: Paged<ShoppingList> = {
+            items: response.items.map((item) => new ShoppingList(item)),
+            totalItems: response.totalItems,
+            totalPages: response.totalPages,
+            currentPage: response.currentPage,
+            pageSize: response.pageSize,
+          };
+
+          return paged;
+        })
+      );
   }
 
   getMonthlyCostByYear(year: number): Observable<ShoppingListMonthlyCost[]> {

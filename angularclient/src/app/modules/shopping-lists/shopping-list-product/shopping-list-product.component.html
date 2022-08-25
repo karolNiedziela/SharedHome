@@ -1,9 +1,9 @@
 <div class="product">
   <div class="product__item product__name">
-    <h4>{{ shoppingListProduct?.name }}</h4>
+    <h4>{{ shoppingListProduct.name }}</h4>
     <h5
       class="bought-status"
-      *ngIf="shoppingListProduct?.isBought; else notBought"
+      *ngIf="shoppingListProduct.isBought; else notBought"
     >
       <fa-icon [icon]="boughtIcon"></fa-icon>
     </h5>
@@ -15,26 +15,26 @@
   </div>
   <h5 class="product__item product__price">
     <div
-      *ngIf="shoppingListProduct?.price != null; then thenBlock; else elseBlock"
+      *ngIf="shoppingListProduct.price != null; then thenBlock; else elseBlock"
     ></div>
     <ng-template #thenBlock
       ><h5>
-        {{ shoppingListProduct?.price }} {{ shoppingListProduct?.currency }}
+        {{ shoppingListProduct.price }} {{ shoppingListProduct.currency }}
       </h5></ng-template
     >
 
     <ng-template #elseBlock><h5>No price</h5></ng-template>
   </h5>
   <h5 class="product__item product__net-content">
-    <div *ngIf="shoppingListProduct?.netContent != null; else emptyNetContent">
-      {{ shoppingListProduct?.netContent }}
-      {{ shoppingListProduct?.netContentType | enumAsString: netContentType }}
+    <div *ngIf="shoppingListProduct.netContent != null; else emptyNetContent">
+      {{ shoppingListProduct.netContent }}
+      {{ shoppingListProduct.netContentType | enumAsString: netContentType }}
       &nbsp;
     </div>
     <ng-template #emptyNetContent> &nbsp; </ng-template>
   </h5>
   <div class="product__item product__quantity">
-    {{ shoppingListProduct?.quantity }}
+    {{ shoppingListProduct.quantity }}
   </div>
   <div class="product__more-options">
     <app-popup-menu [popupMenuConfig]="productPopupMenuConfig"></app-popup-menu>

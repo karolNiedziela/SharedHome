@@ -1,4 +1,3 @@
-import { LoadingService } from './../../../../core/services/loading.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { map, Observable, of } from 'rxjs';
 import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
@@ -35,7 +34,6 @@ export class ShoppingListsComponent
   isDone: boolean = false;
   shoppingListForm!: FormGroup;
   paged$!: Observable<Paged<ShoppingList>>;
-  shoppingLists$!: Observable<ShoppingList[]>;
   singleRefreshSubscription!: Subscription;
   statusSelectSubscription!: Subscription;
 
@@ -43,8 +41,7 @@ export class ShoppingListsComponent
 
   constructor(
     private shoppingListService: ShoppingListsService,
-    private router: Router,
-    public loadingService: LoadingService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,12 +56,12 @@ export class ShoppingListsComponent
       status: new FormControl(ShoppingListStatus['To do']),
     });
 
+    this.getAllShoppingLists(this.year, this.month, this.isDone);
+
     this.singleRefreshSubscription =
       this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
         this.getAllShoppingLists(this.year, this.month, this.isDone);
       });
-
-    this.getAllShoppingLists(this.year, this.month, this.isDone);
   }
 
   ngAfterViewInit(): void {
@@ -85,17 +82,11 @@ export class ShoppingListsComponent
     month: number,
     isDone: boolean = false
   ) {
-    this.shoppingLists$ = this.shoppingListService
-      .getAllByYearAndMonthAndIsDone(year, month, isDone)
-      .pipe(
-        map((response: Paged<ShoppingList>) => {
-          this.paged$ = of(response);
-          const shoppingLists: ShoppingList[] = response.items.map(
-            (item) => new ShoppingList(item)
-          );
-          return shoppingLists;
-        })
-      );
+    this.paged$ = this.shoppingListService.getAllByYearAndMonthAndIsDone(
+      year,
+      month,
+      isDone
+    );
   }
 
   onCurrentYearAndMonthChange(): void {

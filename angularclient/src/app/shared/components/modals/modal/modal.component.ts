@@ -1,4 +1,3 @@
-import { LoadingService } from './../../../../core/services/loading.service';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
   Component,
@@ -22,10 +21,7 @@ export class ModalComponent implements OnInit {
 
   dismissIcon = faXmark;
 
-  constructor(
-    private modalService: NgbModal,
-    public loadingService: LoadingService
-  ) {}
+  constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {
     if (!this.modalConfig.closeButtonLabel) {

@@ -1,4 +1,3 @@
-import { LoadingService } from './../../../core/services/loading.service';
 import { PurchaseShoppingListProductsModalComponent } from './../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
@@ -23,6 +22,8 @@ import {
 } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { AddShoppingListProductComponent } from '../modals/add-shopping-list-product/add-shopping-list-product.component';
 import { EditShoppingListModalComponent } from '../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
+import { Observable, tap } from 'rxjs';
+import { ApiResponse } from 'app/core/models/api-response';
 
 @Component({
   selector: 'app-shopping-list-details',
@@ -33,9 +34,11 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   shoppingListId!: number;
   shoppingListProductNamesSelected: string[] = [];
 
+  shoppingList$: Observable<ApiResponse<ShoppingList>> = new Observable(null!);
   shoppingList?: ShoppingList;
 
   productsSubscription!: Subscription;
+  shoppingListSubscription!: Subscription;
 
   @ViewChildren('product') products!: QueryList<ShoppingListProductComponent>;
 
@@ -92,8 +95,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private shoppingListService: ShoppingListsService,
-    private router: Router,
-    public loadingService: LoadingService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -101,11 +103,12 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       (params: Params) => (this.shoppingListId = params['shoppingListId'])
     );
 
-    this.shoppingListService.singleShoppingListRefreshNeeded.subscribe(() => {
-      this.getShoppingList();
-    });
-
     this.getShoppingList();
+
+    this.shoppingListSubscription =
+      this.shoppingListService.singleShoppingListRefreshNeeded.subscribe(() => {
+        this.getShoppingList();
+      });
   }
 
   ngAfterViewInit(): void {
@@ -170,12 +173,16 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.productsSubscription.unsubscribe();
+    this.shoppingListSubscription.unsubscribe();
+    ('');
   }
 
   getShoppingList() {
-    this.shoppingListService.get(this.shoppingListId).subscribe((response) => {
-      this.shoppingList = new ShoppingList(response.data);
-    });
+    this.shoppingList$ = this.shoppingListService.get(this.shoppingListId).pipe(
+      tap((response: ApiResponse<ShoppingList>) => {
+        this.shoppingList = response.data;
+      })
+    );
   }
 
   markAsDone(isDone: boolean): void {

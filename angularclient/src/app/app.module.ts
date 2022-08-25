@@ -1,4 +1,3 @@
-import { SpinnerInterceptor } from './core/interceptors/spinner.interceptor';
 import { BillsModule } from './modules/bills/bills.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { SharedModule } from './shared/shared.module';
@@ -11,7 +10,7 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -51,6 +50,7 @@ import { ToastrModule } from 'ngx-toastr';
     // { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
 

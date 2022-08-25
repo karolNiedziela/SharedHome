@@ -1,16 +1,13 @@
-<ng-container *ngIf="loadingService.loading$ | async">
-  <app-loading-spinner></app-loading-spinner>
-</ng-container>
 <div
-  *ngIf="!(loadingService.loading$ | async)"
   class="card shopping-list"
-  [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+  *ngIf="(shoppingList$ | async)?.data as shoppingList; else loading"
+  [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
   <div
     class="card-header"
-    [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+    [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
   >
-    <h3 class="card-title">{{ shoppingList?.name }}</h3>
+    <h3 class="card-title">{{ shoppingList.name }}</h3>
     <div
       *ngIf="
         !shoppingListProductNamesSelected ||
@@ -29,32 +26,36 @@
     ></ng-template>
   </div>
   <ul class="list-group list-group-flush shopping-list__products">
-    <li *ngFor="let product of shoppingList?.products">
+    <li *ngFor="let product of shoppingList.products">
       <app-shopping-list-product
         #product
         class="single-product"
         [shoppingListProduct]="product"
         [shoppingListId]="shoppingListId"
-        [isDone]="shoppingList!.isDone"
+        [isDone]="shoppingList.isDone"
       ></app-shopping-list-product>
     </li>
   </ul>
   <div
     class="card-footer"
-    [ngClass]="{ 'shopping-list-done': shoppingList?.isDone }"
+    [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
   >
     <h5>
-      {{ shoppingList?.createdByFirstName }}
-      {{ shoppingList?.createdByLastName }}
+      {{ shoppingList.createdByFirstName }}
+      {{ shoppingList.createdByLastName }}
     </h5>
     <h5>Total price:</h5>
     <h5>
-      {{ shoppingList?.countBoughtProducts() }} /
-      {{ shoppingList?.products?.length }} products bought
+      {{ shoppingList.countBoughtProducts() }} /
+      {{ shoppingList.products.length }} products bought
     </h5>
-    <h5>{{ shoppingList?.countTotalPrice() }} zł</h5>
+    <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
   </div>
 </div>
+
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
 
 <app-add-shopping-list-product
   [shoppingListId]="shoppingListId"
