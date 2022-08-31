@@ -1,8 +1,11 @@
-<div class="row text-center">
-  <div class="col-md-6">
-    <div class="btn-group">
+<div class="calendar">
+  <div class="header">
+    <div class="header__title">
+      <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+    </div>
+    <div class="header__buttons">
       <div
-        class="btn btn-primary sharedhome-btn"
+        class="btn sharedhome-btn"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -17,7 +20,7 @@
         Current month
       </div>
       <div
-        class="btn btn-primary sharedhome-btn"
+        class="btn sharedhome-btn"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -26,12 +29,85 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="calendarEvents"
+    [weekStartsOn]="weekStartsOn"
+    [activeDayIsOpen]="activeDayIsOpen"
+    [openDayEventsTemplate]="openDayEventsTemplate"
+    (dayClicked)="dayClicked($event.day)"
+    [refresh]="refresh"
+  ></mwl-calendar-month-view>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Primary color</th>
+          <th>Secondary + text color</th>
+          <th>Starts at</th>
+          <th>Ends at</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let event of dayEvents">
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="event.title"
+              (keyup)="refresh.next()"
+            />
+          </td>
+          <td>
+            <input type="color" (change)="refresh.next()" />
+          </td>
+          <td>
+            <input type="color" (change)="refresh.next()" />
+            <input
+              type="color"
+              [ngModel]="'#1e90ff'"
+              (change)="refresh.next()"
+            />
+          </td>
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              mwlFlatpickr
+              [(ngModel)]="event.start"
+              (ngModelChange)="refresh.next()"
+              dateFormat="Y-m-dTH:i"
+              altFormat="F j, Y H:i"
+              placeholder="Not set"
+            />
+          </td>
+          <td>
+            <input
+              class="form-control"
+              type="text"
+              mwlFlatpickr
+              [(ngModel)]="event.end"
+              (ngModelChange)="refresh.next()"
+              dateFormat="Y-m-dTH:i"
+              altFormat="F j, Y H:i"
+              placeholder="Not set"
+            />
+          </td>
+          <td>
+            <button class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-<mwl-calendar-month-view
-  [viewDate]="viewDate"
-  [events]="events"
-  [weekStartsOn]="weekStartsOn"
-></mwl-calendar-month-view>
+
+<ng-template
+  #openDayEventsTemplate
+  let-events="events"
+  let-eventClicked="eventClicked"
+>
+</ng-template>

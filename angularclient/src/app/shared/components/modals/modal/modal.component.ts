@@ -49,15 +49,15 @@ export class ModalComponent implements OnInit {
     });
   }
 
-  async save(): Promise<void> {
+  save(): void {
     if (this.modalConfig?.onSave != undefined) {
-      const result = await this.modalConfig.onSave();
+      const result = this.modalConfig.onSave();
     }
   }
 
-  async close(): Promise<void> {
+  close(): void {
     if (this.modalConfig?.onClose != undefined) {
-      const result = await this.modalConfig.onClose();
+      const result = this.modalConfig.onClose();
     }
 
     this.modalRef.close();
@@ -70,8 +70,8 @@ export class ModalComponent implements OnInit {
     this.modalRef.dismiss();
   }
 
-  beforeDismiss(): Promise<boolean> {
+  beforeDismiss(): boolean {
     this.close();
-    return Promise.resolve(true);
+    return true;
   }
 }

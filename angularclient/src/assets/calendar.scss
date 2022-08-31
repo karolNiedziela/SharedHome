@@ -9,10 +9,14 @@
   cursor: pointer;
 }
 
-.cal-days .cal-today {
-  background-color: $l_primary_color_light !important;
-}
+// .cal-days .cal-today {
+//   background-color: $l_primary_color !important;
+// }
 
 .cal-day-cell:hover {
+  background: $l_primary_color_light !important;
+}
+
+.cal-open {
   background: $l_primary_color_light !important;
 }
