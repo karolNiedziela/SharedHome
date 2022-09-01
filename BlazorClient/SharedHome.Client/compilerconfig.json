@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/app.css",
+    "inputFile": "wwwroot/css/app.scss"
+  },
+  {
+    "outputFile": "Modules/Authentication/Pages/Login/Login.razor.css",
+    "inputFile": "Modules/Authentication/Pages/Login/Login.razor.scss"
+  }
+]

@@ -1,0 +1,21 @@
+﻿@using System.Linq.Expressions
+   <MudTextField T="string" Value="@Value" ValueChanged=ValueChanged  Label="@Label" For="@For" Required="@IsRequired" HelperText="@HelperText"/>
+@code {
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public bool IsRequired{ get; set; }
+
+    [Parameter]
+    public string? HelperText { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public Expression<Func<string>>? For { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+}

@@ -1,0 +1,39 @@
+﻿@using FluentValidation;
+
+<form class="row g-3 mb-2 mt-2">
+    <div class="form-floating">
+        <input type="email"
+               class="form-control sharedhome__input register__input"
+               placeholder="placeholder" />
+        <label class="sharedhome__label">
+            Email
+            <span class="required" aria-required="true">
+                *
+            </span>
+        </label>
+    </div>
+</form>
+
+<MudForm Model="@loginModel" @ref="@loginForm" Validation="@(loginValidator.ValidateValue)"  ValidationDelay="0">
+    <SharedHome.Client.Shared.Components.Inputs.TextInput  @bind-Value="loginModel.Email"  For="@(() => loginModel.Email)" Label="Email" IsRequired=true></SharedHome.Client.Shared.Components.Inputs.TextInput>
+   <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Order</MudButton>
+</MudForm>
+@code {
+    MudForm loginForm;
+
+    LoginModel loginModel = new LoginModel();
+
+    LoginModelValidator loginValidator = new LoginModelValidator();
+
+
+
+    private async Task Submit()
+    {
+        await loginForm.Validate();
+
+        if (loginForm.IsValid)
+        {
+            
+        }
+    }
+}

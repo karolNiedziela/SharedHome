@@ -1,0 +1,34 @@
+﻿<MudThemeProvider Theme="SharedHomeTheme"/>
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+
+@code {
+    MudTheme SharedHomeTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = Colors.Indigo.Default,
+            Secondary = Colors.Indigo.Lighten2,
+            Background = Colors.Shades.White,           
+        },
+        PaletteDark = new Palette()
+        {
+            Primary = Colors.Green.Default,
+            Secondary = Colors.Green.Lighten2,
+            Background = Colors.Shades.Black
+        },
+    };
+
+    private bool _isDarkMode;
+}
