@@ -125,16 +125,13 @@
       .nav-link {
         display: flex;
         transition: none;
-        color: $l_black_color;
 
         &:hover {
-          color: $l_primary_color_light;
-          border-right: 5px solid $l_primary_color_light;
+          border-right: 5px solid;
         }
 
         &.active {
-          color: $l_primary_color;
-          border-right: 5px solid $l_primary_color;
+          border-right: 5px solid;
         }
 
         fa-icon {

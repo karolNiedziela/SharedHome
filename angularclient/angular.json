@@ -32,10 +32,20 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/angular-calendar/css/angular-calendar.css",
-              "src/styles.scss",
               "src/assets/calendar.scss",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/ngx-toastr/toastr.css"
+
+              "src/styles.scss",
+              "./node_modules/ngx-toastr/toastr.css",
+              {
+                "input": "src/assets/themes/light.scss",
+                "bundleName": "light",
+                "inject": true
+              },
+              {
+                "input": "src/assets/themes/dark.scss",
+                "bundleName": "dark",
+                "inject": false
+              }
             ],
             "scripts": [
               "./node_modules/@popperjs/core/dist/umd/popper.min.js",

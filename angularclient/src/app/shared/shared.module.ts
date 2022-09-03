@@ -21,6 +21,7 @@ import { CurrencySelectComponent } from './components/selects/currency-select/cu
 import { CircleButtonComponent } from './components/buttons/circle-button/circle-button.component';
 import { ErrorComponent } from './components/errors/error/error.component';
 import { LoadingSpinnerComponent } from './components/spinners/loading-spinner/loading-spinner.component';
+import { ThemeSwitcherComponent } from './components/other/theme-switcher/theme-switcher.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LoadingSpinnerComponent } from './components/spinners/loading-spinner/l
     CircleButtonComponent,
     ErrorComponent,
     LoadingSpinnerComponent,
+    ThemeSwitcherComponent,
   ],
   imports: [
     CommonModule,
@@ -73,6 +75,7 @@ import { LoadingSpinnerComponent } from './components/spinners/loading-spinner/l
     CircleButtonComponent,
     ErrorComponent,
     LoadingSpinnerComponent,
+    ThemeSwitcherComponent,
   ],
 })
 export class SharedModule {}
