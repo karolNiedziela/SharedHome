@@ -3,7 +3,6 @@
     font-family: "Damion", cursive;
     font-size: 30px;
     font-size: calc(100% + 5vw + 3vh);
-    color: #3f51b5;
   }
 }
 
@@ -14,18 +13,4 @@
 .identity {
   box-shadow: 0 6px 20px rgba(18, 18, 18, 0.4);
   border-radius: 14px;
-}
-
-.form-control:focus + .sharedhome__label {
-  color: #3f51b5 !important;
-  opacity: 1;
-  font-weight: 700;
-}
-
-.form-control:focus {
-  color: #212529;
-  background-color: #fff;
-  border-color: #3f51b5;
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgb(63, 81, 181, 0.2);
 }

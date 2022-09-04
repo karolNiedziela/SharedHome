@@ -84,9 +84,7 @@ $primary: $l_primary_color !default;
 // $input-bg: lighten($body-bg, 10%) !default;
 // $input-disabled-bg: lighten($body-bg, 5%) !default;
 
-// $input-color: $white !default;
-
-// $input-placeholder-color: rgba($white, 0.4) !default;
+// $input-placeholder-color: red !default;
 
 // $input-group-addon-bg: $input-disabled-bg !default;
 
@@ -162,8 +160,45 @@ $primary: $l_primary_color !default;
 // $breadcrumb-divider-color: $text-muted !default;
 // $breadcrumb-active-color: $component-active-bg !default;
 
-// // Fix disappearing <hr>
+/*
+----------- IDENTITY -----------
+*/
 
+.welcome {
+  color: $l_primary_color;
+}
+
+/*
+----------- CARDS -----------
+*/
+
+.card {
+  box-shadow: 0px 10px 20px $l_primary_color_light;
+
+  &-header {
+    background-color: $l_white_color !important;
+  }
+
+  &-body {
+    background-color: $l_white_color !important;
+  }
+
+  &-footer {
+    background-color: $l_white_color !important;
+  }
+}
+
+/*
+----------- PRODUCT -----------
+*/
+.product {
+  &:hover {
+    border: 3px solid $l_primary_color_light;
+  }
+  &.selected {
+    border: 3px solid $l_primary_color_light;
+  }
+}
 /*
 ----------- SIDEBAR -----------
 */
@@ -209,9 +244,15 @@ a:hover {
   background-color: $l_primary_color_light !important;
 }
 
+.dropdown-toggle:hover::after {
+  color: $l_primary_color !important;
+}
+
 /*
 ----------- INPUTS -----------
 */
+$input-color: $l_black_color !default;
+$input-group-addon-bg: $l_white_color !default;
 
 .form-control:focus {
   color: $l_black_color !important;
@@ -221,6 +262,69 @@ a:hover {
 }
 
 .form-control:focus + .sharedhome__label {
+  color: $l_primary_color !important;
+}
+
+/*
+----------- MENU TOGGLE -----------
+*/
+
+.menu-toggle {
+  &__hamburger span {
+    background-color: $l_black_color !important;
+  }
+
+  &:hover &__hamburger span {
+    background-color: $l_primary_color !important;
+  }
+
+  &__hamburger span::before,
+  &__hamburger span::after {
+    background-color: inherit;
+  }
+}
+
+/*
+----------- SIDEBAR -----------
+*/
+
+@media (max-width: 768px) {
+  .sidebar {
+    background-color: rgba($color: $l_black_color, $alpha: 0.8);
+    color: white;
+
+    .nav-link {
+      color: $l_white_color !important;
+
+      &:hover {
+        color: $l_primary_color_light !important;
+      }
+
+      &.active {
+        color: $l_primary_color_light !important;
+      }
+    }
+
+    hr {
+      color: $l_white_color;
+    }
+  }
+}
+
+/*
+----------- MODAL -----------
+*/
+
+.dismiss-icon {
+  &:hover {
+    color: $l_primary_color !important;
+  }
+}
+
+/*
+----------- SPINNER -----------
+*/
+.spinner-border {
   color: $l_primary_color !important;
 }
 

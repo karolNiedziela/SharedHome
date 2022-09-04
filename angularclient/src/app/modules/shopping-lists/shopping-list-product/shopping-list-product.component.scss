@@ -9,13 +9,6 @@
     "item item2 side"
     "item3 item4 side";
 
-  &:hover {
-    border: 1px solid $l_primary_color_light;
-  }
-  &.selected {
-    border: 1px solid $l_primary_color_light;
-  }
-
   &__name {
     display: flex;
     grid-area: item;

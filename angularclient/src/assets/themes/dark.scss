@@ -1,7 +1,7 @@
-@import "../variables";
-
-$theme: "dark" !default;
-
+$l_primary_color: #4caf50 !default;
+$l_black_color: white !default;
+$l_primary_color_light: #81c784 !default;
+$l_white_color: black;
 //
 // Color system
 //
@@ -29,7 +29,7 @@ $theme: "dark" !default;
 // $teal: #20c997 !default;
 // $cyan: #17a2b8 !default;
 
-// $primary: $orange !default;
+$primary: #4caf50 !default;
 // $secondary: $gray-500 !default;
 // $success: $green !default;
 // $info: $cyan !default;
@@ -42,8 +42,8 @@ $theme: "dark" !default;
 
 // // Body
 
-// $body-bg: $cyan !default;
-// $body-color: $green !default;
+$body-bg: #424242 !default;
+$body-color: white !default;
 
 // // Fonts
 
@@ -57,8 +57,198 @@ $theme: "dark" !default;
 // $table-dark-bg: $dark !default;
 // $table-dark-border-color: darken($dark, 5%) !default;
 
+/*
+----------- IDENTITY -----------
+*/
+
+.welcome {
+  color: $l_primary_color;
+}
+
+/*
+----------- CARDS -----------
+*/
+.card {
+  box-shadow: 0px 10px 20px $l_primary_color_light;
+  background-color: #424242 !important;
+
+  &-header {
+    background-color: #424242 !important;
+  }
+
+  &-body {
+    background-color: #424242 !important;
+  }
+
+  &-footer {
+    background-color: #424242 !important;
+  }
+}
+
+/*
+----------- PRODUCT -----------
+*/
+.product {
+  &:hover {
+    border: 3px solid $l_primary_color_light;
+  }
+  &.selected {
+    border: 3px solid $l_primary_color_light;
+  }
+}
+
+/*
+----------- SIDEBAR -----------
+*/
+
+.nav-link {
+  color: $l_black_color !important;
+
+  &.active {
+    color: $l_primary_color !important;
+  }
+}
+
+.nav-link a:hover {
+  color: $l_primary_color_light !important;
+}
+
+/*
+----------- ICONS -----------
+*/
+.shared-home-icon {
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+    color: $l_primary_color !important;
+  }
+}
+
+/*
+----------- LINKS -----------
+*/
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: $l_primary_color !important;
+  cursor: pointer;
+}
+
+/*
+----------- DROPDOWNS -----------
+*/
+
+.dropdown-item:hover {
+  background-color: $l_primary_color_light !important;
+}
+
+.dropdown-toggle:hover::after {
+  color: $l_primary_color !important;
+}
+
+.dropdown-menu {
+  background-color: #424242 !important;
+}
+
+.dropdown-item {
+  background-color: #424242 !important;
+  color: $l_black_color !important;
+}
+
+/*
+----------- INPUTS -----------
+*/
+
+$input-group-addon-bg: #424242 !default;
+
+.form-control:focus {
+  color: $l_black_color !important;
+  background-color: rgba($color: $l_white_color, $alpha: 0.3) !important;
+  border-color: $l_primary_color !important;
+  box-shadow: 0 0 0 0.25rem $l_primary_color_light !important;
+}
+
 .form-control:focus + .sharedhome__label {
-  color: red !important;
+  color: $l_primary_color !important;
+}
+
+/*
+----------- MENU TOGGLE -----------
+*/
+
+.menu-toggle {
+  &__hamburger span {
+    background-color: $l_black_color !important;
+  }
+
+  &:hover &__hamburger span {
+    background-color: $l_primary_color !important;
+  }
+
+  &__hamburger span::before,
+  &__hamburger span::after {
+    background-color: inherit;
+  }
+}
+
+/*
+----------- BUTTONS -----------
+*/
+
+.btn {
+  color: white !important;
+}
+
+/*
+----------- SIDEBAR -----------
+*/
+
+@media (max-width: 768px) {
+  .sidebar {
+    background-color: rgba($color: #424242, $alpha: 0.8);
+    color: $l_black_color !important;
+
+    .nav-link {
+      color: $l_black_color !important;
+
+      &:hover {
+        color: $l_primary_color_light !important;
+      }
+
+      &.active {
+        color: $l_primary_color_light !important;
+      }
+    }
+
+    hr {
+      color: $l_black_color;
+    }
+  }
+}
+
+/*
+----------- MODAL -----------
+*/
+
+.modal-content {
+  background-color: #424242 !important;
+}
+
+.dismiss-icon {
+  &:hover {
+    color: #4caf50 !important;
+  }
+}
+
+/*
+----------- SPINNER -----------
+*/
+.spinner-border {
+  color: $l_primary_color !important;
 }
 
 @import "~bootstrap/scss/bootstrap";

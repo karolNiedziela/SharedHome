@@ -18,10 +18,6 @@
   cursor: pointer;
   z-index: 3;
 
-  &:hover &__hamburger span {
-    background-color: $l_primary_color;
-  }
-
   &:hover &__hamburger span::before {
     top: -10px;
   }
@@ -56,7 +52,7 @@
     display: inline-block;
     width: 24px;
     height: 3px;
-    background-color: $l_black_color;
+
     vertical-align: middle;
     -webkit-transform: translateY(-2px);
     -moz-transform: translateY(-2px);
@@ -71,10 +67,8 @@
     display: inline-block;
     position: absolute;
     left: 0;
-
     width: 100%;
     height: 100%;
-    background-color: inherit;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
     transition: all 0.2s;
@@ -101,7 +95,6 @@
   justify-content: center;
 
   &__name {
-    color: $l_primary_color;
     font-size: 1.5rem;
     font-weight: 900;
   }
@@ -176,36 +169,22 @@
     width: 100%;
     max-width: 300px;
     transition: 0.2s linear;
-    background-color: rgba($color: #000000, $alpha: 0.8);
     z-index: 3;
-    color: white;
   }
 
   .sidebar.is-active {
     left: 0;
   }
 
-  .logo__name {
-    color: $l_white_color;
-  }
-
   .nav-link {
     transition: none;
-    color: $l_white_color !important;
 
     &:hover {
-      color: $l_primary_color_light !important;
-      border-right: 5px solid $l_primary_color_light !important;
+      border-right: 5px solid;
     }
 
     &.active {
-      // background: $l_primary_color !important;
-      color: $l_primary_color_light !important;
-      border-right: 5px solid $l_primary_color_light !important;
+      border-right: 5px solid;
     }
-  }
-
-  hr {
-    color: $l_white_color;
   }
 }

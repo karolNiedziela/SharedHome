@@ -66,7 +66,13 @@
     </li>
     <hr />
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        [routerLink]="['/settings']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <fa-icon [icon]="settingsIcon"></fa-icon>
         <span class="links_name">Settings</span>
       </a>

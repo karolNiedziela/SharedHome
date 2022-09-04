@@ -2,11 +2,13 @@
   class="card shopping-list"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
-  <div
-    class="card-header"
-    [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
-  >
-    <h3 class="card-title">{{ shoppingList.name }}</h3>
+  <div class="card-header">
+    <h3
+      class="card-title"
+      [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+    >
+      {{ shoppingList.name }}
+    </h3>
 
     <div class="card-header__operations">
       <fa-icon

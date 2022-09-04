@@ -23,7 +23,6 @@
       [month]="month"
     ></app-add-shopping-list>
   </div>
-  <app-theme-switcher></app-theme-switcher>
   <div class="shopping-lists row" *ngIf="paged$ | async as paged; else loading">
     <div
       class="col-sm-12 col-md-6 col-lg-6 col-xl-6"

@@ -3,27 +3,33 @@
   *ngIf="(shoppingList$ | async)?.data as shoppingList; else loading"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
-  <div
-    class="card-header"
-    [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
-  >
-    <h3 class="card-title">{{ shoppingList.name }}</h3>
-    <div
-      *ngIf="
-        !shoppingListProductNamesSelected ||
-          shoppingListProductNamesSelected.length == 0;
-        then headerPopup;
-        else multipleSelectHeader
-      "
-    ></div>
-    <ng-template #headerPopup>
-      <app-popup-menu [popupMenuConfig]="headerPopupMenuConfig"></app-popup-menu
-    ></ng-template>
-    <ng-template #multipleSelectHeader>
-      <app-popup-menu
-        [popupMenuConfig]="multipleItemsSelectedPopupMenuConfig"
-      ></app-popup-menu
-    ></ng-template>
+  <div class="card-header">
+    <h3
+      class="card-title"
+      [ngClass]="{ 'text-decoration-line-through': shoppingList.isDone }"
+    >
+      {{ shoppingList.name }}
+    </h3>
+    <div *ngIf="!shoppingList.isDone">
+      <div
+        *ngIf="
+          !shoppingListProductNamesSelected ||
+            shoppingListProductNamesSelected.length == 0;
+          then headerPopup;
+          else multipleSelectHeader
+        "
+      ></div>
+      <ng-template #headerPopup>
+        <app-popup-menu
+          [popupMenuConfig]="headerPopupMenuConfig"
+        ></app-popup-menu
+      ></ng-template>
+      <ng-template #multipleSelectHeader>
+        <app-popup-menu
+          [popupMenuConfig]="multipleItemsSelectedPopupMenuConfig"
+        ></app-popup-menu
+      ></ng-template>
+    </div>
   </div>
   <ul class="list-group list-group-flush shopping-list__products">
     <li *ngFor="let product of shoppingList.products">

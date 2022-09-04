@@ -5,22 +5,18 @@
     </div>
     <div class="header__buttons">
       <div
-        class="btn sharedhome-btn"
+        class="btn btn-primary sharedhome-btn"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
       >
         Previous month
       </div>
-      <div
-        class="btn btn-outline-secondary"
-        mwlCalendarToday
-        [(viewDate)]="viewDate"
-      >
+      <div class="btn" mwlCalendarToday [(viewDate)]="viewDate">
         Current month
       </div>
       <div
-        class="btn sharedhome-btn"
+        class="btn btn-primary sharedhome-btn"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
