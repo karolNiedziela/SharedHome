@@ -41,7 +41,6 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 
                 var billsFromHouseGroup = await _bills
                     .Where(bill => houseGroupPersonsId.Contains(bill.PersonId) &&
-                    bill.IsPaid == request.IsPaid &&
                     bill.DateOfPayment.Month == request.Month &&
                     bill.DateOfPayment.Year == request.Year)
                     .Select(bill => _mapper.Map<BillDto>(bill))
@@ -52,7 +51,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
             }
 
             var bills = await _bills
-                .Where(bill => bill.IsPaid == request.IsPaid &&
+                .Where(bill =>
                     bill.DateOfPayment.Month == request.Month &&
                     bill.DateOfPayment.Year == request.Year)
                 .Select(bill => _mapper.Map<BillDto>(bill))

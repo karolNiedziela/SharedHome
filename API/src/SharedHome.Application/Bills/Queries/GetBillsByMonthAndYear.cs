@@ -10,7 +10,5 @@ namespace SharedHome.Application.Bills.Queries
         public int? Month { get; set; }
 
         public int? Year { get; set; }
-
-        public bool IsPaid { get; set; } = false;
     }
 }

@@ -45,7 +45,7 @@ namespace SharedHome.Api.Controllers
         /// <returns>Bills from month and year</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<BillDto>>> GetBillsByMonthAndYearAsync([FromQuery] GetBillsByMonthAndYear query) 
+        public async Task<ActionResult<Response<List<BillDto>>>> GetBillsByMonthAndYearAsync([FromQuery] GetBillsByMonthAndYear query) 
         {
             var bills = await Mediator.Send(query);
 
