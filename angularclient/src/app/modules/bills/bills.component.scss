@@ -1,5 +1,9 @@
 @import "/src/assets/_variables.scss";
 
+.calendar {
+  height: 100%;
+}
+
 .header {
   display: flex;
   flex-direction: row;

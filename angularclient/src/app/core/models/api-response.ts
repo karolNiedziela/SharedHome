@@ -1,4 +1,4 @@
-export interface ApiResponse<Type> {
-  data: Type;
+export interface ApiResponse<T> {
+  data: T;
   message: string;
 }

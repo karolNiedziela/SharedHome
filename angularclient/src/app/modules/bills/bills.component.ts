@@ -1,7 +1,14 @@
+import { BillEvent } from './models/bill-event';
+import { ApiResponse } from 'app/core/models/api-response';
+import { BillService } from './services/bill.service';
 import { CalendarEvent } from './../../../../node_modules/calendar-utils/calendar-utils.d';
 import { Component, OnInit } from '@angular/core';
-import { CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
-import { Subject } from 'rxjs';
+import {
+  CalendarMonthViewDay,
+  CalendarView,
+  DAYS_OF_WEEK,
+} from 'angular-calendar';
+import { Subject, Observable, map, of } from 'rxjs';
 import { colors } from 'app/shared/utils/colors';
 import {
   startOfDay,
@@ -13,6 +20,7 @@ import {
   isSameMonth,
   addHours,
 } from 'date-fns';
+import { Bill } from './models/bill';
 
 @Component({
   selector: 'app-bills',
@@ -20,50 +28,10 @@ import {
   styleUrls: ['./bills.component.scss'],
 })
 export class BillsComponent implements OnInit {
+  events$!: Observable<BillEvent[]>;
   view: CalendarView = CalendarView.Month;
-  calendarEvents: CalendarEvent[] = [
-    {
-      start: subDays(new Date(), 2),
-      end: subDays(new Date(), 2),
-      title: 'A 3 day event',
-      color: { ...colors.red },
-      // actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: new Date(),
-      end: new Date(),
-      title: 'An event with no end date',
-      color: { ...colors.yellow },
-      // actions: this.actions,
-    },
-    {
-      start: subDays(new Date(), 1),
-      end: subDays(new Date(), 1),
-      title: 'A long event that spans 2 months',
-      color: { ...colors.blue },
-      allDay: true,
-    },
-    {
-      start: new Date(),
-      end: new Date(),
-      title: 'A draggable and resizable event',
-      color: { ...colors.yellow },
-      // actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
 
-  dayEvents: CalendarEvent[] = [];
+  currentDayEvents: CalendarEvent[] = [];
 
   CalendarView = CalendarView;
 
@@ -75,11 +43,38 @@ export class BillsComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-  constructor() {}
+  constructor(private billService: BillService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.events$ = this.billService.getAllByYearAndMonthAndIsDone(2022, 9).pipe(
+      map((response: ApiResponse<Bill[]>) => {
+        const billEvents: BillEvent[] = response.data.map((bill: Bill) => {
+          const billEvent: BillEvent = {
+            id: bill.id,
+            start: new Date(Date.parse(bill.dateOfPayment.toString())),
+            end: new Date(Date.parse(bill.dateOfPayment.toString())),
+            title: bill.serviceProvider,
+            isPaid: bill.isPaid,
+            serviceProvider: bill.serviceProvider,
+            dateOfPayment: bill.dateOfPayment,
+            billType: bill.billType,
+            cost: bill.cost,
+            currency: bill.currency,
+          };
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+          return billEvent;
+        });
+        return billEvents;
+      })
+    );
+  }
+
+  dayClicked(
+    calendarMonthViewDay: CalendarMonthViewDay,
+    events: BillEvent[]
+  ): void {
+    console.log(calendarMonthViewDay);
+    const date: Date = calendarMonthViewDay.date;
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -91,8 +86,8 @@ export class BillsComponent implements OnInit {
       }
       this.viewDate = date;
     }
-    console.log(date);
-    this.dayEvents = this.calendarEvents.filter(
+
+    this.currentDayEvents = events.filter(
       (x) => x.start >= startOfDay(date) && x.end! < endOfDay(date)
     );
   }
