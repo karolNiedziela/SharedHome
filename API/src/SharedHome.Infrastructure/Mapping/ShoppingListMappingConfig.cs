@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Constants;
@@ -18,8 +19,11 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<ShoppingListProduct, ShoppingListProductDto>()
                 .Map(dest => dest.Name, src => src.Name.Value)
                 .Map(dest => dest.Quantity, src => src.Quantity.Value)
-                .Map(dest => dest.Price, src => src.Price == null ? null : (decimal?)src.Price!.Amount)
-                .Map(dest => dest.Currency, src => src.Price == null ? null : src.Price!.Currency)
+                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto
+                {
+                    Price = src.Price.Amount,
+                    Currency = src.Price.Currency.Value
+                })               
                 .Map(dest => dest.NetContent, src => src.NetContent == null ? null : src.NetContent.Value)
                 .Map(dest => dest.NetContentType, src => src.NetContent == null ? null : src.NetContent.Type.ToString());
 
@@ -28,8 +32,14 @@ namespace SharedHome.Infrastructure.Mapping
                 .Map(dest => dest.CreatedByLastName, src => src.Person.LastName)
                 .Map(dest => dest.CreatedByFullName, src => $"{src.Person.FirstName} {src.Person.LastName}");
 
+
             config.NewConfig<ShoppingListProductReadModel, ShoppingListProductDto>()
-                .Map(dest => dest.NetContentType, src => src.NetContentType == null ? null : src.NetContentType!.ToString());
+                .Map(dest => dest.NetContentType, src => src.NetContentType == null ? null : src.NetContentType!.ToString())
+                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto
+                {
+                    Price = src.Price.Value,
+                    Currency = src.Currency!
+                });
 
             config.NewConfig<AddShoppingListProductDto, ShoppingListProduct>()
                 .ConstructUsing(src => 

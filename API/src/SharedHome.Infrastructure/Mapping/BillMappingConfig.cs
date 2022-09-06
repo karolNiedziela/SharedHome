@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using SharedHome.Application.Bills.DTO;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Infrastructure.EF.Models;
 
@@ -11,11 +12,19 @@ namespace SharedHome.Infrastructure.Mapping
         {
             config.NewConfig<Bill, BillDto>()
                 .Map(dest => dest.ServiceProvider, src => src.ServiceProvider.Name)
-                .Map(dest => dest.Cost, src => src.Cost == null ? null : (decimal?)src.Cost!.Amount)
-                .Map(dest => dest.Currency, src => src.Cost == null ? null : src.Cost!.Currency);
+                .Map(dest => dest.Cost, src => src.Cost == null ? null : new MoneyDto
+                {
+                    Price = src.Cost.Amount,
+                    Currency = src.Cost.Currency.Value
+                });
 
             config.NewConfig<BillReadModel, BillDto>()
-                .Map(dest => dest.ServiceProvider, src => src.ServiceProviderName);
+                .Map(dest => dest.ServiceProvider, src => src.ServiceProviderName)
+                .Map(dest => dest.Cost, src => src.Cost == null ? null : new MoneyDto
+                {
+                    Price = src.Cost.Value,
+                    Currency = src.Currency!
+                });
         }
     }
 }

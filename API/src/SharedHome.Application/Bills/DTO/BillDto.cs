@@ -1,4 +1,5 @@
-﻿using SharedHome.Domain.Bills.Constants;
+﻿using SharedHome.Application.Common.DTO;
+using SharedHome.Domain.Bills.Constants;
 
 namespace SharedHome.Application.Bills.DTO
 {
@@ -12,9 +13,7 @@ namespace SharedHome.Application.Bills.DTO
 
         public string ServiceProvider { get; set; } = default!;
 
-        public decimal? Cost { get; set; }
-
-        public string? Currency { get; set; }
+        public MoneyDto? Cost { get; set; }
 
         public DateTime DateOfPayment { get; set; }
     }

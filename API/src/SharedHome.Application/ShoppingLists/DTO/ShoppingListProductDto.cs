@@ -1,4 +1,6 @@
-﻿namespace SharedHome.Application.ShoppingLists.DTO
+﻿using SharedHome.Application.Common.DTO;
+
+namespace SharedHome.Application.ShoppingLists.DTO
 {
     public class ShoppingListProductDto
     {
@@ -6,9 +8,7 @@
 
         public uint Quantity { get; set; }
 
-        public decimal? Price { get; set; }
-
-        public string? Currency { get; set; }
+        public MoneyDto? Price { get; set; }
 
         public string? NetContent { get; set; }
 
