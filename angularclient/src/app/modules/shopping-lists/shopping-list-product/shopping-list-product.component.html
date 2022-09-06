@@ -19,7 +19,8 @@
     ></div>
     <ng-template #thenBlock
       ><h5>
-        {{ shoppingListProduct.price }} {{ shoppingListProduct.currency }}
+        {{ shoppingListProduct.price?.price }}
+        {{ shoppingListProduct.price?.currency }}
       </h5></ng-template
     >
 

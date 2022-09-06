@@ -1,3 +1,4 @@
+import { Money } from 'app/core/models/money';
 import { BillType } from '../enums/bill-type';
 
 export interface Bill {
@@ -5,7 +6,6 @@ export interface Bill {
   isPaid: boolean;
   billType: BillType;
   serviceProvider: string;
-  cost?: number;
-  currency?: string;
+  cost?: Money;
   dateOfPayment: Date;
 }

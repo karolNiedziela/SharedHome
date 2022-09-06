@@ -10,7 +10,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ConfirmationModalComponent } from './components/modals/confirmation-modal/confirmation-modal.component';
 import { ButtonComponent } from './components/buttons/button/button.component';
 import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.component';
@@ -22,6 +22,9 @@ import { CircleButtonComponent } from './components/buttons/circle-button/circle
 import { ErrorComponent } from './components/errors/error/error.component';
 import { LoadingSpinnerComponent } from './components/spinners/loading-spinner/loading-spinner.component';
 import { ThemeSwitcherComponent } from './components/other/theme-switcher/theme-switcher.component';
+import { TableComponent } from './components/tables/table/table.component';
+import { StyleCellDirective } from './directives/style-cell.directive';
+import { FormatCellPipe } from './pipes/format-cell.pipe';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { ThemeSwitcherComponent } from './components/other/theme-switcher/theme-
     ErrorComponent,
     LoadingSpinnerComponent,
     ThemeSwitcherComponent,
+    TableComponent,
+    StyleCellDirective,
+    FormatCellPipe,
   ],
   imports: [
     CommonModule,
@@ -76,6 +82,8 @@ import { ThemeSwitcherComponent } from './components/other/theme-switcher/theme-
     ErrorComponent,
     LoadingSpinnerComponent,
     ThemeSwitcherComponent,
+    TableComponent,
   ],
+  providers: [DatePipe],
 })
 export class SharedModule {}

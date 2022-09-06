@@ -33,36 +33,16 @@
       [weekStartsOn]="weekStartsOn"
       [activeDayIsOpen]="activeDayIsOpen"
       [openDayEventsTemplate]="openDayEventsTemplate"
-      (dayClicked)="dayClicked($event.day, evs)"
+      (dayClicked)="dayClicked($event.day.date, evs)"
       [refresh]="refresh"
     ></mwl-calendar-month-view>
 
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Remove</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let event of currentDayEvents">
-            <td>
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="event.title"
-                (keyup)="refresh.next()"
-              />
-            </td>
-            <td>
-              <button class="btn btn-danger">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <app-table
+      *ngIf="currentDayEvents.length > 0"
+      [settings]="columnSettings"
+      [records]="currentDayEvents"
+      [actions]="tablePopupMenuConfig"
+    ></app-table>
   </div>
   <ng-template #loading>
     <app-loading-spinner class="spinner"> Loading... </app-loading-spinner>

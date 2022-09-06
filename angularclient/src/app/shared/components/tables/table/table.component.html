@@ -1,0 +1,36 @@
+<!-- <table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th *ngFor="let header of headers">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let column of columns">
+      <td *ngFor="let header of headers">{{ column }}</td>
+    </tr>
+  </tbody>
+</table> -->
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th *ngFor="let map of columnMaps">{{ map.header }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of records">
+        <td
+          *ngFor="let map of columnMaps"
+          [id]="map.header"
+          [appStyleCell]="record[map.propertyName]"
+          [key]="map.propertyName"
+        >
+          {{ record[map.propertyName] | formatCell: map.format! }}
+        </td>
+        <td *ngIf="actions">
+          <app-popup-menu [popupMenuConfig]="actions"></app-popup-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

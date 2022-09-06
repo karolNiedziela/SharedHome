@@ -16,9 +16,11 @@ export class ShoppingList {
   }
 
   countTotalPrice() {
-    return this.products?.reduce(
-      (sum, product) => sum + product.price! * product.quantity ?? 0,
-      0
-    );
+    return this.products
+      ?.filter((p) => p.price != null)
+      .reduce(
+        (sum, product) => sum + product.price!.price * product.quantity ?? 0,
+        0
+      );
   }
 }

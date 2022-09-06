@@ -1,26 +1,15 @@
+import { PopupMenuConfig } from './../../shared/components/menus/popup-menu/popup-menu.config';
+import { ColumnSetting } from './../../shared/components/tables/column-setting';
 import { BillEvent } from './models/bill-event';
 import { ApiResponse } from 'app/core/models/api-response';
 import { BillService } from './services/bill.service';
 import { CalendarEvent } from './../../../../node_modules/calendar-utils/calendar-utils.d';
 import { Component, OnInit } from '@angular/core';
-import {
-  CalendarMonthViewDay,
-  CalendarView,
-  DAYS_OF_WEEK,
-} from 'angular-calendar';
+import { CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
 import { Subject, Observable, map, of } from 'rxjs';
-import { colors } from 'app/shared/utils/colors';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { startOfDay, endOfDay, isSameDay, isSameMonth } from 'date-fns';
 import { Bill } from './models/bill';
+import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
 
 @Component({
   selector: 'app-bills',
@@ -43,6 +32,42 @@ export class BillsComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
+  columnSettings: ColumnSetting[] = [
+    {
+      propertyName: 'serviceProvider',
+      header: 'Service Provider',
+    },
+    {
+      propertyName: 'dateOfPayment',
+      header: 'Date of Payment',
+      format: CellPipeFormat.DATE,
+    },
+    {
+      propertyName: 'billType',
+      header: 'Type',
+    },
+    {
+      propertyName: 'cost',
+      header: 'Cost',
+      format: CellPipeFormat.MONEY,
+    },
+    {
+      propertyName: 'isPaid',
+      header: 'Paid',
+    },
+  ];
+
+  tablePopupMenuConfig: PopupMenuConfig = {
+    additionalPopupMenuItems: [
+      {
+        text: 'Test',
+        onClick: () => {
+          alert('hello');
+        },
+      },
+    ],
+  };
+
   constructor(private billService: BillService) {}
 
   ngOnInit(): void {
@@ -58,23 +83,25 @@ export class BillsComponent implements OnInit {
             serviceProvider: bill.serviceProvider,
             dateOfPayment: bill.dateOfPayment,
             billType: bill.billType,
-            cost: bill.cost,
-            currency: bill.currency,
+            cost:
+              bill.cost == null
+                ? null
+                : {
+                    price: bill.cost.price,
+                    currency: bill.cost.currency,
+                  },
           };
 
           return billEvent;
         });
+
+        this.dayClicked(new Date(Date.now()), billEvents);
         return billEvents;
       })
     );
   }
 
-  dayClicked(
-    calendarMonthViewDay: CalendarMonthViewDay,
-    events: BillEvent[]
-  ): void {
-    console.log(calendarMonthViewDay);
-    const date: Date = calendarMonthViewDay.date;
+  dayClicked(date: Date, events: BillEvent[]): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -90,5 +117,13 @@ export class BillsComponent implements OnInit {
     this.currentDayEvents = events.filter(
       (x) => x.start >= startOfDay(date) && x.end! < endOfDay(date)
     );
+  }
+
+  getHeaders(events: BillEvent[]): string[] {
+    return ['test', 'test2'];
+  }
+
+  getColumns(events: BillEvent[]): string[] {
+    return events.map((x) => x.serviceProvider);
   }
 }
