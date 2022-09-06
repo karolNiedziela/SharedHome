@@ -35,7 +35,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 CurrentProductName = ShoppingListProvider.ProductName,
                 NewProductName = "NewProductName",
                 Quantity = 2,
-                NetContent = "300"
+                NetContent = "300",
+                IsBought = true
             };
 
             var shoppingList = ShoppingListProvider.GetWithProduct(netContent: new NetContent("500", NetContentType.g));

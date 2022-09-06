@@ -30,7 +30,8 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
 
             var shoppingListProduct = new ShoppingListProduct(request.NewProductName,
                                                               request.Quantity,
-                                                              netContent: new NetContent(request.NetContent, netContentType));
+                                                              netContent: new NetContent(request.NetContent, netContentType),
+                                                              isBought: request.IsBought);
 
             shoppingList.UpdateProduct(shoppingListProduct, request.CurrentProductName);
 

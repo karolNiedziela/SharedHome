@@ -17,5 +17,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
         public string? NetContent { get; set; }
 
         public int? NetContentType { get; set; } = default!;
+
+        public bool IsBought { get; set; }
     }
 }

@@ -94,7 +94,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductIsAlreadyBoughtException(productName);
             }
 
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, isBought: true));
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, netContent: product.NetContent, isBought: true));
         }
 
         public void PurchaseProducts(Dictionary<string, Money> priceByProductNames)
@@ -117,7 +117,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
 
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, isBought: product.IsBought));
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, netContent: product.NetContent, isBought: product.IsBought));
         }
 
         public void CancelPurchaseOfProduct(string productName)
@@ -130,7 +130,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
             
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, isBought: false));
+            product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, netContent: product.NetContent, isBought: false));
         }
 
         public void MakeListDone()
@@ -151,7 +151,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         public void UpdateProduct(ShoppingListProduct shoppingListProduct, string currentProductName)
         {
-            if (_products.Any(p => p.Name == shoppingListProduct.Name))
+            if (shoppingListProduct.Name != currentProductName && _products.Any(p => p.Name == shoppingListProduct.Name))
             {
                 throw new ShoppingListProductAlreadyExistsException(shoppingListProduct.Name);
             }
