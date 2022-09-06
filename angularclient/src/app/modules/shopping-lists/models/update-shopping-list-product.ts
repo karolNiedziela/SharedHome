@@ -5,4 +5,5 @@ export interface UpdateShoppingListProduct {
   quantity: number;
   netContent?: string;
   netContentType?: number;
+  isBought: boolean;
 }

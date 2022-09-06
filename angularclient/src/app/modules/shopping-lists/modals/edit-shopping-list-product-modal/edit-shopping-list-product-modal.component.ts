@@ -84,6 +84,7 @@ export class EditShoppingListProductModalComponent
       quantity: quantity,
       netContent: netContent,
       netContentType: netContentType,
+      isBought: this.shoppingListProduct!.isBought,
     };
 
     this.shoppingListService
