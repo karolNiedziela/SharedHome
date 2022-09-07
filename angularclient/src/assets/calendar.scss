@@ -1,22 +1,7 @@
-@import "./_variables.scss";
-
-.cal-cell-row:hover {
-  background: none !important;
-}
-
-.cal-cell:hover {
-  background: none !important;
+.cal-day-cell {
   cursor: pointer;
 }
 
-// .cal-days .cal-today {
-//   background-color: $l_primary_color !important;
-// }
-
-.cal-day-cell:hover {
-  background: $l_primary_color_light !important;
-}
-
-.cal-open {
-  background: $l_primary_color_light !important;
+.cal-day-number {
+  opacity: 1 !important;
 }

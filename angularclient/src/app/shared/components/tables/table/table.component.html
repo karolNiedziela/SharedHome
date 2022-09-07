@@ -19,12 +19,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let record of records">
-        <td
-          *ngFor="let map of columnMaps"
-          [id]="map.header"
-          [appStyleCell]="record[map.propertyName]"
-          [key]="map.propertyName"
-        >
+        <td *ngFor="let map of columnMaps" [id]="map.header">
           {{ record[map.propertyName] | formatCell: map.format! }}
         </td>
         <td *ngIf="actions">

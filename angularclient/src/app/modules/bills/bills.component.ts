@@ -1,3 +1,4 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { PopupMenuConfig } from './../../shared/components/menus/popup-menu/popup-menu.config';
 import { ColumnSetting } from './../../shared/components/tables/column-setting';
 import { BillEvent } from './models/bill-event';
@@ -10,6 +11,7 @@ import { Subject, Observable, map, of } from 'rxjs';
 import { startOfDay, endOfDay, isSameDay, isSameMonth } from 'date-fns';
 import { Bill } from './models/bill';
 import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
+import { BillType } from './enums/bill-type';
 
 @Component({
   selector: 'app-bills',
@@ -17,6 +19,8 @@ import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
   styleUrls: ['./bills.component.scss'],
 })
 export class BillsComponent implements OnInit {
+  addIcon = faPlus;
+
   events$!: Observable<BillEvent[]>;
   view: CalendarView = CalendarView.Month;
 
@@ -68,6 +72,8 @@ export class BillsComponent implements OnInit {
     ],
   };
 
+  private readonly darkThemeClass = 'dark-theme';
+
   constructor(private billService: BillService) {}
 
   ngOnInit(): void {
@@ -94,7 +100,7 @@ export class BillsComponent implements OnInit {
 
           return billEvent;
         });
-
+        console.log(billEvents);
         this.dayClicked(new Date(Date.now()), billEvents);
         return billEvents;
       })
@@ -125,5 +131,9 @@ export class BillsComponent implements OnInit {
 
   getColumns(events: BillEvent[]): string[] {
     return events.map((x) => x.serviceProvider);
+  }
+
+  getBillTypes(billEvents: BillEvent[]): BillType[] {
+    return billEvents.map((billEvent) => billEvent.billType);
   }
 }

@@ -2,7 +2,7 @@
   <div *ngIf="events$ | async as evs; else loading">
     <div class="header">
       <div class="header__title">
-        <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
+        <h4>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h4>
       </div>
       <div class="header__buttons">
         <div
@@ -11,19 +11,20 @@
           [view]="view"
           [(viewDate)]="viewDate"
         >
-          Previous month
+          Previous
         </div>
-        <div class="btn" mwlCalendarToday [(viewDate)]="viewDate">
-          Current month
-        </div>
+        <div class="btn" mwlCalendarToday [(viewDate)]="viewDate">Current</div>
         <div
           class="btn btn-primary sharedhome-btn"
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
         >
-          Next month
+          Next
         </div>
+      </div>
+      <div class="header__operations">
+        <app-circle-button tooltipText="Add bill">></app-circle-button>
       </div>
     </div>
 
@@ -35,6 +36,7 @@
       [openDayEventsTemplate]="openDayEventsTemplate"
       (dayClicked)="dayClicked($event.day.date, evs)"
       [refresh]="refresh"
+      [cellTemplate]="customCellTemplate"
     ></mwl-calendar-month-view>
 
     <app-table
@@ -54,4 +56,17 @@
   let-events="events"
   let-eventClicked="eventClicked"
 >
+</ng-template>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span class="cal-day-number">{{
+      day.date | calendarDate: "monthViewDayNumber":locale
+    }}</span>
+  </div>
+
+  <app-bill-type-icons
+    [billTypes]="getBillTypes(day.events)"
+    [billEvents]="day.events"
+  ></app-bill-type-icons>
 </ng-template>

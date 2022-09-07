@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,10 +8,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./circle-button.component.scss'],
 })
 export class CircleButtonComponent implements OnInit {
-  @Output() onButtonClick: EventEmitter<any> = new EventEmitter();
   @Input() isDisabled: boolean = false;
-  @Input() icon: any = faPlus;
+  @Input() icon: IconProp = faPlus;
   @Input() tooltipText: string = 'Tooltip text';
+  @Output() onButtonClick: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 

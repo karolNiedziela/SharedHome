@@ -1,0 +1,15 @@
+@import "../../../../assets/variables";
+
+.bill-events {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 100%;
+  padding-left: 2px;
+
+  .bill-event {
+    color: $l_error_color;
+  }
+}

@@ -1,0 +1,9 @@
+<div class="bill-events" *ngIf="billEvents.length > 0">
+  <div class="bill-event" *ngFor="let billEvent of billEvents">
+    <fa-icon
+      [ngClass]="{ 'text-success': billEvent.isPaid }"
+      [icon]="iconByBillType[billEvent.billType]"
+      [title]="billEvent.billType | enumAsString: billTypeType"
+    ></fa-icon>
+  </div>
+</div>

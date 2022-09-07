@@ -83,6 +83,7 @@ import { FormatCellPipe } from './pipes/format-cell.pipe';
     LoadingSpinnerComponent,
     ThemeSwitcherComponent,
     TableComponent,
+    StyleCellDirective,
   ],
   providers: [DatePipe],
 })
