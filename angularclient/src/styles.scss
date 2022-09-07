@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Damion&display=swap");
 @import "/src/assets/_variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Damion&family=Roboto&display=swap");
 
 * {
   margin: 0;
@@ -16,7 +17,8 @@ body,
 my-app {
   width: 100%;
   height: 100%;
-  font-family: "Open Sans" !important;
+  font-family: "Damion", cursive;
+  font-family: "Roboto", sans-serif;
 }
 
 /*

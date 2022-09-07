@@ -13,7 +13,6 @@ import { Component, Input, OnInit, Optional, Self } from '@angular/core';
   styleUrls: ['../input.scss'],
 })
 export class EmailInputComponent implements OnInit, ControlValueAccessor {
-  @Input() isRequired: boolean = false;
   labelText: string = 'Email';
   placeholder: string = 'Email';
 
@@ -22,6 +21,14 @@ export class EmailInputComponent implements OnInit, ControlValueAccessor {
 
   get control(): AbstractControl<any, any> | null {
     return this.controlDir.control;
+  }
+
+  get isRequired(): boolean {
+    if (this.control?.validator) {
+      return this.control.validator!({} as AbstractControl)!['required'];
+    }
+
+    return false;
   }
 
   constructor(@Self() @Optional() private controlDir: NgControl) {

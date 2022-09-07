@@ -1,24 +1,25 @@
 import {
-  ControlValueAccessor,
-  ValidatorFn,
-  NgControl,
-  AbstractControl,
-} from '@angular/forms';
-import {
   Component,
-  Input,
   OnInit,
+  Optional,
   Self,
   OnDestroy,
-  Optional,
+  Input,
 } from '@angular/core';
+import {
+  NgControl,
+  ControlValueAccessor,
+  AbstractControl,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 
 @Component({
-  selector: 'app-text-input',
-  templateUrl: './text-input.component.html',
+  selector: 'app-date-input',
+  templateUrl: './date-input.component.html',
   styleUrls: ['../input.scss'],
 })
-export class TextInputComponent
+export class DateInputComponent
   implements OnInit, ControlValueAccessor, OnDestroy
 {
   @Input() labelText: string = 'label';
@@ -29,10 +30,6 @@ export class TextInputComponent
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
-  get control(): AbstractControl<any, any> | null {
-    return this.controlDir.control;
-  }
-
   get isRequired(): boolean {
     if (this.control?.validator) {
       return this.control.validator!({} as AbstractControl)!['required'];
@@ -41,7 +38,11 @@ export class TextInputComponent
     return false;
   }
 
-  constructor(@Self() @Optional() private controlDir: NgControl) {
+  get control(): AbstractControl<any, any> {
+    return this.controlDir.control!;
+  }
+
+  constructor(@Self() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
 
@@ -73,7 +74,7 @@ export class TextInputComponent
     this.onTouched = onTouched;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 }

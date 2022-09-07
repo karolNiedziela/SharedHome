@@ -1,7 +1,6 @@
 <form class="row g-3 mb-2 mt-2" [formGroup]="loginForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
-  <app-email-input formControlName="email" [isRequired]="true">
-  </app-email-input>
+  <app-email-input formControlName="email"> </app-email-input>
   <app-password-input formControlName="password"></app-password-input>
   <app-button class="d-grid col-12" text="Login" type="submit"></app-button>
 </form>

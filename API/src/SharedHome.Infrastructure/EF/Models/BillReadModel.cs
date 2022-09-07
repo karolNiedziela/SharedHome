@@ -12,7 +12,7 @@
         
         public decimal? Cost { get; set; }
 
-        public string Currency { get; set; } = default!;
+        public string? Currency { get; set; }
 
         public DateTime DateOfPayment { get; set; }
 

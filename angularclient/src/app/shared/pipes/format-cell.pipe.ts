@@ -9,7 +9,7 @@ export class FormatCellPipe implements PipeTransform {
   constructor(private datePipe: DatePipe) {}
 
   transform(value: any, format: CellPipeFormat): any {
-    if (value === undefined) {
+    if (value === undefined || value === null) {
       return '-';
     }
 

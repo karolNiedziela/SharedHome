@@ -72,8 +72,6 @@ export class BillsComponent implements OnInit {
     ],
   };
 
-  private readonly darkThemeClass = 'dark-theme';
-
   constructor(private billService: BillService) {}
 
   ngOnInit(): void {
@@ -100,7 +98,7 @@ export class BillsComponent implements OnInit {
 
           return billEvent;
         });
-        console.log(billEvents);
+
         this.dayClicked(new Date(Date.now()), billEvents);
         return billEvents;
       })

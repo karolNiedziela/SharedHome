@@ -1,0 +1,28 @@
+<div class="form-floating">
+  <input
+    type="date"
+    class="form-control sharedhome__input"
+    [placeholder]="placeholder"
+    (input)="onChanged($any($event.target).value)"
+    [disabled]="disabled"
+    [ngClass]="{
+      'is-invalid': control.touched && !control.valid
+    }"
+    [value]="control.value"
+  />
+  <label class="sharedhome__label"
+    >{{ labelText }}
+
+    <span *ngIf="isRequired" class="required" aria-required="true">
+      *
+    </span></label
+  >
+
+  <div class="invalid-feedback" *ngIf="control.touched && !control.valid">
+    <div *ngIf="control.errors?.['required']">This field is required.</div>
+    <div *ngIf="control.hasError('minlength')">
+      This field must contain at least
+      {{ control.errors?.['minlength'].requiredLength }} characters.
+    </div>
+  </div>
+</div>

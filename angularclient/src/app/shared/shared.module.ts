@@ -25,6 +25,7 @@ import { ThemeSwitcherComponent } from './components/other/theme-switcher/theme-
 import { TableComponent } from './components/tables/table/table.component';
 import { StyleCellDirective } from './directives/style-cell.directive';
 import { FormatCellPipe } from './pipes/format-cell.pipe';
+import { DateInputComponent } from './components/inputs/date-input/date-input.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FormatCellPipe } from './pipes/format-cell.pipe';
     TableComponent,
     StyleCellDirective,
     FormatCellPipe,
+    DateInputComponent,
   ],
   imports: [
     CommonModule,
@@ -84,6 +86,7 @@ import { FormatCellPipe } from './pipes/format-cell.pipe';
     ThemeSwitcherComponent,
     TableComponent,
     StyleCellDirective,
+    DateInputComponent,
   ],
   providers: [DatePipe],
 })

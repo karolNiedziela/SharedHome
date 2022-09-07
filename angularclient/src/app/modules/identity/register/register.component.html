@@ -5,21 +5,16 @@
 >
   <app-error [errorMessages]="errorMessages"></app-error>
   <div *ngIf="information">{{ information }}</div>
-  <app-email-input
-    formControlName="email"
-    [isRequired]="true"
-  ></app-email-input>
+  <app-email-input formControlName="email"></app-email-input>
   <app-text-input
     labelText="First name"
     placeholder="First name"
     formControlName="firstName"
-    [isRequired]="true"
   ></app-text-input>
   <app-text-input
     labelText="Last name"
     placeholder="Last name"
     formControlName="lastName"
-    [isRequired]="true"
   ></app-text-input>
   <app-passwords-form formControlName="password"></app-passwords-form>
   <app-button class="d-grid col-12" text="Sign up" type="submit"></app-button>

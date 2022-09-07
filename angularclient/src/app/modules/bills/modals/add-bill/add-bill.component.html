@@ -1,1 +1,31 @@
-<p>add-bill works!</p>
+<app-circle-button
+  tooltipText="Add bill"
+  (click)="openModal()"
+></app-circle-button>
+
+<app-modal #modal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="addBillForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
+    <app-text-input
+      formControlName="serviceProviderName"
+      labelText="Service Provider"
+      placeholder="Service Provider"
+    ></app-text-input>
+    <app-single-select
+      formControlName="billType"
+      labelText="Type"
+      [enumType]="billTypeType"
+    ></app-single-select>
+    <app-date-input
+      formControlName="dateOfPayment"
+      labelText="Date of Payment"
+    ></app-date-input>
+
+    <app-number-input
+      formControlName="cost"
+      labelText="Cost"
+      placeholder="Cost"
+    ></app-number-input>
+    <app-currency-select formControlName="currency"> </app-currency-select>
+  </div>
+</app-modal>

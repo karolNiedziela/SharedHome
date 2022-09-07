@@ -1,3 +1,4 @@
+import { AddBill } from './../models/add-bill';
 import { Bill } from './../models/bill';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -28,10 +29,16 @@ export class BillService {
     params = params.append('year', year);
     params = params.append('month', month);
 
-    const test = this.httpClient.get<ApiResponse<Bill[]>>(this.billsUrl, {
+    return this.httpClient.get<ApiResponse<Bill[]>>(this.billsUrl, {
       params: params,
     });
-    console.log(test);
-    return test;
+  }
+
+  addBill(bill: AddBill): Observable<any> {
+    return this.httpClient.post<AddBill>(
+      this.billsUrl,
+      bill,
+      this.defaultHttpOptions
+    );
   }
 }

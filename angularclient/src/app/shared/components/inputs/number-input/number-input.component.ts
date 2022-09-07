@@ -23,7 +23,6 @@ export class NumberInputComponent
 {
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
-  @Input() isRequired: boolean = false;
   disabled!: boolean;
 
   onChanged: (value: any) => void = () => {};
@@ -33,7 +32,15 @@ export class NumberInputComponent
     return this.controlDir.control;
   }
 
-  constructor(@Self() @Optional() private controlDir: NgControl) {
+  get isRequired(): boolean {
+    if (this.control?.validator) {
+      return this.control.validator!({} as AbstractControl)!['required'];
+    }
+
+    return false;
+  }
+
+  constructor(@Self() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
 
