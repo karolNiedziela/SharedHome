@@ -2,6 +2,10 @@ import { ValidatorError } from './../../core/models/validator-error';
 import { AbstractControl } from '@angular/forms';
 
 export function yearAndMonthFormat(control: AbstractControl): any | null {
+  if (control.value == undefined) {
+    return null;
+  }
+
   const validSingleDigitMonths = Array.from({ length: 9 }, (_, i) => i + 1);
   const validTwoDigitMonths = [10, 11, 12];
   const validatorError: ValidatorError = {
