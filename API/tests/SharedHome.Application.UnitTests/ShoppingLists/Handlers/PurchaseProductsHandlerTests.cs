@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Common.Models;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.PurchaseProducts;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
@@ -35,23 +35,15 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             var command = new PurchaseProductsCommand
             {
                 ShoppingListId = 1,
-                PriceByProductNames = new Dictionary<string, MoneyModel>
+                PriceByProductNames = new Dictionary<string, MoneyDto>
                 {
                     { 
                         "Product",
-                        new MoneyModel 
-                        {
-                            Price = 50m,
-                            Currency = "zł"
-                        }
+                        new MoneyDto(50m, "zł")
                     },
                     {
                         "Product1",
-                        new MoneyModel
-                        {
-                            Price = 25m,
-                            Currency = "zł"
-                        }
+                        new MoneyDto(25m, "zł")
                     },
                 }
             };

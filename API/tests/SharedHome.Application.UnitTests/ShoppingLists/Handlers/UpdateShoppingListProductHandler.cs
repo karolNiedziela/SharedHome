@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduct;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Constants;
@@ -35,7 +36,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 CurrentProductName = ShoppingListProvider.ProductName,
                 NewProductName = "NewProductName",
                 Quantity = 2,
-                NetContent = "300",
+                NetContent = new NetContentDto("300"),
                 IsBought = true
             };
 

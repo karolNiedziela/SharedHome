@@ -3,6 +3,7 @@ using MapsterMapper;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.AddBill;
 using SharedHome.Application.Bills.DTO;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Infrastructure;
@@ -37,8 +38,6 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             {
                 ServiceProviderName = "Bill",
                 BillType = 2,
-                Cost = 1500m,
-                Currency = "zł",
             };
 
             var response = await _commandHandler.Handle(command, default);

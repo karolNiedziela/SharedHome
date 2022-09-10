@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.ChangePriceOfProduct;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
@@ -33,8 +34,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             {
                 ShoppingListId = 1,
                 ProductName = "Product",
-                Price = 25,
-                Currency = "zł"
+                Price = new MoneyDto(25, "zł"),
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())

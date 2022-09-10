@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.PurchaseProduct;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
@@ -31,9 +32,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             var command = new PurchaseProductCommand
             {
                 ShoppingListId = 1,
-                ProductName = "Product",
-                Price = 10,
-                Currency = "zł"
+                ProductName = "Product",                
+                Price = new MoneyDto(10, "zł")
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetWithProduct());

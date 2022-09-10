@@ -19,9 +19,7 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<ShoppingListProduct, ShoppingListProductDto>()
                 .Map(dest => dest.Name, src => src.Name.Value)
                 .Map(dest => dest.Quantity, src => src.Quantity.Value)
-                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Amount, src.Price.Currency.Value))
-                .Map(dest => dest.NetContent, src => src.NetContent == null ? null : src.NetContent.Value)
-                .Map(dest => dest.NetContentType, src => src.NetContent == null ? null : src.NetContent.Type.ToString());
+                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Amount, src.Price.Currency.Value))                ;
 
             config.NewConfig<ShoppingListReadModel, ShoppingListDto>()
                 .Map(dest => dest.CreatedByFirstName, src => src.Person.FirstName)
@@ -30,7 +28,7 @@ namespace SharedHome.Infrastructure.Mapping
 
 
             config.NewConfig<ShoppingListProductReadModel, ShoppingListProductDto>()
-                .Map(dest => dest.NetContentType, src => src.NetContentType == null ? null : src.NetContentType!.ToString())
+                .Map(dest => dest.NetContent, src => src.NetContent == null ? null : new NetContentDto(src.NetContent, src.NetContentType))                
                 .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Value, src.Currency!));
 
             config.NewConfig<AddShoppingListProductDto, ShoppingListProduct>()
@@ -38,10 +36,10 @@ namespace SharedHome.Infrastructure.Mapping
                 new ShoppingListProduct(src.Name, 
                     src.Quantity, 
                     null,
-                    new NetContent(src.NetContent, 
-                        src.NetContentType.HasValue ?
-                        EnumHelper.ToEnumByIntOrThrow<NetContentType>(src.NetContentType.Value) :
-                        null),
+                    src.NetContent == null ? null : new NetContent(src.NetContent.NetContent,
+                        src.NetContent.NetContentType.HasValue ? 
+                            EnumHelper.ToEnumByIntOrThrow<NetContentType>(src.NetContent.NetContentType.Value)
+                            : null),
                     false
                     )
                 );

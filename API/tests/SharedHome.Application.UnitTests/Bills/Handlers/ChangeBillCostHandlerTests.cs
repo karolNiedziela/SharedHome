@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.ChangeBillCost;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
@@ -36,13 +37,12 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             var command = new ChangeBillCostCommand
             {
                 BillId = 1,
-                Cost = 2000,
-                Currency = "zł"
+                Cost = new MoneyDto(2000m, "zł")
             };
 
             await _commandHandler.Handle(command, default);
 
-            await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(bill => bill.Cost!.Amount == command.Cost));
+            await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(bill => bill.Cost!.Amount == command.Cost.Price));
         }
     }
 }

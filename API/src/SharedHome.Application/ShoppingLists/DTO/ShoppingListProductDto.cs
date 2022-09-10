@@ -10,9 +10,7 @@ namespace SharedHome.Application.ShoppingLists.DTO
 
         public MoneyDto? Price { get; set; }
 
-        public string? NetContent { get; set; }
-
-        public string? NetContentType { get; set; }
+        public NetContentDto? NetContent { get; set; }
 
         public bool IsBought { get; set; }
     }

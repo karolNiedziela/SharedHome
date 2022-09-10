@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.PayForBill;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
@@ -35,8 +36,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
             var command = new PayForBillCommand
             {
                 BillId = 1,
-                Cost = 150,
-                Currency = "zł"
+                Cost = new MoneyDto(150m, "zł")
             };
 
             await _commandHandler.Handle(command, default);

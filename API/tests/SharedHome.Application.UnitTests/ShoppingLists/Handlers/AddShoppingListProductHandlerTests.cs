@@ -2,6 +2,7 @@
 using MapsterMapper;
 using MediatR;
 using NSubstitute;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.ShoppingLists.Aggregates;
@@ -45,12 +46,10 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                     new AddShoppingListProductDto
                     {
                          Name = "Product",
-                         Quantity = 1,
-                         NetContent = "100",
-                         NetContentType = 1
+                         Quantity = 1, 
+                         NetContent = new NetContentDto("100", 1)
                     }
-                }
-               
+                }              
             };
 
             _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetEmpty());

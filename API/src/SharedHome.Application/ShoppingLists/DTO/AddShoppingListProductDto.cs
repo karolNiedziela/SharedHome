@@ -1,4 +1,6 @@
-﻿namespace SharedHome.Application.ShoppingLists.DTO
+﻿using SharedHome.Application.Common.DTO;
+
+namespace SharedHome.Application.ShoppingLists.DTO
 {
     public class AddShoppingListProductDto
     {
@@ -6,8 +8,6 @@
 
         public int Quantity { get; set; }
 
-        public string? NetContent { get; set; }
-
-        public int? NetContentType { get; set; } = default!;
+        public NetContentDto? NetContent { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Requests;
 
@@ -14,9 +15,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
 
         public int Quantity { get; set; }
 
-        public string? NetContent { get; set; }
-
-        public int? NetContentType { get; set; } = default!;
+        public NetContentDto? NetContent { get; set; }
 
         public bool IsBought { get; set; }
     }

@@ -10,6 +10,7 @@ namespace SharedHome.Application.ShoppingLists.DTO
 
         public bool IsDone { get; set; }
 
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CreatedByFirstName { get; set; } = default!;
 
