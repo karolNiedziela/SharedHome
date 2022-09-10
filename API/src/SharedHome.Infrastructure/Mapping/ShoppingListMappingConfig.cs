@@ -36,7 +36,7 @@ namespace SharedHome.Infrastructure.Mapping
                 new ShoppingListProduct(src.Name, 
                     src.Quantity, 
                     null,
-                    src.NetContent == null ? null : new NetContent(src.NetContent.NetContent,
+                    src.NetContent == null || src.NetContent.NetContent == null ? null : new NetContent(src.NetContent.NetContent,
                         src.NetContent.NetContentType.HasValue ? 
                             EnumHelper.ToEnumByIntOrThrow<NetContentType>(src.NetContent.NetContentType.Value)
                             : null),
