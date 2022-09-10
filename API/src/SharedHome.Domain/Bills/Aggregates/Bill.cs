@@ -27,7 +27,7 @@ namespace SharedHome.Domain.Bills.Entities
 
         }
 
-        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost, bool isPaid = false)
+        private Bill(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost = null, bool isPaid = false)
         {
             PersonId = personId;
             BillType = billType;
@@ -37,7 +37,7 @@ namespace SharedHome.Domain.Bills.Entities
             IsPaid = isPaid;
         }
 
-        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost, bool isPaid = false) =>
+        public static Bill Create(string personId, BillType billType, ServiceProviderName serviceProvider, DateTime dateOfPayment, Money? cost = null, bool isPaid = false) =>
             new(personId, billType, serviceProvider, dateOfPayment, cost, isPaid);
 
         public void PayFor(Money cost)

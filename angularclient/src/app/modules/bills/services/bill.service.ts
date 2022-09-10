@@ -1,10 +1,12 @@
+import { PayForBill } from './../models/pay-for-bill';
 import { AddBill } from './../models/add-bill';
 import { Bill } from './../models/bill';
-import { Observable } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ApiResponse } from 'app/core/models/api-response';
+import { UpdateBill } from '../models/update-bill';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,12 @@ export class BillService {
       'Content-Type': 'application/json',
     }),
   };
+
+  private _allBillsRefreshNeeded = new Subject<void>();
+
+  get allBillsRefreshNeeded() {
+    return this._allBillsRefreshNeeded;
+  }
 
   constructor(private httpClient: HttpClient) {}
 
@@ -34,11 +42,63 @@ export class BillService {
     });
   }
 
-  addBill(bill: AddBill): Observable<any> {
-    return this.httpClient.post<AddBill>(
-      this.billsUrl,
-      bill,
-      this.defaultHttpOptions
-    );
+  addBill(bill: AddBill): Observable<ApiResponse<Bill>> {
+    return this.httpClient
+      .post<ApiResponse<Bill>>(this.billsUrl, bill, this.defaultHttpOptions)
+      .pipe(
+        tap(() => {
+          this._allBillsRefreshNeeded.next();
+        })
+      );
+  }
+
+  payForBill(payForBill: PayForBill): Observable<any> {
+    return this.httpClient
+      .patch<any>(
+        `${this.billsUrl}/${payForBill.billId}/pay`,
+        payForBill,
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._allBillsRefreshNeeded.next();
+        })
+      );
+  }
+
+  cancelBillPayment(billId: number): Observable<any> {
+    return this.httpClient
+      .patch<any>(
+        `${this.billsUrl}/${billId}/cancelpayment`,
+        {
+          billId: billId,
+        },
+        this.defaultHttpOptions
+      )
+      .pipe(
+        tap(() => {
+          this._allBillsRefreshNeeded.next();
+        })
+      );
+  }
+
+  updateBill(updateBill: UpdateBill): Observable<any> {
+    return this.httpClient
+      .put<any>(`${this.billsUrl}`, updateBill, this.defaultHttpOptions)
+      .pipe(
+        tap(() => {
+          this._allBillsRefreshNeeded.next();
+        })
+      );
+  }
+
+  deleteBill(billId: number): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.billsUrl}/${billId}`, this.defaultHttpOptions)
+      .pipe(
+        tap(() => {
+          this._allBillsRefreshNeeded.next();
+        })
+      );
   }
 }

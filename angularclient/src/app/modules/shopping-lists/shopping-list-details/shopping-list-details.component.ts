@@ -214,7 +214,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       additionalPopupMenuItems.push({
         text: 'Add products',
         onClick: () => {
-          this.addShoppingListProductForm.modal.open();
+          this.addShoppingListProductForm.openModal();
         },
       });
 
@@ -262,8 +262,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
         );
         return;
       }
-
-      console.log(index);
     }
   }
 

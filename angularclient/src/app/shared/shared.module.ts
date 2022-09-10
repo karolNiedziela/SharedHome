@@ -26,6 +26,8 @@ import { TableComponent } from './components/tables/table/table.component';
 import { StyleCellDirective } from './directives/style-cell.directive';
 import { FormatCellPipe } from './pipes/format-cell.pipe';
 import { DateInputComponent } from './components/inputs/date-input/date-input.component';
+import { MoneyFormComponent } from './components/forms/money-form/money-form.component';
+import { FormGroupPipe } from './pipes/form-group.pipe';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { DateInputComponent } from './components/inputs/date-input/date-input.co
     StyleCellDirective,
     FormatCellPipe,
     DateInputComponent,
+    MoneyFormComponent,
+    FormGroupPipe,
   ],
   imports: [
     CommonModule,
@@ -87,6 +91,8 @@ import { DateInputComponent } from './components/inputs/date-input/date-input.co
     TableComponent,
     StyleCellDirective,
     DateInputComponent,
+    MoneyFormComponent,
+    FormGroupPipe,
   ],
   providers: [DatePipe],
 })

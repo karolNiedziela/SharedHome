@@ -10,7 +10,7 @@ import { ColumnSetting } from '../column-setting';
 export class TableComponent<T> implements OnInit {
   @Input() records!: any[];
   @Input() settings?: ColumnSetting[];
-  @Input() actions?: PopupMenuConfig;
+  @Input() actions?: PopupMenuConfig[];
 
   columnMaps?: ColumnSetting[];
 
@@ -25,13 +25,10 @@ export class TableComponent<T> implements OnInit {
           propertyName: key,
           header:
             key.slice(0, 1).toUpperCase() + key.replace(/_/g, ' ').slice(1),
+          hidden: false,
           format: 0,
         };
       });
     }
-  }
-
-  bC(record: any, func: any, values: any): void {
-    func(...values.map((val: any) => record[val]));
   }
 }

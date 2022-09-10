@@ -1,32 +1,56 @@
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Component, OnInit, forwardRef, AfterViewInit } from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  NgControl,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  forwardRef,
+  AfterViewInit,
+  Optional,
+  Self,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: 'app-currency-select',
   templateUrl: './currency-select.component.html',
   styleUrls: ['../select.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CurrencySelectComponent),
-      multi: true,
-    },
-  ],
 })
 export class CurrencySelectComponent implements OnInit, ControlValueAccessor {
+  @Output() currencyChanged: EventEmitter<string> = new EventEmitter<string>();
+
   public currencies: string[] = ['zł', '€'];
   public selectedCurrency!: string;
 
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
-  constructor() {}
+  get control(): AbstractControl<any, any> | null {
+    return this.controlDir.control;
+  }
+
+  get isRequired(): boolean {
+    if (this.control?.validator) {
+      return this.control.validator!({} as AbstractControl)!['required'];
+    }
+
+    return false;
+  }
+
+  constructor(@Self() @Optional() private controlDir: NgControl) {
+    controlDir.valueAccessor = this;
+  }
 
   ngOnInit(): void {}
 
   writeValue(value: any): void {
     this.selectedCurrency = value;
   }
+
   registerOnChange(onChanged: (value: any) => void): void {
     this.onChanged = onChanged;
   }
@@ -39,5 +63,7 @@ export class CurrencySelectComponent implements OnInit, ControlValueAccessor {
 
     this.onChanged(currency);
     this.onTouched();
+
+    this.currencyChanged.emit(this.selectedCurrency);
   }
 }

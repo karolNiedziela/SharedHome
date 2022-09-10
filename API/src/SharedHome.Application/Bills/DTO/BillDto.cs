@@ -9,7 +9,7 @@ namespace SharedHome.Application.Bills.DTO
 
         public bool IsPaid { get; set; } = false;
 
-        public string BillType { get; set; }
+        public string BillType { get; set; } = default!;
 
         public string ServiceProvider { get; set; } = default!;
 

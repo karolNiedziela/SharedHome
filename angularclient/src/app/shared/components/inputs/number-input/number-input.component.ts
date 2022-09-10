@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnDestroy,
@@ -60,7 +61,7 @@ export class NumberInputComponent
 
   writeValue(value: any): void {
     if (this.control && this.control?.value != value) {
-      this.control?.setValue(value, { emitEvent: true });
+      this.control?.setValue(value, { emitEvent: false });
       return;
     }
   }

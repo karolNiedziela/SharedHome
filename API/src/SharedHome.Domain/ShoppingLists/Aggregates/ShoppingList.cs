@@ -107,7 +107,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             }
         }
 
-        public void ChangePriceOfProduct(string productName, Money price)
+        public void ChangePriceOfProduct(string productName, Money? price)
         {
             IsAlreadyDone();
 

@@ -15,17 +15,11 @@
       formControlName="billType"
       labelText="Type"
       [enumType]="billTypeType"
+      [firstValueSelected]="true"
     ></app-single-select>
     <app-date-input
       formControlName="dateOfPayment"
       labelText="Date of Payment"
     ></app-date-input>
-
-    <app-number-input
-      formControlName="cost"
-      labelText="Cost"
-      placeholder="Cost"
-    ></app-number-input>
-    <app-currency-select formControlName="currency"> </app-currency-select>
   </div>
 </app-modal>

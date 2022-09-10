@@ -37,7 +37,6 @@ export class RegisterComponent implements OnInit {
     const firstName = this.registerForm.get('firstName')?.value;
     const lastName = this.registerForm.get('lastName')?.value;
     const password = this.registerForm.get('password')?.value;
-    console.log(password);
 
     const register: Register = {
       email: email,
@@ -49,7 +48,6 @@ export class RegisterComponent implements OnInit {
 
     this.authenticationService.register(register).subscribe({
       next: (response: any) => {
-        console.log(response);
         this.information = response.data;
         this.registerForm.reset();
       },

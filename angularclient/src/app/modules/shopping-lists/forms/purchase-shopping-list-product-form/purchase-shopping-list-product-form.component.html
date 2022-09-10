@@ -8,10 +8,7 @@
     </div>
   </div> -->
   <h4 *ngIf="productName">{{ productName }}</h4>
-  <app-number-input
-    formControlName="price"
-    labelText="Price"
-    placeholder="Price"
-  ></app-number-input>
-  <app-currency-select formControlName="currency"> </app-currency-select>
+  <app-money-form
+    [moneyFormGroup]="purchaseShoppingListProductForm.get('money') | formGroup"
+  ></app-money-form>
 </div>

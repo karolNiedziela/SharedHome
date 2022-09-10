@@ -19,11 +19,7 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<ShoppingListProduct, ShoppingListProductDto>()
                 .Map(dest => dest.Name, src => src.Name.Value)
                 .Map(dest => dest.Quantity, src => src.Quantity.Value)
-                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto
-                {
-                    Price = src.Price.Amount,
-                    Currency = src.Price.Currency.Value
-                })               
+                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Amount, src.Price.Currency.Value))
                 .Map(dest => dest.NetContent, src => src.NetContent == null ? null : src.NetContent.Value)
                 .Map(dest => dest.NetContentType, src => src.NetContent == null ? null : src.NetContent.Type.ToString());
 
@@ -35,11 +31,7 @@ namespace SharedHome.Infrastructure.Mapping
 
             config.NewConfig<ShoppingListProductReadModel, ShoppingListProductDto>()
                 .Map(dest => dest.NetContentType, src => src.NetContentType == null ? null : src.NetContentType!.ToString())
-                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto
-                {
-                    Price = src.Price.Value,
-                    Currency = src.Currency!
-                });
+                .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Value, src.Currency!));
 
             config.NewConfig<AddShoppingListProductDto, ShoppingListProduct>()
                 .ConstructUsing(src => 

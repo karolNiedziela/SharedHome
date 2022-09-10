@@ -25,7 +25,7 @@ namespace SharedHome.Application.Bills.Commands.UpdateBill
 
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
-            var money = new Money(request.Cost, request.Currency);
+            var money = request.Cost == null ? null : new Money(request.Cost.Price, request.Cost.Currency);
 
             bill.Update(billType, request.ServiceProviderName, request.DateOfPayment, money);
 

@@ -1,3 +1,4 @@
+import { Modalable } from './../../../../core/models/modalable';
 import { NetContentType } from './../../enums/net-content-type';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
@@ -13,9 +14,9 @@ import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-s
   templateUrl: './add-shopping-list-product.component.html',
   styleUrls: ['./add-shopping-list-product.component.scss'],
 })
-export class AddShoppingListProductComponent implements OnInit {
+export class AddShoppingListProductComponent implements OnInit, Modalable {
   @Input() shoppingListId!: number;
-  @ViewChild('addShoppingListProductModal') public modal!: ModalComponent;
+  @ViewChild('addShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {
     modalTitle: 'Add shopping list product',
     onSave: () => this.onSave(),
@@ -40,6 +41,10 @@ export class AddShoppingListProductComponent implements OnInit {
       netContent: new FormControl(''),
       netContenType: new FormControl(null),
     });
+  }
+
+  openModal(): void {
+    this.modal.open();
   }
 
   onSave(): void {

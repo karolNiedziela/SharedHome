@@ -1,0 +1,12 @@
+<div class="row g-3" [formGroup]="moneyFormGroup">
+  <div class="col-md-6">
+    <app-number-input
+      formControlName="price"
+      labelText="Price"
+      placeholder="Price"
+    ></app-number-input>
+  </div>
+  <div class="col md-6">
+    <app-currency-select formControlName="currency"> </app-currency-select>
+  </div>
+</div>

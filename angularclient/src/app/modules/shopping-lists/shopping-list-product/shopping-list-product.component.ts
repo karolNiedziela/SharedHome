@@ -106,7 +106,7 @@ export class ShoppingListProductComponent implements OnInit {
       additionalPopupMenuItems.push({
         text: 'Purchase',
         onClick: () => {
-          this.purchaseShoppingListProductForm.modal.open();
+          this.purchaseShoppingListProductForm.openModal();
         },
       });
     }

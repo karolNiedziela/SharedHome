@@ -1,3 +1,4 @@
+import { Modalable } from './../../../../core/models/modalable';
 import { AddManyShoppingListProductsFormComponent } from './../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 import { AddShoppingList } from './../../models/add-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
@@ -12,7 +13,7 @@ import { ShoppingListProduct } from '../../models/shopping-list-product';
   templateUrl: './add-shopping-list.component.html',
   styleUrls: ['./add-shopping-list.component.scss'],
 })
-export class AddShoppingListComponent implements OnInit {
+export class AddShoppingListComponent implements OnInit, Modalable {
   @Input() year!: number;
   @Input() month!: number;
   addShoppingListForm!: FormGroup;

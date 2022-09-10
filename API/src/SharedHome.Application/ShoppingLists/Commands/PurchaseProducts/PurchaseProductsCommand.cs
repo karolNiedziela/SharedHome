@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SharedHome.Application.Common.Models;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Requests;
 
@@ -9,6 +9,6 @@ namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProducts
     {
         public int ShoppingListId { get; set; }
 
-        public Dictionary<string, MoneyModel> PriceByProductNames { get; set; } = new();
+        public Dictionary<string, MoneyDto> PriceByProductNames { get; set; } = new();
     }
 }

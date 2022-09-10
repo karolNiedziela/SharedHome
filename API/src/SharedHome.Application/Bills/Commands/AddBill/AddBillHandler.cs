@@ -25,12 +25,8 @@ namespace SharedHome.Application.Bills.Commands.AddBill
         {
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
-            var money = request.Cost.HasValue && !string.IsNullOrEmpty(request.Currency) ?
-                new Money(request.Cost.Value, request.Currency) :
-                null;
-
             var bill = Bill.Create(request.PersonId!, billType, request.ServiceProviderName,
-                request.DateOfPayment, money);
+                request.DateOfPayment);
 
             await _billRepository.AddAsync(bill);
 

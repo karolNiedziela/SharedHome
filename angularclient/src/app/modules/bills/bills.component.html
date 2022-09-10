@@ -43,7 +43,7 @@
       *ngIf="currentDayEvents.length > 0"
       [settings]="columnSettings"
       [records]="currentDayEvents"
-      [actions]="tablePopupMenuConfig"
+      [actions]="getPopupMenuConfigs(currentDayEvents)"
     ></app-table>
   </div>
   <ng-template #loading>
@@ -70,3 +70,12 @@
     [billEvents]="day.events"
   ></app-bill-type-icons>
 </ng-template>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="deleteBillModalConfig"
+  #deleteBillModal
+></app-confirmation-modal>
+
+<app-pay-for-bill #payForBillModal></app-pay-for-bill>
+
+<app-cancel-bill-payment #cancelBillPaymentModal></app-cancel-bill-payment>

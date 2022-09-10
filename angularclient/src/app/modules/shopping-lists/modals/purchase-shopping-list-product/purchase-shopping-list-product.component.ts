@@ -1,3 +1,4 @@
+import { Modalable } from './../../../../core/models/modalable';
 import { ErrorResponse } from './../../../../core/models/error-response';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { UserService } from './../../../../core/services/user.service';
@@ -12,10 +13,10 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
   templateUrl: './purchase-shopping-list-product.component.html',
   styleUrls: ['./purchase-shopping-list-product.component.scss'],
 })
-export class PurchaseShoppingListProductComponent implements OnInit {
+export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
   @Input() shoppingListId!: number;
   @Input() productName!: string;
-  @ViewChild('purchaseShoppingListProductModal') public modal!: ModalComponent;
+  @ViewChild('purchaseShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {
     modalTitle: 'Purchase shopping list product',
     onSave: () => this.onSave(),
@@ -34,11 +35,12 @@ export class PurchaseShoppingListProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.purchaseShoppingListProductForm = new FormGroup({
-      price: new FormControl(null, [Validators.required]),
-      currency: new FormControl(this.userService.currentUser.defaultCurrency, [
-        Validators.required,
-      ]),
+      money: new FormGroup({}),
     });
+  }
+
+  openModal(): void {
+    this.modal.open();
   }
 
   onSave(): void {
@@ -47,15 +49,20 @@ export class PurchaseShoppingListProductComponent implements OnInit {
       return;
     }
 
-    const price = this.purchaseShoppingListProductForm.get('price')?.value;
-    const currency =
-      this.purchaseShoppingListProductForm.get('currency')?.value;
+    const price = this.purchaseShoppingListProductForm
+      .get('money')
+      ?.get('price')?.value;
+    const currency = this.purchaseShoppingListProductForm
+      ?.get('money')
+      ?.get('currency')?.value;
 
     const purchaseShoppingListProduct: PurchaseShoppingListProduct = {
       shoppingListId: this.shoppingListId,
       productName: this.productName,
-      price: price,
-      currency: currency,
+      price: {
+        price: price,
+        currency: currency,
+      },
     };
 
     this.shoppingListService
@@ -66,8 +73,8 @@ export class PurchaseShoppingListProductComponent implements OnInit {
 
           this.modal.close();
         },
-        error: (error: ErrorResponse) => {
-          this.errorMessages = error.errors;
+        error: (errors: string[]) => {
+          this.errorMessages = errors;
         },
       });
   }

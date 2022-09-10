@@ -24,7 +24,7 @@ export class PurchaseShoppingListProductsModalComponent
   @Input() shoppingListProductNames: string[] = [];
   @Input() shoppingListId!: number;
 
-  @ViewChild('purchaseShoppingListProductModal') public modal!: ModalComponent;
+  @ViewChild('purchaseShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {
     modalTitle: 'Purchase shopping list products',
     onSave: () => this.onSave(),

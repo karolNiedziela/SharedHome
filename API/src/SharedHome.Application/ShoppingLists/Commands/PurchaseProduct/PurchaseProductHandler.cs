@@ -21,7 +21,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProduct
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 
-            var money = new Money(request.Price, request.Currency);
+            var money = new Money(request.Price.Price, request.Price.Currency);
 
             shoppingList.PurchaseProduct(request.ProductName, money);
 

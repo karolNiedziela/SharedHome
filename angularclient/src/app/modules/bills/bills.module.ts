@@ -7,9 +7,17 @@ import { SharedModule } from 'app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BillTypeIconsComponent } from './bill-type-icons/bill-type-icons.component';
 import { AddBillComponent } from './modals/add-bill/add-bill.component';
+import { PayForBillComponent } from './modals/pay-for-bill/pay-for-bill.component';
+import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-bill-payment.component';
 
 @NgModule({
-  declarations: [BillsComponent, BillTypeIconsComponent, AddBillComponent],
+  declarations: [
+    BillsComponent,
+    BillTypeIconsComponent,
+    AddBillComponent,
+    PayForBillComponent,
+    CancelBillPaymentComponent,
+  ],
   imports: [
     CalendarModule.forRoot({
       provide: DateAdapter,

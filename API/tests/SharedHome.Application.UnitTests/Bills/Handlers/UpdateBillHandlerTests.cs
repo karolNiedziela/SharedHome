@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.UpdateBill;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills.Constants;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
@@ -38,10 +39,9 @@ namespace SharedHome.Application.UnitTests.Bills.AddHouseGroup
                 Id = 0,
                 PersonId = BillProvider.PersonId,
                 BillType = 1,
-                Cost = 200,
+                Cost = new MoneyDto(200, "zł"),
                 DateOfPayment = bill.DateOfPayment,
                 ServiceProviderName = "PGE",
-                Currency = "zł"
             };
 
             await _commandHandler.Handle(command, default);

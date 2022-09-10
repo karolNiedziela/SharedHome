@@ -1,4 +1,5 @@
 ﻿using SharedHome.Api.Constants;
+using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts;
 using SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct;
@@ -101,10 +102,9 @@ namespace SharedHome.IntegrationTests.Controllers
 
             var command = new PurchaseProductCommand
             {
-                Price = 100,
+                Price = new MoneyDto(200, "zł"),
                 ProductName = "Product",
                 ShoppingListId = shoppingList.Id,
-                Currency = "zł"
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.PurchaseShoppingListProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";
@@ -143,10 +143,9 @@ namespace SharedHome.IntegrationTests.Controllers
 
             var command = new ChangePriceOfProductCommand
             {
-                Price = 100,
+                Price = new MoneyDto(200, "zł"),
                 ProductName = "Product",
                 ShoppingListId = shoppingList.Id,
-                Currency = "zł"
             };
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.ChangePriceOfProduct.Replace("{shoppingListId:int}", shoppingList.Id.ToString()).Replace("{productName}", "Product")}";

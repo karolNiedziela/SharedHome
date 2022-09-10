@@ -1,0 +1,8 @@
+<app-modal #modal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="payForBillForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
+    <app-money-form
+      [moneyFormGroup]="payForBillForm.get('money') | formGroup"
+    ></app-money-form>
+  </div>
+</app-modal>

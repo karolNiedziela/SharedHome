@@ -62,6 +62,7 @@ export class EditShoppingListProductModalComponent
   openModal(): void {
     this.modal.open();
   }
+
   onSave(): void {
     if (this.editShoppingListProductForm.invalid) {
       this.editShoppingListProductForm.markAllAsTouched();

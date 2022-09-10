@@ -1,6 +1,6 @@
 import { Money } from './../../../../core/models/money';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { UserService } from 'app/core/services/user.service';
 
 @Component({
@@ -19,17 +19,17 @@ export class PurchaseShoppingListProductFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.purchaseShoppingListProductForm = new FormGroup({
-      price: new FormControl(null, [Validators.required]),
-      currency: new FormControl(this.userService.currentUser.defaultCurrency, [
-        Validators.required,
-      ]),
+      money: new FormGroup({}),
     });
   }
 
   public getPurchasedProduct(): Money {
-    const price = this.purchaseShoppingListProductForm.get('price')?.value;
-    const currency =
-      this.purchaseShoppingListProductForm.get('currency')?.value;
+    const price = this.purchaseShoppingListProductForm
+      .get('money')
+      ?.get('price')?.value;
+    const currency = this.purchaseShoppingListProductForm
+      .get('money')
+      ?.get('currency')?.value;
 
     return {
       price: price,

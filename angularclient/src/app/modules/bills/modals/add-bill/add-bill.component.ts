@@ -34,8 +34,6 @@ export class AddBillComponent implements Modalable, OnInit {
       billType: new FormControl(null, [Validators.required]),
       serviceProviderName: new FormControl('', [Validators.required]),
       dateOfPayment: new FormControl('', [Validators.required]),
-      cost: new FormControl(null),
-      currency: new FormControl(null),
     });
   }
 
@@ -53,21 +51,17 @@ export class AddBillComponent implements Modalable, OnInit {
       'serviceProviderName'
     )?.value;
     const dateOfPayment = this.addBillForm.get('dateOfPayment')?.value;
-    const cost = this.addBillForm.get('cost')?.value;
-    const currency = this.addBillForm.get('currency')?.value;
 
     const addBill: AddBill = {
       billType: billType,
       serviceProviderName: serviceProviderName,
       dateOfPayment: dateOfPayment,
-      cost: cost,
-      currency: currency,
     };
 
     this.billService.addBill(addBill).subscribe({
       next: () => {
-        this.resetForm();
         this.modal.close();
+        this.resetForm();
       },
       error: (errors: string[]) => {
         this.errorMessages = errors;

@@ -1,30 +1,46 @@
+import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-bill-payment.component';
+import { ModalConfig } from './../../shared/components/modals/modal/modal.config';
+import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ConfirmationModalComponent } from './../../shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { PopupMenuConfig } from './../../shared/components/menus/popup-menu/popup-menu.config';
 import { ColumnSetting } from './../../shared/components/tables/column-setting';
 import { BillEvent } from './models/bill-event';
 import { ApiResponse } from 'app/core/models/api-response';
 import { BillService } from './services/bill.service';
-import { CalendarEvent } from './../../../../node_modules/calendar-utils/calendar-utils.d';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
 import { Subject, Observable, map, of } from 'rxjs';
 import { startOfDay, endOfDay, isSameDay, isSameMonth } from 'date-fns';
 import { Bill } from './models/bill';
 import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
 import { BillType } from './enums/bill-type';
+import { PayForBillComponent } from './modals/pay-for-bill/pay-for-bill.component';
 
 @Component({
   selector: 'app-bills',
   templateUrl: './bills.component.html',
   styleUrls: ['./bills.component.scss'],
 })
-export class BillsComponent implements OnInit {
+export class BillsComponent implements OnInit, OnDestroy {
   addIcon = faPlus;
 
   events$!: Observable<BillEvent[]>;
+  eventsSubscription!: Subscription;
+
   view: CalendarView = CalendarView.Month;
 
-  currentDayEvents: CalendarEvent[] = [];
+  currentDayEvents: BillEvent[] = [];
+
+  dateSelected!: Date;
 
   CalendarView = CalendarView;
 
@@ -61,77 +77,122 @@ export class BillsComponent implements OnInit {
     },
   ];
 
-  tablePopupMenuConfig: PopupMenuConfig = {
-    additionalPopupMenuItems: [
-      {
-        text: 'Test',
-        onClick: () => {
-          alert('hello');
-        },
-      },
-    ],
+  @ViewChild('deleteBillModal')
+  deleteBillModal!: ConfirmationModalComponent;
+  deleteBillModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Delete bill',
   };
+
+  @ViewChild('payForBillModal')
+  payForBillModal!: PayForBillComponent;
+
+  @ViewChild('cancelBillPaymentModal')
+  cancelBillPaymentModal!: CancelBillPaymentComponent;
 
   constructor(private billService: BillService) {}
 
   ngOnInit(): void {
+    this.getBillEvents();
+
+    this.eventsSubscription = this.billService.allBillsRefreshNeeded.subscribe(
+      () => {
+        this.getBillEvents(this.dateSelected);
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.eventsSubscription.unsubscribe();
+  }
+
+  private getBillEvents(selectedDate?: Date): void {
     this.events$ = this.billService.getAllByYearAndMonthAndIsDone(2022, 9).pipe(
       map((response: ApiResponse<Bill[]>) => {
         const billEvents: BillEvent[] = response.data.map((bill: Bill) => {
-          const billEvent: BillEvent = {
-            id: bill.id,
-            start: new Date(Date.parse(bill.dateOfPayment.toString())),
-            end: new Date(Date.parse(bill.dateOfPayment.toString())),
-            title: bill.serviceProvider,
-            isPaid: bill.isPaid,
-            serviceProvider: bill.serviceProvider,
-            dateOfPayment: bill.dateOfPayment,
-            billType: bill.billType,
-            cost:
-              bill.cost == null
-                ? null
-                : {
-                    price: bill.cost.price,
-                    currency: bill.cost.currency,
-                  },
-          };
-
-          return billEvent;
+          return this.getBillEvent(bill);
         });
 
-        this.dayClicked(new Date(Date.now()), billEvents);
+        if (selectedDate) this.dayClicked(selectedDate, billEvents);
         return billEvents;
       })
     );
   }
 
-  dayClicked(date: Date, events: BillEvent[]): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
+  private getBillEvent(bill: Bill): BillEvent {
+    const billEvent: BillEvent = {
+      id: bill.id,
+      start: new Date(Date.parse(bill.dateOfPayment.toString())),
+      end: new Date(Date.parse(bill.dateOfPayment.toString())),
+      title: bill.serviceProvider,
+      isPaid: bill.isPaid,
+      serviceProvider: bill.serviceProvider,
+      dateOfPayment: bill.dateOfPayment,
+      billType: bill.billType,
+      cost:
+        bill.cost == null
+          ? null
+          : {
+              price: bill.cost.price,
+              currency: bill.cost.currency,
+            },
+    };
 
+    return billEvent;
+  }
+
+  dayClicked(date: Date, events: BillEvent[]): void {
     this.currentDayEvents = events.filter(
       (x) => x.start >= startOfDay(date) && x.end! < endOfDay(date)
     );
-  }
 
-  getHeaders(events: BillEvent[]): string[] {
-    return ['test', 'test2'];
-  }
+    this.dateSelected = date;
 
-  getColumns(events: BillEvent[]): string[] {
-    return events.map((x) => x.serviceProvider);
+    this.getPopupMenuConfigs(this.currentDayEvents);
   }
 
   getBillTypes(billEvents: BillEvent[]): BillType[] {
     return billEvents.map((billEvent) => billEvent.billType);
+  }
+
+  getPopupMenuConfigs(billEvents: BillEvent[]): PopupMenuConfig[] {
+    const popupMenuConfigs: PopupMenuConfig[] = [];
+
+    billEvents.forEach((billEvent) => {
+      const popupMenuConfig: PopupMenuConfig = {
+        isDeleteVisible: true,
+        onDelete: () => {
+          this.deleteBillModalConfig.onSave = () => {
+            this.billService.deleteBill(+billEvent.id!).subscribe();
+          };
+          this.deleteBillModal.open();
+        },
+        isEditVisible: true,
+      };
+      if (billEvent.isPaid) {
+        popupMenuConfig.additionalPopupMenuItems = [
+          {
+            text: 'Cancel payment',
+            onClick: () => {
+              this.cancelBillPaymentModal.billId = +billEvent.id!;
+              this.cancelBillPaymentModal.openModal();
+            },
+          },
+        ];
+      } else {
+        popupMenuConfig.additionalPopupMenuItems = [
+          {
+            text: 'Pay',
+            onClick: () => {
+              this.payForBillModal.billId = +billEvent.id!;
+              this.payForBillModal.openModal();
+            },
+          },
+        ];
+      }
+
+      popupMenuConfigs.push(popupMenuConfig);
+    });
+
+    return popupMenuConfigs;
   }
 }

@@ -21,7 +21,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.ChangePriceOfProduct
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
 
-            var money = new Money(request.Price, request.Currency);
+            var money = request.Price == null ? null : new Money(request.Price.Price, request.Price.Currency);
 
             shoppingList.ChangePriceOfProduct(request.ProductName, money);
 

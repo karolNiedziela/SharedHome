@@ -13,20 +13,12 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<Bill, BillDto>()
                 .Map(dest => dest.ServiceProvider, src => src.ServiceProvider.Name)
                 .Map(dest => dest.BillType, src => src.BillType.ToString())
-                .Map(dest => dest.Cost, src => src.Cost == null ? null : new MoneyDto
-                {
-                    Price = src.Cost.Amount,
-                    Currency = src.Cost.Currency.Value
-                });
+                .Map(dest => dest.Cost, src => src.Cost == null ? null : new MoneyDto(src.Cost.Amount, src.Cost.Currency.Value));
 
             config.NewConfig<BillReadModel, BillDto>()
                 .Map(dest => dest.ServiceProvider, src => src.ServiceProviderName)
                 .Map(dest => dest.BillType, src => src.BillType.ToString())
-                .Map(dest => dest.Cost, src => src.Cost == null ? null : new MoneyDto
-                {
-                    Price = src.Cost.Value,
-                    Currency = src.Currency!
-                });
+                .Map(dest => dest.Cost, src => src.Cost == null ? null : new MoneyDto(src.Cost.Value, src.Currency!));
         }
     }
 }

@@ -17,3 +17,7 @@
 .dropdown-item {
   cursor: pointer;
 }
+
+.required {
+  color: $l_error_color;
+}
