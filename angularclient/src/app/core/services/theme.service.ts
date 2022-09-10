@@ -20,10 +20,12 @@ export class ThemeService {
   constructor() {
     this.style = document.createElement('link');
     this.style.rel = 'stylesheet';
-    document.head.appendChild(this.style);
+    this.style.href = `/${this.current}.css`;
 
     if (localStorage.getItem('theme') !== undefined) {
       this.style.href = `/${this.current}.css`;
     }
+
+    document.head.appendChild(this.style);
   }
 }

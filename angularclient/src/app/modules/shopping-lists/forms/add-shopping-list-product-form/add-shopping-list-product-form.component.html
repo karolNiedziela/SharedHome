@@ -10,20 +10,11 @@
     labelText="Quantity"
     placeholder="Quantity"
   ></app-number-input>
-  <div class="col-md-6">
-    <app-text-input
-      formControlName="netContent"
-      labelText="Net Content"
-      placeholder="Net Content"
-    ></app-text-input>
-  </div>
-  <div class="col md-6">
-    <app-single-select
-      formControlName="netContentType"
-      labelText="Net Content Type"
-      [enumType]="netContentType"
-    ></app-single-select>
-  </div>
+  <app-net-content-form
+    [netContentFormGroup]="
+      addShoppingListProductForm.get('netContent') | formGroup
+    "
+  ></app-net-content-form>
   <app-button
     class="product__button"
     text="Remove product"

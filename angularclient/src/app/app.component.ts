@@ -1,3 +1,4 @@
+import { ThemeService } from 'app/core/services/theme.service';
 import { Component } from '@angular/core';
 import { AuthenticationResponse } from './core/models/authenticationResponse';
 import { AuthenticationService } from './modules/identity/services/authentication.service';
@@ -17,7 +18,8 @@ export class AppComponent {
 
   constructor(
     private authenticationService: AuthenticationService,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private themeService: ThemeService
   ) {
     this.authenticationService.authenticationResponse.subscribe(
       (result: AuthenticationResponse) => (this.authenticationResponse = result)

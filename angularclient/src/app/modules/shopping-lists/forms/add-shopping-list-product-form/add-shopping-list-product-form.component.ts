@@ -21,8 +21,7 @@ export class AddShoppingListProductFormComponent implements OnInit {
     this.addShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
-      netContent: new FormControl(''),
-      netContentType: new FormControl(null),
+      netContent: new FormGroup({}),
     });
   }
 
@@ -30,9 +29,12 @@ export class AddShoppingListProductFormComponent implements OnInit {
     const productName =
       this.addShoppingListProductForm.get('productName')?.value;
     const quantity = this.addShoppingListProductForm.get('quantity')?.value;
-    const netContent = this.addShoppingListProductForm.get('netContent')?.value;
-    const netContentType =
-      this.addShoppingListProductForm.get('netContentType')?.value;
+    const netContent = this.addShoppingListProductForm
+      ?.get('netContent')
+      ?.get('netContent')?.value;
+    const netContentType = this.addShoppingListProductForm
+      ?.get('netContent')
+      ?.get('netContentType')?.value;
 
     const shoppingListProduct: ShoppingListProduct = {
       name: productName,

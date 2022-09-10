@@ -1,0 +1,16 @@
+<div class="row g-3" [formGroup]="netContentFormGroup">
+  <div class="col-md-6">
+    <app-number-input
+      formControlName="netContent"
+      labelText="Net Content"
+      placeholder="Net Content"
+    ></app-number-input>
+  </div>
+  <div class="col md-6">
+    <app-single-select
+      formControlName="netContentType"
+      labelText="Net Content Type"
+      [enumType]="netContentType"
+    ></app-single-select>
+  </div>
+</div>

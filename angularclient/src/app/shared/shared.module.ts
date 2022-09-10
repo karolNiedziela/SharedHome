@@ -28,6 +28,7 @@ import { FormatCellPipe } from './pipes/format-cell.pipe';
 import { DateInputComponent } from './components/inputs/date-input/date-input.component';
 import { MoneyFormComponent } from './components/forms/money-form/money-form.component';
 import { FormGroupPipe } from './pipes/form-group.pipe';
+import { NetContentFormComponent } from './components/forms/net-content-form/net-content-form.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { FormGroupPipe } from './pipes/form-group.pipe';
     DateInputComponent,
     MoneyFormComponent,
     FormGroupPipe,
+    NetContentFormComponent,
   ],
   imports: [
     CommonModule,
@@ -93,6 +95,7 @@ import { FormGroupPipe } from './pipes/form-group.pipe';
     DateInputComponent,
     MoneyFormComponent,
     FormGroupPipe,
+    NetContentFormComponent,
   ],
   providers: [DatePipe],
 })

@@ -38,8 +38,7 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
     this.addShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
-      netContent: new FormControl(''),
-      netContenType: new FormControl(null),
+      netContent: new FormGroup({}),
     });
   }
 
@@ -58,9 +57,12 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
     const productName =
       this.addShoppingListProductForm.get('productName')?.value;
     const quantity = this.addShoppingListProductForm.get('quantity')?.value;
-    const netContent = this.addShoppingListProductForm.get('netContent')?.value;
-    const netContentType =
-      this.addShoppingListProductForm.get('netContenType')?.value;
+    const netContent = this.addShoppingListProductForm
+      ?.get('netContent')
+      ?.get('netContent')?.value;
+    const netContentType = this.addShoppingListProductForm
+      ?.get('netContent')
+      ?.get('netContentType')?.value;
 
     const firstShoppingListProduct: ShoppingListProduct = {
       name: productName,
