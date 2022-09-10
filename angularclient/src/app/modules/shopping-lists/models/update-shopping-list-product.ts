@@ -1,9 +1,9 @@
+import { NetContent } from './net-content';
 export interface UpdateShoppingListProduct {
   shoppingListId: number;
   currentProductName: string;
   newProductName: string;
   quantity: number;
-  netContent?: string;
-  netContentType?: number;
+  netContent?: NetContent;
   isBought: boolean;
 }

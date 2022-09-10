@@ -83,8 +83,10 @@ export class EditShoppingListProductModalComponent
       currentProductName: this.shoppingListProduct!.name,
       newProductName: productName,
       quantity: quantity,
-      netContent: netContent,
-      netContentType: netContentType,
+      netContent: {
+        netContent: netContent,
+        netContentType: netContentType,
+      },
       isBought: this.shoppingListProduct!.isBought,
     };
 
@@ -116,8 +118,8 @@ export class EditShoppingListProductModalComponent
     this.editShoppingListProductForm?.patchValue({
       productName: this.shoppingListProduct.name,
       quantity: this.shoppingListProduct.quantity,
-      netContent: this.shoppingListProduct.netContent,
-      netContentType: this.shoppingListProduct.netContentType,
+      netContent: this.shoppingListProduct.netContent?.netContent,
+      netContentType: this.shoppingListProduct.netContent?.netContentType,
     });
   }
 

@@ -37,8 +37,10 @@ export class AddShoppingListProductFormComponent implements OnInit {
     const shoppingListProduct: ShoppingListProduct = {
       name: productName,
       quantity: quantity,
-      netContent: netContent,
-      netContentType: netContentType,
+      netContent: {
+        netContent: netContent,
+        netContentType: netContentType,
+      },
       isBought: false,
     };
 
