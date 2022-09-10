@@ -1,5 +1,5 @@
 <app-circle-button
-  tooltipText="Add bill"
+  [tooltipText]="'Add bill' | translate"
   (click)="openModal()"
 ></app-circle-button>
 
@@ -8,18 +8,18 @@
     <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="serviceProviderName"
-      labelText="Service Provider"
-      placeholder="Service Provider"
+      [labelText]="'Service Provider' | translate"
+      [placeholder]="'Service Provider' | translate"
     ></app-text-input>
     <app-single-select
       formControlName="billType"
-      labelText="Type"
+      [labelText]="'Type' | translate"
       [enumType]="billTypeType"
       [firstValueSelected]="true"
     ></app-single-select>
     <app-date-input
       formControlName="dateOfPayment"
-      labelText="Date of Payment"
+      [labelText]="'Date of Payment' | translate"
     ></app-date-input>
   </div>
 </app-modal>

@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { AuthenticationResponse } from './core/models/authenticationResponse';
 import { AuthenticationService } from './modules/identity/services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
+import { registerLocaleData } from '@angular/common';
+import localePl from '@angular/common/locales/pl';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +29,8 @@ export class AppComponent {
 
     translateService.addLangs(['en', 'pl']);
     translateService.setDefaultLang('pl');
+
+    registerLocaleData(localePl);
   }
 
   switchLanguages(lang: string) {

@@ -16,7 +16,7 @@
         class="shared-home-icon"
         data-bs-toggle="tooltip"
         data-bs-placement="top"
-        title="Details"
+        [title]="'Details' | translate"
         aria-haspopup="true"
         aria-expanded="true"
         (click)="openShoppingList(shoppingList.id)"
@@ -34,10 +34,10 @@
       {{ shoppingList.createdByFirstName }}
       {{ shoppingList.createdByLastName }}
     </h5>
-    <h5>Total price:</h5>
+    <h5>{{ "Total price" | translate }}:</h5>
     <h5>
       {{ shoppingList.countBoughtProducts() }} /
-      {{ shoppingList.products.length }} products bought
+      {{ shoppingList.products.length }} {{ "products bought" | translate }}
     </h5>
     <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
   </div>

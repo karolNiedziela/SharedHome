@@ -4,15 +4,15 @@
       <div [formGroup]="shoppingListForm">
         <app-text-input
           formControlName="yearAndMonth"
-          labelText="Year and month"
-          placeholder="Year and Month"
+          [labelText]="'yearAndMonth' | translate"
+          [placeholder]="'yearAndMonth' | translate"
           (change)="onCurrentYearAndMonthChange()"
         ></app-text-input>
       </div>
       <div [formGroup]="shoppingListForm">
         <app-single-select
           #statusSelect
-          labelText="Status"
+          [labelText]="'status' | translate"
           [enumType]="shoppingListStatus"
           formControlName="status"
         ></app-single-select>

@@ -3,8 +3,8 @@
     <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="name"
-      labelText="Name"
-      placeholder="Name"
+      [labelText]="'Name' | translate"
+      [placeholder]="'Name' | translate"
     ></app-text-input>
   </div>
 </app-modal>

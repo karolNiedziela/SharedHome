@@ -13,13 +13,17 @@
     "
   >
     <div class="dropdown-item" (click)="additionalPopupMenuItem.onClick()">
-      {{ additionalPopupMenuItem.text }}
+      {{ additionalPopupMenuItem.text | translate }}
     </div>
   </li>
   <li *ngIf="popupMenuConfig.isEditVisible">
-    <div class="dropdown-item" (click)="popupMenuConfig.onEdit()">Edit</div>
+    <div class="dropdown-item" (click)="popupMenuConfig.onEdit()">
+      {{ "Edit" | translate }}
+    </div>
   </li>
   <li *ngIf="popupMenuConfig.isDeleteVisible">
-    <div class="dropdown-item" (click)="popupMenuConfig.onDelete()">Delete</div>
+    <div class="dropdown-item" (click)="popupMenuConfig.onDelete()">
+      {{ "Delete" | translate }}
+    </div>
   </li>
 </ul>

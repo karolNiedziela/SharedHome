@@ -1,6 +1,6 @@
 <div #container></div>
 <app-button
   class="product__button"
-  text="Add product"
+  [text]="'Add product' | translate"
   (onButtonClick)="addProduct()"
 ></app-button>

@@ -13,13 +13,13 @@
       <a
         href="#"
         class="nav-link"
-        title="Shopping lists"
+        [title]="'shoppingLists' | translate"
         [routerLink]="['/shoppinglists']"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="shoppingListsIcon"></fa-icon>
-        <span class="links_name">Shopping lists</span>
+        <span class="links_name">{{ "shoppingLists" | translate }} </span>
       </a>
     </li>
     <hr />
@@ -32,28 +32,28 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="billsIcon"></fa-icon>
-        <span class="links_name">Bills</span>
+        <span class="links_name">{{ "bills" | translate }}</span>
       </a>
     </li>
     <hr />
     <li class="nav-item">
       <a href="#" class="nav-link link-dark">
         <fa-icon [icon]="houseGroupIcon"></fa-icon>
-        <span class="links_name">House group</span>
+        <span class="links_name">{{ "houseGroup" | translate }}</span>
       </a>
     </li>
     <hr />
     <li class="nav-item">
       <a href="#" class="nav-link link-dark">
         <fa-icon [icon]="expensesIcon"></fa-icon>
-        <span class="links_name">Expenses</span>
+        <span class="links_name">{{ "expenses" | translate }}</span>
       </a>
     </li>
     <hr />
     <li class="nav-item">
       <a href="#" class="nav-link link-dark">
         <fa-icon [icon]="invitationsIcon"></fa-icon>
-        <span class="links_name">Invitations</span>
+        <span class="links_name">{{ "invitations" | translate }}</span>
       </a>
     </li>
   </ul>
@@ -61,7 +61,7 @@
     <li class="nav-item">
       <a href="#" class="nav-link link-dark">
         <fa-icon [icon]="notificationsIcon"></fa-icon>
-        <span class="links_name">Notifications</span>
+        <span class="links_name">{{ "notifications" | translate }}</span>
       </a>
     </li>
     <hr />
@@ -74,14 +74,14 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="settingsIcon"></fa-icon>
-        <span class="links_name">Settings</span>
+        <span class="links_name">{{ "settings" | translate }}</span>
       </a>
     </li>
     <hr />
     <li class="nav-item">
       <a (click)="logout()" class="nav-link link-dark">
         <fa-icon [icon]="logoutIcon"></fa-icon>
-        <span class="links_name">Log out</span>
+        <span class="links_name">{{ "logOut" | translate }}</span>
       </a>
     </li>
   </ul>

@@ -2,14 +2,14 @@
   <div class="col-md-6">
     <app-number-input
       formControlName="netContent"
-      labelText="Net Content"
-      placeholder="Net Content"
+      [labelText]="'Net Content' | translate"
+      [placeholder]="'Net Content' | translate"
     ></app-number-input>
   </div>
   <div class="col md-6">
     <app-single-select
       formControlName="netContentType"
-      labelText="Net Content Type"
+      [labelText]="'Net Content Type' | translate"
       [enumType]="netContentType"
     ></app-single-select>
   </div>

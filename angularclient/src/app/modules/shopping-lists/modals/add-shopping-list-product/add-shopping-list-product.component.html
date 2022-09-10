@@ -1,19 +1,15 @@
-<!-- <app-button text="Add shopping list product" (click)="openModal()"
-  >Open Modal</app-button
-> -->
-
 <app-modal #addShoppingListProductModal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="addShoppingListProductForm">
     <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="productName"
-      labelText="Product Name"
-      placeholder="Product Name"
+      [labelText]="'Product Name' | translate"
+      [placeholder]="'Product Name' | translate"
     ></app-text-input>
     <app-number-input
       formControlName="quantity"
-      labelText="Quantity"
-      placeholder="Quantity"
+      [labelText]="'Quantity' | translate"
+      [placeholder]="'Quantity' | translate"
     ></app-number-input>
     <app-net-content-form
       [netContentFormGroup]="

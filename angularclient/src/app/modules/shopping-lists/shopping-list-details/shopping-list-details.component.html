@@ -50,10 +50,10 @@
       {{ shoppingList.createdByFirstName }}
       {{ shoppingList.createdByLastName }}
     </h5>
-    <h5>Total price:</h5>
+    <h5>{{ "Total price" | translate }}:</h5>
     <h5>
       {{ shoppingList.countBoughtProducts() }} /
-      {{ shoppingList.products.length }} products bought
+      {{ shoppingList.products.length }} {{ "products bought" | translate }}
     </h5>
     <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
   </div>

@@ -85,6 +85,7 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
       products: products,
     };
 
+    console.log(addShoppingListProduct);
     this.shoppingListService
       .addShoppingListProducts(addShoppingListProduct)
       .subscribe({

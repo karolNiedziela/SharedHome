@@ -2,7 +2,7 @@
   <div *ngIf="events$ | async as evs; else loading">
     <div class="header">
       <div class="header__title">
-        <h4>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h4>
+        <h4>{{ viewDate | calendarDate: view + "ViewTitle":locale }}</h4>
       </div>
       <div class="header__buttons">
         <div
@@ -11,16 +11,18 @@
           [view]="view"
           [(viewDate)]="viewDate"
         >
-          Previous
+          {{ "Previous" | translate }}
         </div>
-        <div class="btn" mwlCalendarToday [(viewDate)]="viewDate">Current</div>
+        <div class="btn" mwlCalendarToday [(viewDate)]="viewDate">
+          {{ "Current" | translate }}
+        </div>
         <div
           class="btn btn-primary sharedhome-btn"
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
         >
-          Next
+          {{ "Next" | translate }}
         </div>
       </div>
       <div class="header__operations">
@@ -31,6 +33,7 @@
     <mwl-calendar-month-view
       [viewDate]="viewDate"
       [events]="evs"
+      [locale]="locale"
       [weekStartsOn]="weekStartsOn"
       [activeDayIsOpen]="activeDayIsOpen"
       [openDayEventsTemplate]="openDayEventsTemplate"

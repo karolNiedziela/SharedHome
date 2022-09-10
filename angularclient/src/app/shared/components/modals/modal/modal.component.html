@@ -1,6 +1,6 @@
 <ng-template #modal>
   <div class="modal-header">
-    <h5 class="modal-title">{{ modalConfig.modalTitle }}</h5>
+    <h5 class="modal-title">{{ modalConfig.modalTitle | translate }}</h5>
     <h4>
       <fa-icon
         [icon]="dismissIcon"
@@ -21,12 +21,12 @@
       data-bs-dismiss="modal"
       (click)="close()"
     >
-      {{ modalConfig.closeButtonLabel }}
+      {{ modalConfig.closeButtonLabel! | translate }}
     </button>
 
     <app-button
       *ngIf="modalConfig.isSaveButtonVisible"
-      [text]="modalConfig.saveButtonLabel!"
+      [text]="modalConfig.saveButtonLabel! | translate"
       type="button"
       (onButtonClick)="save()"
     ></app-button>

@@ -15,9 +15,12 @@ export class NetContentFormComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.netContentFormGroup.addControl('netContent', new FormControl(''));
+    this.netContentFormGroup.addControl('netContent', new FormControl(null));
 
-    this.netContentFormGroup.addControl('netContentType', new FormControl(''));
+    this.netContentFormGroup.addControl(
+      'netContentType',
+      new FormControl(null)
+    );
   }
 
   ngOnDestroy(): void {

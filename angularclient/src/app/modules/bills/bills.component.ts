@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-bill-payment.component';
 import { ModalConfig } from './../../shared/components/modals/modal/modal.config';
 import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
@@ -9,15 +10,12 @@ import { ColumnSetting } from './../../shared/components/tables/column-setting';
 import { BillEvent } from './models/bill-event';
 import { ApiResponse } from 'app/core/models/api-response';
 import { BillService } from './services/bill.service';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-} from '@angular/core';
-import { CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
+  CalendarDateFormatter,
+  CalendarView,
+  DAYS_OF_WEEK,
+} from 'angular-calendar';
 import { Subject, Observable, map, of } from 'rxjs';
 import { startOfDay, endOfDay, isSameDay, isSameMonth } from 'date-fns';
 import { Bill } from './models/bill';
@@ -43,6 +41,7 @@ export class BillsComponent implements OnInit, OnDestroy {
   dateSelected!: Date;
 
   CalendarView = CalendarView;
+  locale!: string;
 
   viewDate: Date = new Date();
 
@@ -89,9 +88,14 @@ export class BillsComponent implements OnInit, OnDestroy {
   @ViewChild('cancelBillPaymentModal')
   cancelBillPaymentModal!: CancelBillPaymentComponent;
 
-  constructor(private billService: BillService) {}
+  constructor(
+    private billService: BillService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
+    this.locale = this.translateService.getDefaultLang();
+
     this.getBillEvents();
 
     this.eventsSubscription = this.billService.allBillsRefreshNeeded.subscribe(

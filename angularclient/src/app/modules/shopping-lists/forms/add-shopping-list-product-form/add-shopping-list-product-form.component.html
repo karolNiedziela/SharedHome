@@ -2,13 +2,13 @@
 <div class="row g-3" [formGroup]="addShoppingListProductForm">
   <app-text-input
     formControlName="productName"
-    labelText="Product Name"
-    placeholder="Product Name"
+    [labelText]="'Product Name' | translate"
+    [placeholder]="'Product Name' | translate"
   ></app-text-input>
   <app-number-input
     formControlName="quantity"
-    labelText="Quantity"
-    placeholder="Quantity"
+    [labelText]="'Quantity' | translate"
+    [placeholder]="'Quantity' | translate"
   ></app-number-input>
   <app-net-content-form
     [netContentFormGroup]="
@@ -17,7 +17,7 @@
   ></app-net-content-form>
   <app-button
     class="product__button"
-    text="Remove product"
+    [text]="'Remove product' | translate"
     (onButtonClick)="removeProduct()"
   ></app-button>
 </div>
