@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
@@ -15,6 +16,6 @@ import { IdentityRoutingModule } from './identity-routing.module';
     EmailConfirmationComponent,
     EmailConfirmedComponent,
   ],
-  imports: [SharedModule, IdentityRoutingModule],
+  imports: [SharedModule, IdentityRoutingModule, TranslateModule],
 })
 export class IdentityModule {}

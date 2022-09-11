@@ -7,22 +7,26 @@
   <div *ngIf="information">{{ information }}</div>
   <app-email-input formControlName="email"></app-email-input>
   <app-text-input
-    labelText="First name"
-    placeholder="First name"
+    [labelText]="'First name' | translate"
+    [placeholder]="'First name' | translate"
     formControlName="firstName"
   ></app-text-input>
   <app-text-input
-    labelText="Last name"
-    placeholder="Last name"
+    [labelText]="'Last name' | translate"
+    [placeholder]="'Last name' | translate"
     formControlName="lastName"
   ></app-text-input>
   <app-passwords-form formControlName="password"></app-passwords-form>
-  <app-button class="d-grid col-12" text="Sign up" type="submit"></app-button>
+  <app-button
+    class="d-grid col-12"
+    [text]="'Sign up' | translate"
+    type="submit"
+  ></app-button>
 </form>
 <hr class="mt-4" />
 <app-button
   [routerLink]="['/identity/login']"
   class="d-grid col-12 mb-4"
-  text="Login"
+  [text]="'Login' | translate"
   type="submit"
 ></app-button>

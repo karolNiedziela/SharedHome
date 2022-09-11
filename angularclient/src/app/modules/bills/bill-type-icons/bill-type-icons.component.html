@@ -3,7 +3,7 @@
     <fa-icon
       [ngClass]="{ 'text-success': billEvent.isPaid }"
       [icon]="iconByBillType[billEvent.billType]"
-      [title]="billEvent.billType | enumAsString: billTypeType"
+      [title]="billEvent.billType | enumAsString: billTypeType | translate"
     ></fa-icon>
   </div>
 </div>

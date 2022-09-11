@@ -11,15 +11,17 @@
     [value]="control?.value"
   />
   <label class="sharedhome__label"
-    >{{ labelText }}
+    >{{ labelText | translate }}
     <span *ngIf="isRequired" class="required" aria-required="true">
       *
     </span></label
   >
   <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">This field is required.</div>
+    <div *ngIf="control?.errors?.['required']">
+      {{ "This field is required." | translate }}
+    </div>
     <div *ngIf="control?.hasError('email')">
-      Please provide a valid email adress.
+      {{ "Please provide a valid email address." | translate }}
     </div>
   </div>
 </div>

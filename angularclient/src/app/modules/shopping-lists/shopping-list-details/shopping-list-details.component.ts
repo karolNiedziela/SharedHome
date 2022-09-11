@@ -194,9 +194,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openDeleteSelectedProductsModal(): void {
-    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete ${this.shoppingListProductNamesSelected.join(
-      ', '
-    )}?`;
+    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete?`;
 
     this.deleteSelectedProductsModal.open();
   }

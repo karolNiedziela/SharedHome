@@ -19,18 +19,22 @@
   >
 
   <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">This field is required.</div>
+    <div *ngIf="control?.errors?.['required']">
+      {{ "This field is required." | translate }}
+    </div>
     <div *ngIf="control?.hasError('minlength')">
-      This field must contain at least
-      {{ control?.errors?.['minlength'].requiredLength }} characters.
+      {{ "This field must contain at least" | translate }}
+      {{ control?.errors?.['minlength'].requiredLength }}
+      {{ "characters." | translate }}
     </div>
     <div *ngIf="control?.hasError('maxlength')">
-      This field can contain maximum
-      {{ control?.errors?.['maxlength'].requiredLength }} characters.
+      {{ "This field can contain maximum" | translate }}
+      {{ control?.errors?.['maxlength'].requiredLength }}
+      {{ "characters." | translate }}
     </div>
 
     <div *ngIf="control?.hasError('invalidFormat')">
-      {{ control?.errors?.['invalidFormat'] }}
+      {{ control?.errors?.['invalidFormat']  | translate }}
     </div>
   </div>
 </div>

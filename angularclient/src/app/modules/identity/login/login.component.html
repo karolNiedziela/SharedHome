@@ -2,7 +2,11 @@
   <app-error [errorMessages]="errorMessages"></app-error>
   <app-email-input formControlName="email"> </app-email-input>
   <app-password-input formControlName="password"></app-password-input>
-  <app-button class="d-grid col-12" text="Login" type="submit"></app-button>
+  <app-button
+    class="d-grid col-12"
+    [text]="'Login' | translate"
+    type="submit"
+  ></app-button>
 </form>
 <div class="col-12 text-center">
   <a>Forgot password?</a>
@@ -11,6 +15,6 @@
 <app-button
   [routerLink]="['/identity/register']"
   class="d-grid col-12 mb-4"
-  text="Sign up"
+  [text]="'Sign up' | translate"
   type="submit"
 ></app-button>

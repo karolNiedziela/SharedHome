@@ -30,6 +30,8 @@
     </span></label
   >
   <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">This field is required.</div>
+    <div *ngIf="control?.errors?.['required']">
+      {{ "This field is required." | translate }}
+    </div>
   </div>
 </div>

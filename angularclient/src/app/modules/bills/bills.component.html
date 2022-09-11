@@ -12,10 +12,16 @@
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
+          (viewDateChange)="onMonthChanged()"
         >
           {{ "Previous" | translate }}
         </div>
-        <div class="btn" mwlCalendarToday [(viewDate)]="viewDate">
+        <div
+          class="btn"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+          (viewDateChange)="onMonthChanged()"
+        >
           {{ "Current" | translate }}
         </div>
         <div
@@ -23,6 +29,7 @@
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
+          (viewDateChange)="onMonthChanged()"
         >
           {{ "Next" | translate }}
         </div>
@@ -52,7 +59,7 @@
     ></app-table>
   </div>
   <ng-template #loading>
-    <app-loading-spinner class="spinner"> Loading... </app-loading-spinner>
+    <app-loading-spinner></app-loading-spinner>
   </ng-template>
 </div>
 

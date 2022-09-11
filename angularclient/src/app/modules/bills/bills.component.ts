@@ -49,7 +49,7 @@ export class BillsComponent implements OnInit, OnDestroy {
 
   refresh = new Subject<void>();
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   columnSettings: ColumnSetting[] = [
     {
@@ -64,6 +64,8 @@ export class BillsComponent implements OnInit, OnDestroy {
     {
       propertyName: 'billType',
       header: 'Type',
+      format: CellPipeFormat.ENUM,
+      enumType: BillType,
     },
     {
       propertyName: 'cost',
@@ -198,5 +200,9 @@ export class BillsComponent implements OnInit, OnDestroy {
     });
 
     return popupMenuConfigs;
+  }
+
+  onMonthChanged(): void {
+    this.currentDayEvents = [];
   }
 }

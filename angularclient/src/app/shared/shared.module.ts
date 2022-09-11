@@ -97,6 +97,6 @@ import { NetContentFormComponent } from './components/forms/net-content-form/net
     FormGroupPipe,
     NetContentFormComponent,
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, EnumAsStringPipe],
 })
 export class SharedModule {}
