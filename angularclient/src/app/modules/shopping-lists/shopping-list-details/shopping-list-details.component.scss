@@ -2,8 +2,6 @@
 
 .shopping-list {
   margin-bottom: 15px;
-  border-radius: 20px;
-  border: none;
 
   &__products {
     gap: 10px;
@@ -23,6 +21,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 12.5%);
 
   :nth-child(odd) {
     text-align: left;

@@ -1,6 +1,6 @@
 <div class="card-body product">
   <div class="product__item product__name">
-    <h4>{{ shoppingListProduct.name }}</h4>
+    <h4 class="product-name">{{ shoppingListProduct.name }}</h4>
     <h5
       class="bought-status"
       *ngIf="shoppingListProduct.isBought; else notBought"

@@ -23,6 +23,12 @@ $primary: $l_primary_color !default;
 $success: $l_success_color !default;
 $danger: $l_error_color !default;
 
+$card-border-color: rgba(0, 0, 0, 12.5%) !default;
+$card-color: $l_black_color !default;
+$card-border-radius: 4px !default;
+$card-bg: $l_white_color !default;
+$card-border-radius: 4px !default;
+
 /*
 ----------- IDENTITY -----------
 */
@@ -35,7 +41,16 @@ $danger: $l_error_color !default;
 */
 
 .card {
-  box-shadow: 0px 10px 20px $l_primary_color_light;
+  box-shadow: rgb(0 0 0 / 12%) 0px 8px 40px 0px !important;
+  border-right: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: 8px solid $l_primary_color !important;
+  transition: box-shadow 0.2s ease 0s, transform 0.2s ease 0s;
+
+  &:hover {
+    box-shadow: rgb(0 0 0 / 36%) 0px 16px 32px 0px !important;
+  }
 
   &-header {
     background-color: $l_white_color !important;
@@ -54,11 +69,11 @@ $danger: $l_error_color !default;
 ----------- PRODUCT -----------
 */
 .product {
-  &:hover {
-    border: 3px solid $l_primary_color_light;
+  &:hover .product-name {
+    border-bottom: 4px solid $l_primary_color;
   }
-  &.selected {
-    border: 3px solid $l_primary_color_light;
+  .product-name.selected {
+    border-bottom: 4px solid $l_primary_color;
   }
 }
 /*

@@ -124,7 +124,9 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
             productHtmlElement.addEventListener('click', (e) => {
               const targetHtmlElement = e.target as HTMLElement;
               if (!['svg', 'path'].includes(targetHtmlElement.nodeName)) {
-                productHtmlElement.classList.toggle('selected');
+                productHtmlElement
+                  .querySelector('.product-name')!
+                  .classList.toggle('selected');
                 this.onProductSelect(product);
               }
             });
@@ -266,7 +268,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   private deselectProducts(): void {
     this.shoppingListProductNamesSelected = [];
     document
-      .querySelectorAll('.product.selected')
+      .querySelectorAll('.product-name.selected')
       .forEach((productSelected) => {
         productSelected.classList.remove('selected');
       });

@@ -5,6 +5,7 @@
   grid-template-columns: 8fr 2fr 36px;
   padding-left: 1rem;
   row-gap: 10px;
+  cursor: pointer;
   grid-template-areas:
     "item item2 side"
     "item3 item4 side";
@@ -44,7 +45,7 @@
   &__more-options {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
     grid-area: side;
     font-size: 1.5rem;
   }
