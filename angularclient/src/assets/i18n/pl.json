@@ -92,5 +92,6 @@
   "Password requires must contain at least 6 characters and one lowercase.": "Hasło musi zawierać przynajmniej 6 znaków i jedną małą literę.",
   "Passwords do not match.": "Hasła różnią się.",
   "Invalid format must be year month, for example 2022 6.": "Nieprawidłowy format roku i miesiąca, na przykład 2022 6.",
-  "Loading...": "Ładowanie..."
+  "Loading...": "Ładowanie...",
+  "No price": "Brak ceny"
 }

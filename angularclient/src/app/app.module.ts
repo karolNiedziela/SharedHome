@@ -1,3 +1,4 @@
+import { HousegroupModule } from './modules/housegroups/housegroup.module';
 import { BillsModule } from './modules/bills/bills.module';
 import { IdentityModule } from './modules/identity/identity.module';
 import { SharedModule } from './shared/shared.module';
@@ -33,6 +34,7 @@ import { SettingModule } from './modules/settings/setting.module';
     SettingModule,
     IdentityModule,
     NgbModule,
+    HousegroupModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

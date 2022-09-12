@@ -1,10 +1,11 @@
 export interface ConfirmationModalConfig {
   modalTitle?: string;
   confirmationText?: string;
+  confirmationProperties?: string[];
   yesButtonText?: string;
   noButtonText?: string;
-  onOpen?(): Promise<boolean> | boolean;
-  onSave?(): Promise<any> | any;
-  onClose?(): Promise<boolean> | boolean;
+  onOpen?(): boolean;
+  onSave?(): any;
+  onClose?(): boolean;
   onDismiss?(): boolean;
 }

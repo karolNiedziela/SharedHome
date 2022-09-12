@@ -1,4 +1,3 @@
-import { ConfirmationModalConfig } from './confirmation-modal.config';
 import {
   Component,
   Input,
@@ -8,6 +7,7 @@ import {
 } from '@angular/core';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationModalConfig } from './confirmation-modal.config';
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -77,5 +77,11 @@ export class ConfirmationModalComponent implements OnInit {
 
   dismiss(): void {
     this.modalRef.dismiss();
+  }
+
+  getJoinedConfirmationProperties(): string {
+    return this.confirmationModalConfig.confirmationProperties
+      ? this.confirmationModalConfig.confirmationProperties.join(', ')
+      : '';
   }
 }

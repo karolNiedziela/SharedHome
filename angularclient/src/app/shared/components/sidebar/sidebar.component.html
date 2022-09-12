@@ -37,7 +37,13 @@
     </li>
     <hr />
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        [routerLink]="['/housegroups']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <fa-icon [icon]="houseGroupIcon"></fa-icon>
         <span class="links_name">{{ "houseGroup" | translate }}</span>
       </a>

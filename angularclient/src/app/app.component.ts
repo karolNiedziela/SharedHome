@@ -23,12 +23,12 @@ export class AppComponent {
     public translateService: TranslateService,
     private themeService: ThemeService
   ) {
-    this.authenticationService.authenticationResponse.subscribe(
+    this.authenticationService?.authenticationResponse.subscribe(
       (result: AuthenticationResponse) => (this.authenticationResponse = result)
     );
 
     translateService.addLangs(['en', 'pl']);
-    translateService.setDefaultLang('pl');
+    translateService.setDefaultLang('en');
 
     registerLocaleData(localePl);
   }
