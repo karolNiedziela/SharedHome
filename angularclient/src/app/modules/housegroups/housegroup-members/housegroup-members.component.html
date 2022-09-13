@@ -1,27 +1,17 @@
-<div *ngIf="(houseGroup$ | async)?.data as houseGroup; else loading">
-  <ul class="list-group" *ngFor="let member of houseGroup.members">
-    <li class="list-group-item">
-      <div>{{ member.fullName }}</div>
-      <div class="operations">
-        <fa-icon
-          *ngIf="member.isOwner"
-          [icon]="ownerIcon"
-          [title]="'Owner' | translate"
-        ></fa-icon>
-        <div *ngIf="isCurrentUserOwner && member.personId != personId">
-          <app-popup-menu
-            [popupMenuConfig]="getPopupMenuConfig()!"
-          ></app-popup-menu>
-        </div>
-      </div>
-    </li>
-  </ul>
+<div class="house-group">
+  <div *ngIf="(houseGroup$ | async)?.data as houseGroup; else loading">
+    <ul class="list-group" *ngFor="let member of houseGroup.members">
+      <app-house-group-member
+        [member]="member"
+        [isCurrentUserOwner]="isCurrentUserOwner"
+        [houseGroupId]="houseGroupId"
+      ></app-house-group-member>
+    </ul>
+  </div>
+  <div class="add-member">
+    <app-circle-button tooltipText="Add Member"></app-circle-button>
+  </div>
 </div>
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>
-
-<app-confirmation-modal
-  [confirmationModalConfig]="removeMemberModalConfig"
-  #removeMemberModal
-></app-confirmation-modal>

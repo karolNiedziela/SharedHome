@@ -1,3 +1,4 @@
+import { RemoveMember } from './../models/remove-member';
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { PopupMenuConfig } from './../../../shared/components/menus/popup-menu/popup-menu.config';
 import { AuthenticationService } from './../../identity/services/authentication.service';
@@ -9,7 +10,7 @@ import { HouseGroup } from '../models/housegroup';
 import { HouseGroupService } from '../services/housegroup.service';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { AuthenticationResponse } from 'app/core/models/authenticationResponse';
-import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+
 @Component({
   selector: 'app-housegroup-members',
   templateUrl: './housegroup-members.component.html',
@@ -18,61 +19,47 @@ import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmati
 export class HousegroupMembersComponent implements OnInit, OnDestroy {
   houseGroup$!: Observable<ApiResponse<HouseGroup>>;
   ownerIcon = faStar;
-  subscription!: Subscription;
+  subscriptions: Subscription[] = [];
   personId: string = '';
   isCurrentUserOwner: boolean = false;
+  houseGroupId!: number;
 
-  @ViewChild('removeMemberModal')
-  removeMemberModal!: ConfirmationModalComponent;
-  removeMemberModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Remove member',
-  };
   constructor(
     private houseGroupService: HouseGroupService,
     private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
-    this.subscription =
+    this.subscriptions.push(
       this.authenticationService.authenticationResponse.subscribe(
         (result: AuthenticationResponse) => {
           this.personId = result.userId;
         }
-      );
+      )
+    );
 
+    this.getHouseGroup();
+
+    this.subscriptions.push(
+      this.houseGroupService.houseGroupRefreshNeeded.subscribe(() => {
+        this.getHouseGroup();
+      })
+    );
+  }
+
+  getHouseGroup(): void {
     this.houseGroup$ = this.houseGroupService.get().pipe(
       tap((response: ApiResponse<HouseGroup>) => {
         this.isCurrentUserOwner = response.data.members.some(
           (x) => x.personId == this.personId && x.isOwner
         );
+
+        this.houseGroupId = response.data.id;
       })
     );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  getPopupMenuConfig(): PopupMenuConfig | null {
-    if (this.isCurrentUserOwner) {
-      const popupMenuConfig: PopupMenuConfig = {
-        isDeleteVisible: false,
-        isEditVisible: false,
-        additionalPopupMenuItems: [
-          {
-            text: 'Remove member',
-            onClick: () => {},
-          },
-          {
-            text: 'Hand over the owner',
-            onClick: () => {},
-          },
-        ],
-      };
-
-      return popupMenuConfig;
-    }
-
-    return null;
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 }

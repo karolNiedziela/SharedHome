@@ -1,1 +1,18 @@
-<p>house-group-member works!</p>
+<li class="list-group-item">
+  <div>{{ member.fullName }}</div>
+  <div class="operations" *ngIf="member.isOwner">
+    <fa-icon
+      *ngIf="member.isOwner"
+      [icon]="ownerIcon"
+      [title]="'Owner' | translate"
+    ></fa-icon>
+  </div>
+  <div *ngIf="isCurrentUserOwner && !member.isOwner">
+    <app-popup-menu [popupMenuConfig]="popupMenuConfig!"></app-popup-menu>
+  </div>
+</li>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="removeMemberModalConfig"
+  #removeMemberModal
+></app-confirmation-modal>

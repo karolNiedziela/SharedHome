@@ -36,7 +36,10 @@ export class HouseGroupService {
     return this.httpClient
       .delete<any>(
         `${this.houseGroupsUrl}/${removeMember.houseGroupId}/members/${removeMember.personToRemoveId}`,
-        this.defaultHttpOptions
+        {
+          headers: this.defaultHttpOptions.headers,
+          body: removeMember,
+        }
       )
       .pipe(
         tap(() => {

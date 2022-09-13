@@ -1,3 +1,15 @@
+.house-group {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+
+.add-member {
+  margin-top: auto;
+  margin-left: auto;
+}
+
 .list-group-item {
   display: flex;
   flex-direction: row;

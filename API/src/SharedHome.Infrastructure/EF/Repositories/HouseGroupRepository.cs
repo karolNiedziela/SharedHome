@@ -16,8 +16,7 @@ namespace SharedHome.Infrastructure.EF.Repositories
 
         public async Task<HouseGroup?> GetAsync(int houseGroupId, string personId)
             => await _dbContext.HouseGroups
-            .Include(houseGroup => houseGroup.Members
-                .Where(member => member.PersonId == personId))
+            .Include(houseGroup => houseGroup.Members)
             .SingleOrDefaultAsync(houseGroup => houseGroup.Id == houseGroupId);
 
         public async Task AddAsync(HouseGroup houseGroup)
