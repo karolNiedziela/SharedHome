@@ -1,12 +1,12 @@
 import { ApiResponse } from './../../../../core/models/api-response';
-import { SendInvitation } from './../../../invitation/models/send-invitation';
+import { SendInvitation } from '../../../invitations/models/send-invitation';
 import { ModalConfig } from './../../../../shared/components/modals/modal/modal.config';
 import { ModalComponent } from './../../../../shared/components/modals/modal/modal.component';
 import { Modalable } from './../../../../core/models/modalable';
-import { InvitationService } from './../../../invitation/services/invitation.service';
+import { InvitationService } from '../../../invitations/services/invitation.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Invitation } from 'app/modules/invitation/models/invitation';
+import { Invitation } from 'app/modules/invitations/models/invitation';
 
 @Component({
   selector: 'app-invite-to-house-group',

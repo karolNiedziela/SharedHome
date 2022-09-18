@@ -1,0 +1,10 @@
+<div *ngIf="invitations$ | async as invitations; else loading">
+  <app-table
+    *ngIf="invitations.length > 0"
+    [settings]="columnSettings"
+    [records]="invitations"
+  ></app-table>
+</div>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

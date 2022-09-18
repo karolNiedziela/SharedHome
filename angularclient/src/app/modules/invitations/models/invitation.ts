@@ -4,7 +4,7 @@ export interface Invitation {
   houseGroupId: number;
   requestedByPersonId: string;
   requestedToPersonId: string;
-  InvitationStatus: InvitationStatus;
-  sendByFirstName: string;
-  sendByLastName: string;
+  invitationStatus: InvitationStatus;
+  sentByFirstName: string;
+  sentByLastName: string;
 }

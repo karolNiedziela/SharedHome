@@ -1,3 +1,4 @@
+import { InvitationModule } from './modules/invitations/invitation.module';
 import { HousegroupModule } from './modules/housegroups/housegroup.module';
 import { BillsModule } from './modules/bills/bills.module';
 import { IdentityModule } from './modules/identity/identity.module';
@@ -35,6 +36,7 @@ import { SettingModule } from './modules/settings/setting.module';
     IdentityModule,
     NgbModule,
     HousegroupModule,
+    InvitationModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { SendInvitation } from './../models/send-invitation';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { SendInvitation } from '../models/send-invitation';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Invitation } from '../models/invitation';
@@ -19,6 +19,20 @@ export class InvitationService {
   };
 
   constructor(private httpClient: HttpClient) {}
+
+  getByStatus(status?: number): Observable<ApiResponse<Invitation[]>> {
+    let params = new HttpParams();
+    if (status != null) {
+      params.append('status', status);
+    }
+
+    return this.httpClient.get<ApiResponse<Invitation[]>>(
+      `${this.invitationsUrl}`,
+      {
+        params: params,
+      }
+    );
+  }
 
   send(sendInvitation: SendInvitation): Observable<ApiResponse<Invitation>> {
     return this.httpClient.post<ApiResponse<Invitation>>(

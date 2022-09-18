@@ -57,7 +57,13 @@
     </li>
     <hr />
     <li class="nav-item">
-      <a href="#" class="nav-link link-dark">
+      <a
+        href="#"
+        class="nav-link link-dark"
+        [routerLink]="['/invitations']"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <fa-icon [icon]="invitationsIcon"></fa-icon>
         <span class="links_name">{{ "invitations" | translate }}</span>
       </a>
