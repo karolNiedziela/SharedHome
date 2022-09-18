@@ -12,6 +12,10 @@ namespace SharedHome.Infrastructure.EF.Configurations.Read
 
             builder.HasKey(invitation => invitation.Id);
 
+            builder.Property(i => i.Status)
+                .HasColumnName("InvitationStatus")
+                .IsRequired();
+
             builder.HasOne(invitation => invitation.HouseGroup)
                    .WithMany(houseGroup => houseGroup.Invitations)  
                    .HasForeignKey(invitation => invitation.HouseGroupId);

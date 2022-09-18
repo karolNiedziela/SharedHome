@@ -13,12 +13,12 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
     internal class GetInvitationByStatusHandler : IQueryHandler<GetInvitationsByStatus, Response<List<InvitationDto>>>
     {
-        private readonly DbSet<InvitationReadModel> _invitations;
+        private readonly ReadSharedHomeDbContext _context;
         private readonly IMapper _mapper;
 
         public GetInvitationByStatusHandler(ReadSharedHomeDbContext context, IMapper mapper)
         {
-            _invitations = context.Invitations;
+            _context = context;
             _mapper = mapper;
         }
 
@@ -28,7 +28,8 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
                 EnumHelper.ToEnumByIntOrThrow<InvitationStatus>(request.Status.Value) :
                 InvitationStatus.Pending;
 
-            var invitations = await _invitations
+            var invitations = await _context.Invitations
+                .Include(x => x.RequestedByPerson)
                 .Where(invitation => invitation.Status == (int)invitationStatus &&
                 invitation.RequestedToPersonId == request.PersonId)
                 .ToListAsync();
