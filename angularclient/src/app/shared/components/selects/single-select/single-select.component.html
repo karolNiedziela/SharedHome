@@ -12,14 +12,14 @@
       aria-expanded="false"
     >
     </span>
-    {{ enumType[selectedValue] | translate }}
+    {{ selectedValue.toString() | translate }}
     <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
       <li
         class="dropdown-item"
-        *ngFor="let key of keys"
-        (click)="setValue(key)"
+        *ngFor="let option of selectOptions"
+        (click)="setValue(option.key)"
       >
-        {{ key | translate }}
+        {{ option.value.toString() | translate }}
       </li>
     </ul>
   </div>

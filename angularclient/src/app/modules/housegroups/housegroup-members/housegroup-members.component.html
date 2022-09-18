@@ -1,5 +1,8 @@
-<div class="house-group">
-  <div *ngIf="(houseGroup$ | async)?.data as houseGroup; else loading">
+<div
+  class="house-group"
+  *ngIf="(houseGroup$ | async)?.data; let houseGroup; else: notExisting"
+>
+  <div class="house-group__members">
     <ul class="list-group" *ngFor="let member of houseGroup.members">
       <app-house-group-member
         [member]="member"
@@ -8,10 +11,28 @@
       ></app-house-group-member>
     </ul>
   </div>
-  <div class="add-member">
-    <app-circle-button tooltipText="Add Member"></app-circle-button>
+  <div class="house-group__operations">
+    <app-circle-button
+      [icon]="leaveHouseGroupIcon"
+      [tooltipText]="'Leave house group'"
+      (onButtonClick)="leaveHouseGroupModal.open()"
+    ></app-circle-button>
+    <app-invite-to-house-group
+      [houseGroupId]="houseGroupId"
+    ></app-invite-to-house-group>
   </div>
 </div>
+<ng-template #notExisting>
+  <div class="add-housegroup">
+    <app-add-house-group></app-add-house-group>
+  </div>
+</ng-template>
+
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="leaveHouseGroupModalConfig"
+  #leaveHouseGroup
+></app-confirmation-modal>

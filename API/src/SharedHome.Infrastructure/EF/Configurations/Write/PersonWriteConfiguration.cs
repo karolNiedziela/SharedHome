@@ -25,6 +25,13 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                           .HasColumnName("LastName")
                           .IsRequired();
             });
+
+            builder.OwnsOne(person => person.Email, navigation =>
+            {
+                navigation.Property(email => email.Value)
+                          .HasColumnName("Email")
+                          .IsRequired();
+            });
         }
     }
 }

@@ -74,14 +74,14 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             _members[newOwnerIndex] = memberNewOwner;
         }
 
-        public void Leave(string personId, string? newOwnerPersonId = null)
+        public void Leave(string personId)
         {
-            ValidateOnLeaving(personId, newOwnerPersonId);
-
             var member = GetMember(personId);
-            if (ShouldProcessForOwner(personId))
+
+            if (IsOwner(personId) && _members.Count > 1)
             {
-                HandOwnerRoleOver(personId, newOwnerPersonId!);
+                var newOwnerPersonId = _members.First(x => !x.IsOwner).PersonId;
+                HandOwnerRoleOver(personId, newOwnerPersonId);
                 _members.Remove(member);
                 return;
             }
@@ -114,16 +114,5 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
                 throw new TotalMembersLimitReachedException(MaxMembers);
             }
         }
-
-        private void ValidateOnLeaving(string personId, string? newOwnerPersonId = null)
-        {
-            if (ShouldProcessForOwner(personId) && string.IsNullOrEmpty(newOwnerPersonId))
-            {
-                throw new LeavingHouseGroupNewOwnerNotDefinedException();
-            }
-        }
-        
-        private bool ShouldProcessForOwner(string personId)
-            => IsOwner(personId) && _members.Count > 1;
     }
 }

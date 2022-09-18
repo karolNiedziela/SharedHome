@@ -1,0 +1,11 @@
+<app-circle-button
+  [tooltipText]="'Create house group'"
+  (onButtonClick)="openModal()"
+></app-circle-button>
+
+<app-modal #modal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="addHouseGroupForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
+    Press save to add house group
+  </div>
+</app-modal>

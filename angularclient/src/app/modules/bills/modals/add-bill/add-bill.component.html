@@ -11,12 +11,12 @@
       [labelText]="'Service Provider' | translate"
       [placeholder]="'Service Provider' | translate"
     ></app-text-input>
-    <app-single-select
+    <app-enum-select
       formControlName="billType"
       [labelText]="'Type' | translate"
       [enumType]="billTypeType"
       [firstValueSelected]="true"
-    ></app-single-select>
+    ></app-enum-select>
     <app-date-input
       formControlName="dateOfPayment"
       [labelText]="'Date of Payment' | translate"

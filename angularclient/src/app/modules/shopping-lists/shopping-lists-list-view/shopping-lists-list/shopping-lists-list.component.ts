@@ -1,6 +1,6 @@
+import { EnumSelectComponent } from './../../../../shared/components/selects/enum-select/enum-select.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { map, Observable, of } from 'rxjs';
-import { SingleSelectComponent } from './../../../../shared/components/selects/single-select/single-select.component';
 import { ShoppingListStatus } from './../../enums/shopping-list-status';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -28,7 +28,7 @@ export class ShoppingListsComponent
   public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
 
   @ViewChild('statusSelect')
-  private statusSelect!: SingleSelectComponent;
+  private statusSelect!: EnumSelectComponent;
   year!: number;
   month!: number;
   isDone: boolean = false;

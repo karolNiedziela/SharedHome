@@ -4,7 +4,7 @@ import { PurchaseShoppingListProduct } from './../models/purchase-shopping-list-
 import { AddShoppingList } from './../models/add-shopping-list';
 import { ShoppingListMonthlyCost } from './../models/shopping-list-monthly-cost';
 import { ShoppingList } from './../models/shopping-list';
-import { Observable, map, Subject, BehaviorSubject, tap } from 'rxjs';
+import { Observable, map, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';

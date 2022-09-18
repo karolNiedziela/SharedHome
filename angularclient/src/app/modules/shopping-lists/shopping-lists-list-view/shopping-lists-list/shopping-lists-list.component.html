@@ -10,12 +10,12 @@
         ></app-text-input>
       </div>
       <div [formGroup]="shoppingListForm">
-        <app-single-select
+        <app-enum-select
           #statusSelect
           [labelText]="'status' | translate"
           [enumType]="shoppingListStatus"
           formControlName="status"
-        ></app-single-select>
+        ></app-enum-select>
       </div>
     </div>
     <app-add-shopping-list

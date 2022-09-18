@@ -8,6 +8,8 @@
 
         public string LastName { get; set; } = default!;
 
+        public string Email { get; set; } = default!;
+
         public ICollection<ShoppingListReadModel> ShoppingLists { get; set; } = default!;
 
         public ICollection<InvitationReadModel> SentInvitations { get; set; } = default!;

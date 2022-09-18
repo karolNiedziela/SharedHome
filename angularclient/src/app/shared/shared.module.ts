@@ -15,7 +15,6 @@ import { ConfirmationModalComponent } from './components/modals/confirmation-mod
 import { ButtonComponent } from './components/buttons/button/button.component';
 import { PopupMenuComponent } from './components/menus/popup-menu/popup-menu.component';
 import { NumberInputComponent } from './components/inputs/number-input/number-input.component';
-import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { EnumAsStringPipe } from './pipes/enum-as-string.pipe';
 import { CurrencySelectComponent } from './components/selects/currency-select/currency-select.component';
 import { CircleButtonComponent } from './components/buttons/circle-button/circle-button.component';
@@ -29,6 +28,8 @@ import { DateInputComponent } from './components/inputs/date-input/date-input.co
 import { MoneyFormComponent } from './components/forms/money-form/money-form.component';
 import { FormGroupPipe } from './pipes/form-group.pipe';
 import { NetContentFormComponent } from './components/forms/net-content-form/net-content-form.component';
+import { EnumSelectComponent } from './components/selects/enum-select/enum-select.component';
+import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { NetContentFormComponent } from './components/forms/net-content-form/net
     ConfirmationModalComponent,
     PopupMenuComponent,
     NumberInputComponent,
-    SingleSelectComponent,
+    EnumSelectComponent,
     EnumAsStringPipe,
     CurrencySelectComponent,
     CircleButtonComponent,
@@ -57,6 +58,7 @@ import { NetContentFormComponent } from './components/forms/net-content-form/net
     MoneyFormComponent,
     FormGroupPipe,
     NetContentFormComponent,
+    SingleSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -83,7 +85,7 @@ import { NetContentFormComponent } from './components/forms/net-content-form/net
     ModalComponent,
     ConfirmationModalComponent,
     PopupMenuComponent,
-    SingleSelectComponent,
+    EnumSelectComponent,
     EnumAsStringPipe,
     CurrencySelectComponent,
     CircleButtonComponent,
@@ -96,6 +98,7 @@ import { NetContentFormComponent } from './components/forms/net-content-form/net
     MoneyFormComponent,
     FormGroupPipe,
     NetContentFormComponent,
+    SingleSelectComponent,
   ],
   providers: [DatePipe, EnumAsStringPipe],
 })

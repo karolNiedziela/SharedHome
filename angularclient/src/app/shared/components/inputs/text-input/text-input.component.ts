@@ -24,7 +24,7 @@ export class TextInputComponent
   @Input() labelText: string = 'label';
   @Input() placeholder: string = 'placeholder';
 
-  disabled!: boolean;
+  disabled: boolean = false;
 
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};

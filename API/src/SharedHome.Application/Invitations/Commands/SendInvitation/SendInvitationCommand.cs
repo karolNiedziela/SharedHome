@@ -8,7 +8,7 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
 {
     public class SendInvitationCommand : AuthorizeRequest, ICommand<Response<InvitationDto>>
     {
-        public string RequestedToPersonId { get; set; } = default!;
+        public string RequestedToPersonEmail { get; set; } = default!;
 
         public int HouseGroupId { get; set; }
     }

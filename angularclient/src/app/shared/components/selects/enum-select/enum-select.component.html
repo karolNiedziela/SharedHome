@@ -1,0 +1,37 @@
+<div class="form-floating">
+  <div
+    class="dropdown shared__home form-control"
+    [ngClass]="{
+      'is-invalid': control?.touched && !control?.valid
+    }"
+  >
+    <span
+      class="dropdown-toggle"
+      id="dropdownMenuLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+    </span>
+    {{ enumType[selectedValue] | translate }}
+    <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
+      <li
+        class="dropdown-item"
+        *ngFor="let key of keys"
+        (click)="setValue(key)"
+      >
+        {{ key | translate }}
+      </li>
+    </ul>
+  </div>
+  <label class="sharedhome__label"
+    >{{ labelText | translate }}
+    <span *ngIf="isRequired" class="required" aria-required="true">
+      *
+    </span></label
+  >
+  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
+    <div *ngIf="control?.errors?.['required']">
+      {{ "This field is required." | translate }}
+    </div>
+  </div>
+</div>

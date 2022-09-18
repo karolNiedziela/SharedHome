@@ -1,0 +1,11 @@
+<app-circle-button
+  [tooltipText]="'Invite to house group'"
+  (onButtonClick)="openModal()"
+></app-circle-button>
+
+<app-modal #modal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="inviteToHouseGroupForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
+    <app-email-input formControlName="requestedToPersonEmail"></app-email-input>
+  </div>
+</app-modal>

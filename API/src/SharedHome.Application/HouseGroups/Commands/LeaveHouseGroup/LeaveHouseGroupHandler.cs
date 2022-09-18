@@ -18,7 +18,7 @@ namespace SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup
         {
             var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
 
-            houseGroup.Leave(request.PersonId!, request.NewOwnerId);
+            houseGroup.Leave(request.PersonId!);
 
             if (!houseGroup.Members.Any())
             {

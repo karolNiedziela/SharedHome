@@ -288,6 +288,24 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
             modelBuilder.Entity("SharedHome.Domain.Persons.Aggregates.Person", b =>
                 {
+                    b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.Email", "Email", b1 =>
+                        {
+                            b1.Property<string>("PersonId")
+                                .HasColumnType("varchar(255)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("longtext")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("PersonId");
+
+                            b1.ToTable("Person");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PersonId");
+                        });
+
                     b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.FirstName", "FirstName", b1 =>
                         {
                             b1.Property<string>("PersonId")
@@ -323,6 +341,9 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
                         });
+
+                    b.Navigation("Email")
+                        .IsRequired();
 
                     b.Navigation("FirstName")
                         .IsRequired();

@@ -11,19 +11,22 @@ namespace SharedHome.Domain.Persons.Aggregates
 
         public LastName LastName { get; private set; } = default!;
 
+        public Email Email { get; private set; } = default!;
+
         private Person()
         {
 
         }
 
-        private Person(string id, FirstName firstName, LastName lastName)
+        private Person(string id, FirstName firstName, LastName lastName, Email email)
         {
             Id = id;
             FirstName = firstName;
             LastName = lastName;
+            Email = email;
         }
 
-        public static Person Create(string id, FirstName firstName, LastName lastName)
-            => new(id, firstName, lastName);
+        public static Person Create(string id, FirstName firstName, LastName lastName, Email email)
+            => new(id, firstName, lastName, email);
     }
 }

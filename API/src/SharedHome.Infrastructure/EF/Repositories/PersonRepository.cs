@@ -17,6 +17,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
         public async Task<Person?> GetAsync(string id)
             => await _context.Persons.SingleOrDefaultAsync(person => person.Id == id);
 
+        public async Task<Person?> GetByEmailAsync(string email)
+            => await _context.Persons.SingleOrDefaultAsync(person => person.Email.Value == email);
+
         public async Task AddAsync(Person person)
         {
             await _context.AddAsync(person);

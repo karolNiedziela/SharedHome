@@ -9,6 +9,7 @@ using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
@@ -25,6 +26,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IInvitationReadService _invitationService;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
+        private readonly IPersonRepository _personRepository;
         private readonly ICommandHandler<SendInvitationCommand, Response<InvitationDto>> _commandHandler;
 
         public SendInvitationHandlerTests()
@@ -32,10 +34,11 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationRepository = Substitute.For<IInvitationRepository>();
             _houseGroupService = Substitute.For<IHouseGroupReadService>();
             _invitationService = Substitute.For<IInvitationReadService>();
+            _personRepository = Substitute.For<IPersonRepository>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _mapper);
+            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _mapper, _personRepository);
         }
 
         [Fact]
@@ -80,7 +83,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             {
                 HouseGroupId = 1,
                 PersonId = "personId",
-                RequestedToPersonId = "requestedPersonId",
+                RequestedToPersonEmail = "email@email.com",
             };
 
             var response = await _commandHandler.Handle(command, default);

@@ -6,6 +6,8 @@ namespace SharedHome.Domain.Persons.Repositories
     {
         Task<Person?> GetAsync(string id);
 
+        Task<Person?> GetByEmailAsync(string email);
+
         Task AddAsync(Person person);
     }
 }

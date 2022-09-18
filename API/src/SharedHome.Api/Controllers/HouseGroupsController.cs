@@ -2,6 +2,7 @@
 using SharedHome.Api.Constants;
 using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
 using SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver;
+using SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup;
 using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
@@ -21,11 +22,6 @@ namespace SharedHome.Api.Controllers
         public async Task<ActionResult<Response<HouseGroupDto>>> GetAsync()
         {
             var houseGroup = await Mediator.Send(new GetHouseGroup());
-
-            if (houseGroup.Data is null)
-            {
-                return NotFound();
-            }
 
             return Ok(houseGroup);
         }
@@ -68,6 +64,16 @@ namespace SharedHome.Api.Controllers
             await Mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpDelete(ApiRoutes.HouseGroups.Leave)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LeaveHouseGroupAsync([FromBody] LeaveHouseGroupCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
     }
 }

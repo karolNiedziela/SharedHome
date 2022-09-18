@@ -19,7 +19,7 @@ namespace SharedHome.IntegrationTests
         {
             return new List<Person>
             {
-                Person.Create(ShoppingListProvider.PersonId, "Shopping", "List"),
+                Person.Create(ShoppingListProvider.PersonId, "Shopping", "List", "firstPerson@email.com"),
             };
         }
     }

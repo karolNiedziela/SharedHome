@@ -1,35 +1,33 @@
+import { SelectSetting } from './select-setting';
 import {
   Component,
-  forwardRef,
   Input,
   OnInit,
-  Output,
-  EventEmitter,
   Optional,
+  Output,
   Self,
+  EventEmitter,
 } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
   NgControl,
-  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { getEnumKeys } from 'app/core/utils/enum.utils';
 
 @Component({
   selector: 'app-single-select',
   templateUrl: './single-select.component.html',
-  styleUrls: ['../select.scss', './single-select.component.scss'],
+  styleUrls: ['./single-select.component.scss'],
 })
 export class SingleSelectComponent implements OnInit, ControlValueAccessor {
   @Input() labelText!: string;
-  @Input() enumType!: any;
-  @Input() firstValueSelected: boolean = false;
-  @Output() selectedChanged: EventEmitter<any> = new EventEmitter<any>();
-  selectedValue!: number;
-  keys: string[] = [];
+  @Input() selectOptions: SelectSetting[] = [];
+  @Output() selectedKey: EventEmitter<string | number> = new EventEmitter<
+    string | number
+  >();
+  selectedValue!: string | number;
 
-  onChanged: (value: any) => void = () => {};
+  onChanged: (value: string | number) => void = () => {};
   onTouched: () => void = () => {};
 
   get control(): AbstractControl<any, any> | null {
@@ -48,23 +46,13 @@ export class SingleSelectComponent implements OnInit, ControlValueAccessor {
     controlDir.valueAccessor = this;
   }
 
-  ngOnInit(): void {
-    this.keys = getEnumKeys(this.enumType);
+  ngOnInit(): void {}
 
-    if (this.firstValueSelected) {
-      this.setValue(this.keys[0]);
-    }
+  writeValue(value: string | number): void {
+    this.setValue(value);
   }
 
-  writeValue(value: any): void {
-    if (this.firstValueSelected && value == null) {
-      this.setValue(this.keys[0]);
-      return;
-    }
-    this.selectedValue = value;
-  }
-
-  registerOnChange(onChanged: (value: any) => void): void {
+  registerOnChange(onChanged: (value: string | number) => void): void {
     this.onChanged = onChanged;
   }
 
@@ -72,12 +60,15 @@ export class SingleSelectComponent implements OnInit, ControlValueAccessor {
     this.onTouched = onTouched;
   }
 
-  setValue(selectedValue: string) {
-    this.selectedValue = this.enumType[selectedValue];
+  setValue(selectedKey: string | number) {
+    const selectedValue = this.selectOptions.find(
+      (s) => s.key == selectedKey
+    )!.value;
+    this.selectedValue = selectedValue;
 
-    this.onChanged(this.selectedValue);
+    this.onChanged(selectedValue);
     this.onTouched();
 
-    this.selectedChanged.emit(this.selectedValue);
+    this.selectedKey.emit(selectedKey);
   }
 }

@@ -17,10 +17,10 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
         {
             if (await _context.Persons.AnyAsync()) return;
 
-            var charles = Person.Create(InitializerConstants.CharlesUserId, InitializerConstants.CharlesFirstName, InitializerConstants.CharlesLastName);
+            var charles = Person.Create(InitializerConstants.CharlesUserId, InitializerConstants.CharlesFirstName, InitializerConstants.CharlesLastName, InitializerConstants.CharlesEmail);
             await _context.Persons.AddAsync(charles);
 
-            var franc = Person.Create(InitializerConstants.FrancUserId, InitializerConstants.FrancFirstName, InitializerConstants.FrancLastName);
+            var franc = Person.Create(InitializerConstants.FrancUserId, InitializerConstants.FrancFirstName, InitializerConstants.FrancLastName, InitializerConstants.FrancEmail);
             await _context.Persons.AddAsync(franc);
 
             await _context.SaveChangesAsync();

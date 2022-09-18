@@ -58,6 +58,8 @@
             public const string RemoveMember = "{houseGroupId:int}/members/{personToRemoveId:Guid}";
 
             public const string HandOwnerRoleOver = "{houseGroupId:int}/handownerroleover";
+
+            public const string Leave = "{houseGroupId:int}/leave";
         }
 
         public static class Identity

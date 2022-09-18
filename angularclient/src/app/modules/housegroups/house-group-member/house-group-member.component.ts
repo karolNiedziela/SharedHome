@@ -1,3 +1,4 @@
+import { HandOwnerRoleOverComponent } from './../modals/hand-owner-role-over/hand-owner-role-over.component';
 import { RemoveMember } from './../models/remove-member';
 import { HouseGroupService } from './../services/housegroup.service';
 import { HouseGroupMember } from './../models/housegroup-member';
@@ -26,6 +27,9 @@ export class HouseGroupMemberComponent implements OnInit {
     modalTitle: 'Remove member',
   };
 
+  @ViewChild('handOwnerRoleOverModal')
+  handOwnerRoleOverModal!: HandOwnerRoleOverComponent;
+
   constructor(private houseGroupService: HouseGroupService) {}
 
   ngOnInit(): void {
@@ -41,7 +45,9 @@ export class HouseGroupMemberComponent implements OnInit {
         },
         {
           text: 'Hand over the owner',
-          onClick: () => {},
+          onClick: () => {
+            this.handOwnerRoleOverModal.openModal();
+          },
         },
       ],
     };
@@ -56,7 +62,6 @@ export class HouseGroupMemberComponent implements OnInit {
       personToRemoveId: this.member.personId,
     };
 
-    console.log(removeMember);
     this.removeMemberModalConfig.onSave = () => {
       this.houseGroupService.removeMember(removeMember).subscribe(() => {});
     };

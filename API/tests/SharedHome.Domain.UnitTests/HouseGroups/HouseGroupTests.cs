@@ -136,18 +136,6 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         }
 
         [Fact]
-        public void Leave_Should_Throw_LeavingHouseGroupNewOwnerNotDefinedException_When_Leaving_Member_Is_Owner_And_Members_Count_Is_Greater_Than_Zero()
-        {
-            var houseGroup = HouseGroupProvider.GetWithMember();
-            houseGroup.AddMember(new HouseGroupMember(0, "memberId"));
-
-            var exception = Record.Exception(() => houseGroup.Leave(HouseGroupProvider.PersonId));
-
-            exception.ShouldNotBeNull();
-            exception.ShouldBeOfType<LeavingHouseGroupNewOwnerNotDefinedException>();
-        }
-
-        [Fact]
         public void Leave_Should_Not_Throw_LeavingHouseGroupNewOwnerNotDefinedException_When_Leaving_Member_Is_Owner_And_Members_Count_Is_Greater_Than_Zero()
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
@@ -163,7 +151,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = HouseGroupProvider.GetWithMember();
             houseGroup.AddMember(new HouseGroupMember(0, "secondMemberId"));
 
-            houseGroup.Leave(HouseGroupProvider.PersonId, "secondMemberId");
+            houseGroup.Leave(HouseGroupProvider.PersonId);
 
             houseGroup.Members.Count().ShouldBe(1);
             houseGroup.Members.First().IsOwner.ShouldBeTrue();

@@ -2,13 +2,10 @@ import {
   AbstractControl,
   ControlValueAccessor,
   NgControl,
-  NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import {
   Component,
   OnInit,
-  forwardRef,
-  AfterViewInit,
   Optional,
   Self,
   Output,

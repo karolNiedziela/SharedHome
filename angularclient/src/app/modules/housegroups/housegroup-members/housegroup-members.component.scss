@@ -3,11 +3,14 @@
   display: flex;
   flex-direction: column;
   padding: 5px 0;
-}
 
-.add-member {
-  margin-top: auto;
-  margin-left: auto;
+  &__operations {
+    margin-top: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+  }
 }
 
 .list-group-item {
@@ -19,10 +22,7 @@
   border-left: none;
 }
 
-.operations {
+.add-housegroup {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  gap: 10px;
+  justify-content: flex-end;
 }
