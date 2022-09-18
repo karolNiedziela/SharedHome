@@ -18,7 +18,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
         {
             if (await _context.HouseGroups.AnyAsync()) return;
 
-            var houseGroup = HouseGroup.Create();
+            var houseGroup = HouseGroup.Create("Default");
 
             await _context.HouseGroups.AddAsync(houseGroup);
             await _context.SaveChangesAsync();

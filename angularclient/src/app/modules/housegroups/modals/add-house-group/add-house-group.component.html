@@ -6,6 +6,10 @@
 <app-modal #modal [modalConfig]="modalConfig">
   <div class="row g-3" [formGroup]="addHouseGroupForm">
     <app-error [errorMessages]="errorMessages"></app-error>
-    Press save to add house group
+    <app-text-input
+      formControlName="name"
+      [labelText]="'Name' | translate"
+      [placeholder]="'Name' | translate"
+    ></app-text-input>
   </div>
 </app-modal>

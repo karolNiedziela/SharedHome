@@ -3,6 +3,7 @@
   *ngIf="(houseGroup$ | async)?.data; let houseGroup; else: notExisting"
 >
   <div class="house-group__members">
+    <h3>{{ houseGroup.name }}</h3>
     <ul class="list-group" *ngFor="let member of houseGroup.members">
       <app-house-group-member
         [member]="member"

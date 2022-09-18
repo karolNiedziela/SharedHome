@@ -1,1 +1,3 @@
-export interface AddHouseGroup {}
+export interface AddHouseGroup {
+  name: string;
+}

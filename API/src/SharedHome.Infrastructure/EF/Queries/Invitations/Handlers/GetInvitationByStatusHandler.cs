@@ -30,6 +30,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 
             var invitations = await _context.Invitations
                 .Include(x => x.RequestedByPerson)
+                .Include(x => x.HouseGroup)
                 .Where(invitation => invitation.Status == (int)invitationStatus &&
                 invitation.RequestedToPersonId == request.PersonId)
                 .ToListAsync();

@@ -1,24 +1,44 @@
+import { Subscription } from 'rxjs/internal/Subscription';
+import { FormGroup, FormControl } from '@angular/forms';
+import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
 import { ColumnSetting } from './../../../shared/components/tables/column-setting';
 import { ApiResponse } from './../../../core/models/api-response';
 import { map, Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { InvitationService } from '../services/invitation.service';
 import { Invitation } from '../models/invitation';
 import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
 import { InvitationStatus } from '../enums/invitation-status';
+import { EnumSelectComponent } from 'app/shared/components/selects/enum-select/enum-select.component';
 
 @Component({
   selector: 'app-invitatons-list',
   templateUrl: './invitatons-list.component.html',
   styleUrls: ['./invitatons-list.component.scss'],
 })
-export class InvitatonsListComponent implements OnInit {
+export class InvitatonsListComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   invitations$!: Observable<Invitation[]>;
+
+  @ViewChild('statusSelected')
+  private statusSelect!: EnumSelectComponent;
+
+  invitationForm!: FormGroup;
+  public invitationStatus: typeof InvitationStatus = InvitationStatus;
+
+  statusSelectedSubscription!: Subscription;
 
   columnSettings: ColumnSetting[] = [
     {
-      propertyName: 'houseGroupId',
-      header: 'House Group Id',
+      propertyName: 'houseGroupName',
+      header: 'House Group Name',
     },
     {
       propertyName: 'invitationStatus',
@@ -27,22 +47,53 @@ export class InvitatonsListComponent implements OnInit {
       enumType: InvitationStatus,
     },
     {
-      propertyName: 'sentByFirstName',
+      propertyName: 'sentByFullName',
       header: 'Send By',
-    },
-    {
-      propertyName: 'sentByLastName',
-      header: 'Send To',
     },
   ];
 
   constructor(private invitationService: InvitationService) {}
 
   ngOnInit(): void {
-    this.invitations$ = this.invitationService.getByStatus().pipe(
+    this.getInvitations(InvitationStatus.Pending);
+
+    this.invitationForm = new FormGroup({
+      status: new FormControl(InvitationStatus.Pending),
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.statusSelectedSubscription =
+      this.statusSelect.selectedChanged.subscribe(
+        (selectedValue: number | undefined) => {
+          this.onStatusChange(selectedValue!);
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.statusSelectedSubscription.unsubscribe();
+  }
+
+  getInvitations(status?: number) {
+    this.invitations$ = this.invitationService.getByStatus(status).pipe(
       map((response: ApiResponse<Invitation[]>) => {
         return response.data;
       })
     );
+  }
+
+  getPopupMenuConfigs(invitations: Invitation[]): PopupMenuConfig[] {
+    const popupMenuConfigs: PopupMenuConfig[] = [];
+
+    return popupMenuConfigs;
+  }
+
+  onStatusChange(selectedStatus: number): void {
+    if (this.invitationForm.invalid) {
+      return;
+    }
+
+    this.getInvitations(selectedStatus);
   }
 }

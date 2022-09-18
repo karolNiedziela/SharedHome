@@ -1,5 +1,6 @@
 ﻿using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
+using SharedHome.Domain.HouseGroups.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.HouseGroups.Aggregates
@@ -12,6 +13,8 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         public int Id { get; private set; }
 
+        public HouseGroupName Name { get; private set; } = default!;
+
         public IEnumerable<HouseGroupMember> Members => _members;
 
         public int TotalMembers => _members.Count;
@@ -21,12 +24,13 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         }
 
-        public static HouseGroup Create()
+        private HouseGroup(HouseGroupName name)
         {
-            var houseGroup = new HouseGroup();
-
-            return houseGroup;
+            Name = name;
         }
+
+        public static HouseGroup Create(HouseGroupName name)
+            => new(name);
 
         public void AddMember(HouseGroupMember houseGroupMember)
         {

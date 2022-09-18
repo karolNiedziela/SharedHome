@@ -6,14 +6,15 @@ namespace SharedHome.Tests.Shared.Providers
     public static class HouseGroupProvider
     {
         public const string PersonId = "99c3dce2-54ca-48d6-a8cd-faca83168768";
+        public const string DefaultHouseGroupName = "HouseGroup";
         public const int HouseGroupId = 0;
 
         public static HouseGroup Get()
-            => HouseGroup.Create();
+            => HouseGroup.Create(DefaultHouseGroupName);
 
         public static HouseGroup GetWithMember(bool isOwner = true)
         {
-            var houseGroup =  HouseGroup.Create();
+            var houseGroup =  HouseGroup.Create(DefaultHouseGroupName);
             houseGroup.AddMember(new HouseGroupMember(HouseGroupId, PersonId, isOwner));
 
             return houseGroup;

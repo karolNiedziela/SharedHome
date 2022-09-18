@@ -18,6 +18,13 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
             builder.Ignore(houseGroup => houseGroup.Members);
 
+            builder.OwnsOne(houseGroup => houseGroup.Name, navigation =>
+            {
+                navigation.Property(name => name.Value)
+                          .HasColumnName("Name")
+                          .IsRequired();
+            });
+
             builder.OwnsMany(houseGroup => houseGroup.Members, navigation =>
             {
                 navigation.WithOwner().HasForeignKey("HouseGroupId");

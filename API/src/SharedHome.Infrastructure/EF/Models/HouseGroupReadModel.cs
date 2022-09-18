@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
 
+        public string Name { get; set; } = default!;
+
         public ICollection<HouseGroupMemberReadModel> Members { get; set; } = default!;
 
         public ICollection<InvitationReadModel> Invitations { get; set; } = default!;

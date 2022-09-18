@@ -8,6 +8,6 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 {
     public class AddHouseGroupCommand : AuthorizeRequest, ICommand<Response<HouseGroupDto>>
     {
+        public string Name { get; set; } = default!;
     }
-
 }

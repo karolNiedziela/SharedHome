@@ -1,7 +1,7 @@
 import { AddHouseGroup } from './../../models/add-house-group';
 import { HouseGroupService } from './../../services/housegroup.service';
 import { Modalable } from './../../../../core/models/modalable';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
@@ -26,7 +26,12 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
   constructor(private houseGroupService: HouseGroupService) {}
 
   ngOnInit(): void {
-    this.addHouseGroupForm = new FormGroup({});
+    this.addHouseGroupForm = new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(40),
+      ]),
+    });
   }
 
   openModal(): void {
@@ -38,11 +43,17 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
       return;
     }
 
-    const addHouseGroup: AddHouseGroup = {};
+    const name = this.addHouseGroupForm.get('name')?.value;
+
+    const addHouseGroup: AddHouseGroup = {
+      name: name,
+    };
 
     this.houseGroupService.add(addHouseGroup).subscribe({
       next: () => {
-        this.onClose();
+        this.addHouseGroupForm.reset();
+
+        this.modal.close();
       },
       error: (errors: string[]) => {
         this.errorMessages = errors;

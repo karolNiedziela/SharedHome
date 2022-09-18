@@ -41,7 +41,8 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var command = new AddHouseGroupCommand
             {
-                PersonId = "personId"
+                PersonId = "personId",
+                Name = "HouseGroupName"
             };
 
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(true);
@@ -58,6 +59,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
             var command = new AddHouseGroupCommand
             {
                 PersonId = "personId",
+                Name = "HouseGroupName"
             };
 
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);

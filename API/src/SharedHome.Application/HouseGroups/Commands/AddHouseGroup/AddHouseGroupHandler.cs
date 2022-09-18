@@ -30,7 +30,7 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
             {
                 throw new PersonIsAlreadyInHouseGroupException(request.PersonId!);
             }
-            var houseGroup = HouseGroup.Create();
+            var houseGroup = HouseGroup.Create(request.Name);
 
             await _houseGroupRepository.AddAsync(houseGroup);
 

@@ -1,3 +1,11 @@
+<div class="operations" *ngIf="invitations$" [formGroup]="invitationForm">
+  <app-enum-select
+    #statusSelected
+    [labelText]="'status' | translate"
+    [enumType]="invitationStatus"
+    formControlName="status"
+  ></app-enum-select>
+</div>
 <div *ngIf="invitations$ | async as invitations; else loading">
   <app-table
     *ngIf="invitations.length > 0"

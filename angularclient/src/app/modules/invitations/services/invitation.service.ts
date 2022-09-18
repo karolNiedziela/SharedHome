@@ -22,9 +22,12 @@ export class InvitationService {
 
   getByStatus(status?: number): Observable<ApiResponse<Invitation[]>> {
     let params = new HttpParams();
+    console.log(status);
     if (status != null) {
-      params.append('status', status);
+      params = params.append('status', status);
     }
+
+    console.log(params);
 
     return this.httpClient.get<ApiResponse<Invitation[]>>(
       `${this.invitationsUrl}`,

@@ -7,6 +7,8 @@ namespace SharedHome.Application.Invitations.Dto
     {
         public int HouseGroupId { get; set; }
 
+        public string HouseGroupName { get; set; } = default!;
+
         public string RequestedByPersonId { get; set; } = default!;
 
         public string RequestedToPersonId { get; set; } = default!;
@@ -18,5 +20,8 @@ namespace SharedHome.Application.Invitations.Dto
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SentByLastName { get; set; } = default!;
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public string SentByFullName { get; set; } = default!;
     }
 }

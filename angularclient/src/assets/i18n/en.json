@@ -25,7 +25,7 @@
   "houseGroup": "Housegroup",
   "expenses": "Expenses",
   "invitations": "Invitations",
-  "notifications": "Notification",
+  "notifications": "Notifications",
   "settings": "Settings",
   "logOut": "Log out",
   "Name": "Name",
@@ -98,5 +98,11 @@
   "Owner": "Owner",
   "New Owner": "New Owner",
   "Create house group": "Create house group",
-  "Leave house group": "Leave house group"
+  "Leave house group": "Leave house group",
+  "Are you sure to leave the house group?": "Are you sure to leave the house group?",
+  "Pending": "Pending",
+  "Accepted": "Accepted",
+  "Rejected": "Rejected",
+  "House Group Name": "House Group Name",
+  "Send By": "Send By"
 }

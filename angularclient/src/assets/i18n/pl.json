@@ -98,5 +98,11 @@
   "Owner": "Właściciel",
   "New Owner": "Nowy Właściciel",
   "Create house group": "Utwórz grupę domową",
-  "Leave house group": "Opuść grupę domową"
+  "Leave house group": "Opuść grupę domową",
+  "Are you sure to leave the house group?": "Czy na pewnoc chcesz opuścić grupę domową?",
+  "Pending": "Oczekujące",
+  "Accepted": "Zaakceptowane",
+  "Rejected": "Odrzucone",
+  "House Group Name": "Nazwa grupy domowej",
+  "Send By": "Wysłane przez"
 }
