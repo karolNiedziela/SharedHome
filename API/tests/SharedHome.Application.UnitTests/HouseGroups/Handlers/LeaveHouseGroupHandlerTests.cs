@@ -51,7 +51,6 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
             {
                 HouseGroupId = HouseGroupProvider.HouseGroupId,
                 PersonId = HouseGroupProvider.PersonId,
-                NewOwnerId = HouseGroupProvider.PersonId + 0
             };
 
         await _commandHandler.Handle(command, default);

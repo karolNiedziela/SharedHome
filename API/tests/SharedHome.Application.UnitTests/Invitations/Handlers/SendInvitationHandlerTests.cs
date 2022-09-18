@@ -5,6 +5,7 @@ using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Commands.SendInvitation;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
+using SharedHome.Application.Persons.Extensions;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
@@ -13,6 +14,7 @@ using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -44,6 +46,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Throws_PersonIsNotInHouseGroupException_When_Person_Is_Not_In_HouseGroup()
         {
+            var person = PersonProvider.Get();
+            _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
+                .Returns(person);
+
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
                 .Returns(false);
 
@@ -57,6 +63,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Throws_InvitationAlreadySentException_When_Invitation_Already_Sent_ToPerson()
         {
+            var person = PersonProvider.Get();
+            _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
+                .Returns(person);
+
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
                 .Returns(true);
 
@@ -73,6 +83,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Shoudl_Call_Repository_OnSuccess()
         {
+            var person = PersonProvider.Get();
+            _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
+                .Returns(person);
+
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
              .Returns(true);
 
