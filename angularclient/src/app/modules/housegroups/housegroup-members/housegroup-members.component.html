@@ -14,7 +14,7 @@
   <div class="house-group__operations">
     <app-circle-button
       [icon]="leaveHouseGroupIcon"
-      [tooltipText]="'Leave house group'"
+      [tooltipText]="'Leave house group' | translate"
       (onButtonClick)="leaveHouseGroupModal.open()"
     ></app-circle-button>
     <app-invite-to-house-group

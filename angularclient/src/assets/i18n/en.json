@@ -93,5 +93,10 @@
   "Passwords do not match.": "Passwords do not match.",
   "Invalid format must be year month, for example 2022 6.": "Invalid format must be year month, for example 2022 6.",
   "Loading...": "Loading...",
-  "No price": "No price"
+  "No price": "No price",
+  "Invite to house group": "Invite to house group",
+  "Owner": "Owner",
+  "New Owner": "New Owner",
+  "Create house group": "Create house group",
+  "Leave house group": "Leave house group"
 }

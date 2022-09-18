@@ -93,5 +93,10 @@
   "Passwords do not match.": "Hasła różnią się.",
   "Invalid format must be year month, for example 2022 6.": "Nieprawidłowy format roku i miesiąca, na przykład 2022 6.",
   "Loading...": "Ładowanie...",
-  "No price": "Brak ceny"
+  "No price": "Brak ceny",
+  "Invite to house group": "Zaproś do grupy domowej",
+  "Owner": "Właściciel",
+  "New Owner": "Nowy Właściciel",
+  "Create house group": "Utwórz grupę domową",
+  "Leave house group": "Opuść grupę domową"
 }
