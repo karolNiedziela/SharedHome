@@ -84,7 +84,7 @@ namespace SharedHome.Api.Controllers
         {
             var command = new DeleteHouseGroupCommand
             {
-                houseGroupId = houseGroupId
+                HouseGroupId = houseGroupId
             };
             await Mediator.Send(command);
 
