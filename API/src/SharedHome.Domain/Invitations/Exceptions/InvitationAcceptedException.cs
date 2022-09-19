@@ -14,7 +14,7 @@ namespace SharedHome.Domain.Invitations.Exceptions
 
         public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
-        public InvitationAcceptedException() : base($"Friend request was accepted.")
+        public InvitationAcceptedException() : base($"Invitation is already accepted.")
         {
         }
     }

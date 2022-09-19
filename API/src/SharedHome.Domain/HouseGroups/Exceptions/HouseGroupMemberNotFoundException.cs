@@ -6,7 +6,7 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
 {
     public class HouseGroupMemberNotFoundException : SharedHomeException
     {
-        public override string ErrorCode => "HouseGroupMemberNotFoundException";
+        public override string ErrorCode => "HouseGroupMemberNotFound";
 
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 

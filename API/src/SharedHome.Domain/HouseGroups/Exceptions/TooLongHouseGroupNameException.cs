@@ -6,14 +6,15 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
 {
     public class TooLongHouseGroupNameException : SharedHomeException
     {
-        public override string ErrorCode => throw new NotImplementedException();
+        public override string ErrorCode => "TooLongHouseGroupName";
 
-        public override HttpStatusCode StatusCode => throw new NotImplementedException();
+        public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 
         [Order]
         public int MaxLength { get; }
 
-        public TooLongHouseGroupNameException(int maxLength) : base($"Name cannot be longer than {maxLength} characters.")
+        public TooLongHouseGroupNameException(int maxLength) 
+            : base($"Name cannot be longer than '{maxLength}' characters.")
         {
             MaxLength = maxLength;
         }

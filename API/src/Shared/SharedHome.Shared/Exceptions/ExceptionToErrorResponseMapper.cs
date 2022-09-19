@@ -33,6 +33,8 @@ namespace SharedHome.Shared.Exceptions
 
         private string GetFormattedErrors(SharedHomeException exception)
         {
+            _logger.LogWarning(exception.Message);
+
             var resourceStringValue = _localizer.GetString(exception.ErrorCode);
 
             if (resourceStringValue.ResourceNotFound)

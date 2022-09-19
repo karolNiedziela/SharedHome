@@ -6,7 +6,7 @@ namespace SharedHome.Application.HouseGroups.Exceptions
 {
     public class HouseGroupNotFoundException : SharedHomeException
     {
-        public override string ErrorCode => "HouseGroupNotFoundException";
+        public override string ErrorCode => "HouseGroupNotFound";
 
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 

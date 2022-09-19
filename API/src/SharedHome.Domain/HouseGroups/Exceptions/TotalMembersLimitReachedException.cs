@@ -13,7 +13,8 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
         [Order]
         public int TotalMembers { get; }
 
-        public TotalMembersLimitReachedException(int totalMembers) : base($"Max members limit reached. Limit is {totalMembers}.")
+        public TotalMembersLimitReachedException(int totalMembers) 
+            : base($"Max members limit reached. Limit is {totalMembers}.")
         {
             TotalMembers = totalMembers;
         }

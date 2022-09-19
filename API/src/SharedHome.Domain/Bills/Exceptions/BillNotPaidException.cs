@@ -9,7 +9,7 @@ namespace SharedHome.Domain.Bills.Exceptions
 
         public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
-        public BillNotPaidException() : base($"Bill is not paid.")
+        public BillNotPaidException() : base($"Bill has not been paid yet.")
         {
         }
     }

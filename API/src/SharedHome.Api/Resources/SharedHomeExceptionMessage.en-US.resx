@@ -118,117 +118,116 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BillNotFound" xml:space="preserve">
-    <value>Rachunek nie został znaleziony.</value>
+    <value>Bill was not found.</value>
   </data>
   <data name="BillNotPaid" xml:space="preserve">
-    <value>Rachunek nie został jeszcze opłacony.</value>
+    <value>Bill has not been paid yet.</value>
   </data>
   <data name="BillPaid" xml:space="preserve">
-    <value>Rachunek został już opłacony.</value>
+    <value>Bill is already paid.</value>
   </data>
   <data name="EmptyFirstName" xml:space="preserve">
-    <value>Imię nie może być puste.</value>
+    <value>First name cannot be empty.</value>
   </data>
   <data name="EmptyLastName" xml:space="preserve">
-    <value>Nazwisko nie może być puste.</value>
+    <value>Last name cannot be empty.</value>
   </data>
   <data name="EmptyServiceProviderName" xml:space="preserve">
-    <value>Nazwa dostawcy usługi nie może być pusta.</value>
+    <value>Service provider name cannot be empty.</value>
   </data>
   <data name="EmptyShoppingListName" xml:space="preserve">
-    <value>Nazwa listy zakupów nie może być pusta.</value>
+    <value>Shopping list name cannot be empty.</value>
   </data>
   <data name="EmptyShoppingListProductName" xml:space="preserve">
-    <value>Nazwa produktu nie może być pusta.</value>
+    <value>Shopping list product cannot be empty.</value>
   </data>
   <data name="HouseGroupMemberIsNotOwner" xml:space="preserve">
-    <value>Nie jesteś właścicielem grupy domowej.</value>
+    <value>You are not the owner of the home group.</value>
   </data>
-  <data name="HouseGroupMemberNotFound" xml:space="preserve">
+  <data name="HouseGroupMemberNotFoundException" xml:space="preserve">
     <value>Członek grupy domowej o identyfikatorze osoby '{0}' nie został znaleziony.</value>
   </data>
-  <data name="HouseGroupNotFound" xml:space="preserve">
-    <value>Grupa domowa nie została znaleziona.</value>
+  <data name="HouseGroupNotFoundException" xml:space="preserve">
+    <value>House group was not found.</value>
   </data>
   <data name="InvalidCredentials" xml:space="preserve">
-    <value>Niepoprawne dane logowania.</value>
+    <value>Invalid credentials.</value>
   </data>
   <data name="InvalidCurrency" xml:space="preserve">
-    <value>Nieprawidłowa waluta.</value>
+    <value>Invalid currency.</value>
   </data>
   <data name="InvalidEmailAddress" xml:space="preserve">
-    <value>Nieprawidłowy format adresu e-mail.</value>
+    <value>Invalid email address format.</value>
   </data>
   <data name="InvalidEnum" xml:space="preserve">
-    <value>Niepoprawna wartość słownika.</value>
+    <value>Invalid dictionary value.</value>
   </data>
   <data name="InvalidRefreshToken" xml:space="preserve">
-    <value>Problem autoryzacyjny.</value>
+    <value>Authorization problem.</value>
   </data>
   <data name="InvitationAccepted" xml:space="preserve">
-    <value>Zaproszenie zostało już zaakceptowane.</value>
+    <value>Invitation is already accepted.</value>
+    <comment>
+</comment>
   </data>
   <data name="InvitationAlreadySent" xml:space="preserve">
-    <value>Zaproszenie już zostało wysłane do podanej osoby.</value>
+    <value>Invitation was already sent to giiven person.</value>
   </data>
   <data name="InvitationNotFound" xml:space="preserve">
-    <value>Zaproszenie nie zostało znalezione.</value>
+    <value>Invitation was not found.</value>
   </data>
   <data name="InvitationRejected" xml:space="preserve">
-    <value>Zaproszenie zostało już odrzucone.</value>
+    <value>Invitation is already rejected.</value>
   </data>
   <data name="MoneyAmountBelowZero" xml:space="preserve">
-    <value>Cena/Koszt nie może być mniejszy niż zero.</value>
+    <value>Price/Cost cannot be lower than zero.</value>
   </data>
   <data name="PersonIsAlreadyInHouseGroup" xml:space="preserve">
-    <value>Osoba już znajduje się w innej grupie domowej.</value>
+    <value>Person is already in another house group.</value>
   </data>
   <data name="PersonIsNotInHouseGroup" xml:space="preserve">
-    <value>Osoba nie znajduje się w podanej grupie domowej.</value>
+    <value>Person is not in given house group.</value>
   </data>
   <data name="PersonWithEmailNotFound" xml:space="preserve">
-    <value>Osoba z podanym adresem e-mail nie została znaleziona.</value>
-  </data>
-  <data name="ProductPriceBelowZero" xml:space="preserve">
-    <value>Cena produktu nie może być mniejsza niż zero.</value>
+    <value>The person with the specified e-mail address was not found.</value>
   </data>
   <data name="QuantityBelowZero" xml:space="preserve">
-    <value>Ilość nie może być mniejsza niż zero.</value>
+    <value>Quantity cannot be lower than zero.</value>
   </data>
   <data name="RefreshTokenExpired" xml:space="preserve">
-    <value>Problem autoryzacyjny.</value>
+    <value>Authorization problem.</value>
   </data>
   <data name="ShoppingListAlreadyDone" xml:space="preserve">
-    <value>Lista zakupów została już wykonana.</value>
+    <value>Shopping list is already done.</value>
   </data>
   <data name="ShoppingListNotFound" xml:space="preserve">
-    <value>Lista zakupów nie została znaleziona.</value>
+    <value>Shopping list was not found.</value>
   </data>
   <data name="ShoppingListProductAlreadyExists" xml:space="preserve">
-    <value>Produkt o nazwie '{0}' już został dodany do listy.</value>
+    <value>Shopping list product with name '{0}' already added to list.</value>
   </data>
   <data name="ShoppingListProductIsAlreadyBought" xml:space="preserve">
-    <value>Produkt '{0}' został już zakupiony.</value>
+    <value>Shopping list product '{0}' is already bought.</value>
   </data>
   <data name="ShoppingListProductNotFound" xml:space="preserve">
-    <value>Produkt nie został znaleziony.</value>
+    <value>Shopping list product was not found.</value>
   </data>
   <data name="ShoppingListProductWasNotBought" xml:space="preserve">
-    <value>Produkt '{0}' nie został zakupiony.</value>
+    <value>Shopping list product '{0}' was not bought.</value>
   </data>
   <data name="TooLongHouseGroupName" xml:space="preserve">
-    <value>Nazwa nie może być dłuższa niż '{0}' znaków.</value>
+    <value>Name cannot be longer than '{maxLength}' characters.</value>
   </data>
   <data name="TooLongShoppingListNameException" xml:space="preserve">
-    <value>Nazwa może zawierać maksymalnie '{0}' znaków.</value>
+    <value>Name can contain maximum '{0}' characters.</value>
   </data>
   <data name="TotalMembersLimitReached" xml:space="preserve">
-    <value>Maksymalny limit członków został osiągniety. Limit wynosi '{0}'.</value>
+    <value>Max members limit reached. Limit is '{0}'.</value>
   </data>
   <data name="UnsupportedCurrency" xml:space="preserve">
-    <value>Podana waluta jest niewspierana.</value>
+    <value>Given currency is unsupported.</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
-    <value>Użytkownik nie został znaleziony</value>
+    <value>User was not found</value>
   </data>
 </root>

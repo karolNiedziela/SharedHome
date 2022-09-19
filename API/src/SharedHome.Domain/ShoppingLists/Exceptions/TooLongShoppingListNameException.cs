@@ -12,7 +12,7 @@ namespace SharedHome.Domain.ShoppingLists.Exceptions
         public int MaximumLength { get; }
 
         public TooLongShoppingListNameException(int maximumLength) 
-            : base($"Name can contain maximum {maximumLength} characters.")
+            : base($"Name can contain maximum '{maximumLength}' characters.")
         {
             MaximumLength = maximumLength;
         }
