@@ -1,13 +1,16 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Invitations.Commands.AcceptInvitation;
+using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using Shouldly;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,13 +20,31 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupRepository _houseGroupRepository;
+        private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly ICommandHandler<AcceptInvitationCommand, Unit> _commandHandler;
 
         public AcceptInvitationHandlerTests()
         {
             _invitationRepository = Substitute.For<IInvitationRepository>();
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
-            _commandHandler = new AcceptInvitationHandler(_invitationRepository, _houseGroupRepository);
+            _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
+            _commandHandler = new AcceptInvitationHandler(_invitationRepository, _houseGroupRepository, _houseGroupReadService);
+        }
+
+        [Fact]
+        public async Task Handle_Should_Throw_PersonIsAlreadyInHouseGroupException_If_Person_Is_Already_In_House_Group()
+        {
+            var command = new AcceptInvitationCommand
+            {
+                PersonId = "AcceptPersonId",
+                HouseGroupId = 1,
+            };
+
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(true);
+
+            var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
+
+            exception.ShouldBeOfType<PersonIsAlreadyInHouseGroupException>();
         }
 
         [Fact]
@@ -34,6 +55,8 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 PersonId = "AcceptPersonId",
                 HouseGroupId = 1,
             };
+
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
 
             var invitation = InvitationProvider.Get();
 
