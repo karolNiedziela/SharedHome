@@ -60,6 +60,8 @@
             public const string HandOwnerRoleOver = "{houseGroupId:int}/handownerroleover";
 
             public const string Leave = "{houseGroupId:int}/leave";
+
+            public const string Delete = "{houseGroupId:int}";
         }
 
         public static class Identity

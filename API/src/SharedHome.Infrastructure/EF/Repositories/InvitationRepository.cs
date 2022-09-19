@@ -17,6 +17,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
             => await _dbContext.Invitations.SingleOrDefaultAsync(i => i.HouseGroupId == houseGroupId &&
             i.RequestedToPersonId == personId);
 
+        public async Task<IEnumerable<Invitation>> GetAllAsync(int houseGroupId)
+            => await _dbContext.Invitations.Where(invitation => invitation.HouseGroupId == houseGroupId).ToListAsync();
+
         public async Task AddAsync(Invitation invitation)
         {
             await _dbContext.AddAsync(invitation);
@@ -26,6 +29,12 @@ namespace SharedHome.Infrastructure.EF.Repositories
         public async Task DeleteAsync(Invitation invitation)
         {
             _dbContext.Invitations.Remove(invitation);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(IEnumerable<Invitation> invitations)
+        {
+            _dbContext.Invitations.RemoveRange(invitations);
             await _dbContext.SaveChangesAsync();
         }
 

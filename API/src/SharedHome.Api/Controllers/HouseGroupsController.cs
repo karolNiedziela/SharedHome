@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
 using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
+using SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup;
 using SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver;
 using SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup;
 using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
@@ -71,6 +72,20 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LeaveHouseGroupAsync([FromBody] LeaveHouseGroupCommand command)
         {
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [HttpDelete(ApiRoutes.HouseGroups.Delete)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteHouseGroupAsync(int houseGroupId)
+        {
+            var command = new DeleteHouseGroupCommand
+            {
+                houseGroupId = houseGroupId
+            };
             await Mediator.Send(command);
 
             return NoContent();
