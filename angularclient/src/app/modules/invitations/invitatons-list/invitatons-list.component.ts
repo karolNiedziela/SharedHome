@@ -1,3 +1,8 @@
+import { ConfirmationModalConfig } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ConfirmationModalComponent } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { RejectInvitationComponent } from './../modals/reject-invitation/reject-invitation.component';
+import { AcceptInvitationComponent } from './../modals/accept-invitation/accept-invitation.component';
+import { AcceptInvitation } from './../models/accept-invitation';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { FormGroup, FormControl } from '@angular/forms';
 import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
@@ -30,10 +35,26 @@ export class InvitatonsListComponent
   @ViewChild('statusSelected')
   private statusSelect!: EnumSelectComponent;
 
+  @ViewChild('acceptInvitationModal')
+  acceptInvitationModal!: AcceptInvitationComponent;
+
+  @ViewChild('rejectInvitationModal')
+  rejectInvitationModal!: RejectInvitationComponent;
+
+  @ViewChild('deleteInvitationConfirmationModal')
+  deleteInvitationConfirmationModal!: ConfirmationModalComponent;
+  deleteInvitationConfirmationModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Delete invitation',
+    confirmationText: 'Are you sure to delete the invitation?',
+  };
+
   invitationForm!: FormGroup;
   public invitationStatus: typeof InvitationStatus = InvitationStatus;
+  statusSelected: number = InvitationStatus.Pending;
 
   statusSelectedSubscription!: Subscription;
+
+  invitationsSubscription!: Subscription;
 
   columnSettings: ColumnSetting[] = [
     {
@@ -60,19 +81,24 @@ export class InvitatonsListComponent
     this.invitationForm = new FormGroup({
       status: new FormControl(InvitationStatus.Pending),
     });
+
+    this.invitationsSubscription =
+      this.invitationService.allInvitationsRefreshNeeded.subscribe(() => {
+        this.getInvitations(this.statusSelected);
+      });
   }
 
   ngAfterViewInit(): void {
     this.statusSelectedSubscription =
-      this.statusSelect.selectedChanged.subscribe(
-        (selectedValue: number | undefined) => {
-          this.onStatusChange(selectedValue!);
-        }
-      );
+      this.statusSelect.selectedChanged.subscribe((selectedValue: number) => {
+        this.onStatusChange(selectedValue!);
+        this.statusSelected = selectedValue;
+      });
   }
 
   ngOnDestroy(): void {
     this.statusSelectedSubscription.unsubscribe();
+    this.invitationsSubscription.unsubscribe();
   }
 
   getInvitations(status?: number) {
@@ -83,10 +109,63 @@ export class InvitatonsListComponent
     );
   }
 
-  getPopupMenuConfigs(invitations: Invitation[]): PopupMenuConfig[] {
+  getPopupMenuConfigs(invitations: Invitation[]): PopupMenuConfig[] | null {
     const popupMenuConfigs: PopupMenuConfig[] = [];
 
-    return popupMenuConfigs;
+    for (let invitation of invitations) {
+      let popupMenuConfig: PopupMenuConfig = {
+        isHidden: false,
+        isDeleteVisible: true,
+        onDelete: () => {
+          this.deleteInvitationConfirmationModalConfig.onSave = () => {
+            this.invitationService.delete(invitation.houseGroupId).subscribe();
+          };
+          this.deleteInvitationConfirmationModal.open();
+        },
+        isEditVisible: false,
+      };
+
+      switch (Number(invitation.invitationStatus)) {
+        case InvitationStatus.Pending:
+          popupMenuConfig.additionalPopupMenuItems = [
+            {
+              text: 'Accept',
+              onClick: () => {
+                this.acceptInvitationModal.houseGroupId =
+                  invitation.houseGroupId;
+                this.acceptInvitationModal.houseGroupName =
+                  invitation.houseGroupName;
+
+                this.acceptInvitationModal.openModal();
+              },
+            },
+            {
+              text: 'Reject',
+              onClick: () => {
+                this.rejectInvitationModal.houseGroupId =
+                  invitation.houseGroupId;
+                this.rejectInvitationModal.houseGroupName =
+                  invitation.houseGroupName;
+
+                this.rejectInvitationModal.openModal();
+              },
+            },
+          ];
+
+          popupMenuConfigs.push(popupMenuConfig);
+          break;
+
+        case InvitationStatus.Rejected:
+          popupMenuConfigs.push(popupMenuConfig);
+          break;
+
+        case InvitationStatus.Accepted:
+          popupMenuConfigs.push(popupMenuConfig);
+          break;
+      }
+    }
+
+    return popupMenuConfigs.length == 0 ? null : popupMenuConfigs;
   }
 
   onStatusChange(selectedStatus: number): void {

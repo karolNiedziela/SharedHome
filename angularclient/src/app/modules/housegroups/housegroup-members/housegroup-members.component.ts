@@ -1,4 +1,4 @@
-import { faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from './../../identity/services/authentication.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
@@ -25,12 +25,20 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
   houseGroupId!: number;
 
   leaveHouseGroupIcon = faSignOut;
+  deleteHouseGroupIcon = faTrash;
 
   @ViewChild('leaveHouseGroup')
   leaveHouseGroupModal!: ConfirmationModalComponent;
   leaveHouseGroupModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Leave house group',
     confirmationText: 'Are you sure to leave the house group?',
+  };
+
+  @ViewChild('deleteHouseGroup')
+  deleteHouseGroupModal!: ConfirmationModalComponent;
+  deleteHouseGroupModalConfig: ConfirmationModalConfig = {
+    modalTitle: 'Delete house group',
+    confirmationText: 'Are you sure to delete the house group?',
   };
 
   constructor(
@@ -57,6 +65,10 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
 
     this.leaveHouseGroupModalConfig.onSave = () => {
       this.houseGroupService.leaveHouseGroup(this.houseGroupId).subscribe();
+    };
+
+    this.deleteHouseGroupModalConfig.onSave = () => {
+      this.houseGroupService.delete(this.houseGroupId).subscribe();
     };
   }
 

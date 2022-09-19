@@ -1,0 +1,10 @@
+<app-modal #modal [modalConfig]="modalConfig">
+  <div class="row g-3" [formGroup]="acceptInvitationForm">
+    <app-error [errorMessages]="errorMessages"></app-error>
+    <app-text-input
+      formControlName="houseGroupName"
+      [labelText]="'House Group Name' | translate"
+      [placeholder]="'House Group Name' | translate"
+    ></app-text-input>
+  </div>
+</app-modal>

@@ -8,32 +8,19 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./popup-menu.component.scss'],
 })
 export class PopupMenuComponent implements OnInit {
-  @Input() public popupMenuConfig!: PopupMenuConfig;
+  @Input() public popupMenuConfig: PopupMenuConfig = {};
 
   moreOptionsIcon = faEllipsisVertical;
 
   constructor() {}
 
   ngOnInit(): void {
-    if (
-      this.popupMenuConfig.isHidden == null ||
-      this.popupMenuConfig.isHidden == undefined
-    ) {
-      this.popupMenuConfig.isHidden = false;
-    }
-
-    if (
-      this.popupMenuConfig.isEditVisible == null ||
-      this.popupMenuConfig.isEditVisible == undefined
-    ) {
-      this.popupMenuConfig.isEditVisible = true;
-    }
-
-    if (
-      this.popupMenuConfig.isDeleteVisible == null ||
-      this.popupMenuConfig.isDeleteVisible == undefined
-    ) {
-      this.popupMenuConfig.isDeleteVisible = true;
+    if (this.popupMenuConfig == null || this.popupMenuConfig == undefined) {
+      this.popupMenuConfig = {
+        isHidden: false,
+        isEditVisible: true,
+        isDeleteVisible: true,
+      };
     }
   }
 }

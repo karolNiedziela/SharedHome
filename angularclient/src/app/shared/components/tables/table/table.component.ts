@@ -10,7 +10,7 @@ import { ColumnSetting } from '../column-setting';
 export class TableComponent<T> implements OnInit {
   @Input() records!: any[];
   @Input() settings?: ColumnSetting[];
-  @Input() actions?: PopupMenuConfig[];
+  @Input() actions?: PopupMenuConfig[] | null;
 
   columnMaps?: ColumnSetting[];
 

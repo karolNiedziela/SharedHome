@@ -11,8 +11,18 @@
     *ngIf="invitations.length > 0"
     [settings]="columnSettings"
     [records]="invitations"
+    [actions]="getPopupMenuConfigs(invitations)"
   ></app-table>
 </div>
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>
 </ng-template>
+
+<app-accept-invitation #acceptInvitationModal></app-accept-invitation>
+
+<app-reject-invitation #rejectInvitationModal></app-reject-invitation>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="deleteInvitationConfirmationModalConfig"
+  #deleteInvitationConfirmationModal
+></app-confirmation-modal>

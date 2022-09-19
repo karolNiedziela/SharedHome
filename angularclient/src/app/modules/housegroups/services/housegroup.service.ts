@@ -92,4 +92,16 @@ export class HouseGroupService {
         })
       );
   }
+
+  delete(houseGroupId: number): Observable<any> {
+    return this.httpClient
+      .delete<any>(`${this.houseGroupsUrl}/${houseGroupId}`, {
+        headers: this.defaultHttpOptions.headers,
+      })
+      .pipe(
+        tap(() => {
+          this._houseGroupRefreshNeeded.next();
+        })
+      );
+  }
 }

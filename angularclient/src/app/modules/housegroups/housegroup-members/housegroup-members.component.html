@@ -14,6 +14,12 @@
   </div>
   <div class="house-group__operations">
     <app-circle-button
+      *ngIf="isCurrentUserOwner"
+      [icon]="deleteHouseGroupIcon"
+      [tooltipText]="'Delete house group' | translate"
+      (onButtonClick)="deleteHouseGroupModal.open()"
+    ></app-circle-button>
+    <app-circle-button
       [icon]="leaveHouseGroupIcon"
       [tooltipText]="'Leave house group' | translate"
       (onButtonClick)="leaveHouseGroupModal.open()"
@@ -36,4 +42,9 @@
 <app-confirmation-modal
   [confirmationModalConfig]="leaveHouseGroupModalConfig"
   #leaveHouseGroup
+></app-confirmation-modal>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="deleteHouseGroupModalConfig"
+  #deleteHouseGroup
 ></app-confirmation-modal>
