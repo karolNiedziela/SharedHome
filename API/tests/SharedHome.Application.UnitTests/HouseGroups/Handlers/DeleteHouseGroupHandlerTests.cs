@@ -2,10 +2,13 @@
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup;
 using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Tests.Shared.Providers;
+using Shouldly;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,17 +26,36 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         }
         
         [Fact]
-        public async Task Handle_Should_Delete_House_Group_And_All_Invitations_To_This_House_Group_OnSuccess()
+        public async Task Should_Throw_HouseGroupMemberIsNotOwnerException_When_Member_Is_Not_Owner()
         {
-            var houseGroup = HouseGroupProvider.Get();
+            var houseGroup = HouseGroupProvider.GetWithMember(false);
 
             _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
                 .Returns(houseGroup);
 
+            var command = new DeleteHouseGroupCommand
+            {
+                HouseGroupId = houseGroup.Id,
+                PersonId = houseGroup.Members.First().PersonId
+            };
+
+            var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
+
+            exception.ShouldBeOfType<HouseGroupMemberIsNotOwnerException>();
+        }
+
+        [Fact]
+        public async Task Handle_Should_Delete_House_Group_When_Member_IsOwner()
+        {
+            var houseGroup = HouseGroupProvider.GetWithMember();
+
+            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+                .Returns(houseGroup);
            
             var command = new DeleteHouseGroupCommand
             {
                 HouseGroupId = houseGroup.Id,
+                PersonId = houseGroup.Members.First().PersonId
             };
 
             await _commandHandler.Handle(command, default);
