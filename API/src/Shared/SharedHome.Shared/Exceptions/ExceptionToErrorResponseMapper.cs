@@ -33,12 +33,11 @@ namespace SharedHome.Shared.Exceptions
 
         private string GetFormattedErrors(SharedHomeException exception)
         {
-            _logger.LogWarning(exception.Message);
-
             var resourceStringValue = _localizer.GetString(exception.ErrorCode);
 
             if (resourceStringValue.ResourceNotFound)
-            {               
+            {
+                _logger.LogWarning("Resource {exceptionCode} not found.", exception.ErrorCode);
                 return exception.Message;
             }
 
@@ -53,7 +52,7 @@ namespace SharedHome.Shared.Exceptions
 
             var values = properties.Select(prop => prop.GetValue(exception, null)).ToArray();
 
-            var formattedMessage = string.Format(resourceStringValue.Value, values);
+            var formattedMessage = string.Format(resourceStringValue.Value, values);            
 
             return formattedMessage;
         }

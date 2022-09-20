@@ -42,6 +42,8 @@ namespace SharedHome.Api.Controllers
 
             var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
 
+            _logger.LogWarning("{exceptionSource} : {exceptionMessage}", exception!.Source, exception!.Message);
+
             var errorResponse = _exceptionMapper.Map(exception!);
 
             HttpContext.Items[HttpContextItemKeys.Errors] = errorResponse.Errors;

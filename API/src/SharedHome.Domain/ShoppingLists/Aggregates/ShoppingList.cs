@@ -48,7 +48,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
             if (_products.Any(p => p.Name == product.Name))
             {
-                throw new ShoppingListProductAlreadyExistsException(product.Name);
+                throw new ShoppingListProductAlreadyExistsException(product.Name, Id);
             }
 
             _products.Add(product);
@@ -153,7 +153,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
         {
             if (shoppingListProduct.Name != currentProductName && _products.Any(p => p.Name == shoppingListProduct.Name))
             {
-                throw new ShoppingListProductAlreadyExistsException(shoppingListProduct.Name);
+                throw new ShoppingListProductAlreadyExistsException(shoppingListProduct.Name, Id);
             }
 
             var product = GetProduct(currentProductName);
