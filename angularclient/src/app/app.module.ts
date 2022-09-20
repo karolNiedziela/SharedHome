@@ -1,3 +1,4 @@
+import { LanguageInterceptor } from './core/interceptors/language.interceptor';
 import { InvitationModule } from './modules/invitations/invitation.module';
 import { HousegroupModule } from './modules/housegroups/housegroup.module';
 import { BillsModule } from './modules/bills/bills.module';
@@ -54,6 +55,7 @@ import { SettingModule } from './modules/settings/setting.module';
     },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
