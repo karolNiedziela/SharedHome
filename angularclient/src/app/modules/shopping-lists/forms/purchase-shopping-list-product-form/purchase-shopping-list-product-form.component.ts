@@ -1,7 +1,6 @@
 import { Money } from './../../../../core/models/money';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { UserService } from 'app/core/services/user.service';
 
 @Component({
   selector: 'app-purchase-shopping-list-product-form',
@@ -15,7 +14,7 @@ export class PurchaseShoppingListProductFormComponent implements OnInit {
 
   public errorMessages: string[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.purchaseShoppingListProductForm = new FormGroup({
@@ -35,12 +34,5 @@ export class PurchaseShoppingListProductFormComponent implements OnInit {
       price: price,
       currency: currency,
     };
-  }
-
-  public resetForm() {
-    this.purchaseShoppingListProductForm.reset();
-    this.purchaseShoppingListProductForm.patchValue({
-      currency: this.userService.currentUser.defaultCurrency,
-    });
   }
 }

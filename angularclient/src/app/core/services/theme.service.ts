@@ -4,28 +4,45 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ThemeService {
-  public static default = 'light';
+  private static key: string = 'sharedhome-theme';
+  private stylesheet!: HTMLLinkElement;
 
-  public get current(): string {
-    return localStorage.getItem('theme') ?? ThemeService.default;
-  }
+  public static isDefaultDark: boolean = window.matchMedia(
+    '(prefers-color-scheme: dark)'
+  ).matches;
 
-  public set current(value: string) {
-    localStorage.setItem('theme', value);
-    this.style.href = `/${value}.css`;
-  }
-
-  private readonly style: HTMLLinkElement;
-
-  constructor() {
-    this.style = document.createElement('link');
-    this.style.rel = 'stylesheet';
-    this.style.href = `/${this.current}.css`;
-
-    if (localStorage.getItem('theme') !== undefined) {
-      this.style.href = `/${this.current}.css`;
+  public get theme(): string {
+    const theme: string | null = localStorage.getItem(ThemeService.key);
+    if (theme) {
+      return theme;
     }
 
-    document.head.appendChild(this.style);
+    return ThemeService.isDefaultDark ? 'dark' : 'light';
+  }
+
+  constructor() {}
+
+  public setTheme(theme?: string): void {
+    this.stylesheet = document.createElement('link');
+    this.stylesheet.rel = 'stylesheet';
+    this.stylesheet.href = `/${this.theme}.css`;
+
+    if (theme && theme.length > 0) {
+      this.stylesheet.href = `/${theme}.css`;
+      localStorage.setItem(ThemeService.key, theme);
+    } else {
+      this.stylesheet.href = `/${this.theme}.css`;
+      localStorage.setItem(ThemeService.key, this.theme);
+    }
+
+    document.head.appendChild(this.stylesheet);
+  }
+
+  public switchTheme(): void {
+    if (this.theme === 'light') {
+      this.setTheme('dark');
+    } else {
+      this.setTheme('light');
+    }
   }
 }

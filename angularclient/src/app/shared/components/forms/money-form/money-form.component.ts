@@ -1,5 +1,5 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { UserService } from './../../../../core/services/user.service';
 import { Component, forwardRef, OnInit, OnDestroy, Input } from '@angular/core';
 import {
   FormGroup,
@@ -41,7 +41,7 @@ export class MoneyFormComponent implements OnInit, OnDestroy {
     };
   }
 
-  constructor(private userService: UserService) {}
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.moneyFormGroup.addControl(
@@ -51,17 +51,13 @@ export class MoneyFormComponent implements OnInit, OnDestroy {
 
     this.moneyFormGroup.addControl(
       'currency',
-      new FormControl(this.userService.currentUser.defaultCurrency, [
-        Validators.required,
-      ])
+      new FormControl(this.getCurrencyBasedOnLanguage(), [Validators.required])
     );
 
     this.subscriptions.push(
       this.moneyFormGroup.valueChanges.subscribe((value: any) => {
         if (this.currencyControl.value == null) {
-          this.currencyControl.patchValue(
-            this.userService.currentUser.defaultCurrency
-          );
+          this.currencyControl.patchValue(this.getCurrencyBasedOnLanguage());
         }
       })
     );
@@ -70,5 +66,20 @@ export class MoneyFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach((s) => s.unsubscribe());
     this.moneyFormGroup.reset();
+  }
+
+  private getCurrencyBasedOnLanguage(): string {
+    const language: string = this.translateService.currentLang;
+
+    switch (language) {
+      case 'pl':
+        return 'zł';
+
+      case 'en':
+        return '€';
+
+      default:
+        return '€';
+    }
   }
 }

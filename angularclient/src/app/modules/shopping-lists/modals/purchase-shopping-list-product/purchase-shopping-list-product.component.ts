@@ -1,10 +1,8 @@
 import { Modalable } from './../../../../core/models/modalable';
-import { ErrorResponse } from './../../../../core/models/error-response';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
-import { UserService } from './../../../../core/services/user.service';
 import { PurchaseShoppingListProduct } from './../../models/purchase-shopping-list-product';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 
@@ -28,10 +26,7 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
 
   public errorMessages: string[] = [];
 
-  constructor(
-    private shoppingListService: ShoppingListsService,
-    private userService: UserService
-  ) {}
+  constructor(private shoppingListService: ShoppingListsService) {}
 
   ngOnInit(): void {
     this.purchaseShoppingListProductForm = new FormGroup({
@@ -87,5 +82,7 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
     this.resetForm();
   }
 
-  private resetForm() {}
+  private resetForm() {
+    this.purchaseShoppingListProductForm.reset();
+  }
 }

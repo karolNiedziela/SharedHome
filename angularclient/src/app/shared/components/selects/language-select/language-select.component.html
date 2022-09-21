@@ -1,0 +1,23 @@
+<div class="form-floating">
+  <div class="dropdown shared__home form-control">
+    <span
+      class="dropdown-toggle"
+      id="dropdownMenuLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      {{ languageService.language | translate }}
+    </span>
+
+    <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
+      <li
+        class="dropdown-item"
+        *ngFor="let lang of translateService.getLangs()"
+        (click)="onLanguageChanged(lang)"
+      >
+        {{ lang }}
+      </li>
+    </ul>
+  </div>
+  <label class="sharedhome__label">{{ "Language" | translate }} </label>
+</div>

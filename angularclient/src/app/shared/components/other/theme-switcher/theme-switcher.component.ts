@@ -12,10 +12,6 @@ export class ThemeSwitcherComponent implements OnInit {
   ngOnInit(): void {}
 
   public switchTheme(): void {
-    if (this.themeService.current === 'light') {
-      this.themeService.current = 'dark';
-    } else {
-      this.themeService.current = 'light';
-    }
+    this.themeService.switchTheme();
   }
 }

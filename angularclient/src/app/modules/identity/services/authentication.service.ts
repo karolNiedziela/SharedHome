@@ -2,7 +2,7 @@ import { Register } from './../models/register';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationResponse } from 'app/core/models/authenticationResponse';
+import { AuthenticationResponse } from 'app/core/models/authentication-response';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 

@@ -7,7 +7,7 @@ import { Observable, map } from 'rxjs';
 import { HouseGroup } from '../models/housegroup';
 import { HouseGroupService } from '../services/housegroup.service';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { AuthenticationResponse } from 'app/core/models/authenticationResponse';
+import { AuthenticationResponse } from 'app/core/models/authentication-response';
 import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 

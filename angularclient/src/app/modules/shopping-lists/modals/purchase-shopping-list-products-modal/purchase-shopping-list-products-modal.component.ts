@@ -90,7 +90,7 @@ export class PurchaseShoppingListProductsModalComponent
 
   private resetForms(): void {
     this.purchaseProductsViewChildren.map((x) => {
-      x.resetForm();
+      x.purchaseShoppingListProductForm.reset();
     });
   }
 }

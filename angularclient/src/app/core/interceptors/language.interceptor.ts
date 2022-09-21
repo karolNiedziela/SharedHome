@@ -16,7 +16,7 @@ export class LanguageInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     request = request.clone({
-      headers: request.headers.set('Accept-Language', 'en-US'),
+      headers: request.headers.set('Accept-Language', navigator.language),
     });
 
     return next.handle(request);

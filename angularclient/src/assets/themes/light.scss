@@ -124,6 +124,14 @@ a:hover {
   color: $l_primary_color !important;
 }
 
+.dropdown-menu {
+  background-color: $l_white_color !important;
+}
+
+.dropdown-item {
+  background-color: $l_white_color !important;
+  color: $l_black_color !important;
+}
 /*
 ----------- INPUTS -----------
 */

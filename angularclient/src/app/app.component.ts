@@ -1,6 +1,7 @@
+import { LanguageService } from './core/services/language.service';
 import { ThemeService } from 'app/core/services/theme.service';
 import { Component } from '@angular/core';
-import { AuthenticationResponse } from './core/models/authenticationResponse';
+import { AuthenticationResponse } from './core/models/authentication-response';
 import { AuthenticationService } from './modules/identity/services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
 import { registerLocaleData } from '@angular/common';
@@ -21,19 +22,18 @@ export class AppComponent {
   constructor(
     private authenticationService: AuthenticationService,
     public translateService: TranslateService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private languageService: LanguageService
   ) {
     this.authenticationService?.authenticationResponse.subscribe(
       (result: AuthenticationResponse) => (this.authenticationResponse = result)
     );
 
-    translateService.addLangs(['en', 'pl']);
-    translateService.setDefaultLang('pl');
-
     registerLocaleData(localePl);
-  }
+    this.translateService.addLangs(['en', 'pl']);
+    this.translateService.setDefaultLang('en');
+    this.languageService.setLanguageOnInit();
 
-  switchLanguages(lang: string) {
-    this.translateService.use(lang);
+    this.themeService.setTheme();
   }
 }
