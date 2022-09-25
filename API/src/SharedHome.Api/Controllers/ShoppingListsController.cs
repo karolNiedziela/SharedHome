@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts;
@@ -19,7 +18,6 @@ using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Api.Controllers
 {
-    [Authorize]
     public class ShoppingListsController : ApiController
     {
         /// <summary>

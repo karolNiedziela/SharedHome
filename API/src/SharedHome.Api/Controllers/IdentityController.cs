@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
 using SharedHome.Application.Authentication.Commands.ConfirmEmail;
 using SharedHome.Application.Authentication.Commands.Register;
@@ -15,6 +16,7 @@ namespace SharedHome.Api.Controllers
         /// Register new user
         /// </summary>
         [HttpPost(ApiRoutes.Identity.Register)]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -30,6 +32,7 @@ namespace SharedHome.Api.Controllers
         /// </summary>
         /// <returns>Authentication result</returns>
         [HttpPost(ApiRoutes.Identity.Login)]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AuthenticationResponse>> Login([FromBody] LoginRequest request)
@@ -44,6 +47,7 @@ namespace SharedHome.Api.Controllers
         /// Confirm email address
         /// </summary>
         [HttpGet(ApiRoutes.Identity.ConfirmEmail)]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string code)
         {
             if (code is null || string.IsNullOrWhiteSpace(code) || email is null || string.IsNullOrWhiteSpace(email))
