@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedHome.Application\SharedHome.Application.csproj" />  
+    <ProjectReference Include="..\SharedHome.Application\SharedHome.Application.csproj" />
+    <ProjectReference Include="..\SharedHome.Notifications\SharedHome.Notifications.csproj" />  
   </ItemGroup>
 
   <ItemGroup>

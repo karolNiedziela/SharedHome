@@ -7,6 +7,7 @@ using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Abstractions.Domain;
 using SharedHome.Shared.Abstractions.Responses;
 using Shouldly;
 using System.Reflection;
@@ -19,15 +20,17 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
+        private readonly IDomainEventDispatcher _eventDispatcher;
         private readonly ICommandHandler<AddShoppingListCommand, Response<ShoppingListDto>> _commandHandler;
 
         public AddShoppingListHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
+            _eventDispatcher = Substitute.For<IDomainEventDispatcher>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new AddShoppingListHandler(_shoppingListRepository, _mapper);
+            _commandHandler = new AddShoppingListHandler(_shoppingListRepository, _mapper, _eventDispatcher);
         }
 
         [Fact]

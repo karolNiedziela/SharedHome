@@ -6,6 +6,7 @@ using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Infrastructure.EF.Configurations.Write;
+using SharedHome.Notifications.Entities;
 using SharedHome.Shared.Abstractions.Domain;
 using SharedHome.Shared.Abstractions.Time;
 using System.Reflection;
@@ -26,6 +27,8 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         public DbSet<HouseGroup> HouseGroups { get; set; } = default!;
 
+        public DbSet<AppNotification> Notifications { get; set; } = default!;
+
    
         public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options, ITimeProvider time) : base(options)
         {
@@ -41,7 +44,7 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            foreach (EntityEntry<Entity> entry in ChangeTracker.Entries<Entity>())
+            foreach (EntityEntry<IAuditable> entry in ChangeTracker.Entries<IAuditable>())
             {
                 switch (entry.State)
                 {

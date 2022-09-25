@@ -19,6 +19,9 @@ $l_error_color: #dc3545;
 $l_grey_color: #f5f5f5;
 $l_success_color: green;
 
+$body-bg: $l_white_color !default;
+$body-color: $l_black_color !default;
+
 $primary: $l_primary_color !default;
 $success: $l_success_color !default;
 $danger: $l_error_color !default;
@@ -28,6 +31,14 @@ $card-color: $l_black_color !default;
 $card-border-radius: 4px !default;
 $card-bg: $l_white_color !default;
 $card-border-radius: 4px !default;
+
+$btn-color: $l_white_color !default;
+
+.btn-primary {
+  &:hover {
+    color: $l_white_color !important;
+  }
+}
 
 /*
 ----------- IDENTITY -----------

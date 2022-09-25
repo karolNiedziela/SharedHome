@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application;
 using SharedHome.Infrastructure.EF;
 using SharedHome.Infrastructure.Mapping;
+using SharedHome.Notifications;
 
 namespace SharedHome.Infrastructure
 {
@@ -11,7 +12,7 @@ namespace SharedHome.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMediatR(new[] { typeof(ApplicationAssemblyReference).Assembly, typeof(InfrastructureAssemblyReference).Assembly });
+            services.AddMediatR(new[] { typeof(ApplicationAssemblyReference).Assembly, typeof(NotificationAssemblyReference).Assembly, typeof(InfrastructureAssemblyReference).Assembly });
 
             services.AddMappings();
 

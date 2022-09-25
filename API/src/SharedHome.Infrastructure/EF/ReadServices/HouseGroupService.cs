@@ -32,5 +32,14 @@ namespace SharedHome.Infrastructure.EF.ReadServices
                .SelectMany(houseGroup => houseGroup.Members
                .Select(member => member.PersonId))
                .ToListAsync();
+
+        public async Task<IEnumerable<string>> GetMemberPersonIdsExcludingCreator(string personId) 
+            => await _houseGroups
+               .Include(houseGroup => houseGroup.Members
+                 .Where(member => member.PersonId == personId))
+               .SelectMany(houseGroup => houseGroup.Members
+                 .Where(member => member.PersonId != personId)
+               .Select(member => member.PersonId))
+               .ToListAsync();
     }
 }

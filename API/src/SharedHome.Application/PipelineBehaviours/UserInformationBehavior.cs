@@ -19,6 +19,8 @@ namespace SharedHome.Application.PipelineBehaviours
             if (request is AuthorizeRequest command)
             {
                 command.PersonId = _currentUser.UserId;
+                command.FirstName = _currentUser.FirstName;
+                command.LastName = _currentUser.LastName;
             }
 
             return await next();

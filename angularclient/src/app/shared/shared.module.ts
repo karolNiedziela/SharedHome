@@ -31,6 +31,7 @@ import { NetContentFormComponent } from './components/forms/net-content-form/net
 import { EnumSelectComponent } from './components/selects/enum-select/enum-select.component';
 import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { LanguageSelectComponent } from './components/selects/language-select/language-select.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { LanguageSelectComponent } from './components/selects/language-select/la
     NetContentFormComponent,
     SingleSelectComponent,
     LanguageSelectComponent,
+    NavbarComponent,
   ],
   imports: [
     CommonModule,
@@ -102,6 +104,7 @@ import { LanguageSelectComponent } from './components/selects/language-select/la
     NetContentFormComponent,
     SingleSelectComponent,
     LanguageSelectComponent,
+    NavbarComponent,
   ],
   providers: [DatePipe, EnumAsStringPipe],
 })

@@ -7,6 +7,14 @@ namespace SharedHome.Shared.Abstractions.Requests
     {
         [JsonIgnore]
         [SwaggerExclude]
-        public string? PersonId { get; set; }
+        public string? PersonId { get; set; } = default!;
+
+        [JsonIgnore]
+        [SwaggerExclude]
+        public string? FirstName { get; set; } = default!;
+
+        [JsonIgnore]
+        [SwaggerExclude]
+        public string? LastName { get; set; } = default!;
     }
 }

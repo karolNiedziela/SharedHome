@@ -1,0 +1,23 @@
+@import "/src/assets/_variables.scss";
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+  width: 95%;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: flex-start;
+  }
+}

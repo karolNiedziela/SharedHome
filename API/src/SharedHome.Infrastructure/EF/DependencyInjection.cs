@@ -14,6 +14,7 @@ using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Infrastructure.EF.Repositories;
 using SharedHome.Shared.Settings;
 using SharedHome.Identity.EF.Contexts;
+using SharedHome.Notifications.Repositories;
 
 namespace SharedHome.Infrastructure.EF
 {
@@ -27,6 +28,7 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IInvitationRepository, InvitationRepository>();
             services.AddScoped<IBillRepository, BillRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
 
             //Services
             services.AddScoped<IInvitationReadService, InvitationReadService>();

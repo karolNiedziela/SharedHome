@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SharedHome.Application\SharedHome.Application.csproj" />
+    <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
