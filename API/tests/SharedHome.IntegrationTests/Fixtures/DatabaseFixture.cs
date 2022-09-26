@@ -2,6 +2,7 @@
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Shared.Time;
+using SharedHome.Shared.User;
 using System;
 
 namespace SharedHome.IntegrationTests.Fixtures
@@ -15,9 +16,11 @@ namespace SharedHome.IntegrationTests.Fixtures
         public DatabaseFixture()
         {
             var settings = new SettingsProvider().Get<MySQLSettings>(MySQLSettings.SectionName);
+ 
             WriteContext = new WriteSharedHomeDbContext(new DbContextOptionsBuilder<WriteSharedHomeDbContext>()
                  .UseMySql(settings.ConnectionString, ServerVersion.AutoDetect(settings.ConnectionString)).Options,
-                new UtcTimeProvider());
+                new UtcTimeProvider(),
+                null!);
 
             ReadContext = new ReadSharedHomeDbContext(new DbContextOptionsBuilder<ReadSharedHomeDbContext>()
               .UseMySql(settings.ConnectionString, ServerVersion.AutoDetect(settings.ConnectionString)).Options);

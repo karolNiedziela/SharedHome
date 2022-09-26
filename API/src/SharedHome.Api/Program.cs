@@ -7,6 +7,7 @@ using SharedHome.Api.Constants;
 using SharedHome.Application;
 using SharedHome.Identity;
 using SharedHome.Infrastructure;
+using SharedHome.Notifications;
 using SharedHome.Shared;
 
 try
@@ -28,6 +29,7 @@ try
 
     builder.Services.AddSharedHomeIdentity(builder.Configuration);
     builder.Services.AddApplication();
+    builder.Services.AddNotifications();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddShared(builder.Configuration);
     builder.Services.AddApi();

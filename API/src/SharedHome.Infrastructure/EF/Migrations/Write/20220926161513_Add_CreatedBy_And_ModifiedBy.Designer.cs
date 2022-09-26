@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedHome.Infrastructure.EF.Contexts;
 
@@ -10,9 +11,10 @@ using SharedHome.Infrastructure.EF.Contexts;
 namespace SharedHome.Infrastructure.EF.Migrations.Write
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    partial class WriteSharedHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220926161513_Add_CreatedBy_And_ModifiedBy")]
+    partial class Add_CreatedBy_And_ModifiedBy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

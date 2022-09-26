@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedHome.Infrastructure.EF.Contexts;
 
@@ -10,9 +11,10 @@ using SharedHome.Infrastructure.EF.Contexts;
 namespace SharedHome.Infrastructure.EF.Migrations.Write
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    partial class WriteSharedHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220926155632_Add_OperationType_To_Notification")]
+    partial class Add_OperationType_To_Notification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,10 +34,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("DateOfPayment")
                         .HasColumnType("datetime(6)");
 
@@ -46,10 +44,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("PersonId")
                         .IsRequired()
@@ -71,16 +65,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -96,19 +82,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<int>("HouseGroupId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("RequestedByPersonId")
                         .IsRequired()
@@ -141,16 +119,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -166,10 +136,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("IsDone")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
@@ -177,10 +143,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<string>("PersonId")
                         .IsRequired()
@@ -202,10 +164,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("IsRead")
                         .HasColumnType("tinyint(1)");
 
@@ -214,10 +172,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("Operation")
                         .HasColumnType("int")
@@ -328,10 +282,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                             b1.Property<DateTime>("CreatedAt")
                                 .HasColumnType("datetime(6)");
 
-                            b1.Property<string>("CreatedBy")
-                                .IsRequired()
-                                .HasColumnType("longtext");
-
                             b1.Property<bool>("IsOwner")
                                 .ValueGeneratedOnAdd()
                                 .HasColumnType("tinyint(1)")
@@ -339,10 +289,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.Property<DateTime>("ModifiedAt")
                                 .HasColumnType("datetime(6)");
-
-                            b1.Property<string>("ModifiedBy")
-                                .IsRequired()
-                                .HasColumnType("longtext");
 
                             b1.HasKey("HouseGroupId", "PersonId");
 

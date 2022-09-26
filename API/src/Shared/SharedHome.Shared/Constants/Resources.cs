@@ -15,5 +15,9 @@ namespace SharedHome.Shared.Constants
         public const string DataAnnotationMessage = "DataAnnotationMessage";
 
         public const string IdentityExceptionMessage = "IdentityExceptionMessage";
+
+        public const string NotificationTitle = "NotificationTitle";
+
+        public const string NotificationMessage = "NotificationMessage";
     }
 }

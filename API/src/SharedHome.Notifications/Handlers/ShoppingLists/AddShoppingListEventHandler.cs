@@ -5,6 +5,7 @@ using SharedHome.Application.ShoppingLists.Events;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Repositories;
+using SharedHome.Notifications.Services;
 
 namespace SharedHome.Notifications.Handlers.ShoppingLists
 {
@@ -32,7 +33,7 @@ namespace SharedHome.Notifications.Handlers.ShoppingLists
 
             foreach (var personId in personIds)
             {
-                var appNotification = new AppNotification(shoppingListCreated.Creator.PersonId, nameof(ShoppingListCreated), TargetType.ShoppingList);
+                var appNotification = new AppNotification(shoppingListCreated.Creator.PersonId, nameof(ShoppingListCreated), TargetType.ShoppingList, OperationType.Create);
 
                 await _notificationRepository.AddAsync(appNotification);
             }            

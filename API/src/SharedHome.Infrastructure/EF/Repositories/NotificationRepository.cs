@@ -15,9 +15,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _context = context;
         }      
 
-        public async Task<IEnumerable<AppNotification>> GetAll(NotificationType? notificationType, TargetType? targetType)
+        public async Task<IEnumerable<AppNotification>> GetAll(string personId, NotificationType? notificationType = null, TargetType? targetType = null)
         {
-            var query = _context.Notifications.AsQueryable();
+            var query = _context.Notifications.Where(x => x.PersonId == personId).AsQueryable();
 
             if (notificationType is null)
             {
@@ -31,7 +31,7 @@ namespace SharedHome.Infrastructure.EF.Repositories
 
             query.Where(x => !x.IsRead);
 
-            return await query.ToListAsync();
+            return await query.OrderByDescending(x => x.CreatedAt).ToListAsync();
         }
 
         public async Task AddAsync(AppNotification notification)
