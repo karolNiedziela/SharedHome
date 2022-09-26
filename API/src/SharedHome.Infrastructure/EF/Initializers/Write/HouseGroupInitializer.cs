@@ -19,14 +19,17 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             if (await _context.HouseGroups.AnyAsync()) return;
 
             var houseGroup = HouseGroup.Create("Default");
+            houseGroup.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+            houseGroup.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+
+            var firstMember = new HouseGroupMember(houseGroup.Id, InitializerConstants.CharlesUserId, true);
+            firstMember.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+            firstMember.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+            var secondMember = new HouseGroupMember(houseGroup.Id, InitializerConstants.FrancUserId, false);
+            secondMember.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+            secondMember.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
 
             await _context.HouseGroups.AddAsync(houseGroup);
-            await _context.SaveChangesAsync();
-
-            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, InitializerConstants.CharlesUserId, true));
-            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, InitializerConstants.FrancUserId, false));
-
-            _context.HouseGroups.Update(houseGroup);
             await _context.SaveChangesAsync();
         }
     }

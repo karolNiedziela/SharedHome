@@ -54,14 +54,14 @@ namespace SharedHome.Infrastructure.EF.Contexts
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedAt = _time.CurrentDate();
-                        entry.Entity.CreatedBy = $"{_currentUser.FirstName} {_currentUser.LastName}";
+                        entry.Entity.CreatedBy = string.IsNullOrEmpty(_currentUser.FirstName) ? entry.Entity.CreatedBy : $"{_currentUser.FirstName} {_currentUser.LastName}";
                         entry.Entity.ModifiedAt = _time.CurrentDate();
-                        entry.Entity.ModifiedBy = $"{_currentUser.FirstName} {_currentUser.LastName}";
+                        entry.Entity.ModifiedBy = string.IsNullOrEmpty(_currentUser.FirstName) ? entry.Entity.ModifiedBy : $"{_currentUser.FirstName} {_currentUser.LastName}";
                         break;
 
                     case EntityState.Modified:
                         entry.Entity.ModifiedAt = _time.CurrentDate();
-                        entry.Entity.ModifiedBy = $"{_currentUser.FirstName} {_currentUser.LastName}";
+                        entry.Entity.ModifiedBy = string.IsNullOrEmpty(_currentUser.FirstName) ? entry.Entity.ModifiedBy : $"{_currentUser.FirstName} {_currentUser.LastName}";
                         break;
                 }
             }
@@ -69,6 +69,6 @@ namespace SharedHome.Infrastructure.EF.Contexts
             var result = await base.SaveChangesAsync(cancellationToken);
 
             return result;
-        } 
+        }  
     }
 }

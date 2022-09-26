@@ -4,6 +4,7 @@ using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Constants;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Infrastructure.EF.Models;
+using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Infrastructure.Mapping
 {
@@ -16,6 +17,8 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<NetContentDto, NetContent>().ConstructUsing(src => (src == null || src.NetContent == null ? null : new NetContent(src.NetContent, src.NetContentType.HasValue ? (NetContentType)src.NetContentType : null))!);
 
             config.NewConfig<ShoppingListProductReadModel, NetContentDto>().ConstructUsing(src => (src.NetContent == null ? null : new NetContentDto(src.NetContent, src.NetContentType!.Value))!);
+
+            config.NewConfig<Entity, AuditableDto>();
         }
     }
 }

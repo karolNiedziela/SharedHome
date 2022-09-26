@@ -21,10 +21,7 @@ namespace SharedHome.Infrastructure.Mapping
                 .Map(dest => dest.Quantity, src => src.Quantity.Value)
                 .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Amount, src.Price.Currency.Value))                ;
 
-            config.NewConfig<ShoppingListReadModel, ShoppingListDto>()
-                .Map(dest => dest.CreatedByFirstName, src => src.Person.FirstName)
-                .Map(dest => dest.CreatedByLastName, src => src.Person.LastName)
-                .Map(dest => dest.CreatedByFullName, src => $"{src.Person.FirstName} {src.Person.LastName}");
+            config.NewConfig<ShoppingListReadModel, ShoppingListDto>();
 
 
             config.NewConfig<ShoppingListProductReadModel, ShoppingListProductDto>()

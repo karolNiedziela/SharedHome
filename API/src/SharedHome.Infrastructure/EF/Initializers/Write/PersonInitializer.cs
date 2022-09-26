@@ -18,13 +18,16 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             if (await _context.Persons.AnyAsync()) return;
 
             var charles = Person.Create(InitializerConstants.CharlesUserId, InitializerConstants.CharlesFirstName, InitializerConstants.CharlesLastName, InitializerConstants.CharlesEmail);
+            charles.CreatedBy = "SYSTEM";
+            charles.ModifiedBy = "SYSTEM";
             await _context.Persons.AddAsync(charles);
 
             var franc = Person.Create(InitializerConstants.FrancUserId, InitializerConstants.FrancFirstName, InitializerConstants.FrancLastName, InitializerConstants.FrancEmail);
+            franc.CreatedBy = "SYSTEM";
+            franc.ModifiedBy = "SYSTEM";
             await _context.Persons.AddAsync(franc);
 
             await _context.SaveChangesAsync();
-
         }
     }
 }

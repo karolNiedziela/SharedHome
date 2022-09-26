@@ -3,7 +3,7 @@ using SharedHome.Domain.Bills.Constants;
 
 namespace SharedHome.Application.Bills.DTO
 {
-    public class BillDto
+    public class BillDto : AuditableDto
     {
         public int Id { get; set; }
 
