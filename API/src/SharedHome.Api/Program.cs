@@ -67,6 +67,8 @@ try
 
     app.UseAuthorization();
 
+    app.UseNotifications();
+
     app.MapControllers();
 
     app.Run();

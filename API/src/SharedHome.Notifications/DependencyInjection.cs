@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Services;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,19 @@ namespace SharedHome.Notifications
             services.AddScoped<IAppNotificationService, AppNotificationService>();
             services.AddScoped<IAppNotificationInformationResolver, AppNotificationInformationResolver>();
 
+            services.AddSignalR();
+
             return services;
+        }
+
+        public static IApplicationBuilder UseNotifications(this IApplicationBuilder applicationBuilder)
+        {
+            applicationBuilder.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<BroadcastHub>("/notify");
+            });
+
+            return applicationBuilder;
         }
     }
 }

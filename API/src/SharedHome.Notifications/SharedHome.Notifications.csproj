@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="6.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SharedHome.Application\SharedHome.Application.csproj" />
     <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
   </ItemGroup>

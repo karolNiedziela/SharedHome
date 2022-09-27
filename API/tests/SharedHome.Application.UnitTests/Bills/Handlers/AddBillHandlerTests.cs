@@ -8,6 +8,7 @@ using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Abstractions.Domain;
 using SharedHome.Shared.Abstractions.Responses;
 using Shouldly;
 using System.Reflection;
@@ -20,15 +21,17 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;
+        private readonly IDomainEventDispatcher _eventDispatcher;
         private readonly ICommandHandler<AddBillCommand, Response<BillDto>> _commandHandler;
 
         public AddBillHandlerTests()
         {
             _billRepository = Substitute.For<IBillRepository>();
+            _eventDispatcher = Substitute.For<IDomainEventDispatcher>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new AddBillHandler(_billRepository, _mapper);
+            _commandHandler = new AddBillHandler(_billRepository, _mapper, _eventDispatcher);
         }
 
         [Fact]

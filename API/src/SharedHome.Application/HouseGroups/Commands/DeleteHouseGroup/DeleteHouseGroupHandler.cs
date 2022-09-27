@@ -23,7 +23,7 @@ namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
 
             if (!houseGroup.IsOwner(request.PersonId!))
             {
-                throw new HouseGroupMemberIsNotOwnerException(request.PersonId);
+                throw new HouseGroupMemberIsNotOwnerException(request.PersonId!);
             }
 
             await _houseGroupRepository.DeleteAsync(houseGroup);
