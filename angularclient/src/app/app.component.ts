@@ -1,7 +1,9 @@
+import { AppNotification } from './core/models/app-notification';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { SignalrService } from './core/services/signalr.service';
 import { LanguageService } from './core/services/language.service';
 import { ThemeService } from 'app/core/services/theme.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthenticationResponse } from './core/models/authentication-response';
 import { AuthenticationService } from './modules/identity/services/authentication.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,11 +18,12 @@ import localePl from '@angular/common/locales/pl';
     './shared/components/sidebar/sidebar.component.scss',
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'sharedhomewebclient';
   authenticationResponse: AuthenticationResponse = null!;
+  subscriptions: Subscription[] = [];
 
-  hubHelloMessage: any;
+  notification?: AppNotification;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -29,8 +32,11 @@ export class AppComponent implements OnInit {
     private languageService: LanguageService,
     private signalRService: SignalrService
   ) {
-    this.authenticationService?.authenticationResponse.subscribe(
-      (result: AuthenticationResponse) => (this.authenticationResponse = result)
+    this.subscriptions.push(
+      this.authenticationService?.authenticationResponse.subscribe(
+        (result: AuthenticationResponse) =>
+          (this.authenticationResponse = result)
+      )
     );
 
     registerLocaleData(localePl);
@@ -39,12 +45,26 @@ export class AppComponent implements OnInit {
     this.languageService.setLanguageOnInit();
 
     this.themeService.setTheme();
+
+    if (this.authenticationResponse) {
+      this.signalRService.initiateSignalRConnection(
+        this.authenticationResponse.accessToken
+      );
+    }
   }
 
   ngOnInit(): void {
-    this.signalRService.hubHelloMessage.subscribe((message: any) => {
-      this.hubHelloMessage = message;
-      console.log(message);
-    });
+    this.subscriptions.push(
+      this.signalRService.notification.subscribe(
+        (notification: AppNotification) => {
+          this.notification = notification;
+          console.log(notification);
+        }
+      )
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe);
   }
 }

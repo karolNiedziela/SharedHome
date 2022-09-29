@@ -74,6 +74,9 @@
       <a href="#" class="nav-link link-dark">
         <fa-icon [icon]="notificationsIcon"></fa-icon>
         <span class="links_name">{{ "notifications" | translate }}</span>
+        <div *ngIf="notificationsCount$ | async as notificationsCount">
+          <span>{{ notificationsCount }}</span>
+        </div>
       </a>
     </li>
     <hr />

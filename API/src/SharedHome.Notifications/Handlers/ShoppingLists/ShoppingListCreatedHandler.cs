@@ -1,31 +1,25 @@
-﻿using MapsterMapper;
-using MediatR;
-using Microsoft.AspNetCore.SignalR;
+﻿using MediatR;
 using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Events;
 using SharedHome.Notifications.Constants;
-using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Repositories;
 using SharedHome.Notifications.Services;
 
 namespace SharedHome.Notifications.Handlers.ShoppingLists
 {
-    internal class ShoppingListCreatedHandler : INotificationHandler<DomainEventNotification<ShoppingListCreated>>
+    public class ShoppingListCreatedHandler : INotificationHandler<DomainEventNotification<ShoppingListCreated>>
     {
         private readonly INotificationRepository _notificationRepository;
         private readonly IHouseGroupReadService _houseGroupReadService;
-        private readonly IMapper _mapper;
-        private readonly IHubContext<BroadcastHub, IHubClient> _hubContext;
+        private readonly IAppNotificationService _appNotificationService;
 
-        public ShoppingListCreatedHandler(INotificationRepository notificationRepository, IHouseGroupReadService houseGroupReadService, IHubContext<BroadcastHub, IHubClient> hubContext, IMapper mapper)
+        public ShoppingListCreatedHandler(INotificationRepository notificationRepository, IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
         {
             _notificationRepository = notificationRepository;
             _houseGroupReadService = houseGroupReadService;
-            _hubContext = hubContext;
-            _mapper = mapper;
+            _appNotificationService = appNotificationService;
         }
 
         public async Task Handle(DomainEventNotification<ShoppingListCreated> notification, CancellationToken cancellationToken)
@@ -41,16 +35,12 @@ namespace SharedHome.Notifications.Handlers.ShoppingLists
 
             foreach (var personId in personIds)
             {
-                var appNotification = new AppNotification(shoppingListCreated.Creator.PersonId, nameof(ShoppingListCreated), TargetType.ShoppingList, OperationType.Create);
+                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), TargetType.ShoppingList, OperationType.Create);
 
                 await _notificationRepository.AddAsync(appNotification);
 
-                var notificationDto = _mapper.Map<AppNotificationDto>(appNotification);
-
-                _hubContext.Clients.All.BroadcastNotification(notificationDto);
-            }            
-
-
+                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId);
+            }           
         }
     }
 }

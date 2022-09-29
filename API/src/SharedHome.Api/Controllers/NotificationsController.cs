@@ -3,24 +3,25 @@ using Microsoft.AspNetCore.SignalR;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Services;
+using SharedHome.Shared.Abstractions.User;
 
 namespace SharedHome.Api.Controllers
 {
     public class NotificationsController : ApiController
     {
         private readonly IAppNotificationService _appNotificationService;
-        private readonly IHubContext<BroadcastHub, IHubClient> _hubContext;
+        private readonly ICurrentUser _currentUser;
 
-        public NotificationsController(IAppNotificationService appNotificationService, IHubContext<BroadcastHub, IHubClient> hubContext)
+        public NotificationsController(IAppNotificationService appNotificationService, ICurrentUser currentUser)
         {
             _appNotificationService = appNotificationService;
-            _hubContext = hubContext;
+            _currentUser = currentUser;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppNotificationDto>>> GetNotifications()
         {
-            var notifications = await _appNotificationService.GetAll("6B0EE0EA-23EF-4A51-AE07-BE9B7FD9FFC6");
+            var notifications = await _appNotificationService.GetAll(_currentUser.UserId);
 
             return Ok(notifications);
         }

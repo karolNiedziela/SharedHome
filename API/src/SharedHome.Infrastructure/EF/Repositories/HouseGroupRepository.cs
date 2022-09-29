@@ -14,6 +14,11 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _dbContext = dbContext;
         }
 
+        public async Task<HouseGroup?> GetAsync(string personId)
+             => await _dbContext.HouseGroups
+            .Include(houseGroup => houseGroup.Members.Where(m => m.PersonId == personId))
+            .SingleOrDefaultAsync();
+
         public async Task<HouseGroup?> GetAsync(int houseGroupId, string personId)
             => await _dbContext.HouseGroups
             .Include(houseGroup => houseGroup.Members)
@@ -35,7 +40,6 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _dbContext.HouseGroups.Update(houseGroup);
             await _dbContext.SaveChangesAsync();
-        }
-
+        }       
     }
 }

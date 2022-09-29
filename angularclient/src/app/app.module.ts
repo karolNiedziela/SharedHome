@@ -61,14 +61,6 @@ import { SignalrService } from './core/services/signalr.service';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
-    SignalrService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (signalrService: SignalrService) => () =>
-        signalrService.initiateSignalRConnection(),
-      deps: [SignalrService],
-      multi: true,
-    },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

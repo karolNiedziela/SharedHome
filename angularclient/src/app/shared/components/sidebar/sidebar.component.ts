@@ -1,4 +1,5 @@
-import { map } from 'rxjs';
+import { NotificationService } from './../../../modules/notifications/services/notification.service';
+import { map, Observable } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   faBars,
@@ -31,7 +32,12 @@ export class SidebarComponent implements OnInit {
   settingsIcon = faGear;
   logoutIcon = faSignOut;
 
-  constructor(private authenticationService: AuthenticationService) {}
+  notificationsCount$!: Observable<number>;
+
+  constructor(
+    private authenticationService: AuthenticationService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     const navItems = document.querySelectorAll('.nav-item');
@@ -40,6 +46,8 @@ export class SidebarComponent implements OnInit {
         this.toggleMenu();
       })
     );
+
+    this.notificationsCount$ = this.notificationService.notificationsCount$;
   }
 
   toggleMenu(): void {

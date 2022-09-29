@@ -9,5 +9,7 @@ namespace SharedHome.Notifications.Services
         Task<IEnumerable<AppNotificationDto>> GetAll(string personId);
 
         Task AddAsync(AppNotification notification);
+
+        Task BroadcastNotificationAsync(AppNotification notification, string personId, string personIdToExclude);
     }
 }

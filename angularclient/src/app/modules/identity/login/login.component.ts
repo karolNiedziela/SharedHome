@@ -1,3 +1,4 @@
+import { SignalrService } from './../../../core/services/signalr.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { first } from 'rxjs';
@@ -13,7 +14,10 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessages: string[] = [];
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private signalRService: SignalrService
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -34,7 +38,11 @@ export class LoginComponent implements OnInit {
       .login(email, password)
       .pipe(first())
       .subscribe({
-        next: () => {},
+        next: () => {
+          this.signalRService.initiateSignalRConnection(
+            this.authenticationService.authenticationResponseValue.accessToken
+          );
+        },
         error: (error: string[]) => {
           this.errorMessages = error;
         },

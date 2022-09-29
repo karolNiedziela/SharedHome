@@ -26,7 +26,7 @@ namespace SharedHome.Notifications
         {
             applicationBuilder.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<BroadcastHub>("/notify");
+                endpoints.MapHub<HouseGroupNotificationHub>("/notify");
             });
 
             return applicationBuilder;

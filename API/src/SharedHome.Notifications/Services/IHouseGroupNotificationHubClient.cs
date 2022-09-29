@@ -2,7 +2,7 @@
 
 namespace SharedHome.Notifications.Services
 {
-    public interface IHubClient
+    public interface IHouseGroupNotificationHubClient
     {
         Task BroadcastNotification(AppNotificationDto notifications);
     }
