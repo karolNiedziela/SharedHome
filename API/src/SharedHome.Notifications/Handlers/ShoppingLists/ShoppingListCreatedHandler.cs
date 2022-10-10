@@ -39,7 +39,7 @@ namespace SharedHome.Notifications.Handlers.ShoppingLists
 
                 await _notificationRepository.AddAsync(appNotification);
 
-                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId);
+                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId, shoppingListCreated.ShoppingListName);
             }           
         }
     }

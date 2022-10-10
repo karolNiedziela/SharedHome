@@ -10,6 +10,6 @@ namespace SharedHome.Notifications.Services
 
         Task AddAsync(AppNotification notification);
 
-        Task BroadcastNotificationAsync(AppNotification notification, string personId, string personIdToExclude);
+        Task BroadcastNotificationAsync(AppNotification notification, string personId, string personIdToExclude, string? name = null);
     }
 }

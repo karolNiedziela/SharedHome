@@ -123,7 +123,13 @@
   <data name="Create" xml:space="preserve">
     <value>została dodana</value>
   </data>
+  <data name="name" xml:space="preserve">
+    <value>nazwą</value>
+  </data>
   <data name="ShoppingList" xml:space="preserve">
     <value>Lista zakupów</value>
+  </data>
+  <data name="with name" xml:space="preserve">
+    <value>z nazwą</value>
   </data>
 </root>

@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using NSubstitute;
+using SharedHome.Application.Bills.Events;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
-using SharedHome.Application.ShoppingLists.Events;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Handlers.ShoppingLists;
+using SharedHome.Notifications.Handlers.Bills;
 using SharedHome.Notifications.Repositories;
 using SharedHome.Notifications.Services;
 using System;
@@ -13,32 +13,31 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SharedHome.Notifications.UnitTests.Handlers.ShoppingLists
+namespace SharedHome.Notifications.UnitTests.Handlers.Bills
 {
-    public class ShoppingListCreatedHandlerTests
+    public class BillCreatedHandlerTests
     {
         private readonly INotificationRepository _notificationRepository;
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
-        private readonly INotificationHandler<DomainEventNotification<ShoppingListCreated>> _notificationHandler;
+        private readonly INotificationHandler<DomainEventNotification<BillCreated>> _notificationHandler;
 
-        public ShoppingListCreatedHandlerTests()
+        public BillCreatedHandlerTests()
         {
             _notificationRepository = Substitute.For<INotificationRepository>();
             _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
             _appNotificationService = Substitute.For<IAppNotificationService>();
-            _notificationHandler = new ShoppingListCreatedHandler(_notificationRepository, _houseGroupReadService, _appNotificationService);
+            _notificationHandler = new BillCreatedHandler(_notificationRepository, _houseGroupReadService, _appNotificationService);
         }
 
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var shoppingListCreated = new ShoppingListCreated(1, "Test", new CreatorDto("", "", ""));
+            var billCreated = new BillCreated(1, "Test", new CreatorDto("", "", ""));
 
-            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
+            var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>())
-                .Returns(false);
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
 
             await _notificationHandler.Handle(domainEvent, default);
 
@@ -49,9 +48,9 @@ namespace SharedHome.Notifications.UnitTests.Handlers.ShoppingLists
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var shoppingListCreated = new ShoppingListCreated(1, "Test", new CreatorDto("", "", ""));
+            var billCreated = new BillCreated(1, "Test", new CreatorDto("", "", ""));
 
-            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
+            var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
             _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>())
                 .Returns(true);
@@ -68,9 +67,9 @@ namespace SharedHome.Notifications.UnitTests.Handlers.ShoppingLists
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var shoppingListCreated = new ShoppingListCreated(1, "Test", new CreatorDto("", "", ""));
+            var billCreated = new BillCreated(1, "Test", new CreatorDto("", "", ""));
 
-            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
+            var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
             _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>())
                 .Returns(true);

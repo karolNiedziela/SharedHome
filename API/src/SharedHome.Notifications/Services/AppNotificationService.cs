@@ -39,7 +39,7 @@ namespace SharedHome.Notifications.Services
             return Task.CompletedTask;
         }
 
-        public async Task BroadcastNotificationAsync(AppNotification notification, string personId, string personIdToExclude)
+        public async Task BroadcastNotificationAsync(AppNotification notification, string personId, string personIdToExclude, string? name = null)
         {
             var notificationDto = _mapper.Map<AppNotificationDto>(notification);
 
@@ -48,7 +48,7 @@ namespace SharedHome.Notifications.Services
                 return;
             }
 
-            notificationDto.Title = _notificationInformationResolver.GetTitle(notification);
+            notificationDto.Title = _notificationInformationResolver.GetTitle(notification, name);
 
             await _hubContext.Clients.GroupExcept(groupName!, HouseGroupNotificationHub.GetConnectionId(personIdToExclude)).BroadcastNotification(notificationDto);
         }
