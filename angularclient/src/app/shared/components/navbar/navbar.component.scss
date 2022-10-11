@@ -2,9 +2,11 @@
 
 .navbar {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: 0 auto;
-  width: 95%;
+  width: 100%;
+  padding: 0.2rem 1rem 0.2rem 1rem;
+  border-bottom: 1px solid lightgrey;
 }
 
 .account {
@@ -14,6 +16,11 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+
+.logo {
+  width: 200px;
+  height: 30px;
 }
 
 @media (max-width: 768px) {

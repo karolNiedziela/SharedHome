@@ -1,13 +1,9 @@
-.welcome {
-  &__app-name {
-    font-family: "Damion", cursive;
-    font-size: 30px;
-    font-size: calc(100% + 5vw + 3vh);
-  }
+.d-flex {
+  height: 90vh;
 }
 
-.d-flex {
-  min-height: 90vh;
+.logo {
+  width: 90%;
 }
 
 .identity {

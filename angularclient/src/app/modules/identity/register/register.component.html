@@ -1,8 +1,4 @@
-<form
-  class="row g-3 mb-2 mt-2"
-  [formGroup]="registerForm"
-  (submit)="onSubmit()"
->
+<form class="row g-3 mb-4" [formGroup]="registerForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
   <div *ngIf="information">{{ information }}</div>
   <app-email-input formControlName="email"></app-email-input>

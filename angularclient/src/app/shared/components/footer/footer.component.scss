@@ -5,11 +5,11 @@
   flex-wrap: nowrap;
   flex-direction: row;
   justify-content: space-around;
-  padding: 16px 20px 16px 16px;
+  padding: 1rem 1rem 1rem 1rem;
   border-top: 1px solid lightgrey;
 
   &__company {
-    width: 90%;
+    width: 95%;
   }
 
   &__icons {

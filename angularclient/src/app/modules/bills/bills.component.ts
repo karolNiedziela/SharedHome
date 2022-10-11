@@ -96,7 +96,7 @@ export class BillsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.locale = this.translateService.getDefaultLang();
+    this.locale = this.translateService.currentLang;
 
     this.getBillEvents();
 
