@@ -41,6 +41,15 @@ $btn-color: $l_white_color !default;
 }
 
 /*
+----------- LOGO -----------
+*/
+
+.logo {
+  filter: brightness(0) saturate(100%) invert(29%) sepia(89%) saturate(865%)
+    hue-rotate(205deg) brightness(87%) contrast(95%);
+}
+
+/*
 ----------- IDENTITY -----------
 */
 .welcome {
@@ -106,8 +115,14 @@ $btn-color: $l_white_color !default;
 /*
 ----------- ICONS -----------
 */
-.shared-home-icon:hover {
-  color: $l_primary_color !important;
+
+.shared-home-icon {
+  color: $l_black_color !important;
+  cursor: pointer;
+
+  &:hover {
+    color: $l_primary_color !important;
+  }
 }
 
 /*
@@ -200,6 +215,10 @@ $input-group-addon-bg: $l_white_color !default;
 hr:not([size]) {
   height: 1px !important;
 }
+
+/*
+----------- BADGE -----------
+*/
 
 /*
 ----------- CALENDAR -----------

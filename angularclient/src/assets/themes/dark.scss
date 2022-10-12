@@ -32,6 +32,15 @@ $card-bg: $l_background_color !default;
 $card-border-radius: 4px !default;
 
 /*
+----------- LOGO -----------
+*/
+
+.logo {
+  filter: invert(58%) sepia(9%) saturate(3044%) hue-rotate(73deg)
+    brightness(100%) contrast(82%);
+}
+
+/*
 ----------- IDENTITY -----------
 */
 
@@ -100,7 +109,7 @@ $card-border-radius: 4px !default;
 ----------- ICONS -----------
 */
 .shared-home-icon {
-  color: $l_white_color;
+  color: $l_white_color !important;
 
   &:hover {
     cursor: pointer;

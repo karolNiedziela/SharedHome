@@ -6,5 +6,20 @@
       class="logo"
     />
   </span>
-  <span class="account btn btn-primary"> KN </span>
+  <div class="navbar__left">
+    <div class="icon-wrapper">
+      <fa-icon
+        class="shared-home-icon btn"
+        data-toggle="tooltip"
+        [title]="'notifications' | translate"
+        [icon]="notificationIcon"
+      >
+      </fa-icon>
+      <div *ngIf="notificationsCount$ | async as notificationsCount">
+        <span class="badge bg-primary">{{ notificationsCount }}</span>
+      </div>
+    </div>
+
+    <span class="account btn btn-primary"> KN </span>
+  </div>
 </nav>

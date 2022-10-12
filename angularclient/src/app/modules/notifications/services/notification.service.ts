@@ -27,7 +27,6 @@ export class NotificationService {
     this._notificationsCount.asObservable();
 
   constructor(private http: HttpClient) {
-    console.log(this._notifications.value);
     if (this._notifications.value == null) {
       this.get();
     }
@@ -46,8 +45,6 @@ export class NotificationService {
 
   add(notification: AppNotification) {
     this._notifications.next([...this._notifications.value, notification]);
-    console.log(this._notifications.value);
     this._notificationsCount.next(this._notificationsCount.value + 1);
-    console.log(this._notificationsCount.value);
   }
 }

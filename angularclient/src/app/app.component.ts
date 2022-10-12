@@ -58,7 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.signalRService.notification.subscribe(
         (notification: AppNotification) => {
           this.notification = notification;
-          console.log(notification);
         }
       )
     );

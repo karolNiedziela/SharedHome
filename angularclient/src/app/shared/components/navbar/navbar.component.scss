@@ -7,6 +7,35 @@
   width: 100%;
   padding: 0.2rem 1rem 0.2rem 1rem;
   border-bottom: 1px solid lightgrey;
+
+  &__left {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    justify-content: center;
+    align-items: center;
+
+    .icon-wrapper {
+      position: relative;
+
+      fa-icon {
+        font-size: 30px;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      .badge {
+        width: auto;
+        height: auto;
+        margin: 0;
+        border-radius: 50%;
+        position: absolute;
+        top: 0px;
+        right: -4px;
+        padding: 5px;
+      }
+    }
+  }
 }
 
 .account {
