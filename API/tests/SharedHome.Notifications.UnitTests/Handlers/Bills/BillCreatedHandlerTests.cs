@@ -84,7 +84,7 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
             await _notificationHandler.Handle(domainEvent, default);
 
             await _notificationRepository.Received(2).AddAsync(Arg.Any<AppNotification>());
-            await _appNotificationService.Received(2).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<string>(), Arg.Any<string>());
+            await _appNotificationService.Received(2).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
         }
     }
 }
