@@ -216,6 +216,11 @@ $input-group-addon-bg: $l_background_color !default;
   color: $l_primary_color !important;
 }
 
+hr {
+  border-bottom: 1px solid $l_white_color !important;
+  background: $l_background_color !important;
+}
+
 /*
 ----------- CALENDAR -----------
 */

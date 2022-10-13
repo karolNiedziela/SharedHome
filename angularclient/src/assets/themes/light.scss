@@ -216,6 +216,11 @@ hr:not([size]) {
   height: 1px !important;
 }
 
+hr {
+  border-bottom: 1px solid $l_black_color !important;
+  background: $l_white_color !important;
+}
+
 /*
 ----------- BADGE -----------
 */

@@ -47,6 +47,16 @@ export class SidebarComponent implements OnInit {
 
     const menuToggle = document.querySelector('.menu-toggle');
     menuToggle?.classList.toggle('is-active');
+
+    const content = document.querySelector('.content') as HTMLDivElement;
+    const navbar = document.querySelector('.navbar') as HTMLDivElement;
+    if (menuToggle?.classList.contains('is-active')) {
+      content.style.opacity = '0.1';
+      navbar.style.opacity = '0.1';
+    } else {
+      content.style.opacity = '1';
+      navbar.style.opacity = '1';
+    }
   }
 
   logout() {

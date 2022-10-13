@@ -129,15 +129,7 @@
 
   &__bottom {
     justify-content: flex-end;
-
-    .nav-item:last-child {
-      padding-bottom: 0.6rem;
-    }
   }
-}
-
-hr {
-  opacity: 0;
 }
 
 @media (max-width: 1024px) {
