@@ -1,3 +1,4 @@
+import { ExpensesModule } from './modules/expenses/expenses.module';
 import { LanguageInterceptor } from './core/interceptors/language.interceptor';
 import { InvitationModule } from './modules/invitations/invitation.module';
 import { HousegroupModule } from './modules/housegroups/housegroup.module';
@@ -13,18 +14,13 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  APP_INITIALIZER,
-  CUSTOM_ELEMENTS_SCHEMA,
-  NgModule,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { SettingModule } from './modules/settings/setting.module';
-import { SignalrService } from './core/services/signalr.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +47,7 @@ import { SignalrService } from './core/services/signalr.service';
       },
     }),
     ToastrModule.forRoot(),
+    ExpensesModule,
   ],
   providers: [
     {

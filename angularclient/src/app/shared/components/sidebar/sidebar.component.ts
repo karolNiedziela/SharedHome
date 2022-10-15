@@ -48,6 +48,17 @@ export class SidebarComponent implements OnInit {
     const menuToggle = document.querySelector('.menu-toggle');
     menuToggle?.classList.toggle('is-active');
 
+    const media = window.matchMedia('(max-width: 768px)');
+    if (media.matches) {
+      this.blurContent(menuToggle);
+    }
+  }
+
+  logout() {
+    this.authenticationService.logout();
+  }
+
+  private blurContent(menuToggle: Element | null): void {
     const content = document.querySelector('.content') as HTMLDivElement;
     const navbar = document.querySelector('.navbar') as HTMLDivElement;
     if (menuToggle?.classList.contains('is-active')) {
@@ -57,9 +68,5 @@ export class SidebarComponent implements OnInit {
       content.style.opacity = '1';
       navbar.style.opacity = '1';
     }
-  }
-
-  logout() {
-    this.authenticationService.logout();
   }
 }

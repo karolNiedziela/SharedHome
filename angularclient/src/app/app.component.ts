@@ -2,7 +2,7 @@ import { AppNotification } from './core/models/app-notification';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { SignalrService } from './core/services/signalr.service';
 import { LanguageService } from './core/services/language.service';
-import { ThemeService } from 'app/core/services/theme.service';
+import { ThemeService } from 'app/core/services/theme/theme.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthenticationResponse } from './core/models/authentication-response';
 import { AuthenticationService } from './modules/identity/services/authentication.service';
