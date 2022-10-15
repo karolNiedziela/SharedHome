@@ -229,8 +229,12 @@ hr {
 ----------- CALENDAR -----------
 */
 
-.cal-cell-row:hover {
+.cal-cell-row {
   background: none !important;
+
+  &:hover {
+    background: none !important;
+  }
 }
 
 .cal-cell:hover {

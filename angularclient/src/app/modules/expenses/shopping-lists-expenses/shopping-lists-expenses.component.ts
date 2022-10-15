@@ -1,9 +1,16 @@
+import { ApiResponse } from 'app/core/models/api-response';
+import { BillService } from './../../bills/services/bill.service';
 import { BarChartService } from './../../../core/services/charts/bar-chart.service';
 import {
   LightTheme,
   DarkTheme,
 } from './../../../core/services/theme/theme.constants';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   ChartConfiguration,
   ChartData,
@@ -13,6 +20,8 @@ import {
 } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import * as DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { BillMonthlyCost } from 'app/modules/bills/models/bill-mothly-cost';
+import { Observable } from 'rxjs';
 
 type Theme = 'light-theme' | 'dark-theme';
 
@@ -20,23 +29,20 @@ type Theme = 'light-theme' | 'dark-theme';
   selector: 'app-shopping-lists-expenses',
   templateUrl: './shopping-lists-expenses.component.html',
   styleUrls: ['./shopping-lists-expenses.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ShoppingListsExpensesComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
+  public billMonthlyCost$!: Observable<ApiResponse<BillMonthlyCost[]>>;
+
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
-
+    maintainAspectRatio: false,
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      x: {
-        ticks: {
-          color: 'white',
-        },
-      },
-      y: {
-        min: 10,
-      },
+      x: {},
+      y: {},
     },
     plugins: {
       legend: {
@@ -66,8 +72,7 @@ export class ShoppingListsExpensesComponent implements OnInit {
         displayColors: false,
         callbacks: {
           label: function (context) {
-            let label = `Amount: ${context.formattedValue}`;
-            return label;
+            return `Amount: ${context.formattedValue}`;
           },
         },
       },
@@ -75,69 +80,46 @@ export class ShoppingListsExpensesComponent implements OnInit {
     color: 'white',
   };
 
-  constructor(public barChartService: BarChartService) {}
-
-  ngOnInit(): void {
-    this.barChartOptions = this.barChartService.getOptionsColors(
-      this.barChartOptions
-    );
-
-    let datasetsData = this.barChartData!.datasets[0].data;
-    let datasetsLabels = this.barChartData!.labels!;
-
-    for (let i = 0; i <= datasetsData.length; i++) {
-      if (datasetsData[i] === 0) {
-        datasetsData.splice(i, 1);
-        datasetsLabels.splice(i, 1);
-        i--;
-      }
-    }
-
-    this.barChartData!.datasets[0].data = datasetsData;
-    this.barChartData!.labels = datasetsLabels;
-  }
-
   public barChartPlugins = [DataLabelsPlugin];
 
-  public barChartData: ChartData<'bar'> = {
-    labels: [
-      'Styczeń',
-      'Luty',
-      'Marzec',
-      'Kwiecień',
-      'Maj',
-      'Czerwiec',
-      'Lipiec',
-      'Sierpień',
-      'Wrzesień',
-      'Październik',
-      'Listopad',
-      'Grudzień',
-    ],
-    datasets: [
-      {
-        data: [65, 0, 80, 81, 0, 55, 40, 70, 34, 75, 62, 47],
-        label: 'Amount',
-        backgroundColor: DarkTheme.primaryColor,
-      },
-    ],
-  };
+  constructor(
+    public barChartService: BarChartService,
+    private billService: BillService
+  ) {}
 
-  public chartClicked({
-    event,
-    active,
-  }: {
-    event?: ChartEvent;
-    active?: {}[];
-  }): void {
-    console.log(event, active);
+  ngOnInit(): void {
+    this.billMonthlyCost$ = this.billService.getMonthlyCost(2022);
+
+    this.barChartService.getOptionsColors(this.barChartOptions);
   }
 
-  public chartHovered({
-    event,
-    active,
-  }: {
-    event?: ChartEvent;
-    active?: {}[];
-  }): void {}
+  public getBarChartData(billMonthlyCost: BillMonthlyCost[]): ChartData<'bar'> {
+    const barChartData: ChartData<'bar'> = {
+      labels: [
+        'Styczeń',
+        'Luty',
+        'Marzec',
+        'Kwiecień',
+        'Maj',
+        'Czerwiec',
+        'Lipiec',
+        'Sierpień',
+        'Wrzesień',
+        'Październik',
+        'Listopad',
+        'Grudzień',
+      ],
+      datasets: [
+        {
+          data: billMonthlyCost.map((x) => x.totalCost!),
+          label: 'Amount',
+        },
+      ],
+    };
+
+    this.barChartService.cleanDataset(barChartData);
+    this.barChartService.getChartaDataColors(barChartData);
+
+    return barChartData;
+  }
 }

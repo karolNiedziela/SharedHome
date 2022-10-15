@@ -1,16 +1,10 @@
-<div>
-  <div>
-    <div style="display: block">
-      <canvas
-        baseChart
-        [data]="barChartData"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [type]="barChartService.barChartType"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"
-      >
-      </canvas>
-    </div>
-  </div>
+<div class="chart-container" *ngIf="billMonthlyCost$ | async as billResponse">
+  <canvas
+    baseChart
+    [data]="getBarChartData(billResponse.data)"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [type]="barChartService.barChartType"
+  >
+  </canvas>
 </div>

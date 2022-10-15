@@ -72,10 +72,6 @@ export class BillsComponent implements OnInit, OnDestroy {
       header: 'Cost',
       format: CellPipeFormat.MONEY,
     },
-    {
-      propertyName: 'isPaid',
-      header: 'Paid',
-    },
   ];
 
   @ViewChild('deleteBillModal')

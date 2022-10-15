@@ -1,3 +1,4 @@
+import { BillMonthlyCost } from './../models/bill-mothly-cost';
 import { PayForBill } from './../models/pay-for-bill';
 import { AddBill } from './../models/add-bill';
 import { Bill } from './../models/bill';
@@ -40,6 +41,18 @@ export class BillService {
     return this.httpClient.get<ApiResponse<Bill[]>>(this.billsUrl, {
       params: params,
     });
+  }
+
+  getMonthlyCost(year: number): Observable<ApiResponse<BillMonthlyCost[]>> {
+    let params = new HttpParams();
+    params = params.append('year', year);
+
+    return this.httpClient.get<ApiResponse<BillMonthlyCost[]>>(
+      `${this.billsUrl}/monthlycost`,
+      {
+        params: params,
+      }
+    );
   }
 
   addBill(bill: AddBill): Observable<ApiResponse<Bill>> {
