@@ -229,16 +229,20 @@ hr {
 ----------- CALENDAR -----------
 */
 
+.calendar {
+  color: $l_black_color !important;
+}
+
 .cal-cell-row {
-  background: none !important;
+  background: $l_white_color !important;
 
   &:hover {
-    background: none !important;
+    background: $l_white_color !important;
   }
 }
 
 .cal-cell:hover {
-  background: none !important;
+  background: $l_white_color !important;
 }
 
 .cal-days {
@@ -251,16 +255,18 @@ hr {
   color: $l_black_color !important;
 }
 
-// .cal-days .cal-today {
-//   background-color: $l_primary_color !important;
-// }
-
 .cal-day-cell:hover {
   background: $l_primary_color_light !important;
 }
 
 .cal-open {
   background: $l_primary_color_light !important;
+  background-color: $l_primary_color_light !important;
+}
+
+.cal-day-open {
+  background: $l_primary_color_light !important;
+  background-color: $l_primary_color_light !important;
 }
 
 /*

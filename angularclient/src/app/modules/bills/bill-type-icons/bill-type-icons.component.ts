@@ -10,13 +10,20 @@ import {
   faWifi,
 } from '@fortawesome/free-solid-svg-icons';
 import { BillType } from './../enums/bill-type';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-bill-type-icons',
   templateUrl: './bill-type-icons.component.html',
   styleUrls: ['./bill-type-icons.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BillTypeIconsComponent implements OnInit {
   @Input() billTypes: BillType[] = [];

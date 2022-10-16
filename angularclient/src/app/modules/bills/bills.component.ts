@@ -10,14 +10,21 @@ import { ColumnSetting } from './../../shared/components/tables/column-setting';
 import { BillEvent } from './models/bill-event';
 import { ApiResponse } from 'app/core/models/api-response';
 import { BillService } from './services/bill.service';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+} from '@angular/core';
 import {
   CalendarDateFormatter,
   CalendarView,
   DAYS_OF_WEEK,
 } from 'angular-calendar';
 import { Subject, Observable, map, of } from 'rxjs';
-import { startOfDay, endOfDay, isSameDay, isSameMonth } from 'date-fns';
+import { startOfDay, endOfDay } from 'date-fns';
 import { Bill } from './models/bill';
 import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
 import { BillType } from './enums/bill-type';
@@ -27,6 +34,8 @@ import { PayForBillComponent } from './modals/pay-for-bill/pay-for-bill.componen
   selector: 'app-bills',
   templateUrl: './bills.component.html',
   styleUrls: ['./bills.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class BillsComponent implements OnInit, OnDestroy {
   addIcon = faPlus;
@@ -49,7 +58,7 @@ export class BillsComponent implements OnInit, OnDestroy {
 
   refresh = new Subject<void>();
 
-  activeDayIsOpen: boolean = false;
+  activeDayIsOpen: boolean = true;
 
   columnSettings: ColumnSetting[] = [
     {
@@ -108,23 +117,30 @@ export class BillsComponent implements OnInit, OnDestroy {
   }
 
   private getBillEvents(selectedDate?: Date): void {
-    this.events$ = this.billService.getAllByYearAndMonthAndIsDone(2022, 9).pipe(
-      map((response: ApiResponse<Bill[]>) => {
-        const billEvents: BillEvent[] = response.data.map((bill: Bill) => {
-          return this.getBillEvent(bill);
-        });
+    const year = selectedDate?.getFullYear() ?? new Date().getFullYear();
+    const month = selectedDate?.getMonth() ?? new Date().getMonth();
+    this.events$ = this.billService
+      .getAllByYearAndMonthAndIsDone(year, month + 1)
+      .pipe(
+        map((response: ApiResponse<Bill[]>) => {
+          const billEvents: BillEvent[] = response.data.map((bill: Bill) => {
+            return this.getBillEvent(bill);
+          });
 
-        if (selectedDate) this.dayClicked(selectedDate, billEvents);
-        return billEvents;
-      })
-    );
+          if (selectedDate) this.dayClicked(selectedDate, billEvents);
+
+          return billEvents;
+        })
+      );
   }
 
   private getBillEvent(bill: Bill): BillEvent {
+    endOfDay(Date.parse(bill.dateOfPayment.toString()));
     const billEvent: BillEvent = {
       id: bill.id,
-      start: new Date(Date.parse(bill.dateOfPayment.toString())),
-      end: new Date(Date.parse(bill.dateOfPayment.toString())),
+      start: new Date(startOfDay(Date.parse(bill.dateOfPayment.toString()))),
+      end: new Date(endOfDay(Date.parse(bill.dateOfPayment.toString()))),
+
       title: bill.serviceProvider,
       isPaid: bill.isPaid,
       serviceProvider: bill.serviceProvider,
@@ -144,7 +160,7 @@ export class BillsComponent implements OnInit, OnDestroy {
 
   dayClicked(date: Date, events: BillEvent[]): void {
     this.currentDayEvents = events.filter(
-      (x) => x.start >= startOfDay(date) && x.end! < endOfDay(date)
+      (x) => x.start >= startOfDay(date) && x.end! <= endOfDay(date)
     );
 
     this.dateSelected = date;
@@ -198,7 +214,8 @@ export class BillsComponent implements OnInit, OnDestroy {
     return popupMenuConfigs;
   }
 
-  onMonthChanged(): void {
-    this.currentDayEvents = [];
+  onMonthChanged(date: Date): void {
+    this.getBillEvents(date);
+    this.refresh.next();
   }
 }

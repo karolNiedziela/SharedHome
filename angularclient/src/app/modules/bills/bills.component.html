@@ -12,15 +12,15 @@
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
-          (viewDateChange)="onMonthChanged()"
+          (viewDateChange)="onMonthChanged($event)"
         >
           {{ "Previous" | translate }}
         </div>
         <div
-          class="btn"
+          class="btn btn-primary sharedhome-btn"
           mwlCalendarToday
           [(viewDate)]="viewDate"
-          (viewDateChange)="onMonthChanged()"
+          (viewDateChange)="onMonthChanged($event)"
         >
           {{ "Current" | translate }}
         </div>
@@ -29,7 +29,7 @@
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
-          (viewDateChange)="onMonthChanged()"
+          (viewDateChange)="onMonthChanged($event)"
         >
           {{ "Next" | translate }}
         </div>
@@ -49,7 +49,9 @@
       (dayClicked)="dayClicked($event.day.date, evs)"
       [refresh]="refresh"
       [cellTemplate]="customCellTemplate"
-    ></mwl-calendar-month-view>
+      [activeDay]="dateSelected"
+    >
+    </mwl-calendar-month-view>
 
     <app-table
       *ngIf="currentDayEvents.length > 0"
