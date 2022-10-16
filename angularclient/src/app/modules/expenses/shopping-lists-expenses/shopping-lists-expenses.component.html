@@ -1,10 +1,23 @@
-<div class="chart-container" *ngIf="billMonthlyCost$ | async as billResponse">
-  <canvas
-    baseChart
-    [data]="getBarChartData(billResponse.data)"
-    [options]="barChartOptions"
-    [plugins]="barChartPlugins"
-    [type]="barChartService.barChartType"
+<div
+  *ngIf="
+    shoppingListMonthlyCost$ | async as shoppingListResponse;
+    else loadingShoppingLists
+  "
+>
+  <div class="chart-container" *ngIf="anyCosts; else noShoppingLists">
+    <canvas
+      baseChart
+      [data]="getBarChartData(shoppingListResponse.data)"
+      [options]="getBarChartOptions(shoppingListResponse.data)"
+      [plugins]="barChartPlugins"
+      [type]="barChartService.barChartType"
+    >
+    </canvas>
+  </div>
+  <ng-template #noShoppingLists
+    ><div class="text-center">No shopping lists</div></ng-template
   >
-  </canvas>
 </div>
+<ng-template #loadingShoppingLists>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

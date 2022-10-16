@@ -87,10 +87,18 @@ export class ShoppingListsService {
       );
   }
 
-  getMonthlyCostByYear(year: number): Observable<ShoppingListMonthlyCost[]> {
-    return this.http.get<ShoppingListMonthlyCost[]>(this.shoppingListsUrl, {
-      params: new HttpParams().set('year', year),
-    });
+  getMonthlyCostByYear(
+    year: number
+  ): Observable<ApiResponse<ShoppingListMonthlyCost[]>> {
+    let params = new HttpParams();
+    params = params.append('year', year);
+
+    return this.http.get<ApiResponse<ShoppingListMonthlyCost[]>>(
+      `${this.shoppingListsUrl}/monthlycost`,
+      {
+        params: params,
+      }
+    );
   }
 
   add(shoppingList: AddShoppingList): Observable<ShoppingList> {

@@ -58,7 +58,8 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                         (month, shoppingListReadModels) => new ShoppingListMonthlyCostDto
                         {
                             MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month).FirstCharToUpper(),
-                            TotalCost = SumProductPrices(shoppingListReadModels)
+                            TotalCost = SumProductPrices(shoppingListReadModels),
+                            Currency = GetCurrency(shoppingListReadModels)
                         }
                     )
                     .ToList();
@@ -82,7 +83,8 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                        (month, shoppingListReadModels) => new ShoppingListMonthlyCostDto
                        {
                            MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month).FirstCharToUpper(),
-                           TotalCost = SumProductPrices(shoppingListReadModels)
+                           TotalCost = SumProductPrices(shoppingListReadModels),
+                           Currency = GetCurrency(shoppingListReadModels)
                        }
                    )
                    .ToList();
@@ -91,6 +93,17 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
         }
 
         private decimal SumProductPrices(IEnumerable<ShoppingListReadModel> shoppingLists)
-             => shoppingLists.SelectMany(shoppingList => shoppingList.Products).Where(product => product.IsBought).Aggregate((decimal)0, (count, product) => count + (product.Quantity * (decimal)product.Price!));
+             => shoppingLists
+            .Where(shoppingList => shoppingList.IsDone)
+            .SelectMany(shoppingList => shoppingList.Products)
+            .Where(product => product.IsBought)
+            .Aggregate((decimal)0, (count, product) => count + (product.Quantity * (decimal)product.Price!));
+
+        private string GetCurrency(IEnumerable<ShoppingListReadModel> shoppingLists)
+            => shoppingLists.Where(x => x.IsDone)
+            .SelectMany(shoppingList => shoppingList.Products)
+            .Where(product => product.IsBought)
+            .FirstOrDefault()?.Currency ?? string.Empty;
+  
     }
 }

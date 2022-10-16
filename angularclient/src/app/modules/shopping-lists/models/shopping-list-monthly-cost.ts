@@ -1,4 +1,5 @@
 export interface ShoppingListMonthlyCost {
   monthName: string;
-  totalCost?: number;
+  totalCost: number;
+  currency: string;
 }

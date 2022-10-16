@@ -1,3 +1,4 @@
+import { LanguageService } from './../services/language.service';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -9,15 +10,15 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class LanguageInterceptor implements HttpInterceptor {
-  constructor() {}
+  constructor(private languageService: LanguageService) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    let language: string = '';
+    let language: string;
 
-    switch (navigator.language) {
+    switch (this.languageService.language) {
       case 'pl':
         language = 'pl-PL';
         break;

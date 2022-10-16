@@ -46,6 +46,20 @@ namespace SharedHome.Api
                 options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
+
+                options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
+                {
+                    var languages = context.Request.Headers["Accept-Language"].ToString();
+                    var currentLanguage = languages.Split(',').FirstOrDefault();
+                    var defaultLanguage = string.IsNullOrEmpty(currentLanguage) ? "en-US" : currentLanguage;
+
+                    if (!supportedCultures.Where(s => s.Name.Equals(defaultLanguage)).Any())
+                    {
+                        defaultLanguage = "en-US";
+                    }
+
+                    return Task.FromResult(new ProviderCultureResult(defaultLanguage, defaultLanguage))!;
+                }));
             });
 
             AddCors(services);

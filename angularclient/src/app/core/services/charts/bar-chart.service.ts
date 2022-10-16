@@ -22,9 +22,7 @@ export class BarChartService {
         color: BaseTheme.greyColor,
       };
 
-      barChartOptions.scales.y.ticks = {
-        color: BaseTheme.blackColor,
-      };
+      barChartOptions.scales.y.ticks.color = BaseTheme.blackColor;
       barChartOptions.scales.y.grid = {
         color: BaseTheme.greyColor,
       };
@@ -41,9 +39,7 @@ export class BarChartService {
       color: BaseTheme.lightGrey,
     };
 
-    barChartOptions.scales.y.ticks = {
-      color: BaseTheme.whiteColor,
-    };
+    barChartOptions.scales.y.ticks.color = BaseTheme.whiteColor;
     barChartOptions.scales.y.grid = {
       color: BaseTheme.lightGrey,
     };
