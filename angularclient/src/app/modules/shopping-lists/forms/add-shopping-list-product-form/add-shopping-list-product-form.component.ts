@@ -10,12 +10,10 @@ import { NetContentType } from '../../enums/net-content-type';
 })
 export class AddShoppingListProductFormComponent implements OnInit {
   @Input() uniqueKey!: number;
-  @Output() delete: EventEmitter<any> = new EventEmitter();
+  @Output() removedProduct: EventEmitter<number> = new EventEmitter();
   public addShoppingListProductForm!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
-
-  constructor() {}
 
   ngOnInit(): void {
     this.addShoppingListProductForm = new FormGroup({
@@ -49,7 +47,7 @@ export class AddShoppingListProductFormComponent implements OnInit {
     return shoppingListProduct;
   }
 
-  removeProduct() {
-    this.delete.emit(this.uniqueKey);
+  removeProduct(): void {
+    this.removedProduct.emit(this.uniqueKey);
   }
 }

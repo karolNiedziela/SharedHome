@@ -1,6 +1,6 @@
 import { EnumSelectComponent } from './../../../../shared/components/selects/enum-select/enum-select.component';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { map, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ShoppingListStatus } from './../../enums/shopping-list-status';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

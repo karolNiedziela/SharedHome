@@ -108,33 +108,74 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shoppingListSubscription =
       this.shoppingListService.singleShoppingListRefreshNeeded.subscribe(() => {
         this.getShoppingList();
+        this.deselectProducts();
+        this.generateMultipleSelectedItemsPopupMenuConfig();
       });
   }
 
   ngAfterViewInit(): void {
     this.productsSubscription = this.products.changes.subscribe(
-      (c: QueryList<ShoppingListProductComponent>) => {
-        c.toArray().forEach((product) => {
-          const productHtmlElement =
-            product.element.nativeElement.querySelector(
-              '.product'
-            ) as HTMLElement;
-
-          if (!this.shoppingList?.isDone) {
-            productHtmlElement.addEventListener('click', (e) => {
-              const targetHtmlElement = e.target as HTMLElement;
-              if (!['svg', 'path'].includes(targetHtmlElement.nodeName)) {
-                productHtmlElement
-                  .querySelector('.product-name')!
-                  .classList.toggle('selected');
-                this.onProductSelect(product);
-              }
-            });
-          }
-        });
+      (productComponents: QueryList<ShoppingListProductComponent>) => {
+        this.addOnProductSelectedListener(productComponents);
       }
     );
 
+    this.generateHeaderPopupMenuConfig();
+    this.generateMultipleSelectedItemsPopupMenuConfig();
+  }
+
+  ngOnDestroy(): void {
+    this.productsSubscription.unsubscribe();
+    this.shoppingListSubscription.unsubscribe();
+  }
+
+  private getShoppingList() {
+    this.shoppingList$ = this.shoppingListService.get(this.shoppingListId).pipe(
+      tap((response: ApiResponse<ShoppingList>) => {
+        this.shoppingList = response.data;
+      })
+    );
+  }
+
+  private markAsDone(isDone: boolean): void {
+    const markAsDone: MarkAsDone = {
+      shoppingListId: this.shoppingListId,
+      isDone: isDone,
+    };
+    this.shoppingListService.markAsDone(markAsDone, true).subscribe();
+  }
+
+  private openDeleteSelectedProductsModal(): void {
+    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete?`;
+
+    this.deleteSelectedProductsModal.open();
+  }
+
+  private addOnProductSelectedListener(
+    productComponents: QueryList<ShoppingListProductComponent>
+  ): void {
+    productComponents.toArray().forEach((product) => {
+      const productHtmlElement = product.element.nativeElement.querySelector(
+        '.product'
+      ) as HTMLElement;
+
+      if (!this.shoppingList?.isDone) {
+        productHtmlElement.addEventListener('click', (e) => {
+          const targetHtmlElement = e.target as HTMLElement;
+
+          if (!['svg', 'path'].includes(targetHtmlElement.nodeName)) {
+            productHtmlElement
+              .querySelector('.product-name')!
+              .classList.toggle('selected');
+
+            this.onProductSelected(product);
+          }
+        });
+      }
+    });
+  }
+
+  private generateHeaderPopupMenuConfig(): void {
     this.headerPopupMenuConfig = {
       isEditVisible: !this.shoppingList?.isDone,
       isDeleteVisible: !this.shoppingList?.isDone,
@@ -146,7 +187,9 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
     };
+  }
 
+  private generateMultipleSelectedItemsPopupMenuConfig(): void {
     this.multipleItemsSelectedPopupMenuConfig = {
       isEditVisible: false,
       isDeleteVisible: false,
@@ -171,34 +214,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       ],
     };
-  }
-
-  ngOnDestroy(): void {
-    this.productsSubscription.unsubscribe();
-    this.shoppingListSubscription.unsubscribe();
-    ('');
-  }
-
-  getShoppingList() {
-    this.shoppingList$ = this.shoppingListService.get(this.shoppingListId).pipe(
-      tap((response: ApiResponse<ShoppingList>) => {
-        this.shoppingList = response.data;
-      })
-    );
-  }
-
-  markAsDone(isDone: boolean): void {
-    const markAsDone: MarkAsDone = {
-      shoppingListId: this.shoppingListId,
-      isDone: isDone,
-    };
-    this.shoppingListService.markAsDone(markAsDone, true).subscribe();
-  }
-
-  openDeleteSelectedProductsModal(): void {
-    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete?`;
-
-    this.deleteSelectedProductsModal.open();
   }
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
@@ -237,7 +252,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private onProductSelect(product: ShoppingListProductComponent): void {
+  private onProductSelected(product: ShoppingListProductComponent): void {
     const index = this.shoppingListProductNamesSelected.indexOf(
       product.shoppingListProduct!.name
     );

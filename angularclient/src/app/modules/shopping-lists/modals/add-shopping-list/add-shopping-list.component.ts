@@ -64,16 +64,16 @@ export class AddShoppingListComponent implements OnInit, Modalable {
       products: products,
     };
 
-    this.shoppingListService.add(addShoppingList).subscribe(
-      () => {
+    this.shoppingListService.add(addShoppingList).subscribe({
+      next: () => {
         this.resetForm();
 
         this.modal.close();
       },
-      (error: string[]) => {
-        this.errorMessages = error;
-      }
-    );
+      error: (errors: string[]) => {
+        this.errorMessages = errors;
+      },
+    });
   }
 
   onClose(): void {

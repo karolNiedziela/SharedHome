@@ -3,7 +3,6 @@ import {
   Component,
   ComponentRef,
   OnDestroy,
-  OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -15,67 +14,74 @@ import { AddShoppingListProductFormComponent } from '../add-shopping-list-produc
   templateUrl: './add-many-shopping-list-products-form.component.html',
   styleUrls: ['./add-many-shopping-list-products-form.component.scss'],
 })
-export class AddManyShoppingListProductsFormComponent
-  implements OnInit, OnDestroy
-{
+export class AddManyShoppingListProductsFormComponent implements OnDestroy {
   productInstanceSubscription!: Subscription;
 
-  @ViewChild('container', { read: ViewContainerRef })
-  container!: ViewContainerRef;
+  @ViewChild('additionalAddShoppingListForms', { read: ViewContainerRef })
+  additionalAddShoppingListForms!: ViewContainerRef;
 
-  productComponents: ComponentRef<AddShoppingListProductFormComponent>[] = [];
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  addShoppingListProductComponents: ComponentRef<AddShoppingListProductFormComponent>[] =
+    [];
 
   ngOnDestroy(): void {
-    this.clearProducts();
+    this.destroyProductComponents();
     if (this.productInstanceSubscription)
       this.productInstanceSubscription.unsubscribe();
   }
 
-  addProduct() {
-    const product = this.container.createComponent(
+  public addProduct(): void {
+    const product = this.additionalAddShoppingListForms.createComponent(
       AddShoppingListProductFormComponent
     );
-    product.instance.uniqueKey = this.productComponents.length + 1;
-    this.productInstanceSubscription = product.instance.delete.subscribe(
-      (uniqueKey: number) => {
+    product.instance.uniqueKey =
+      this.addShoppingListProductComponents.length + 1;
+    this.productInstanceSubscription =
+      product.instance.removedProduct.subscribe((uniqueKey: number) => {
         this.removeProduct(uniqueKey);
-      }
-    );
+      });
 
-    this.productComponents.push(product);
+    this.addShoppingListProductComponents.push(product);
   }
 
-  removeProduct(uniqueKey: number) {
+  public removeProduct(uniqueKey: number): void {
     const productComponent: ComponentRef<AddShoppingListProductFormComponent> =
-      this.productComponents.find((pc) => pc.instance.uniqueKey == uniqueKey)!;
+      this.addShoppingListProductComponents.find(
+        (componentRef: ComponentRef<AddShoppingListProductFormComponent>) =>
+          componentRef.instance.uniqueKey == uniqueKey
+      )!;
     const productComponentIndex =
-      this.productComponents.indexOf(productComponent);
+      this.addShoppingListProductComponents.indexOf(productComponent);
 
     if (productComponentIndex !== -1) {
-      this.container.remove(this.productComponents.indexOf(productComponent));
-      this.productComponents.splice(productComponentIndex, 1);
+      this.additionalAddShoppingListForms.remove(
+        this.addShoppingListProductComponents.indexOf(productComponent)
+      );
+      this.addShoppingListProductComponents.splice(productComponentIndex, 1);
     }
   }
 
   getProducts(): ShoppingListProduct[] {
-    return this.productComponents.map((p) => {
-      return p.instance.getProduct();
-    });
-  }
-
-  markAllAsTouchedOnSave() {
-    this.productComponents.map((p) => {
-      if (p.instance.addShoppingListProductForm.invalid) {
-        p.instance.addShoppingListProductForm.markAllAsTouched();
+    return this.addShoppingListProductComponents.map(
+      (componentRef: ComponentRef<AddShoppingListProductFormComponent>) => {
+        return componentRef.instance.getProduct();
       }
-    });
+    );
   }
 
-  clearProducts(): void {
-    this.productComponents.map((x) => x.destroy());
+  markAllAsTouchedOnSave(): void {
+    this.addShoppingListProductComponents.map(
+      (componentRef: ComponentRef<AddShoppingListProductFormComponent>) => {
+        if (componentRef.instance.addShoppingListProductForm.invalid) {
+          componentRef.instance.addShoppingListProductForm.markAllAsTouched();
+        }
+      }
+    );
+  }
+
+  destroyProductComponents(): void {
+    this.addShoppingListProductComponents.map(
+      (componentRef: ComponentRef<AddShoppingListProductFormComponent>) =>
+        componentRef.destroy()
+    );
   }
 }

@@ -14,15 +14,13 @@ export class PurchaseShoppingListProductFormComponent implements OnInit {
 
   public errorMessages: string[] = [];
 
-  constructor() {}
-
   ngOnInit(): void {
     this.purchaseShoppingListProductForm = new FormGroup({
       money: new FormGroup({}),
     });
   }
 
-  public getPurchasedProduct(): Money {
+  public getProductPrice(): Money {
     const price = this.purchaseShoppingListProductForm
       .get('money')
       ?.get('price')?.value;

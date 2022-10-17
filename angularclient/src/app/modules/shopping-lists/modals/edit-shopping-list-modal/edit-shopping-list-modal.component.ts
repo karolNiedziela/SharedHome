@@ -77,7 +77,7 @@ export class EditShoppingListModalComponent
     this.shoppingListService
       .update(updateShoppingList, this.isSingleRefresh)
       .subscribe({
-        next: (response) => {
+        next: () => {
           this.resetForm();
 
           this.editShoppingListModal.close();

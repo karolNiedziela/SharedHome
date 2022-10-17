@@ -12,7 +12,6 @@ import { ModalComponent } from 'app/shared/components/modals/modal/modal.compone
 import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 import { PurchaseShoppingListProductFormComponent } from '../../forms/purchase-shopping-list-product-form/purchase-shopping-list-product-form.component';
 import { PurchaseShoppingListProducts } from '../../models/purchase-shopping-list-products';
-import { Money } from 'app/core/models/money';
 @Component({
   selector: 'app-purchase-shopping-list-products-modal',
   templateUrl: './purchase-shopping-list-products-modal.component.html',
@@ -45,13 +44,15 @@ export class PurchaseShoppingListProductsModalComponent
     this.modal.open();
   }
   onSave(): void {
-    this.purchaseProductsViewChildren.map((x) =>
-      x.purchaseShoppingListProductForm.markAllAsTouched()
+    this.purchaseProductsViewChildren.map(
+      (component: PurchaseShoppingListProductFormComponent) =>
+        component.purchaseShoppingListProductForm.markAllAsTouched()
     );
 
     if (
       this.purchaseProductsViewChildren.some(
-        (x) => x.purchaseShoppingListProductForm.invalid
+        (component: PurchaseShoppingListProductFormComponent) =>
+          component.purchaseShoppingListProductForm.invalid
       )
     ) {
       return;
@@ -61,14 +62,18 @@ export class PurchaseShoppingListProductsModalComponent
       shoppingListId: this.shoppingListId!,
       priceByProductNames: {},
     };
-    this.purchaseProductsViewChildren.forEach((x) => {
-      const purchasedProduct = x.getPurchasedProduct();
+    this.purchaseProductsViewChildren.forEach(
+      (component: PurchaseShoppingListProductFormComponent) => {
+        const productPrice = component.getProductPrice();
 
-      purchaseShoppingListProducts.priceByProductNames[x.productName!] = {
-        price: purchasedProduct.price,
-        currency: purchasedProduct.currency,
-      };
-    });
+        purchaseShoppingListProducts.priceByProductNames[
+          component.productName!
+        ] = {
+          price: productPrice.price,
+          currency: productPrice.currency,
+        };
+      }
+    );
 
     this.shoppingListService
       .purchaseProducts(purchaseShoppingListProducts)
@@ -89,8 +94,10 @@ export class PurchaseShoppingListProductsModalComponent
   }
 
   private resetForms(): void {
-    this.purchaseProductsViewChildren.map((x) => {
-      x.purchaseShoppingListProductForm.reset();
-    });
+    this.purchaseProductsViewChildren.map(
+      (component: PurchaseShoppingListProductFormComponent) => {
+        component.purchaseShoppingListProductForm.reset();
+      }
+    );
   }
 }

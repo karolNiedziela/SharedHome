@@ -11,7 +11,6 @@ import { ConfirmationModalComponent } from 'app/shared/components/modals/confirm
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { MarkAsDone } from '../../models/mark-as-done';
 import { EditShoppingListModalComponent } from '../../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-single-shopping-list',
