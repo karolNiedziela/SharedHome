@@ -1,0 +1,35 @@
+<div class="icon-wrapper">
+  <div class="dropdown">
+    <fa-icon
+      class="shared-home-icon btn"
+      [title]="'notifications' | translate"
+      [icon]="notificationIcon"
+      id="dropdownMenuLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+    </fa-icon>
+
+    <div *ngIf="notificationsCount$ | async as notificationsCount">
+      <span class="badge bg-primary">{{ notificationsCount }}</span>
+    </div>
+
+    <ul
+      class="dropdown-menu notifications dropdown-menu-end"
+      *ngIf="notifications$ | async as notifications"
+    >
+      <div class="notification-heading">
+        <h4 class="menu-title">Notifications</h4>
+      </div>
+      <li class="divider"></li>
+      <div class="notifications-wrapper">
+        <div
+          class="notification-item border"
+          *ngFor="let notification of notifications"
+        >
+          <h4 class="item-title">{{ notification.title }}</h4>
+        </div>
+      </div>
+    </ul>
+  </div>
+</div>

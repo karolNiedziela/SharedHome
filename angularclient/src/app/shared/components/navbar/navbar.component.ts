@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { Observable } from 'rxjs';
@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
 export class NavbarComponent implements OnInit {
   notificationIcon = faBell;
   notificationsCount$!: Observable<number>;
-
   constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {

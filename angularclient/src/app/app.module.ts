@@ -1,3 +1,4 @@
+import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ExpensesModule } from './modules/expenses/expenses.module';
 import { LanguageInterceptor } from './core/interceptors/language.interceptor';
 import { InvitationModule } from './modules/invitations/invitation.module';
@@ -48,6 +49,7 @@ import { SettingModule } from './modules/settings/setting.module';
     }),
     ToastrModule.forRoot(),
     ExpensesModule,
+    NotificationsModule,
   ],
   providers: [
     {

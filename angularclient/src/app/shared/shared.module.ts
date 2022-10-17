@@ -2,7 +2,7 @@ import { ModalComponent } from './components/modals/modal/modal.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PasswordsFormComponent } from './components/forms/passwords-form/passwords-form.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FooterComponent } from './components/footer/footer.component';
 import { EmailInputComponent } from './components/inputs/email-input/email-input.component';
 import { TextInputComponent } from './components/inputs/text-input/text-input.component';
@@ -32,6 +32,7 @@ import { EnumSelectComponent } from './components/selects/enum-select/enum-selec
 import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { LanguageSelectComponent } from './components/selects/language-select/language-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ListNotificationsComponent } from './components/notifications/list-notifications/list-notifications.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     SingleSelectComponent,
     LanguageSelectComponent,
     NavbarComponent,
+    ListNotificationsComponent,
   ],
   imports: [
     CommonModule,

@@ -23,6 +23,7 @@ export class EnumSelectComponent implements OnInit, ControlValueAccessor {
   @Input() labelText!: string;
   @Input() enumType!: any;
   @Input() firstValueSelected: boolean = false;
+  @Input() isFormControl: boolean = true;
   @Output() selectedChanged: EventEmitter<any> = new EventEmitter<any>();
   selectedValue!: number;
   keys: string[] = [];

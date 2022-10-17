@@ -13,7 +13,13 @@
     >
     </span>
     {{ enumType[selectedValue] | translate }}
-    <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
+    <ul
+      class="dropdown-menu"
+      [ngClass]="{
+        'form-control': isFormControl
+      }"
+      aria-labelledby="dropdownMenuLink"
+    >
       <li
         class="dropdown-item"
         *ngFor="let key of keys"
