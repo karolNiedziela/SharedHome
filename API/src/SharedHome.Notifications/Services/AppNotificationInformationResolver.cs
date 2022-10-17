@@ -30,7 +30,7 @@ namespace SharedHome.Notifications.Services
             {
                 AppendConnectorWithName(appNotification.Target, titleBuilder, name);               
             }        
-            AppendOperation(appNotification.Operation, titleBuilder);
+            AppendOperation(appNotification, titleBuilder);
             AppendBy(appNotification, titleBuilder);
 
             return titleBuilder.ToString();
@@ -82,16 +82,17 @@ namespace SharedHome.Notifications.Services
             titleBuilder.Append(' ');
         }
 
-        private void AppendOperation(OperationType operationType, StringBuilder titleBuilder)
+        private void AppendOperation(AppNotification notification, StringBuilder titleBuilder)
         {
-            var operationTypeResourceStringValue = _titleLocalizer.GetString(operationType.ToString());
-            if (operationTypeResourceStringValue.ResourceNotFound)
+            var targetAndOperationType = string.Join("", notification.Target.ToString(), notification.Operation.ToString());
+            var targetAndOperationTypeResourceStringValue = _titleLocalizer.GetString(targetAndOperationType);
+            if (targetAndOperationTypeResourceStringValue.ResourceNotFound)
             {
-                _logger.LogWarning("Resource {operation} not found.", operationType.ToString());
+                _logger.LogWarning("Resource {targetAndOperationType} not found.", targetAndOperationType);
                 return;
             }
 
-            titleBuilder.Append(operationTypeResourceStringValue.Value);
+            titleBuilder.Append(targetAndOperationTypeResourceStringValue.Value);
             titleBuilder.Append(' ');
         }
 
