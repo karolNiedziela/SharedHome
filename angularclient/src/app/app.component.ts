@@ -1,4 +1,4 @@
-import { AppNotification } from './core/models/app-notification';
+import { AppNotification } from './modules/notifications/models/app-notification';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { SignalrService } from './core/services/signalr.service';
 import { LanguageService } from './core/services/language.service';

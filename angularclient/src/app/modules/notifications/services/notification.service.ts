@@ -1,4 +1,4 @@
-import { AppNotification } from './../../../core/models/app-notification';
+import { AppNotification } from '../models/app-notification';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';

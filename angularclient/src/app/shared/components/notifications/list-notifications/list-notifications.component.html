@@ -19,15 +19,18 @@
       *ngIf="notifications$ | async as notifications"
     >
       <div class="notification-heading">
-        <h4 class="menu-title">Notifications</h4>
+        <h4 class="menu-title">{{ "notifications" | translate }}</h4>
       </div>
       <li class="divider"></li>
       <div class="notifications-wrapper">
         <div
-          class="notification-item border"
+          class="notification-item"
           *ngFor="let notification of notifications"
         >
-          <h4 class="item-title">{{ notification.title }}</h4>
+          <div class="item-title">{{ notification.title }}</div>
+          <div class="notification-icon">
+            <fa-icon [icon]="iconByTargetType[notification.target]"></fa-icon>
+          </div>
         </div>
       </div>
     </ul>

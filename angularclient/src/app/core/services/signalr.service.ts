@@ -1,5 +1,5 @@
 import { NotificationService } from './../../modules/notifications/services/notification.service';
-import { AppNotification } from './../models/app-notification';
+import { AppNotification } from '../../modules/notifications/models/app-notification';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { environment } from 'environments/environment';

@@ -53,6 +53,12 @@
   padding: 5px;
   margin-right: 5px;
   margin-left: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
 
   &:first-child {
     margin-top: 5px;
@@ -64,8 +70,13 @@
   }
 }
 
+.notification-icon {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 .item-title {
   overflow-wrap: break-word;
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {

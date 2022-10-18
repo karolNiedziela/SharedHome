@@ -1,8 +1,9 @@
+import { TargetType } from './../constants/target-type';
 export interface AppNotification {
   title: string;
   message?: string;
   isRead: boolean;
   type?: string;
-  target: string;
+  target: TargetType;
   operation: string;
 }

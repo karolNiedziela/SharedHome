@@ -22,9 +22,9 @@ namespace SharedHome.Notifications.Services
             _hubContext = hubContext;
         }
 
-        public async Task<IEnumerable<AppNotificationDto>> GetAll(string personId)
+        public async Task<IEnumerable<AppNotificationDto>> GetAllAsync(string personId)
         {
-            var notifications = await _notificationRepository.GetAll(personId);
+            var notifications = await _notificationRepository.GetAllAsync(personId);
 
             foreach (var notification in notifications)
             {
@@ -33,7 +33,6 @@ namespace SharedHome.Notifications.Services
 
             return _mapper.Map<IEnumerable<AppNotificationDto>>(notifications);
         }
-
         public Task AddAsync(AppNotification notification)
         {
             return Task.CompletedTask;

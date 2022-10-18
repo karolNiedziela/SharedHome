@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using SharedHome.Api.Constants;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Services;
@@ -19,11 +20,13 @@ namespace SharedHome.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<AppNotificationDto>>> GetNotifications()
         {
-            var notifications = await _appNotificationService.GetAll(_currentUser.UserId);
+            var notifications = await _appNotificationService.GetAllAsync(_currentUser.UserId);
 
             return Ok(notifications);
         }
+        
     }
 }

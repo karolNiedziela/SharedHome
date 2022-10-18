@@ -6,7 +6,7 @@ namespace SharedHome.Notifications.Services
 {
     public interface IAppNotificationService
     {
-        Task<IEnumerable<AppNotificationDto>> GetAll(string personId);
+        Task<IEnumerable<AppNotificationDto>> GetAllAsync(string personId);
 
         Task AddAsync(AppNotification notification);
 
