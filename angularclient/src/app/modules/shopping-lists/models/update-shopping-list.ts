@@ -1,4 +1,4 @@
 export interface UpdateShoppingList {
-  id: number;
+  shoppingListId: number;
   name: string;
 }

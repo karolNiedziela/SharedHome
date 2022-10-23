@@ -1,7 +1,7 @@
 import { Money } from 'app/core/models/money';
 
 export interface UpdateBill {
-  id: number;
+  billId: number;
   billType: number;
   serviceProviderName: string;
   dateOfPayment: Date;

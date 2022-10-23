@@ -70,7 +70,7 @@ export class EditShoppingListModalComponent
     const name = this.editShoppingListForm.get('name')?.value;
 
     const updateShoppingList: UpdateShoppingList = {
-      id: this.shoppingList.id,
+      shoppingListId: this.shoppingList.id,
       name: name,
     };
 
