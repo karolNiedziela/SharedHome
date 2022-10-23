@@ -1,5 +1,6 @@
 ﻿using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Extensions;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
@@ -23,7 +24,9 @@ namespace SharedHome.Application.ShoppingLists.Services
             {
                 var houseGroupPersonIds = await _houseGroupReadService.GetMemberPersonIds(personId);
 
-                return await _shoppingListRepository.GetOrThrowAsync(shoppingListId, houseGroupPersonIds);           
+                var convertedHouseGroupPersonIds = new List<PersonId>(houseGroupPersonIds.Select(x => new PersonId(x)));
+
+                return await _shoppingListRepository.GetOrThrowAsync(shoppingListId, convertedHouseGroupPersonIds);           
             }
 
             return await _shoppingListRepository.GetOrThrowAsync(shoppingListId, personId);

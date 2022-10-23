@@ -3,6 +3,7 @@ using NSubstitute;
 using SharedHome.Application.Invitations.Commands.DeleteInvitation;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using System;
@@ -27,7 +28,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _invitationRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(invitation);
 
             var command = new DeleteInvitationCommand

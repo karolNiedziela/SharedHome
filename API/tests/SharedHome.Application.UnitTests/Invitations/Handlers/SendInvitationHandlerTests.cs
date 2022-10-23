@@ -11,6 +11,7 @@ using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
+using SharedHome.Domain.Persons.ValueObjects;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
@@ -48,7 +49,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         public async Task Handle_Throws_PersonIsNotInHouseGroupException_When_Person_Is_Not_In_HouseGroup()
         {
             var person = PersonProvider.Get();
-            _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
+            _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
@@ -65,7 +66,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         public async Task Handle_Throws_InvitationAlreadySentException_When_Invitation_Already_Sent_ToPerson()
         {
             var person = PersonProvider.Get();
-            _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
+            _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
@@ -85,7 +86,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         public async Task Handle_Shoudl_Call_Repository_OnSuccess()
         {
             var person = PersonProvider.Get();
-            _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
+            _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
             _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())

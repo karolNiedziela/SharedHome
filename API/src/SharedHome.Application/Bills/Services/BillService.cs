@@ -3,6 +3,7 @@ using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Application.Bills.Services
 {
@@ -23,7 +24,9 @@ namespace SharedHome.Application.Bills.Services
             {
                 var houseGroupPersonIds = await _houseGroupReadService.GetMemberPersonIds(personId);
 
-                return await _billRepository.GetOrThrowAsync(id, houseGroupPersonIds);
+                var convertedHouseGroupPersonIds = new List<PersonId>(houseGroupPersonIds.Select(x => new PersonId(x)));
+
+                return await _billRepository.GetOrThrowAsync(id, convertedHouseGroupPersonIds);
             }
 
             return await _billRepository.GetOrThrowAsync(id, personId);

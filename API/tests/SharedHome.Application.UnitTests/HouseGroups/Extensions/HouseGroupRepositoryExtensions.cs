@@ -2,6 +2,7 @@
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -24,7 +25,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
         public async Task GetOrThrowAsync_Throw_HouseGroupNotFoundException_When_HouseGroup_Does_Not_Exist()
         {
             var exception = await Record.ExceptionAsync(() => 
-                _houseGroupRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()));
+                _houseGroupRepository.GetOrThrowAsync(new HouseGroupId(), Arg.Any<PersonId>()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<HouseGroupNotFoundException>();
@@ -35,7 +36,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);
 
             var returnedHouseGroup = await _houseGroupRepository.GetAsync(HouseGroupProvider.HouseGroupId, Guid.NewGuid());

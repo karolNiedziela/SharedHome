@@ -2,6 +2,7 @@
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.Invitations.Extensions;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -24,7 +25,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Extensions
         public async Task GetOrThrowAsync_Throws_InvitationNotFoundException_When_Invitation_Does_Not_Exist()
         {
             var exception = await Record.ExceptionAsync(() =>
-                _invitationRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()));
+                _invitationRepository.GetOrThrowAsync(new HouseGroupId(), Arg.Any<PersonId>()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvitationNotFoundException>();
@@ -35,7 +36,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Extensions
         {
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _invitationRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(invitation);
 
             var returnedInvitation = await _invitationRepository.GetAsync(InvitationProvider.InvitationId, Guid.NewGuid());

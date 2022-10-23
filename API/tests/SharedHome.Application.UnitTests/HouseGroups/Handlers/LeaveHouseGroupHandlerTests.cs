@@ -4,6 +4,7 @@ using SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using System;
@@ -28,7 +29,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(houseGroup);
+            _houseGroupRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>()).Returns(houseGroup);
 
             var command = new LeaveHouseGroupCommand
             {
@@ -46,7 +47,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(new Guid[] { Guid.NewGuid() });
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(houseGroup);
+            _houseGroupRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>()).Returns(houseGroup);
 
             var command = new LeaveHouseGroupCommand
             {

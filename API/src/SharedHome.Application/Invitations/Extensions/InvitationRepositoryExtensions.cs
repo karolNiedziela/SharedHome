@@ -1,13 +1,14 @@
 ﻿using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Application.Invitations.Extensions
 {
     public static class InvitationRepositoryExtensions
     {
         public static async Task<Invitation> GetOrThrowAsync(this IInvitationRepository repository, 
-            Guid houseGroupId, Guid personId)
+            HouseGroupId houseGroupId, PersonId personId)
         {
             var invitation = await repository.GetAsync(houseGroupId, personId);
             if (invitation is null)

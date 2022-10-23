@@ -3,6 +3,7 @@ using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
@@ -38,7 +39,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 PersonToRemoveId = personToRemoveId
             };
 
-            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);
 
             var membersCountBeforeRemove = houseGroup.Members.Count();

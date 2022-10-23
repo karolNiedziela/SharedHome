@@ -9,7 +9,7 @@ namespace SharedHome.Application.ShoppingLists.Extensions
     public static class ShoppingListRepositoryExtensions
     {
         public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository,
-            Guid shoppingListId, Guid personId)
+            ShoppingListId shoppingListId, PersonId personId)
         {
             var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personId);
             if (shoppingList is null)
@@ -20,16 +20,10 @@ namespace SharedHome.Application.ShoppingLists.Extensions
             return shoppingList;
         }
 
-        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository, 
-            Guid shoppingListId, IEnumerable<Guid> personIds)
+        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository,
+            ShoppingListId shoppingListId, IEnumerable<PersonId> personIds)
         {
-            var personIdsConverted = new List<PersonId>();
-            foreach (var personId in personIds)
-            {
-                personIdsConverted.Add(personId);
-            }
-
-            var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personIdsConverted);
+            var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personIds);
             if (shoppingList is null)
             {
                 throw new ShoppingListNotFoundException(shoppingListId);

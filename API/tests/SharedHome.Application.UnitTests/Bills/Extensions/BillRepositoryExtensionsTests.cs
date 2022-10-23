@@ -2,10 +2,13 @@
 using SharedHome.Application.Bills.Exceptions;
 using SharedHome.Application.Bills.Extensions;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -24,7 +27,7 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
         public async Task GetOrThrowAsync_With_PersonId_Parameter_Should_Throw_BillNotFoundException_When_Bill_Not_Found()
         {
             var exception = await Record.ExceptionAsync(() => 
-                _billRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()));
+                _billRepository.GetOrThrowAsync(new BillId(), Arg.Any<PersonId>()));
 
             exception.ShouldBeOfType<BillNotFoundException>();
         }
@@ -34,7 +37,7 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
         {
             var bill = BillProvider.Get();
 
-            _billRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _billRepository.GetAsync(Arg.Any<BillId>(), Arg.Any<PersonId>())
                 .Returns(bill);
 
             var returnedBill = await _billRepository.GetOrThrowAsync(BillProvider.BillId, Guid.NewGuid());
@@ -46,7 +49,7 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
         public async Task GetOrThrowAsync_With_PersonIds_Parameter_Should_Throw_BillNotFoundException_Bill_Not_Found()
         {
             var exception = await Record.ExceptionAsync(() =>
-                _billRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<IEnumerable<Guid>>()));
+                _billRepository.GetOrThrowAsync(new BillId(), Enumerable.Empty<PersonId>()));
 
             exception.ShouldBeOfType<BillNotFoundException>();
         }
@@ -55,11 +58,11 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
         public async Task GetOrThrowAsync_With_PersonIds_Should_Return_Bill_When_Bill_Exists()
         {
             var bill = BillProvider.Get();
+            var personIds = new List<PersonId> { Guid.NewGuid() };
 
-            _billRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<IEnumerable<Guid>>())
+            _billRepository.GetAsync(BillProvider.BillId, personIds)
                 .Returns(bill);
 
-            var personIds = new List<Guid> { Guid.NewGuid() };
             var returnedBill = await _billRepository.GetOrThrowAsync(BillProvider.BillId, personIds);
 
             returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.ServiceProviderName);

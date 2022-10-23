@@ -9,7 +9,7 @@ namespace SharedHome.Application.Bills.Extensions
     public static class BillRepositoryExtensions
     {
         public static async Task<Bill> GetOrThrowAsync(this IBillRepository billRepository, 
-            Guid id, Guid personId)
+            BillId id, PersonId personId)
         {
             var bill = await billRepository.GetAsync(id, personId);
             if (bill is null)
@@ -21,15 +21,9 @@ namespace SharedHome.Application.Bills.Extensions
         }
 
         public static async Task<Bill> GetOrThrowAsync(this IBillRepository billRepository,
-            Guid id, IEnumerable<Guid> personIds)
+            BillId id, IEnumerable<PersonId> personIds)
         {
-            var personIdsConverted = new List<PersonId>();
-            foreach (var personId in personIds)
-            {
-                personIdsConverted.Add(personId);
-            }
-
-            var bill = await billRepository.GetAsync(id, personIdsConverted);
+            var bill = await billRepository.GetAsync(id, personIds);
             if (bill is null)
             {
                 throw new BillNotFoundException(id);

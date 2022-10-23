@@ -4,6 +4,7 @@ using SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Tests.Shared.Providers;
@@ -31,7 +32,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithMember(false);
 
-            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);
 
             var command = new DeleteHouseGroupCommand
@@ -50,7 +51,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);
            
             var command = new DeleteHouseGroupCommand
