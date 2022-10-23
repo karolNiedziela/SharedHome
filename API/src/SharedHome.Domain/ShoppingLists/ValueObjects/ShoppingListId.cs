@@ -20,8 +20,6 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
             Value = value;
         }
 
-        public override string ToString() => Value.ToString();
-
         public static implicit operator Guid(ShoppingListId id) => id.Value;
 
         public static implicit operator ShoppingListId(Guid id) => new(id);

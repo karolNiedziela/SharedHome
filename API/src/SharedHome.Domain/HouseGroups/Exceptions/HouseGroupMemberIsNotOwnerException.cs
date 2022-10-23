@@ -11,9 +11,9 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
         [Order]
-        public string PersonId { get; }
+        public Guid PersonId { get; }
 
-        public HouseGroupMemberIsNotOwnerException(string personId) : base($"House group member with person id '{personId}' is not owner.")
+        public HouseGroupMemberIsNotOwnerException(Guid personId) : base($"House group member with person id '{personId}' is not owner.")
         {
             PersonId = personId;
         }

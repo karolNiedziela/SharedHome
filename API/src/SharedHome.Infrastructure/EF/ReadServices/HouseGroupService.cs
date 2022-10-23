@@ -14,18 +14,18 @@ namespace SharedHome.Infrastructure.EF.ReadServices
             _houseGroups = context.HouseGroups;
         }
 
-        public async Task<bool> IsPersonInHouseGroup(string personId)
+        public async Task<bool> IsPersonInHouseGroup(Guid personId)
           => await _houseGroups
             .Include(houseGroup => houseGroup.Members)
           .AnyAsync(houseGroup => houseGroup.Members
               .Any(member => member.PersonId == personId));
 
-        public async Task<bool> IsPersonInHouseGroup(string personId, int houseGroupId)
+        public async Task<bool> IsPersonInHouseGroup(Guid personId, Guid houseGroupId)
             => await _houseGroups
             .AnyAsync(houseGroup => houseGroup.Id == houseGroupId && houseGroup.Members
                 .Any(member => member.PersonId == personId));      
         
-        public async Task<IEnumerable<string>> GetMemberPersonIds(string personId)
+        public async Task<IEnumerable<Guid>> GetMemberPersonIds(Guid personId)
              => await _houseGroups
                .Include(houseGroup => houseGroup.Members
                  .Where(member => member.PersonId == personId))
@@ -33,7 +33,7 @@ namespace SharedHome.Infrastructure.EF.ReadServices
                .Select(member => member.PersonId))
                .ToListAsync();
 
-        public async Task<IEnumerable<string>> GetMemberPersonIdsExcludingCreator(string personId) 
+        public async Task<IEnumerable<Guid>> GetMemberPersonIdsExcludingCreator(Guid personId) 
             => await _houseGroups
                .Include(houseGroup => houseGroup.Members)
                .SelectMany(houseGroup => houseGroup.Members

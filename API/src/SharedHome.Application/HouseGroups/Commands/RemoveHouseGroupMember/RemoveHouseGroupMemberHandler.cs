@@ -17,9 +17,9 @@ namespace SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember
 
         public async Task<Unit> Handle(RemoveHouseGroupMemberCommand request, CancellationToken cancellationToken)
         {
-            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
+            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
 
-            houseGroup.RemoveMember(request.PersonId!, request.PersonToRemoveId);
+            houseGroup.RemoveMember(request.PersonId, request.PersonToRemoveId);
 
             await _houseGroupRepository.UpdateAsync(houseGroup);
 

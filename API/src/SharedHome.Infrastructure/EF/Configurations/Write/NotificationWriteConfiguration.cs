@@ -8,6 +8,8 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
     {
         public void Configure(EntityTypeBuilder<AppNotification> builder)
         {
+            builder.ToTable("Notifications");
+
             builder.HasKey(notification => notification.Id);
 
             builder.Property(notification => notification.Type)

@@ -80,7 +80,7 @@ namespace SharedHome.Api.Controllers
         [HttpDelete(ApiRoutes.HouseGroups.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteHouseGroupAsync(int houseGroupId)
+        public async Task<IActionResult> DeleteHouseGroupAsync(Guid houseGroupId)
         {
             var command = new DeleteHouseGroupCommand
             {

@@ -7,6 +7,6 @@ namespace SharedHome.Application.ShoppingLists.Queries
 {
     public class GetShoppingList : AuthorizeRequest, IQuery<Response<ShoppingListDto>>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

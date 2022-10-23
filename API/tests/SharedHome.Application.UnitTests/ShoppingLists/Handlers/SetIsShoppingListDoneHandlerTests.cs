@@ -6,6 +6,7 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -29,11 +30,11 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {            
             var command = new SetIsShoppingListDoneCommand
             {
-                ShoppingListId = 0,
+                ShoppingListId = ShoppingListProvider.ShoppingListId,
                 IsDone = true,
             };
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(ShoppingListProvider.GetEmpty());
 
             await _commandHandler.Handle(command, default);
@@ -47,11 +48,11 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new SetIsShoppingListDoneCommand
             {
-                ShoppingListId = 0,
+                ShoppingListId = ShoppingListProvider.ShoppingListId,
                 IsDone = false,
             };
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                             .Returns(ShoppingListProvider.GetEmpty(true));
 
             await _commandHandler.Handle(command, default);

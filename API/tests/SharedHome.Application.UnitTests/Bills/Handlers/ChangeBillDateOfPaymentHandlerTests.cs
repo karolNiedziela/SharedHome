@@ -30,19 +30,19 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         {
             var bill = BillProvider.Get();
 
-            _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _billService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                  .Returns(bill);
 
             var command = new ChangeBillDateOfPaymentCommand
             {
-                BillId = 1,
+                BillId = BillProvider.BillId,
                 DateOfPayment = new DateTime(2021, 10, 10)
             };
 
             await _commandHandler.Handle(command, default);
 
             await _billRepository.Received(1).UpdateAsync(Arg.Is<Bill>(bill =>
-                bill.DateOfPayment == command.DateOfPayment));
+                bill.DateOfPayment == DateOnly.FromDateTime(command.DateOfPayment)));
         }
     }
 }

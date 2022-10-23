@@ -12,9 +12,9 @@ namespace SharedHome.Application.ShoppingLists.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
         [Order]
-        public int Id { get; }
+        public Guid Id { get; }
 
-        public ShoppingListNotFoundException(int id) : base($"Shopping list with id '{id}' was not found.")
+        public ShoppingListNotFoundException(Guid id) : base($"Shopping list with id '{id}' was not found.")
         {
             Id = id;
         }

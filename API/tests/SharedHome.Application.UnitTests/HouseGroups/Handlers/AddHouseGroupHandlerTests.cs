@@ -11,6 +11,7 @@ using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
 using Shouldly;
+using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -41,11 +42,11 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var command = new AddHouseGroupCommand
             {
-                PersonId = "personId",
+                PersonId = Guid.NewGuid(),
                 Name = "HouseGroupName"
             };
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(true);
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -58,16 +59,16 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var command = new AddHouseGroupCommand
             {
-                PersonId = "personId",
+                PersonId = Guid.NewGuid(),
                 Name = "HouseGroupName"
             };
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(false);
 
             var response = await _commandHandler.Handle(command, default);
 
             await _houseGroupRepository.Received(1).AddAsync(Arg.Is<HouseGroup>(houseGroup =>
-            houseGroup.Members.First().PersonId == command.PersonId));
+            houseGroup.Members.First().PersonId.Value == command.PersonId));
 
             response.Data.ShouldNotBeNull();
         }

@@ -1,13 +1,12 @@
-﻿using MediatR;
+﻿using MapsterMapper;
+using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
-using SharedHome.Application.HouseGroups.DTO;
-using MapsterMapper;
 
 namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 {
@@ -26,15 +25,15 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 
         public async Task<Response<HouseGroupDto>> Handle(AddHouseGroupCommand request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId))
             {
-                throw new PersonIsAlreadyInHouseGroupException(request.PersonId!);
+                throw new PersonIsAlreadyInHouseGroupException(request.PersonId);
             }
-            var houseGroup = HouseGroup.Create(request.Name);
+            var houseGroup = HouseGroup.Create(request.HouseGroupId, request.Name);
 
             await _houseGroupRepository.AddAsync(houseGroup);
 
-            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, request.PersonId!, true));
+            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, request.PersonId, true));
 
             await _houseGroupRepository.UpdateAsync(houseGroup);
 

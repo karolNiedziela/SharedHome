@@ -17,7 +17,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         public void Create_Throws_EmptyServiceProviderNameException_When_Name_Is_NullOrWhiteSpace(string name) 
         {
             var exception = Record.Exception(() 
-                => Bill.Create(BillProvider.PersonId, BillType.Trash, name, DateTime.Now, new Money(100m, "zł")));
+                => Bill.Create(Guid.NewGuid(), BillProvider.PersonId, BillType.Trash, name, DateOnly.FromDateTime(DateTime.Now), new Money(100m, "zł")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<EmptyServiceProviderNameException>();
@@ -84,9 +84,9 @@ namespace SharedHome.Domain.UnitTests.Bills
         {
             var bill = BillProvider.Get(isPaid: true);
 
-            bill.ChangeDateOfPayment(new DateTime(2022, 5, 10));
+            bill.ChangeDateOfPayment(DateOnly.FromDateTime(new DateTime(2022, 5, 10)));
 
-            bill.DateOfPayment.ShouldBe(new DateTime(2022, 5, 10));
+            bill.DateOfPayment.ShouldBe(new DateOnly(2022, 5, 10));
         }
     }
 }

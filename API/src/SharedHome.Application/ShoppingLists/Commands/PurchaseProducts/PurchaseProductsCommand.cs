@@ -7,7 +7,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProducts
 {
     public class PurchaseProductsCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
 
         public Dictionary<string, MoneyDto> PriceByProductNames { get; set; } = new();
     }

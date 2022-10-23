@@ -6,7 +6,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.DeleteManyShoppingListPr
 {
     public class DeleteManyShoppingListProductsCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
 
         public IEnumerable<string> ProductNames { get; set; } = new List<string>();
     }

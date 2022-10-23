@@ -8,7 +8,7 @@ namespace SharedHome.Infrastructure.EF.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<PersonReadModel> builder)
         {
-            builder.ToTable("Person");
+            builder.ToTable("Persons");
 
             builder.HasKey(person => person.Id);
 

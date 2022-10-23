@@ -1,12 +1,15 @@
 ﻿using SharedHome.Application.ShoppingLists.Exceptions;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Domain.ShoppingLists.ValueObjects;
 
 namespace SharedHome.Application.ShoppingLists.Extensions
 {
     public static class ShoppingListRepositoryExtensions
     {
-        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository, int shoppingListId, string personId)
+        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository,
+            Guid shoppingListId, Guid personId)
         {
             var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personId);
             if (shoppingList is null)
@@ -17,9 +20,16 @@ namespace SharedHome.Application.ShoppingLists.Extensions
             return shoppingList;
         }
 
-        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository, int shoppingListId, IEnumerable<string> personIds)
+        public static async Task<ShoppingList> GetOrThrowAsync(this IShoppingListRepository shoppingListRepository, 
+            Guid shoppingListId, IEnumerable<Guid> personIds)
         {
-            var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personIds);
+            var personIdsConverted = new List<PersonId>();
+            foreach (var personId in personIds)
+            {
+                personIdsConverted.Add(personId);
+            }
+
+            var shoppingList = await shoppingListRepository.GetAsync(shoppingListId, personIdsConverted);
             if (shoppingList is null)
             {
                 throw new ShoppingListNotFoundException(shoppingListId);

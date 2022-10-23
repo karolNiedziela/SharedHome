@@ -34,17 +34,17 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
         {
             var person = await _personRepository.GetByEmailOrThrowAsync(request.RequestedToPersonEmail);
 
-            if (!await _houseGroupService.IsPersonInHouseGroup(request.PersonId!, request.HouseGroupId)) 
+            if (!await _houseGroupService.IsPersonInHouseGroup(request.PersonId, request.HouseGroupId)) 
             {
-                throw new PersonIsNotInHouseGroupException(request.PersonId!, request.HouseGroupId);
+                throw new PersonIsNotInHouseGroupException(request.PersonId, request.HouseGroupId);
             }
 
-            if (await _invitationService.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId!, person.Id))
+            if (await _invitationService.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId, person.Id))
             {
                 throw new InvitationAlreadySentException(request.HouseGroupId, person.Id);
             }
 
-            var invitation = Invitation.Create(request.HouseGroupId, request.PersonId!, person.Id);
+            var invitation = Invitation.Create(request.InvitationId, request.HouseGroupId, request.PersonId!, person.Id);
 
             await _invitationRepository.AddAsync(invitation);
 

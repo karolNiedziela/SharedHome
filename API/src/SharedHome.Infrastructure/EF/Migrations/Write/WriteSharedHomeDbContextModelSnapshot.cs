@@ -21,9 +21,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
             modelBuilder.Entity("SharedHome.Domain.Bills.Entities.Bill", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("BillType")
                         .HasColumnType("int")
@@ -36,8 +35,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("DateOfPayment")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateOnly>("DateOfPayment")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsPaid")
                         .ValueGeneratedOnAdd()
@@ -51,22 +50,20 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("Bill", (string)null);
+                    b.ToTable("Bills", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.HouseGroups.Aggregates.HouseGroup", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -84,14 +81,13 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.HasKey("Id");
 
-                    b.ToTable("HouseGroup", (string)null);
+                    b.ToTable("HouseGroups", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.Invitations.Aggregates.Invitation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -100,8 +96,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("HouseGroupId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("HouseGroupId")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
@@ -110,13 +106,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("RequestedByPersonId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("RequestedByPersonId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<string>("RequestedToPersonId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("RequestedToPersonId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int")
@@ -130,13 +124,13 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.HasIndex("RequestedToPersonId");
 
-                    b.ToTable("Invitation", (string)null);
+                    b.ToTable("Invitations", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.Persons.Aggregates.Person", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -154,14 +148,13 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.HasKey("Id");
 
-                    b.ToTable("Person", (string)null);
+                    b.ToTable("Persons", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.ShoppingLists.Aggregates.ShoppingList", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -182,15 +175,14 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PersonId");
 
-                    b.ToTable("ShoppingList", (string)null);
+                    b.ToTable("ShoppingLists", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Notifications.Entities.AppNotification", b =>
@@ -223,9 +215,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .HasColumnType("int")
                         .HasColumnName("OperationType");
 
-                    b.Property<string>("PersonId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<Guid>("PersonId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Target")
                         .HasColumnType("int")
@@ -241,7 +232,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("SharedHome.Domain.Bills.Entities.Bill", b =>
@@ -254,8 +245,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Money", "Cost", b1 =>
                         {
-                            b1.Property<int>("BillId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("BillId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<decimal>("Amount")
                                 .HasPrecision(14, 2)
@@ -264,15 +255,15 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("BillId");
 
-                            b1.ToTable("Bill");
+                            b1.ToTable("Bills");
 
                             b1.WithOwner()
                                 .HasForeignKey("BillId");
 
                             b1.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Currency", "Currency", b2 =>
                                 {
-                                    b2.Property<int>("MoneyBillId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("MoneyBillId")
+                                        .HasColumnType("char(36)");
 
                                     b2.Property<string>("Value")
                                         .IsRequired()
@@ -281,7 +272,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                                     b2.HasKey("MoneyBillId");
 
-                                    b2.ToTable("Bill");
+                                    b2.ToTable("Bills");
 
                                     b2.WithOwner()
                                         .HasForeignKey("MoneyBillId");
@@ -293,8 +284,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsOne("SharedHome.Domain.Bills.ValueObjects.ServiceProviderName", "ServiceProvider", b1 =>
                         {
-                            b1.Property<int>("BillId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("BillId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
@@ -303,7 +294,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("BillId");
 
-                            b1.ToTable("Bill");
+                            b1.ToTable("Bills");
 
                             b1.WithOwner()
                                 .HasForeignKey("BillId");
@@ -319,11 +310,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 {
                     b.OwnsMany("SharedHome.Domain.HouseGroups.Entities.HouseGroupMember", "Members", b1 =>
                         {
-                            b1.Property<int>("HouseGroupId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("HouseGroupId")
+                                .HasColumnType("char(36)");
 
-                            b1.Property<string>("PersonId")
-                                .HasColumnType("varchar(255)");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<DateTime>("CreatedAt")
                                 .HasColumnType("datetime(6)");
@@ -349,7 +340,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                             b1.HasIndex("PersonId")
                                 .IsUnique();
 
-                            b1.ToTable("HouseGroupMember", (string)null);
+                            b1.ToTable("HouseGroupMembers", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("HouseGroupId");
@@ -363,8 +354,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsOne("SharedHome.Domain.HouseGroups.ValueObjects.HouseGroupName", "Name", b1 =>
                         {
-                            b1.Property<int>("HouseGroupId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("HouseGroupId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -373,7 +364,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("HouseGroupId");
 
-                            b1.ToTable("HouseGroup");
+                            b1.ToTable("HouseGroups");
 
                             b1.WithOwner()
                                 .HasForeignKey("HouseGroupId");
@@ -410,8 +401,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 {
                     b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.Email", "Email", b1 =>
                         {
-                            b1.Property<string>("PersonId")
-                                .HasColumnType("varchar(255)");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -420,7 +411,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("PersonId");
 
-                            b1.ToTable("Person");
+                            b1.ToTable("Persons");
 
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
@@ -428,8 +419,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.FirstName", "FirstName", b1 =>
                         {
-                            b1.Property<string>("PersonId")
-                                .HasColumnType("varchar(255)");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -438,7 +429,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("PersonId");
 
-                            b1.ToTable("Person");
+                            b1.ToTable("Persons");
 
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
@@ -446,8 +437,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.LastName", "LastName", b1 =>
                         {
-                            b1.Property<string>("PersonId")
-                                .HasColumnType("varchar(255)");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -456,7 +447,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("PersonId");
 
-                            b1.ToTable("Person");
+                            b1.ToTable("Persons");
 
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
@@ -482,8 +473,8 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListName", "Name", b1 =>
                         {
-                            b1.Property<int>("ShoppingListId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("ShoppingListId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<string>("Name")
                                 .IsRequired()
@@ -492,7 +483,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("ShoppingListId");
 
-                            b1.ToTable("ShoppingList");
+                            b1.ToTable("ShoppingLists");
 
                             b1.WithOwner()
                                 .HasForeignKey("ShoppingListId");
@@ -500,12 +491,12 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                     b.OwnsMany("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProduct", "Products", b1 =>
                         {
-                            b1.Property<int>("ShoppingListId")
-                                .HasColumnType("int");
+                            b1.Property<Guid>("ShoppingListId")
+                                .HasColumnType("char(36)");
 
-                            b1.Property<int>("Id")
+                            b1.Property<Guid>("Id")
                                 .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
+                                .HasColumnType("char(36)");
 
                             b1.Property<bool>("IsBought")
                                 .ValueGeneratedOnAdd()
@@ -514,18 +505,18 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.HasKey("ShoppingListId", "Id");
 
-                            b1.ToTable("ShoppingListProduct", (string)null);
+                            b1.ToTable("ShoppingListProducts", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("ShoppingListId");
 
                             b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.NetContent", "NetContent", b2 =>
                                 {
-                                    b2.Property<int>("ShoppingListProductShoppingListId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
 
-                                    b2.Property<int>("ShoppingListProductId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductId")
+                                        .HasColumnType("char(36)");
 
                                     b2.Property<int?>("Type")
                                         .HasColumnType("int")
@@ -538,7 +529,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
-                                    b2.ToTable("ShoppingListProduct");
+                                    b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
@@ -546,11 +537,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.Quantity", "Quantity", b2 =>
                                 {
-                                    b2.Property<int>("ShoppingListProductShoppingListId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
 
-                                    b2.Property<int>("ShoppingListProductId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductId")
+                                        .HasColumnType("char(36)");
 
                                     b2.Property<int>("Value")
                                         .HasColumnType("int")
@@ -558,7 +549,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
-                                    b2.ToTable("ShoppingListProduct");
+                                    b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
@@ -566,11 +557,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Money", "Price", b2 =>
                                 {
-                                    b2.Property<int>("ShoppingListProductShoppingListId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
 
-                                    b2.Property<int>("ShoppingListProductId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductId")
+                                        .HasColumnType("char(36)");
 
                                     b2.Property<decimal>("Amount")
                                         .HasPrecision(12, 4)
@@ -579,18 +570,18 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
-                                    b2.ToTable("ShoppingListProduct");
+                                    b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
                                     b2.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Currency", "Currency", b3 =>
                                         {
-                                            b3.Property<int>("MoneyShoppingListProductShoppingListId")
-                                                .HasColumnType("int");
+                                            b3.Property<Guid>("MoneyShoppingListProductShoppingListId")
+                                                .HasColumnType("char(36)");
 
-                                            b3.Property<int>("MoneyShoppingListProductId")
-                                                .HasColumnType("int");
+                                            b3.Property<Guid>("MoneyShoppingListProductId")
+                                                .HasColumnType("char(36)");
 
                                             b3.Property<string>("Value")
                                                 .IsRequired()
@@ -599,7 +590,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                                             b3.HasKey("MoneyShoppingListProductShoppingListId", "MoneyShoppingListProductId");
 
-                                            b3.ToTable("ShoppingListProduct");
+                                            b3.ToTable("ShoppingListProducts");
 
                                             b3.WithOwner()
                                                 .HasForeignKey("MoneyShoppingListProductShoppingListId", "MoneyShoppingListProductId");
@@ -611,11 +602,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                             b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProductName", "Name", b2 =>
                                 {
-                                    b2.Property<int>("ShoppingListProductShoppingListId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
 
-                                    b2.Property<int>("ShoppingListProductId")
-                                        .HasColumnType("int");
+                                    b2.Property<Guid>("ShoppingListProductId")
+                                        .HasColumnType("char(36)");
 
                                     b2.Property<string>("Value")
                                         .IsRequired()
@@ -624,7 +615,7 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
                                     b2.HasKey("ShoppingListProductShoppingListId", "ShoppingListProductId");
 
-                                    b2.ToTable("ShoppingListProduct");
+                                    b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
                                         .HasForeignKey("ShoppingListProductShoppingListId", "ShoppingListProductId");

@@ -10,8 +10,8 @@ namespace SharedHome.Notifications.Hubs
     [Authorize]
     public class HouseGroupNotificationHub : Hub<IHouseGroupNotificationHubClient>
     {
-        public static readonly ConcurrentDictionary<string, string> GroupNames = new();
-        public static readonly ConcurrentDictionary<string, string> UserToConnection = new();
+        public static readonly ConcurrentDictionary<Guid, string> GroupNames = new();
+        public static readonly ConcurrentDictionary<Guid, string> UserToConnection = new();
 
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IHouseGroupRepository _houseGroupRepository;
@@ -24,7 +24,7 @@ namespace SharedHome.Notifications.Hubs
 
         public string GetConnectionId() => Context.ConnectionId;
 
-        public static string GetConnectionId(string personId)
+        public static string GetConnectionId(Guid personId)
         {
             if (!UserToConnection.TryGetValue(personId, out var connectionId))
             {
@@ -42,8 +42,8 @@ namespace SharedHome.Notifications.Hubs
                 return;
             }
 
-            GroupNames.TryAdd(Context.UserIdentifier!, groupName);
-            UserToConnection.TryAdd(Context.UserIdentifier!, GetConnectionId());
+            GroupNames.TryAdd(new Guid(Context.UserIdentifier!), groupName);
+            UserToConnection.TryAdd(new Guid(Context.UserIdentifier!), GetConnectionId());
             await Groups.AddToGroupAsync(GetConnectionId(), groupName);
             await base.OnConnectedAsync();
         }
@@ -56,20 +56,20 @@ namespace SharedHome.Notifications.Hubs
                 return;
             }
 
-            GroupNames.TryRemove(Context.UserIdentifier!, out _);
-            UserToConnection.TryRemove(Context.UserIdentifier!, out _);
+            GroupNames.TryRemove(new Guid(Context.UserIdentifier!), out _);
+            UserToConnection.TryRemove(new Guid(Context.UserIdentifier!), out _);
             await Groups.RemoveFromGroupAsync(GetConnectionId(), groupName);
             await base.OnDisconnectedAsync(exception);
         }
 
         private async Task<string?> GetGroupNameAsync()
         {
-            if (!await _houseGroupReadService.IsPersonInHouseGroup(Context.UserIdentifier!))
+            if (!await _houseGroupReadService.IsPersonInHouseGroup(new Guid(Context.UserIdentifier!)))
             {
                 return string.Empty;
             }
 
-            var houseGroup = await _houseGroupRepository.GetAsync(Context.UserIdentifier!);
+            var houseGroup = await _houseGroupRepository.GetAsync(new Guid(Context.UserIdentifier!));
 
             return $"{houseGroup!.Id}-{houseGroup.Name.Value}";
         }

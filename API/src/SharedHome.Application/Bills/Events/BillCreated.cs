@@ -4,5 +4,5 @@ using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Application.Bills.Events
 {
-    public record BillCreated(int Id, ServiceProviderName ServiceProviderName, CreatorDto Creator) : IDomainEvent;
+    public record BillCreated(Guid BillId, ServiceProviderName ServiceProviderName, CreatorDto Creator) : IDomainEvent;
 }

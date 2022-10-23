@@ -18,9 +18,9 @@ namespace SharedHome.Application.Bills.Commands.ChangeBillDateOfPayment
 
         public async Task<Unit> Handle(ChangeBillDateOfPaymentCommand request, CancellationToken cancellationToken)
         {
-            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId);
 
-            bill.ChangeDateOfPayment(request.DateOfPayment);
+            bill.ChangeDateOfPayment(DateOnly.FromDateTime(request.DateOfPayment));
 
             await _billRepository.UpdateAsync(bill);
 

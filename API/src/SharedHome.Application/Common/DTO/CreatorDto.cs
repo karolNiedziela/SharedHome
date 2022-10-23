@@ -1,4 +1,4 @@
 ﻿namespace SharedHome.Application.Common.DTO
 {
-    public record CreatorDto(string PersonId, string FirstName, string LastName);
+    public record CreatorDto(Guid PersonId, string FirstName, string LastName);
 }

@@ -6,8 +6,8 @@ namespace SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver
 {
     public class HandOwnerRoleOverCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
 
-        public string NewOwnerPersonId { get; set; } = default!;
+        public Guid NewOwnerPersonId { get; set; } = default!;
     }
 }

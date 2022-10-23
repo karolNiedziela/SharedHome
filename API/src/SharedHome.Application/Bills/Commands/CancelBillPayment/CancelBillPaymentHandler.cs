@@ -18,7 +18,7 @@ namespace SharedHome.Application.Bills.Commands.CancelBillPayment
 
         public async Task<Unit> Handle(CancelBillPaymentCommand request, CancellationToken cancellationToken)
         {
-            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId);
 
             bill.CancelPayment();
 

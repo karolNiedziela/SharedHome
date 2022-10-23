@@ -8,6 +8,7 @@ using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -30,7 +31,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithMember(false);
 
-            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(houseGroup);
 
             var command = new DeleteHouseGroupCommand
@@ -49,7 +50,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(houseGroup);
            
             var command = new DeleteHouseGroupCommand

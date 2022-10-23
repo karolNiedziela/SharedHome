@@ -6,6 +6,7 @@ using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -26,18 +27,18 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers();
-
-            var personToRemoveId = HouseGroupProvider.PersonId + "0";
+            var personToRemoveId = Guid.NewGuid();
+            var additionalMembers = new Guid[] { personToRemoveId };
+            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(additionalMembers);
 
             var command = new RemoveHouseGroupMemberCommand
             {
-                HouseGroupId = 1,
+                HouseGroupId = HouseGroupProvider.HouseGroupId,
                 PersonId = HouseGroupProvider.PersonId,
                 PersonToRemoveId = personToRemoveId
             };
 
-            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(houseGroup);
 
             var membersCountBeforeRemove = houseGroup.Members.Count();

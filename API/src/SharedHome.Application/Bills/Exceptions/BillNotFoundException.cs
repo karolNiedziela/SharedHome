@@ -11,9 +11,9 @@ namespace SharedHome.Application.Bills.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
         [Order]
-        public int BillId { get; }
+        public Guid BillId { get; }
 
-        public BillNotFoundException(int billId) : base($"Bill with id '{billId}' was not found.")
+        public BillNotFoundException(Guid billId) : base($"Bill with id '{billId}' was not found.")
         {
             BillId = billId;
         }

@@ -11,57 +11,57 @@
 
         public static class ShoppingLists
         {
-            public const string Get = "{shoppingListId:int}";
+            public const string Get = "{shoppingListId}";
 
             public const string GetMonthlyCost = "monthlycost";
 
-            public const string AddShoppingListProduct = "{shoppingListId:int}/products";
+            public const string AddShoppingListProduct = "{shoppingListId}/products";
 
-            public const string PurchaseShoppingListProduct = "{shoppingListId:int}/products/{productName}/purchase";
+            public const string PurchaseShoppingListProduct = "{shoppingListId}/products/{productName}/purchase";
 
-            public const string PurchaseShoppingListProducts = "{shoppingListId:int}/products/purchase";
+            public const string PurchaseShoppingListProducts = "{shoppingListId}/products/purchase";
 
-            public const string CancelPurchaseOfProduct = "{shoppingListId:int}/products/{productName}/cancelpurchase";
+            public const string CancelPurchaseOfProduct = "{shoppingListId}/products/{productName}/cancelpurchase";
 
-            public const string ChangePriceOfProduct = "{shoppingListId:int}/products/{productName}/changeprice";
+            public const string ChangePriceOfProduct = "{shoppingListId}/products/{productName}/changeprice";
 
-            public const string SetIsDone = "{shoppingListId:int}/setisdone";
+            public const string SetIsDone = "{shoppingListId}/setisdone";
 
-            public const string UpdateShoppingListProduct = "{shoppingListId:int}/products/{productName}/update";
+            public const string UpdateShoppingListProduct = "{shoppingListId}/products/{productName}/update";
 
-            public const string Delete = "{shoppingListId:int}";
+            public const string Delete = "{shoppingListId}";
 
-            public const string DeleteShoppingListProduct = "{shoppingListId:int}/products/{productName}";
+            public const string DeleteShoppingListProduct = "{shoppingListId}/products/{productName}";
 
-            public const string DeleteManyShoppingListProducts = "{shoppingListId:int}/products";
+            public const string DeleteManyShoppingListProducts = "{shoppingListId}/products";
         }
 
         public static class Bills
         {
-            public const string Get = "{billId:int}";
+            public const string Get = "{billId}";
 
             public const string GetMonthlyCost = "monthlycost";
 
-            public const string PayForBill = "{billId:int}/pay";
+            public const string PayForBill = "{billId}/pay";
 
-            public const string ChangeBillCost = "{billId:int}/changecost";
+            public const string ChangeBillCost = "{billId}/changecost";
 
-            public const string CancelPayment = "{billId:int}/cancelpayment";
+            public const string CancelPayment = "{billId}/cancelpayment";
 
-            public const string ChangeDateOfPayment = "{billId:int}/changedateofpayment";
+            public const string ChangeDateOfPayment = "{billId}/changedateofpayment";
 
-            public const string Delete = "{billId:int}";
+            public const string Delete = "{billId}";
         }
 
         public static class HouseGroups
         {
-            public const string RemoveMember = "{houseGroupId:int}/members/{personToRemoveId:Guid}";
+            public const string RemoveMember = "{houseGroupId}/members/{personToRemoveId:Guid}";
 
-            public const string HandOwnerRoleOver = "{houseGroupId:int}/handownerroleover";
+            public const string HandOwnerRoleOver = "{houseGroupId}/handownerroleover";
 
-            public const string Leave = "{houseGroupId:int}/leave";
+            public const string Leave = "{houseGroupId}/leave";
 
-            public const string Delete = "{houseGroupId:int}";
+            public const string Delete = "{houseGroupId}";
         }
 
         public static class Identity
@@ -75,13 +75,13 @@
 
         public static class Invitations
         {
-            public const string Get = "{houseGroupId:int}";
+            public const string Get = "{houseGroupId}";
 
             public const string Accept = "accept";
 
             public const string Reject = "reject";
 
-            public const string Delete = "{houseGroupId:int}";
+            public const string Delete = "{houseGroupId}";
         }
     }
 }

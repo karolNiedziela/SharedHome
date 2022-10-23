@@ -6,6 +6,6 @@ namespace SharedHome.Application.Invitations.Commands.AcceptInvitation
 {
     public class AcceptInvitationCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
     }
 }

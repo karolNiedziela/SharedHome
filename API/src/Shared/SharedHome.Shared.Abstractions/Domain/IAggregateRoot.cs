@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Abstractions.Domain
 {
-    public interface IAggregateRoot
+    public interface IAggregateRoot<T>
     {
+        public T Id { get; }
     }
 }

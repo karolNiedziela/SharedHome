@@ -1,13 +1,14 @@
 ﻿using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.Persons.Exceptions;
 using Shouldly;
+using System;
 using Xunit;
 
 namespace SharedHome.Domain.UnitTests.Persons
 {
     public class PersonTests
     {
-        private readonly string _personId = "46826ecb-c40d-441c-ad0d-f11e616e4948";
+        private readonly Guid _personId = new("46826ecb-c40d-441c-ad0d-f11e616e4948");
 
         [Theory]
         [InlineData(null)]

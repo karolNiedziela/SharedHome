@@ -7,6 +7,6 @@ namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
 {
     public class DeleteHouseGroupCommand : AuthorizeRequest, ICommand<Response<Unit>>
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
     }
 }

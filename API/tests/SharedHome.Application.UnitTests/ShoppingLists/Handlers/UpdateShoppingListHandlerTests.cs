@@ -6,6 +6,7 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -34,7 +35,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 Name = "TestName"
             };
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(shoppingList);
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(shoppingList);
 
             await _commandHandler.Handle(command, default);
 

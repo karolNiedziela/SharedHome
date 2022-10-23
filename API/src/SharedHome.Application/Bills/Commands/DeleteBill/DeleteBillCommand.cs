@@ -6,6 +6,6 @@ namespace SharedHome.Application.Bills.Commands.DeleteBill
 {
     public class DeleteBillCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int BillId { get; set; }
+        public Guid BillId { get; set; }
     }
 }

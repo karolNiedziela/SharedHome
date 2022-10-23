@@ -8,7 +8,7 @@ namespace SharedHome.Infrastructure.EF.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<InvitationReadModel> builder)
         {
-            builder.ToTable("Invitation");
+            builder.ToTable("Invitations");
 
             builder.HasKey(invitation => invitation.Id);
 

@@ -6,6 +6,6 @@ namespace SharedHome.Application.ShoppingLists.Commands.DeleteShoppingList
 {
     public class DeleteShoppingListCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
     }
 }

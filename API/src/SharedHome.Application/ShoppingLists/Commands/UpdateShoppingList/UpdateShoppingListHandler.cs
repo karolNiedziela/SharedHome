@@ -18,7 +18,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList
 
         public async Task<Unit> Handle(UpdateShoppingListCommand request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListService.GetAsync(request.Id, request.PersonId!);
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
             shoppingList.Update(request.Name);
 

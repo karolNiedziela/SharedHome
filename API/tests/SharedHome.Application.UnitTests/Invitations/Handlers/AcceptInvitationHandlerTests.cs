@@ -11,6 +11,7 @@ using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -36,11 +37,11 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var command = new AcceptInvitationCommand
             {
-                PersonId = "AcceptPersonId",
-                HouseGroupId = 1,
+                PersonId = InvitationProvider.RequestedByPersonId,
+                HouseGroupId = InvitationProvider.HouseGroupId,
             };
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(true);
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -52,20 +53,20 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var command = new AcceptInvitationCommand
             {
-                PersonId = "AcceptPersonId",
-                HouseGroupId = 1,
+                PersonId = InvitationProvider.RequestedByPersonId,
+                HouseGroupId = InvitationProvider.HouseGroupId,
             };
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(false);
 
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _invitationRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(invitation);
 
             var houseGroup = HouseGroupProvider.Get();
 
-            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(houseGroup);
 
             await _commandHandler.Handle(command, default);

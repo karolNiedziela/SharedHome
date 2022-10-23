@@ -5,7 +5,7 @@
 
         // Administrator
 
-        public const string AdminUserId = "B4705CBA-5257-4C16-8E9F-EBA096C84331";
+        public static readonly Guid AdminUserId = new("B4705CBA-5257-4C16-8E9F-EBA096C84331");
         public const string AdminUserName = "Admin";
         public const string AdminFirstName = "Admin";
         public const string AdminLastName = "Admin";
@@ -13,13 +13,13 @@
 
         // Default users
 
-        public const string CharlesUserId = "6B0EE0EA-23EF-4A51-AE07-BE9B7FD9FFC6";
+        public static readonly Guid CharlesUserId = new("6B0EE0EA-23EF-4A51-AE07-BE9B7FD9FFC6");
         public const string CharlesUserName = "Charles";
         public const string CharlesFirstName = "Charles";
         public const string CharlesLastName = "Sunday";
         public const string CharlesEmail = "charles@email.com";
 
-        public const string FrancUserId = "E03CF90D-5BD9-4427-8536-A126C4A92C5C";
+        public static readonly Guid FrancUserId = new("E03CF90D-5BD9-4427-8536-A126C4A92C5C");
         public const string FrancUserName = "Franc";
         public const string FrancFirstName = "Franc";
         public const string FrancLastName = "Kawka";

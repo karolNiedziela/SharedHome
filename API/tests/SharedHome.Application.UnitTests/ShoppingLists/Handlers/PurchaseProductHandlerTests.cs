@@ -7,6 +7,7 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -31,12 +32,12 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new PurchaseProductCommand
             {
-                ShoppingListId = 1,
+                ShoppingListId = ShoppingListProvider.ShoppingListId,
                 ProductName = "Product",                
                 Price = new MoneyDto(10, "zł")
             };
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetWithProduct());
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(ShoppingListProvider.GetWithProduct());
 
             await _commandHandler.Handle(command, default);
 

@@ -7,6 +7,6 @@ namespace SharedHome.Application.Bills.Queries
 {
     public class GetBill : AuthorizeRequest, IQuery<Response<BillDto>>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

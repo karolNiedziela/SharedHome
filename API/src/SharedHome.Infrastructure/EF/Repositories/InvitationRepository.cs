@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.Invitations.Aggregates;
 using SharedHome.Domain.Invitations.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Repositories
@@ -13,11 +14,11 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<Invitation?> GetAsync(int houseGroupId, string personId)
+        public async Task<Invitation?> GetAsync(HouseGroupId houseGroupId, PersonId personId)
             => await _dbContext.Invitations.SingleOrDefaultAsync(i => i.HouseGroupId == houseGroupId &&
             i.RequestedToPersonId == personId);
 
-        public async Task<IEnumerable<Invitation>> GetAllAsync(int houseGroupId)
+        public async Task<IEnumerable<Invitation>> GetAllAsync(HouseGroupId houseGroupId)
             => await _dbContext.Invitations.Where(invitation => invitation.HouseGroupId == houseGroupId).ToListAsync();
 
         public async Task AddAsync(Invitation invitation)
@@ -44,8 +45,8 @@ namespace SharedHome.Infrastructure.EF.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(int houseGroupId, string personId)
-            => await _dbContext.Invitations.AnyAsync(invitation => invitation.HouseGroupId == houseGroupId &&
-            invitation.RequestedToPersonId == personId);
+        public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(Guid houseGroupId, Guid personId)
+            => await _dbContext.Invitations.AnyAsync(invitation => invitation.HouseGroupId.Value == houseGroupId &&
+            invitation.RequestedToPersonId.Value == personId);
     }
 }

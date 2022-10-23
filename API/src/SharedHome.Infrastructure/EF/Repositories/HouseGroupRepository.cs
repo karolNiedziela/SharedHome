@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Repositories
@@ -14,12 +15,12 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<HouseGroup?> GetAsync(string personId)
+        public async Task<HouseGroup?> GetAsync(PersonId personId)
              => await _dbContext.HouseGroups
             .Include(houseGroup => houseGroup.Members.Where(m => m.PersonId == personId))
             .SingleOrDefaultAsync();
 
-        public async Task<HouseGroup?> GetAsync(int houseGroupId, string personId)
+        public async Task<HouseGroup?> GetAsync(HouseGroupId houseGroupId, PersonId personId)
             => await _dbContext.HouseGroups
             .Include(houseGroup => houseGroup.Members)
             .SingleOrDefaultAsync(houseGroup => houseGroup.Id == houseGroupId);

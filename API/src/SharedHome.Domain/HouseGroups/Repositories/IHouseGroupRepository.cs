@@ -1,13 +1,13 @@
 ﻿using SharedHome.Domain.HouseGroups.Aggregates;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.HouseGroups.Repositories
 {
     public interface IHouseGroupRepository
     {
-        Task<HouseGroup?> GetAsync(string personId);
+        Task<HouseGroup?> GetAsync(PersonId personId);
 
-        Task<HouseGroup?> GetAsync(int houseGroupId, string personId);
+        Task<HouseGroup?> GetAsync(HouseGroupId houseGroupId, PersonId personId);
 
         Task AddAsync(HouseGroup houseGroup);
 

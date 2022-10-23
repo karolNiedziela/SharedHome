@@ -1,12 +1,13 @@
-﻿using SharedHome.Shared.Abstractions.Domain;
+﻿using SharedHome.Domain.Shared.ValueObjects;
+using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.HouseGroups.Entities
 {
     public class HouseGroupMember : Entity
     {
-        public string PersonId { get; private set; } = default!;
+        public PersonId PersonId { get; private set; } = default!;
 
-        public int HouseGroupId { get; private set; }
+        public HouseGroupId HouseGroupId { get; private set; } = default!;
 
         public bool IsOwner { get; private set; }
 
@@ -15,7 +16,7 @@ namespace SharedHome.Domain.HouseGroups.Entities
 
         }
 
-        public HouseGroupMember(int houseGroupId, string personId, bool isOwner = false)
+        public HouseGroupMember(HouseGroupId houseGroupId, PersonId personId, bool isOwner = false)
         {
             HouseGroupId = houseGroupId;
             PersonId = personId;

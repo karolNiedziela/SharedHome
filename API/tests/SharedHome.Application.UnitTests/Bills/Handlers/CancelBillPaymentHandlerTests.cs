@@ -7,6 +7,7 @@ using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -30,12 +31,12 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         {
             var bill = BillProvider.Get(billCost: new Money(100m, "zł"), isPaid: true);
 
-            _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(bill);
+            _billService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(bill);
 
             var command = new CancelBillPaymentCommand
             {
-                BillId = 1,
-                PersonId = "personId"
+                BillId = BillProvider.BillId,
+                PersonId = BillProvider.PersonId
             };
 
             await _commandHandler.Handle(command, default);

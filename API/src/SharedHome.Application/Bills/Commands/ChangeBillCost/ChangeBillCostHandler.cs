@@ -19,7 +19,7 @@ namespace SharedHome.Application.Bills.Commands.ChangeBillCost
 
         public async Task<Unit> Handle(ChangeBillCostCommand request, CancellationToken cancellationToken)
         {
-            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId);
 
             var money = new Money(request.Cost.Price, request.Cost.Currency);
 

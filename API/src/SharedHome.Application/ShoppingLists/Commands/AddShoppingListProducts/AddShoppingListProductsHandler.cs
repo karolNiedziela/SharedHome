@@ -22,7 +22,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts
 
         public async Task<Unit> Handle(AddShoppingListProductsCommand request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
             var products = _mapper.Map<IEnumerable<ShoppingListProduct>>(request.Products);
 

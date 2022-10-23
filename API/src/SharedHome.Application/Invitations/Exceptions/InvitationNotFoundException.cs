@@ -11,10 +11,10 @@ namespace SharedHome.Application.Invitations.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
         [Order]
-        public int HouseGroupId { get; }
+        public Guid HouseGroupId { get; }
 
-        public InvitationNotFoundException(int houseGroupId) 
-            : base($"Invitation from house group with '{houseGroupId}' was not found.")
+        public InvitationNotFoundException(Guid houseGroupId) 
+            : base($"Invitation from house group with id '{houseGroupId}' was not found.")
         {
             HouseGroupId = houseGroupId;
         }

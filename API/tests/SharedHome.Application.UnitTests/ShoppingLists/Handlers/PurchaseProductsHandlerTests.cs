@@ -34,7 +34,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new PurchaseProductsCommand
             {
-                ShoppingListId = 1,
+                ShoppingListId = ShoppingListProvider.ShoppingListId,
                 PriceByProductNames = new Dictionary<string, MoneyDto>
                 {
                     { 
@@ -56,7 +56,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 new ShoppingListProduct("Product1", 1),
             });
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                     .Returns(shoppingList);
 
             await _commandHandler.Handle(command, default!);

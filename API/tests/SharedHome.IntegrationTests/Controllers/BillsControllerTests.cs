@@ -28,7 +28,7 @@ namespace SharedHome.IntegrationTests.Controllers
             var bill = BillProvider.Get();
             ProviderNew(bill);
 
-            Authorize(bill.PersonId);
+            Authorize(bill.PersonId.Value);
 
             var endpointAddress = $"{BaseAddress}/{ApiRoutes.Bills.Get.Replace("{billId:int}", "1")}";
 

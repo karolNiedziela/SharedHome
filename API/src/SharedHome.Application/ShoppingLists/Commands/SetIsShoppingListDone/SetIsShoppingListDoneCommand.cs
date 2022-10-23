@@ -6,7 +6,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone
 {
     public class SetIsShoppingListDoneCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
 
         public bool IsDone { get; set; }
     }

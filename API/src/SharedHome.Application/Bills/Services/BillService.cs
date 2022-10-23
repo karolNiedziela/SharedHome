@@ -17,7 +17,7 @@ namespace SharedHome.Application.Bills.Services
             _houseGroupReadService = houseGroupReadService;
         }
 
-        public async Task<Bill> GetAsync(int id, string personId)
+        public async Task<Bill> GetAsync(Guid id, Guid personId)
         {
             if (await _houseGroupReadService.IsPersonInHouseGroup(personId))
             {

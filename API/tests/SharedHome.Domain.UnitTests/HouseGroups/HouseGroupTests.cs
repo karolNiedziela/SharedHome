@@ -2,6 +2,7 @@
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -53,7 +54,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            var exception = Record.Exception(() => houseGroup.RemoveMember("", ""));
+            var exception = Record.Exception(() => houseGroup.RemoveMember(Guid.NewGuid(), Guid.NewGuid()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<HouseGroupMemberNotFoundException>();
@@ -65,7 +66,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = HouseGroupProvider.GetWithMember(false);
 
             var exception = Record.Exception(() 
-                => houseGroup.RemoveMember(HouseGroupProvider.PersonId, ""));
+                => houseGroup.RemoveMember(HouseGroupProvider.PersonId, Guid.NewGuid()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<HouseGroupMemberIsNotOwnerException>();
@@ -77,7 +78,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = HouseGroupProvider.Get();
 
             var exception = Record.Exception(() 
-                => houseGroup.RemoveMember(HouseGroupProvider.PersonId, ""));
+                => houseGroup.RemoveMember(HouseGroupProvider.PersonId, Guid.NewGuid()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<HouseGroupMemberNotFoundException>();
@@ -88,7 +89,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            var memberToRemoveId = "";
+            var memberToRemoveId = Guid.NewGuid();
             houseGroup.AddMember(new HouseGroupMember
                 (
                 HouseGroupProvider.HouseGroupId, 
@@ -107,7 +108,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
             var houseGroup = HouseGroupProvider.GetWithMember(false);
 
             var exception = Record.Exception(() 
-                => houseGroup.HandOwnerRoleOver(HouseGroupProvider.PersonId, ""));
+                => houseGroup.HandOwnerRoleOver(HouseGroupProvider.PersonId, Guid.NewGuid()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<HouseGroupMemberIsNotOwnerException>();
@@ -118,7 +119,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            var secondPersonId = "";
+            var secondPersonId = Guid.NewGuid();
             houseGroup.AddMember(new HouseGroupMember
                 (
                 HouseGroupProvider.HouseGroupId, 
@@ -129,10 +130,10 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
 
             houseGroup.HandOwnerRoleOver(HouseGroupProvider.PersonId, secondPersonId);
 
-            oldOwnerId.ShouldBe(HouseGroupProvider.PersonId);
+            oldOwnerId.Value.ShouldBe(HouseGroupProvider.PersonId);
             
             var newOwnerId = houseGroup.Members.First(x => x.IsOwner).PersonId;
-            newOwnerId.ShouldBe("");
+            newOwnerId.Value.ShouldBe(secondPersonId);
         }
 
         [Fact]
@@ -149,7 +150,7 @@ namespace SharedHome.Domain.UnitTests.HouseGroups
         public void Leave_Should_Remove_Member_And_Set_New_Owner_When_Leaving_Member_Is_Owner()
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
-            houseGroup.AddMember(new HouseGroupMember(0, "secondMemberId"));
+            houseGroup.AddMember(new HouseGroupMember(Guid.NewGuid(), Guid.NewGuid()));
 
             houseGroup.Leave(HouseGroupProvider.PersonId);
 

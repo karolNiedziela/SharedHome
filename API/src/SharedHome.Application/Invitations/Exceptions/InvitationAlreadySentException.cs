@@ -11,12 +11,12 @@ namespace SharedHome.Application.Invitations.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
         [Order]
-        public int HouseGroupId { get; }
+        public Guid HouseGroupId { get; }
 
         [Order(1)]
-        public string RequestedToPersonId { get; }
+        public Guid RequestedToPersonId { get; }
 
-        public InvitationAlreadySentException(int houseGroupId, string requestedToPersonId) 
+        public InvitationAlreadySentException(Guid houseGroupId, Guid requestedToPersonId) 
             : base($"Invitation from house group with id '{houseGroupId}' already sent to person with id '{requestedToPersonId}'.")
         {
             HouseGroupId = houseGroupId;

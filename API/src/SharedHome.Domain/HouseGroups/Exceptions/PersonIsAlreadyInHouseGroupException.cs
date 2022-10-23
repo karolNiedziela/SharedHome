@@ -11,9 +11,9 @@ namespace SharedHome.Domain.HouseGroups.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
         [Order]
-        public string PersonId { get; }
+        public Guid PersonId { get; }
 
-        public PersonIsAlreadyInHouseGroupException(string personId) : base($"Person with id '{personId}' is already in house group.")
+        public PersonIsAlreadyInHouseGroupException(Guid personId) : base($"Person with id '{personId}' is already in house group.")
         {
             PersonId = personId;
         }

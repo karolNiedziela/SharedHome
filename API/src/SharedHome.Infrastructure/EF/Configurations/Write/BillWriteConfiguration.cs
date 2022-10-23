@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills.ValueObjects;
 using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Infrastructure.EF.Configurations.Write
 {
@@ -9,9 +11,12 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
     {
         public void Configure(EntityTypeBuilder<Bill> builder)
         {
-            builder.ToTable("Bill");
+            builder.ToTable("Bills");
 
             builder.HasKey(bill => bill.Id);
+
+            builder.Property(bill => bill.Id)
+                .HasConversion(billdId => billdId.Value, id => new BillId(id));
 
             builder.Property(bill => bill.PersonId)
                 .IsRequired();
@@ -22,6 +27,9 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
             builder.Property(bill => bill.BillType)
                    .HasColumnName("BillType")
                    .HasConversion<int>();
+
+            builder.Property(bill => bill.PersonId)
+                   .HasConversion(personId => personId.Value, id => new PersonId(id));
 
             builder.OwnsOne(bill => bill.ServiceProvider, navigation =>
             {

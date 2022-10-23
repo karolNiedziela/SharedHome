@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.Bills.Entities;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Repositories
@@ -14,10 +16,10 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _context = context;
         }
 
-        public async Task<Bill?> GetAsync(int id, string personId)
+        public async Task<Bill?> GetAsync(BillId id, PersonId personId)
             => await _context.Bills.SingleOrDefaultAsync(b => b.Id == id && b.PersonId == personId);
 
-        public async Task<Bill?> GetAsync(int id, IEnumerable<string> personIds)
+        public async Task<Bill?> GetAsync(BillId id, IEnumerable<PersonId> personIds)
             => await _context.Bills
              .SingleOrDefaultAsync(bill => bill.Id == id &&
              personIds.Contains(bill.PersonId));

@@ -15,7 +15,7 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _context = context;
         }      
 
-        public async Task<IEnumerable<AppNotification>> GetAllAsync(string personId, NotificationType? notificationType = null, TargetType? targetType = null)
+        public async Task<IEnumerable<AppNotification>> GetAllAsync(Guid personId, NotificationType? notificationType = null, TargetType? targetType = null)
         {
             var query = _context.Notifications.Where(x => x.PersonId == personId).AsQueryable();
 

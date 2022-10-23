@@ -2,7 +2,7 @@
 {
     internal class ShoppingListReadModel : BaseReadModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; } = default!;
 
@@ -12,6 +12,6 @@
 
         public PersonReadModel Person { get; set; } = default!;
 
-        public string PersonId { get; set; } = default!;
+        public Guid PersonId { get; set; } = default!;
     }
 }

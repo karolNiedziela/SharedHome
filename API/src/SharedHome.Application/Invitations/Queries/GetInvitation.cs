@@ -7,6 +7,6 @@ namespace SharedHome.Application.Invitations.Queries
 {
     public class GetInvitation : AuthorizeRequest, IQuery<Response<InvitationDto>>
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
     }
 }

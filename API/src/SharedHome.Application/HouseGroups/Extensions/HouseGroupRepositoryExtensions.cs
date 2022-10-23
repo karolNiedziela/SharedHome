@@ -7,7 +7,7 @@ namespace SharedHome.Application.HouseGroups.Extensions
     public static class HouseGroupRepositoryExtensions
     {
         public static async Task<HouseGroup> GetOrThrowAsync(this IHouseGroupRepository houseGroupRepository,
-            int houseGroupId, string personId)
+            Guid houseGroupId, Guid personId)
         {
             var houseGroup = await houseGroupRepository.GetAsync(houseGroupId, personId);
             if (houseGroup is null)

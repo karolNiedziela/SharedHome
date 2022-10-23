@@ -7,7 +7,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
 {
     public class UpdateShoppingListProductCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
 
         public string CurrentProductName { get; set; } = default!;
 

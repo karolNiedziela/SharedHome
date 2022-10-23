@@ -5,27 +5,27 @@ namespace SharedHome.Tests.Shared.Providers
 {
     public static class HouseGroupProvider
     {
-        public const string PersonId = "99c3dce2-54ca-48d6-a8cd-faca83168768";
+        public static readonly Guid PersonId = new("99c3dce2-54ca-48d6-a8cd-faca83168768");
+        public static readonly Guid HouseGroupId = new("56b47fac-bd9f-47b7-8ab3-13139f5cfd95");
         public const string DefaultHouseGroupName = "HouseGroup";
-        public const int HouseGroupId = 0;
 
         public static HouseGroup Get()
-            => HouseGroup.Create(DefaultHouseGroupName);
+            => HouseGroup.Create(HouseGroupId, DefaultHouseGroupName);
 
         public static HouseGroup GetWithMember(bool isOwner = true)
         {
-            var houseGroup =  HouseGroup.Create(DefaultHouseGroupName);
+            var houseGroup =  HouseGroup.Create(HouseGroupId, DefaultHouseGroupName);
             houseGroup.AddMember(new HouseGroupMember(HouseGroupId, PersonId, isOwner));
 
             return houseGroup;
         }
 
-        public static HouseGroup GetWithAdditionalMembers(int additionalMembersCount = 1)
+        public static HouseGroup GetWithAdditionalMembers(IEnumerable<Guid> memberIds)
         {
             var houseGroup = GetWithMember();
-            for (var i = 0; i < additionalMembersCount; i++)
+            foreach (var memberId in memberIds)
             {
-                houseGroup.AddMember(new HouseGroupMember(HouseGroupId, $"{PersonId}{i}"));
+                houseGroup.AddMember(new HouseGroupMember(HouseGroupId, memberId));
             }
 
             return houseGroup;
@@ -33,7 +33,7 @@ namespace SharedHome.Tests.Shared.Providers
 
         public static HouseGroup GetWithMembersLimit()
         {
-            var houseGroup = GetWithAdditionalMembers(4);
+            var houseGroup = GetWithAdditionalMembers(new Guid[] { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() });
 
             return houseGroup;
         }

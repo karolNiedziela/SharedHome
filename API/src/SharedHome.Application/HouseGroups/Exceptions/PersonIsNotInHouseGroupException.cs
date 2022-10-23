@@ -11,12 +11,12 @@ namespace SharedHome.Application.HouseGroups.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 
         [Order]
-        public string PersonId { get; }
+        public Guid PersonId { get; }
 
         [Order(1)]
-        public int HouseGroupId { get; }
+        public Guid HouseGroupId { get; }
 
-        public PersonIsNotInHouseGroupException(string personId, int houseGroupId) 
+        public PersonIsNotInHouseGroupException(Guid personId, Guid houseGroupId) 
             : base($"Person with id '{personId}' is not in house group with id '{houseGroupId}'")
         {
             PersonId = personId;

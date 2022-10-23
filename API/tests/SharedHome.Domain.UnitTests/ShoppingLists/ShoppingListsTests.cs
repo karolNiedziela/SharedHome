@@ -6,6 +6,7 @@ using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -20,7 +21,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         public void Create_Throws_EmptyShoppingListNameException_When_ShoppingListName_Is_NullOrWhiteSpace(string shoppingListName)
         {
             var exception = Record.Exception(() 
-                => ShoppingList.Create(shoppingListName, ShoppingListProvider.PersonId));
+                => ShoppingList.Create(Guid.NewGuid(), shoppingListName, ShoppingListProvider.PersonId));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<EmptyShoppingListNameException>();
@@ -30,12 +31,11 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
         public void Create_Throws_TooLongShoppingListNameException_When_ShoppingListName_Is_Longer_Than_20_Characters()
         {
             var exception = Record.Exception(() 
-                => ShoppingList.Create(new string('k', 25), ShoppingListProvider.PersonId));
+                => ShoppingList.Create(Guid.NewGuid(), new string('k', 25), ShoppingListProvider.PersonId));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<TooLongShoppingListNameException>();
         }
-
 
         [Theory]
         [InlineData(null)]

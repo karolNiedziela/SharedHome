@@ -119,7 +119,7 @@ namespace SharedHome.IntegrationTests.Controllers
             var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "zł"), isBought: true);
             ProviderNew(shoppingList);
 
-            Authorize(userId: shoppingList.PersonId);
+            Authorize(userId: shoppingList.PersonId.Value);
 
             var command = new CancelPurchaseOfProductCommand
             {
@@ -139,7 +139,7 @@ namespace SharedHome.IntegrationTests.Controllers
             var shoppingList = ShoppingListProvider.GetWithProduct(price: new Money(100m, "zł"), isBought: true);
             ProviderNew(shoppingList);
 
-            Authorize(userId: shoppingList.PersonId);
+            Authorize(userId: shoppingList.PersonId.Value);
 
             var command = new ChangePriceOfProductCommand
             {
@@ -160,7 +160,7 @@ namespace SharedHome.IntegrationTests.Controllers
             var shoppingList = ShoppingListProvider.GetEmpty();
             ProviderNew(shoppingList);
 
-            Authorize(userId: shoppingList.PersonId);
+            Authorize(userId: shoppingList.PersonId.Value);
 
             var command = new SetIsShoppingListDoneCommand
             {
@@ -184,7 +184,7 @@ namespace SharedHome.IntegrationTests.Controllers
 
             var command = new UpdateShoppingListCommand
             {
-                Id = shoppingList.Id,
+                ShoppingListId = shoppingList.Id.Value,
                 Name = "NewShoppingList"
             };
 

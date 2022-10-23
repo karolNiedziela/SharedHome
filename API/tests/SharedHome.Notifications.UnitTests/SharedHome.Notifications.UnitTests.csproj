@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\SharedHome.Api\SharedHome.Api.csproj" />
     <ProjectReference Include="..\..\src\SharedHome.Notifications\SharedHome.Notifications.csproj" />
+    <ProjectReference Include="..\SharedHome.Tests.Shared\SharedHome.Tests.Shared.csproj" />
   </ItemGroup>
 
 </Project>

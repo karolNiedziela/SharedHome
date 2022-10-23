@@ -1,12 +1,11 @@
 ﻿using SharedHome.Domain.Persons.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.Persons.Aggregates
 {
-    public class Person : Entity, IAggregateRoot
+    public class Person : AggregateRoot<PersonId>
     {
-        public string Id { get; set; } = default!;
-
         public FirstName FirstName { get; private set; } = default!;
 
         public LastName LastName { get; private set; } = default!;
@@ -18,7 +17,7 @@ namespace SharedHome.Domain.Persons.Aggregates
 
         }
 
-        private Person(string id, FirstName firstName, LastName lastName, Email email)
+        private Person(PersonId id, FirstName firstName, LastName lastName, Email email)
         {
             Id = id;
             FirstName = firstName;
@@ -26,7 +25,7 @@ namespace SharedHome.Domain.Persons.Aggregates
             Email = email;
         }
 
-        public static Person Create(string id, FirstName firstName, LastName lastName, Email email)
+        public static Person Create(PersonId id, FirstName firstName, LastName lastName, Email email)
             => new(id, firstName, lastName, email);
     }
 }

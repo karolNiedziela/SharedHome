@@ -4,6 +4,6 @@ namespace SharedHome.Domain.Bills.Services
 {
     public interface IBillService
     {
-        Task<Bill> GetAsync(int id, string personId);
+        Task<Bill> GetAsync(Guid id, Guid personId);
     }
 }

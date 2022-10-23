@@ -30,7 +30,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                 var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
 
                 var billsFromHouseGroup = await _bills
-                    .SingleOrDefaultAsync(bill => bill.Id == request.Id && houseGroupPersonIds.Contains(bill.PersonId!));
+                    .SingleOrDefaultAsync(bill => bill.Id == request.Id && houseGroupPersonIds.Contains(bill.PersonId));
 
                 return new Response<BillDto>(_mapper.Map<BillDto>(billsFromHouseGroup!));
             }

@@ -3,5 +3,5 @@ using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Application.ShoppingLists.Events
 {
-    public record ShoppingListCreated(int ShoppingListId, string ShoppingListName, CreatorDto Creator) : IDomainEvent;    
+    public record ShoppingListCreated(Guid ShoppingListId, string ShoppingListName, CreatorDto Creator) : IDomainEvent;    
 }

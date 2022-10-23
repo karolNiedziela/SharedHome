@@ -7,7 +7,7 @@ namespace SharedHome.Application.Bills.Commands.UpdateBill
 {
     public class UpdateBillCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int Id { get; set; }
+        public Guid BillId { get; set; }
 
         public int BillType { get; set; }
 

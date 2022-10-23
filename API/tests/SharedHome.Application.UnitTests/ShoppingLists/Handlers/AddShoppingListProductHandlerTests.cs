@@ -11,6 +11,7 @@ using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new AddShoppingListProductsCommand
             {
-                ShoppingListId = 1,
+                ShoppingListId = ShoppingListProvider.ShoppingListId,
                 Products = new List<AddShoppingListProductDto>
                 {
                     new AddShoppingListProductDto
@@ -52,7 +53,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 }              
             };
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(ShoppingListProvider.GetEmpty());
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(ShoppingListProvider.GetEmpty());
 
             await _commandHandler.Handle(command, default);
 

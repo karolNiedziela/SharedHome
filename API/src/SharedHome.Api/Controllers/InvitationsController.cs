@@ -19,7 +19,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.Invitations.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<InvitationDto>>> GetAsync(int houseGroupId)
+        public async Task<ActionResult<Response<InvitationDto>>> GetAsync(Guid houseGroupId)
         {
             var invitation = await Mediator.Send(new GetInvitation
             {

@@ -8,6 +8,7 @@ using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Handlers.Bills;
 using SharedHome.Notifications.Repositories;
 using SharedHome.Notifications.Services;
+using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,58 +34,58 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var billCreated = new BillCreated(1, "Test", new CreatorDto("", "", ""));
+            var billCreated = new BillCreated(BillProvider.BillId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
 
             var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>()).Returns(false);
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(false);
 
             await _notificationHandler.Handle(domainEvent, default);
 
             await _notificationRepository.ReceivedWithAnyArgs(0).AddAsync(Arg.Any<AppNotification>());
-            await _appNotificationService.ReceivedWithAnyArgs(0).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<string>(), Arg.Any<string>());
+            await _appNotificationService.ReceivedWithAnyArgs(0).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>());
         }
 
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var billCreated = new BillCreated(1, "Test", new CreatorDto("", "", ""));
+            var billCreated = new BillCreated(BillProvider.BillId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
 
             var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>())
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreator(Arg.Any<string>())
-                .Returns(Array.Empty<string>());
+            _houseGroupReadService.GetMemberPersonIdsExcludingCreator(Arg.Any<Guid>())
+                .Returns(Array.Empty<Guid>());
 
             await _notificationHandler.Handle(domainEvent, default);
 
             await _notificationRepository.ReceivedWithAnyArgs(0).AddAsync(Arg.Any<AppNotification>());
-            await _appNotificationService.ReceivedWithAnyArgs(0).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<string>(), Arg.Any<string>());
+            await _appNotificationService.ReceivedWithAnyArgs(0).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>());
         }
 
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var billCreated = new BillCreated(1, "Test", new CreatorDto("", "", ""));
+            var billCreated = new BillCreated(BillProvider.BillId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
 
             var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<string>())
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreator(Arg.Any<string>())
-               .Returns(new List<string>
+            _houseGroupReadService.GetMemberPersonIdsExcludingCreator(Arg.Any<Guid>())
+               .Returns(new List<Guid>
                {
-                   "1",
-                   "2"
+                   Guid.NewGuid(),
+                   Guid.NewGuid(),
                });
 
             await _notificationHandler.Handle(domainEvent, default);
 
             await _notificationRepository.Received(2).AddAsync(Arg.Any<AppNotification>());
-            await _appNotificationService.Received(2).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>());
+            await _appNotificationService.Received(2).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>(), Arg.Any<string>());
         }
     }
 }

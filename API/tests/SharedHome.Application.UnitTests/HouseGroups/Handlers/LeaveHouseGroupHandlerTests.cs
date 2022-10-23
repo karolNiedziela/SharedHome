@@ -6,6 +6,7 @@ using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,7 +28,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var houseGroup = HouseGroupProvider.GetWithMember();
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(houseGroup);
+            _houseGroupRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(houseGroup);
 
             var command = new LeaveHouseGroupCommand
             {
@@ -43,9 +44,9 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Call_Update_Repository_Method_When_Members_Count_Is_Greater_Than_Zero()
         {
-            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers();
+            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(new Guid[] { Guid.NewGuid() });
 
-            _houseGroupRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(houseGroup);
+            _houseGroupRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(houseGroup);
 
             var command = new LeaveHouseGroupCommand
             {

@@ -4,6 +4,7 @@ using SharedHome.Application.Invitations.Extensions;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -23,7 +24,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Extensions
         public async Task GetOrThrowAsync_Throws_InvitationNotFoundException_When_Invitation_Does_Not_Exist()
         {
             var exception = await Record.ExceptionAsync(() =>
-                _invitationRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()));
+                _invitationRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvitationNotFoundException>();
@@ -34,13 +35,13 @@ namespace SharedHome.Application.UnitTests.Invitations.Extensions
         {
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _invitationRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(invitation);
 
-            var returnedInvitation = await _invitationRepository.GetAsync(1, "personId");
+            var returnedInvitation = await _invitationRepository.GetAsync(InvitationProvider.InvitationId, Guid.NewGuid());
 
             invitation.ShouldNotBeNull();
-            returnedInvitation!.HouseGroupId.ShouldBe(1);
+            returnedInvitation!.HouseGroupId.ShouldBe(invitation.HouseGroupId);
         }
     }
 }

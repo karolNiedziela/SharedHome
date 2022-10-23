@@ -22,7 +22,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.Bills.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<BillDto>>> GetBillAsync(int billId)
+        public async Task<ActionResult<Response<BillDto>>> GetBillAsync(Guid billId)
         {
             var bill = await Mediator.Send(new GetBill
             {
@@ -148,7 +148,7 @@ namespace SharedHome.Api.Controllers
         [HttpDelete(ApiRoutes.Bills.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteBillAsync(int billId)
+        public async Task<IActionResult> DeleteBillAsync(Guid billId)
         {
             await Mediator.Send(new DeleteBillCommand
             {

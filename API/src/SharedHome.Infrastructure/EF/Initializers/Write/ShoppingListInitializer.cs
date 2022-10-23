@@ -29,22 +29,22 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
 
         private static List<ShoppingList> GetShoppingLists()
         {
-            var firstShoppingList = ShoppingList.Create("Lidl", InitializerConstants.CharlesUserId);
+            var firstShoppingList = ShoppingList.Create(Guid.NewGuid(), "Lidl", InitializerConstants.CharlesUserId);
             firstShoppingList.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             firstShoppingList.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             firstShoppingList.AddProducts(GetProducts());
 
-            var secondShoppingList = ShoppingList.Create("Biedronka", InitializerConstants.CharlesUserId);
+            var secondShoppingList = ShoppingList.Create(Guid.NewGuid(), "Biedronka", InitializerConstants.CharlesUserId);
             secondShoppingList.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             secondShoppingList.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             secondShoppingList.AddProducts(GetProducts());
 
-            var thirdShoppingList = ShoppingList.Create("Rossman", InitializerConstants.FrancUserId);
+            var thirdShoppingList = ShoppingList.Create(Guid.NewGuid(), "Rossman", InitializerConstants.FrancUserId);
             thirdShoppingList.CreatedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             thirdShoppingList.ModifiedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             thirdShoppingList.AddProducts(GetProducts());
 
-            var fourthShoppingList = ShoppingList.Create("Tesco", InitializerConstants.FrancUserId);
+            var fourthShoppingList = ShoppingList.Create(Guid.NewGuid(), "Tesco", InitializerConstants.FrancUserId);
             fourthShoppingList.CreatedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             fourthShoppingList.ModifiedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             fourthShoppingList.AddProducts(GetProducts());

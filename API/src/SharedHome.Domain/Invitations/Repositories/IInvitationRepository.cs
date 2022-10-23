@@ -1,12 +1,13 @@
 ﻿using SharedHome.Domain.Invitations.Aggregates;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.Invitations.Repositories
 {
     public interface IInvitationRepository
     {
-        Task<Invitation?> GetAsync(int houseGroupId, string personId);
+        Task<Invitation?> GetAsync(HouseGroupId houseGroupId, PersonId personId);
 
-        Task<IEnumerable<Invitation>> GetAllAsync(int houseGroupId);
+        Task<IEnumerable<Invitation>> GetAllAsync(HouseGroupId houseGroupId);
 
         Task AddAsync(Invitation invitation);
 

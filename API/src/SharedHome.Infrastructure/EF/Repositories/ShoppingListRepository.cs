@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Repositories
@@ -13,12 +15,12 @@ namespace SharedHome.Infrastructure.EF.Repositories
         {
             _context = context;
         }
-        public async Task<ShoppingList?> GetAsync(int id, string personId)
+        public async Task<ShoppingList?> GetAsync(ShoppingListId id, PersonId personId)
             => await _context.ShoppingLists
             .Include(shoppingList => shoppingList.Products)
             .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id && shoppingList.PersonId == personId);
 
-        public async Task<ShoppingList?> GetAsync(int id, IEnumerable<string> personIds)
+        public async Task<ShoppingList?> GetAsync(ShoppingListId id, IEnumerable<PersonId> personIds)
             => await _context.ShoppingLists
                    .Include(shoppingList => shoppingList.Products)
                     .SingleOrDefaultAsync(shoppingList => shoppingList.Id == id &&

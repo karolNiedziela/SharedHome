@@ -5,11 +5,9 @@ using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.ShoppingLists.Aggregates
 {
-    public class ShoppingList : Entity, IAggregateRoot
+    public class ShoppingList : AggregateRoot<ShoppingListId>
     {
         private readonly List<ShoppingListProduct> _products = new();
-
-        public int Id { get; private set; }
 
         public ShoppingListName Name { get; private set; } = default!;
 
@@ -18,15 +16,16 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
 
         public IEnumerable<ShoppingListProduct> Products => _products;
 
-        public string PersonId { get; private set; } = default!;
+        public PersonId PersonId { get; private set; } = default!;
 
         private ShoppingList()
         {
 
         }
 
-        private ShoppingList(ShoppingListName name, string personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
+        private ShoppingList(ShoppingListId id, ShoppingListName name, PersonId personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
         {
+            Id = id;
             Name = name;
             PersonId = personId;
             IsDone = isDone;
@@ -34,8 +33,8 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             AddProducts(products);
         }
 
-        public static ShoppingList Create(ShoppingListName name, string personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
-            => new (name, personId, isDone, products);
+        public static ShoppingList Create(ShoppingListId id, ShoppingListName name, PersonId personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
+            => new (id, name, personId, isDone, products);
 
         public void ChangeName(ShoppingListName shoppingListName)
         {

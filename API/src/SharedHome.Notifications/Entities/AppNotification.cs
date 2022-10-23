@@ -7,7 +7,7 @@ namespace SharedHome.Notifications.Entities
     {
         public int Id { get; private set; }
 
-        public string PersonId { get; set; } = default!;
+        public Guid PersonId { get; set; } = default!;
 
         public string Title { get; set; } = default!;
 
@@ -34,7 +34,7 @@ namespace SharedHome.Notifications.Entities
 
         }
 
-        public AppNotification(string personId, string title, TargetType targetType, OperationType operationType, NotificationType? notificationType = null)
+        public AppNotification(Guid personId, string title, TargetType targetType, OperationType operationType, NotificationType? notificationType = null)
         {
             PersonId = personId;
             Title = title;
@@ -44,7 +44,7 @@ namespace SharedHome.Notifications.Entities
             IsRead = false;
         }
 
-        public AppNotification(string personId, string title, string message, TargetType targetType, OperationType operationType, NotificationType? notificationType = null)
+        public AppNotification(Guid personId, string title, string message, TargetType targetType, OperationType operationType, NotificationType? notificationType = null)
         {
             PersonId = personId;
             Title = title;

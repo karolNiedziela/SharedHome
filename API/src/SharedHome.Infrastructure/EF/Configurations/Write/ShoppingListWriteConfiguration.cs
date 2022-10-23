@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists.ValueObjects;
 
 namespace SharedHome.Infrastructure.EF.Configurations.Write
 {
@@ -9,12 +11,16 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
     {
         public void Configure(EntityTypeBuilder<ShoppingList> builder)
         {
-            builder.ToTable("ShoppingList");
+            builder.ToTable("ShoppingLists");
 
             builder.HasKey(shoppingList => shoppingList.Id);
 
+            builder.Property(shoppingList => shoppingList.Id)
+                .HasConversion(id => id.Value, id => new ShoppingListId(id));
+
             builder.Property(shoppingList => shoppingList.PersonId)
-                   .IsRequired();
+                   .IsRequired()
+                   .HasConversion(personId => personId.Value, id => new PersonId(id));
 
             builder.OwnsOne(shoppingList => shoppingList.Name, navigation =>
             {
@@ -28,9 +34,9 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
             builder.OwnsMany(shoppingList => shoppingList.Products, navigation =>
             {
-                navigation.ToTable("ShoppingListProduct");
+                navigation.ToTable("ShoppingListProducts");
 
-                navigation.Property<int>("Id");
+                navigation.Property<Guid>("Id");
 
                 navigation.OwnsOne(product => product.Name, navigation =>
                 {

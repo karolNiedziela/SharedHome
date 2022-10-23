@@ -13,9 +13,9 @@ namespace SharedHome.Domain.ShoppingLists.Exceptions
         [Order]
         public string ProductName { get; }
 
-        public int ShoppingListId { get; }
+        public Guid ShoppingListId { get; }
 
-        public ShoppingListProductAlreadyExistsException(string productName, int shoppingListId) 
+        public ShoppingListProductAlreadyExistsException(string productName, Guid shoppingListId) 
             : base($"Shopping list product with name '{productName}' already added to shopping list with id '{shoppingListId}'.")
         {
             ProductName = productName;

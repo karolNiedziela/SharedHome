@@ -6,8 +6,8 @@ namespace SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember
 {
     public class RemoveHouseGroupMemberCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
 
-        public string PersonToRemoveId { get; set; } = default!;
+        public Guid PersonToRemoveId { get; set; } = default!;
     }
 }

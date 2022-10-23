@@ -10,6 +10,7 @@ using SharedHome.Shared.Abstractions.Authentication;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Authentication;
 using SharedHome.Shared.Time;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -35,7 +36,7 @@ namespace SharedHome.IntegrationTests.Controllers
             Client = app.Client;
         }
 
-        protected AuthenticationResponse Authorize(string userId = "userId", string firstName = "firstName", string lastName = "lastName", string email = "test@email.com", IEnumerable<string>? roles = null)
+        protected AuthenticationResponse Authorize(Guid userId, string firstName = "firstName", string lastName = "lastName", string email = "test@email.com", IEnumerable<string>? roles = null)
         {
             if (roles is null)
             {
@@ -45,7 +46,7 @@ namespace SharedHome.IntegrationTests.Controllers
                 };
             }
 
-            var jwt = _authManager.Authenticate(userId, firstName, lastName, email, roles);
+            var jwt = _authManager.Authenticate(userId.ToString(), firstName, lastName, email, roles);
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt.AccessToken);
 
             return jwt;

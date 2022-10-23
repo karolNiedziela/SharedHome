@@ -2,7 +2,7 @@
 {
     internal class BillReadModel : BaseReadModel
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public int BillType { get; set; }
 
@@ -16,7 +16,7 @@
 
         public DateTime DateOfPayment { get; set; }
 
-        public string PersonId { get; set; } = default!;
+        public Guid PersonId { get; set; } = default!;
 
         public PersonReadModel Person { get; set; } = default!;
     }

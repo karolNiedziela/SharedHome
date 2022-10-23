@@ -7,6 +7,7 @@ using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -30,7 +31,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new DeleteManyShoppingListProductsCommand
             {
-                ShoppingListId = 0,
+                ShoppingListId = ShoppingListProvider.ShoppingListId,
                 ProductNames = new[] { "Produkt1", "Produkt3" }
             };
 
@@ -39,7 +40,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             shoppingList.AddProduct(new ShoppingListProduct("Produkt2", 1));
             shoppingList.AddProduct(new ShoppingListProduct("Produkt3", 1));
 
-            _shoppingListService.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(shoppingList);
 
             await _commandHandler.Handle(command, default);

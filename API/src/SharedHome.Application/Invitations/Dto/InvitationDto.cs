@@ -5,13 +5,13 @@ namespace SharedHome.Application.Invitations.Dto
 {
     public class InvitationDto
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
 
         public string HouseGroupName { get; set; } = default!;
 
-        public string RequestedByPersonId { get; set; } = default!;
+        public Guid RequestedByPersonId { get; set; } = default!;
 
-        public string RequestedToPersonId { get; set; } = default!;
+        public Guid RequestedToPersonId { get; set; } = default!;
 
         public string InvitationStatus { get; set; } = default!;
 

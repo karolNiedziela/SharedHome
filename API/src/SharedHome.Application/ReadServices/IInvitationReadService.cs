@@ -2,6 +2,6 @@
 {
     public interface IInvitationReadService
     {
-        Task<bool> IsAnyInvitationFromHouseGroupToPerson(int houseGroupId, string requestedToPersonId);
+        Task<bool> IsAnyInvitationFromHouseGroupToPerson(Guid houseGroupId, Guid requestedToPersonId);
     }
 }

@@ -19,7 +19,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProducts
 
         public async Task<Unit> Handle(PurchaseProductsCommand request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
             var priceByProductNames = request.PriceByProductNames.ToDictionary(x => x.Key,
                 x => new Money(x.Value.Price, x.Value.Currency));

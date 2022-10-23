@@ -6,6 +6,6 @@ namespace SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup
 {
     public class LeaveHouseGroupCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int HouseGroupId { get; set; }
+        public Guid HouseGroupId { get; set; }
     }
 }

@@ -19,13 +19,13 @@ namespace SharedHome.Shared.User
             _context = contextAccessor.HttpContext!;
         }
 
-        public string UserId 
+        public Guid UserId 
         { 
             get
             {
                 var userId = _context?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                return string.IsNullOrWhiteSpace(userId) ? string.Empty : userId;
+                return string.IsNullOrWhiteSpace(userId) ? Guid.Empty : new Guid(userId);
             }
         }
 

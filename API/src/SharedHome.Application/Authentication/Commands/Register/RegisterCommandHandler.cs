@@ -49,7 +49,7 @@ namespace SharedHome.Application.Authentication.Commands.Register
 
             await _userManager.AddToRoleAsync(applicationUser, AppIdentityConstants.Roles.User);
 
-            var person = Person.Create(applicationUser.Id, applicationUser.FirstName, applicationUser.LastName, applicationUser.Email);
+            var person = Person.Create(new Guid(applicationUser.Id), applicationUser.FirstName, applicationUser.LastName, applicationUser.Email);
             await _personRepository.AddAsync(person);
             _logger.LogInformation("Person with id '{userId}' created.", person.Id);
 

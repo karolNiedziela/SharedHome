@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Infrastructure.EF.Configurations.Write
 {
@@ -8,9 +10,12 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.ToTable("Person");
+            builder.ToTable("Persons");
 
             builder.Property(person => person.Id).ValueGeneratedNever();
+
+            builder.Property(person => person.Id)
+                .HasConversion(personId => personId.Value, id => new PersonId(id));
 
             builder.OwnsOne(person => person.FirstName, navigation =>
             {

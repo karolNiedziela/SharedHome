@@ -51,11 +51,11 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
 
         private async Task AddDefaultUsersWithRoles()
         {
-            if(await _userManager.FindByIdAsync(InitializerConstants.AdminUserId) is null)
+            if(await _userManager.FindByIdAsync(InitializerConstants.AdminUserId.ToString()) is null)
             {
                 var administrator = new ApplicationUser
                 {
-                    Id = InitializerConstants.AdminUserId,
+                    Id = InitializerConstants.AdminUserId.ToString(),
                     FirstName = InitializerConstants.AdminFirstName,
                     LastName = InitializerConstants.AdminLastName,
                     EmailConfirmed = true,
@@ -71,11 +71,11 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
                 await _userManager.AddToRoleAsync(administrator, AppIdentityConstants.Roles.Administrator);
             }
 
-            if (await _userManager.FindByIdAsync(InitializerConstants.CharlesUserId) is null)
+            if (await _userManager.FindByIdAsync(InitializerConstants.CharlesUserId.ToString()) is null)
             {
                 var charles = new ApplicationUser
                 {
-                    Id = InitializerConstants.CharlesUserId,
+                    Id = InitializerConstants.CharlesUserId.ToString(),
                     FirstName = InitializerConstants.CharlesFirstName,
                     LastName = InitializerConstants.CharlesLastName,
                     EmailConfirmed = true,
@@ -91,11 +91,11 @@ namespace SharedHome.Infrastructure.EF.Initializers.Identity
                 await _userManager.AddToRoleAsync(charles, AppIdentityConstants.Roles.Administrator);
             }
 
-            if (await _userManager.FindByIdAsync(InitializerConstants.FrancUserId) is null)
+            if (await _userManager.FindByIdAsync(InitializerConstants.FrancUserId.ToString()) is null)
             {
                 var franc = new ApplicationUser
                 {
-                    Id = InitializerConstants.FrancUserId,
+                    Id = InitializerConstants.FrancUserId.ToString(),
                     FirstName = InitializerConstants.FrancFirstName,
                     LastName = InitializerConstants.FrancLastName,
                     EmailConfirmed = true,

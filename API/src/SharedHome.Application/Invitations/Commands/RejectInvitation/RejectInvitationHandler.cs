@@ -16,7 +16,7 @@ namespace SharedHome.Application.Invitations.Commands.RejectInvitation
 
         public async Task<Unit> Handle(RejectInvitationCommand request, CancellationToken cancellationToken)
         {
-            var invitation = await _invitationRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
+            var invitation = await _invitationRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
 
             invitation.Reject();
 

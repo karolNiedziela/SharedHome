@@ -15,7 +15,7 @@ namespace SharedHome.Infrastructure.EF.ReadServices
             _invitations = context.Invitations;
         }
 
-        public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(int houseGroupId, string requestedToPersonId)
+        public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(Guid houseGroupId, Guid requestedToPersonId)
            => await _invitations.AnyAsync(invitation => invitation.HouseGroupId == houseGroupId &&
            invitation.RequestedToPersonId == requestedToPersonId);
     }

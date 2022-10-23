@@ -22,10 +22,14 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
 
         public async Task<Unit> Handle(UpdateShoppingListProductCommand request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
 
-            var netContent = request.NetContent == null ? null : new NetContent(request.NetContent.NetContent, request.NetContent.NetContentType.HasValue ?  EnumHelper.ToEnumByIntOrThrow<NetContentType>(request.NetContent.NetContentType.Value) : null);
+            var netContent = request.NetContent == null ? null 
+                : new NetContent(request.NetContent.NetContent, 
+                    request.NetContent.NetContentType.HasValue 
+                        ? EnumHelper.ToEnumByIntOrThrow<NetContentType>(request.NetContent.NetContentType.Value) 
+                        : null);
 
             var shoppingListProduct = new ShoppingListProduct(request.NewProductName,
                                                               request.Quantity,

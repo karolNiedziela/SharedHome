@@ -16,9 +16,9 @@ namespace SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver
 
         public async Task<Unit> Handle(HandOwnerRoleOverCommand request, CancellationToken cancellationToken)
         {
-            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
+            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
 
-            houseGroup.HandOwnerRoleOver(request.PersonId!, request.NewOwnerPersonId);
+            houseGroup.HandOwnerRoleOver(request.PersonId, request.NewOwnerPersonId);
 
             await _houseGroupRepository.UpdateAsync(houseGroup);
 

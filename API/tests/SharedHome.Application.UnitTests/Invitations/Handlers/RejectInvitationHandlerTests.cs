@@ -6,6 +6,7 @@ using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,13 +28,13 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var invitation = InvitationProvider.Get();
 
-            _invitationRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _invitationRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(invitation);
 
             var command = new RejectInvitationCommand
             {
-                HouseGroupId = 1,
-                PersonId = "personId"
+                HouseGroupId = InvitationProvider.HouseGroupId,
+                PersonId = Guid.NewGuid()
             };
 
             await _commandHandler.Handle(command, default);

@@ -17,7 +17,7 @@ namespace SharedHome.Application.ShoppingLists.Services
             _houseGroupReadService = houseGroupReadService;
         }
 
-        public async Task<ShoppingList> GetAsync(int shoppingListId, string personId)
+        public async Task<ShoppingList> GetAsync(Guid shoppingListId, Guid personId)
         {
             if (await _houseGroupReadService.IsPersonInHouseGroup(personId))
             {

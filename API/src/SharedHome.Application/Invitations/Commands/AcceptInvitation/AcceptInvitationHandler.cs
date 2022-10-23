@@ -26,19 +26,19 @@ namespace SharedHome.Application.Invitations.Commands.AcceptInvitation
 
         public async Task<Unit> Handle(AcceptInvitationCommand request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupReadService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupReadService.IsPersonInHouseGroup(request.PersonId))
             {
-                throw new PersonIsAlreadyInHouseGroupException(request.PersonId!);
+                throw new PersonIsAlreadyInHouseGroupException(request.PersonId);
             }
 
-            var invitation = await _invitationRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
+            var invitation = await _invitationRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
 
             invitation.Accept();
 
             await _invitationRepository.UpdateAsync(invitation);
 
-            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(invitation.HouseGroupId, request.PersonId!);
-            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, request.PersonId!));
+            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(invitation.HouseGroupId, request.PersonId);
+            houseGroup.AddMember(new HouseGroupMember(houseGroup.Id, request.PersonId));
 
             await _houseGroupRepository.UpdateAsync(houseGroup);
 

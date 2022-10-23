@@ -6,6 +6,6 @@ namespace SharedHome.Application.Bills.Commands.CancelBillPayment
 {
     public class CancelBillPaymentCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int BillId { get; set; }
+        public Guid BillId { get; set; }
     }
 }

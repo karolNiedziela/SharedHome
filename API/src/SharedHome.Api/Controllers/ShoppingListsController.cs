@@ -27,7 +27,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.ShoppingLists.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(int shoppingListId)
+        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(Guid shoppingListId)
         {
             var shoppingList = await Mediator.Send(new GetShoppingList
             {
@@ -184,7 +184,7 @@ namespace SharedHome.Api.Controllers
         [HttpDelete(ApiRoutes.ShoppingLists.Delete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteShoppingList(int shoppingListId)
+        public async Task<IActionResult> DeleteShoppingList(Guid shoppingListId)
         {
             await Mediator.Send(new DeleteShoppingListCommand
             {
@@ -200,7 +200,7 @@ namespace SharedHome.Api.Controllers
         [HttpDelete(ApiRoutes.ShoppingLists.DeleteShoppingListProduct)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteShoppingListProduct(int shoppingListId, string productName)
+        public async Task<IActionResult> DeleteShoppingListProduct(Guid shoppingListId, string productName)
         {
             await Mediator.Send(new DeleteShoppingListProductCommand
             {

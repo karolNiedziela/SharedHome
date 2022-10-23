@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.Persons.Aggregates;
 using SharedHome.Domain.Persons.Repositories;
+using SharedHome.Domain.Persons.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Repositories
@@ -14,11 +16,11 @@ namespace SharedHome.Infrastructure.EF.Repositories
             _context = context;
         }
 
-        public async Task<Person?> GetAsync(string id)
+        public async Task<Person?> GetAsync(PersonId id)
             => await _context.Persons.SingleOrDefaultAsync(person => person.Id == id);
 
-        public async Task<Person?> GetByEmailAsync(string email)
-            => await _context.Persons.SingleOrDefaultAsync(person => person.Email.Value == email);
+        public async Task<Person?> GetByEmailAsync(Email email)
+            => await _context.Persons.SingleOrDefaultAsync(person => person.Email == email);
 
         public async Task AddAsync(Person person)
         {

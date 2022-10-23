@@ -16,6 +16,7 @@ using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
@@ -50,7 +51,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
                 .Returns(person);
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(false);
 
             var exception = await Record.ExceptionAsync(() => 
@@ -67,10 +68,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
                 .Returns(person);
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(true);
 
-            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
+            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(true);
 
             var exception = await Record.ExceptionAsync(() =>
@@ -87,16 +88,16 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<string>())
                 .Returns(person);
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<string>(), Arg.Any<int>())
+            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
              .Returns(true);
 
-            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<int>(), Arg.Any<string>())
+            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(false);
 
             var command = new SendInvitationCommand
             {
-                HouseGroupId = 1,
-                PersonId = "personId",
+                HouseGroupId = InvitationProvider.HouseGroupId,
+                PersonId = InvitationProvider.RequestedToPersonId,
                 RequestedToPersonEmail = "email@email.com",
             };
 

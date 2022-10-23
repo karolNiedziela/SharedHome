@@ -18,7 +18,7 @@ namespace SharedHome.Application.Bills.Commands.DeleteBill
 
         public async Task<Unit> Handle(DeleteBillCommand request, CancellationToken cancellationToken)
         {
-            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId);
 
             await _billRepository.DeleteAsync(bill);
 

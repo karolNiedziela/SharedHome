@@ -16,7 +16,7 @@ namespace SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup
 
         public async Task<Unit> Handle(LeaveHouseGroupCommand request, CancellationToken cancellationToken)
         {
-            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId!);
+            var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
 
             houseGroup.Leave(request.PersonId!);
 

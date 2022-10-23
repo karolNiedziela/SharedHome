@@ -9,6 +9,7 @@ using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -32,15 +33,15 @@ namespace SharedHome.Application.UnitTests.Bills.AddHouseGroup
         {
             var bill = BillProvider.Get(billCost: new Money(100m, "zł"), isPaid: true);
 
-            _billService.GetAsync(Arg.Any<int>(), Arg.Any<string>()).Returns(bill);
+            _billService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(bill);
 
             var command = new UpdateBillCommand
             {
-                Id = 0,
+                BillId = BillProvider.BillId,
                 PersonId = BillProvider.PersonId,
                 BillType = 1,
                 Cost = new MoneyDto(200, "zł"),
-                DateOfPayment = bill.DateOfPayment,
+                DateOfPayment = bill.DateOfPayment.ToDateTime(TimeOnly.MinValue),
                 ServiceProviderName = "PGE",
             };
 

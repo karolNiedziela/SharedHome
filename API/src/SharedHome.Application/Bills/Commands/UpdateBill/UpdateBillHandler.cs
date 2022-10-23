@@ -21,13 +21,13 @@ namespace SharedHome.Application.Bills.Commands.UpdateBill
 
         public async Task<Unit> Handle(UpdateBillCommand request, CancellationToken cancellationToken)
         {
-            var bill = await _billService.GetAsync(request.Id, request.PersonId!);
+            var bill = await _billService.GetAsync(request.BillId, request.PersonId!);
 
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
             var money = request.Cost == null ? null : new Money(request.Cost.Price, request.Cost.Currency);
 
-            bill.Update(billType, request.ServiceProviderName, request.DateOfPayment, money);
+            bill.Update(billType, request.ServiceProviderName, DateOnly.FromDateTime(request.DateOfPayment), money);
 
             await _billRepository.UpdateAsync(bill);
 

@@ -4,7 +4,7 @@ namespace SharedHome.Application.HouseGroups.DTO
 {
     public class HouseGroupMemberDto
     {
-        public string PersonId { get; set; } = default!;
+        public Guid PersonId { get; set; } = default!;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string FirstName { get; set; } = default!;

@@ -5,6 +5,7 @@ using SharedHome.Domain.HouseGroups.Aggregates;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,26 +26,26 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers();
+            var additionalMembers = new Guid[] { Guid.NewGuid()};
 
-            var newOwnerPersonId = HouseGroupProvider.PersonId + "0";
+            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(additionalMembers);
 
             var command = new HandOwnerRoleOverCommand
             {
-                HouseGroupId = 1,
+                HouseGroupId = Guid.NewGuid(),
                 PersonId = HouseGroupProvider.PersonId,
-                NewOwnerPersonId = newOwnerPersonId
+                NewOwnerPersonId = additionalMembers[0]
             };
 
-            _houseGroupRepository.GetAsync(Arg.Any<int>(), Arg.Any<string>())
+            _houseGroupRepository.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(houseGroup);
 
             await _commandHandler.Handle(command, default);
 
             await _houseGroupRepository.Received(1).UpdateAsync(Arg.Is<HouseGroup>(houseGroup => 
-                houseGroup.Members.Where(member => member.PersonId == HouseGroupProvider.PersonId)
+                houseGroup.Members.Where(member => member.PersonId.Value == HouseGroupProvider.PersonId)
                     .First().IsOwner == false &&
-                houseGroup.Members.Where(member => member.PersonId == newOwnerPersonId)
+                houseGroup.Members.Where(member => member.PersonId.Value == additionalMembers[0])
                     .First().IsOwner == true));
         }
     }

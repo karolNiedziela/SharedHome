@@ -8,7 +8,7 @@ namespace SharedHome.Infrastructure.EF.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<ShoppingListProductReadModel> builder)
         {
-            builder.ToTable("ShoppingListProduct");
+            builder.ToTable("ShoppingListProducts");
         }
     }
 }

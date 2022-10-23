@@ -18,7 +18,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
         {
             if (await _context.HouseGroups.AnyAsync()) return;
 
-            var houseGroup = HouseGroup.Create("Default");
+            var houseGroup = HouseGroup.Create(Guid.NewGuid(), "Default");
             houseGroup.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             houseGroup.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
 

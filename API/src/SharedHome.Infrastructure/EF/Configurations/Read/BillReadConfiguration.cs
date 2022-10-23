@@ -8,7 +8,7 @@ namespace SharedHome.Infrastructure.EF.Configurations.Read
     {
         public void Configure(EntityTypeBuilder<BillReadModel> builder)
         {
-            builder.ToTable("Bill");
+            builder.ToTable("Bills");
             builder.HasKey(bill => bill.Id);
         }
     }

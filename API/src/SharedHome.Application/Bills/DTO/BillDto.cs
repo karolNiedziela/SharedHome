@@ -5,7 +5,7 @@ namespace SharedHome.Application.Bills.DTO
 {
     public class BillDto : AuditableDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public bool IsPaid { get; set; } = false;
 

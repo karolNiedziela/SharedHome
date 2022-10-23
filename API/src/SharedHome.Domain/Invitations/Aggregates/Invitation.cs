@@ -1,37 +1,37 @@
 ﻿using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Domain.Invitations.Exceptions;
+using SharedHome.Domain.Invitations.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.Invitations.Aggregates
 {
-    public class Invitation : Entity, IAggregateRoot
+    public class Invitation : AggregateRoot<InvitationId>
     {
-        public int Id { get; set; }
-
         public InvitationStatus Status { get; private set; }
 
-        public int HouseGroupId { get; private set; } = default!;
+        public HouseGroupId HouseGroupId { get; private set; } = default!;
 
-        public string RequestedByPersonId { get; private set; } = default!;
+        public PersonId RequestedByPersonId { get; private set; } = default!;
 
-        public string RequestedToPersonId { get; private set; } = default!;
-
+        public PersonId RequestedToPersonId { get; private set; } = default!;
 
         private Invitation()
         {
 
         }
 
-        private Invitation(int houseGroupId, string requestedByPersonId, string requestedToPersonId)
+        private Invitation(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId)
         {
+            Id = id;
             HouseGroupId = houseGroupId;
             RequestedByPersonId = requestedByPersonId;
             RequestedToPersonId = requestedToPersonId;
             Status = InvitationStatus.Pending;
         }
 
-        public static Invitation Create(int houseGroupId, string requestedByPersonId, string requestedToPersonId)
-            => new(houseGroupId, requestedByPersonId, requestedToPersonId);
+        public static Invitation Create(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId)
+            => new(id, houseGroupId, requestedByPersonId, requestedToPersonId);
 
         public void Accept()
         {

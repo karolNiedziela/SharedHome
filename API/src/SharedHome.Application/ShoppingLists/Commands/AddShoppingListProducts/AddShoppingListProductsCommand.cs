@@ -7,7 +7,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts
 {
     public class AddShoppingListProductsCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
 
         public IReadOnlyList<AddShoppingListProductDto> Products { get; set; } = new List<AddShoppingListProductDto>();
     }

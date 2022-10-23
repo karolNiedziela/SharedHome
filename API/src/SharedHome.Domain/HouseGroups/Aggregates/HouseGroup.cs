@@ -1,36 +1,34 @@
 ﻿using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Domain.HouseGroups.Aggregates
 {
-    public class HouseGroup : Entity, IAggregateRoot
+    public class HouseGroup : AggregateRoot<HouseGroupId>
     {        
         public const int MaxMembers = 5;
 
         private readonly List<HouseGroupMember> _members = new();
 
-        public int Id { get; private set; }
-
         public HouseGroupName Name { get; private set; } = default!;
 
-        public IEnumerable<HouseGroupMember> Members => _members;
-
-        public int TotalMembers => _members.Count;
+        public IEnumerable<HouseGroupMember> Members => _members;      
 
         private HouseGroup()
         {
 
         }
 
-        private HouseGroup(HouseGroupName name)
+        private HouseGroup(HouseGroupId id, HouseGroupName name)
         {
+            Id = id;
             Name = name;
         }
 
-        public static HouseGroup Create(HouseGroupName name)
-            => new(name);
+        public static HouseGroup Create(HouseGroupId id,  HouseGroupName name)
+            => new(id, name);
 
         public void AddMember(HouseGroupMember houseGroupMember)
         {
@@ -44,7 +42,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             _members.Add(houseGroupMember);
         }
 
-        public void RemoveMember(string requestedById, string memberToRemoveId)
+        public void RemoveMember(PersonId requestedById, PersonId memberToRemoveId)
         {
             var requester = GetMember(requestedById);
             if (!requester.IsOwner)
@@ -58,7 +56,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
         }
 
         // Change owner of house group, only current owner can give this status to another member
-        public void HandOwnerRoleOver(string oldOwnerPersonId, string newOwnerPersonid)
+        public void HandOwnerRoleOver(PersonId oldOwnerPersonId, PersonId newOwnerPersonid)
         {
             var memberOldOwner = GetMember(oldOwnerPersonId);
             if (!memberOldOwner.IsOwner)
@@ -78,7 +76,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             _members[newOwnerIndex] = memberNewOwner;
         }
 
-        public void Leave(string personId)
+        public void Leave(PersonId personId)
         {
             var member = GetMember(personId);
 
@@ -93,14 +91,14 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
             _members.Remove(member);
         }
 
-        public bool IsOwner(string personId)
+        public bool IsOwner(PersonId personId)
         {
             var member = GetMember(personId);
 
             return member.IsOwner;
         }
 
-        private HouseGroupMember GetMember(string personId)
+        private HouseGroupMember GetMember(PersonId personId)
         {
             var member = _members.SingleOrDefault(x => x.PersonId == personId);
             if (member is null)
@@ -113,7 +111,7 @@ namespace SharedHome.Domain.HouseGroups.Aggregates
 
         private void ValidateMembersLimit()
         {
-            if (TotalMembers >= MaxMembers)
+            if (_members.Count >= MaxMembers)
             {
                 throw new TotalMembersLimitReachedException(MaxMembers);
             }

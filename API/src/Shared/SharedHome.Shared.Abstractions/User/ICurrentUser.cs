@@ -2,7 +2,7 @@
 {
     public interface ICurrentUser
     {
-        string UserId { get; }
+        Guid UserId { get; }
 
         string FirstName { get; }
 

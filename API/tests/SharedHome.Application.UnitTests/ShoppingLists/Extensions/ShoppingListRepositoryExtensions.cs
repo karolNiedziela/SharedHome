@@ -4,6 +4,7 @@ using SharedHome.Application.ShoppingLists.Extensions;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Extensions
         public async Task GetOrThrowAsync_Should_Throw_ShoppingListNotFoundException_When_ShoppingList_Not_Found()
         {
             var exception = await Record.ExceptionAsync(() =>
-                _shoppingListRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>()));
+                _shoppingListRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>()));
 
             exception.ShouldBeOfType<ShoppingListNotFoundException>();
         }
@@ -32,10 +33,10 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Extensions
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
 
-            _shoppingListRepository.GetOrThrowAsync(Arg.Any<int>(), Arg.Any<string>())
+            _shoppingListRepository.GetOrThrowAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(shoppingList);
 
-            var returnedShoppingList = await _shoppingListRepository.GetOrThrowAsync(1, "personId");
+            var returnedShoppingList = await _shoppingListRepository.GetOrThrowAsync(ShoppingListProvider.ShoppingListId, Guid.NewGuid());
 
             returnedShoppingList.Name.Name.ShouldBe(ShoppingListProvider.ShoppingListName);
         }

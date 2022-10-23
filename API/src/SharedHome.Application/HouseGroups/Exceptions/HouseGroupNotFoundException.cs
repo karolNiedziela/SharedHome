@@ -11,9 +11,9 @@ namespace SharedHome.Application.HouseGroups.Exceptions
         public override HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
         [Order]
-        public int HouseGroupId { get; }
+        public Guid HouseGroupId { get; }
 
-        public HouseGroupNotFoundException(int houseGroupId) : base($"House group with id '{houseGroupId}' was not found.")
+        public HouseGroupNotFoundException(Guid houseGroupId) : base($"House group with id '{houseGroupId}' was not found.")
         {
             HouseGroupId = houseGroupId;
         }

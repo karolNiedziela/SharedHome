@@ -6,7 +6,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct
 {
     public class CancelPurchaseOfProductCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public int ShoppingListId { get; set; }
+        public Guid ShoppingListId { get; set; }
 
         public string ProductName { get; set; } = default!;
     }

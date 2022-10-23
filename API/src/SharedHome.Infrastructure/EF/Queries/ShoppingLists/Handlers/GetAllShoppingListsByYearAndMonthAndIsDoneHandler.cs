@@ -40,6 +40,10 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
             {
                 var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
 
+                var test = await _shoppingLists
+                    .Include(shoppingLists => shoppingLists.Products)
+                    .ToListAsync();
+
                 return await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)
                     .Include(shoppingLists => shoppingLists.Products)

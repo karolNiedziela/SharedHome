@@ -18,7 +18,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct
 
         public async Task<Unit> Handle(CancelPurchaseOfProductCommand request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId!);    
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);    
 
             shoppingList.CancelPurchaseOfProduct(request.ProductName);
 
