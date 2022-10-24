@@ -24,7 +24,7 @@ namespace SharedHome.Application.Common.Events
             await _mediator.Publish(domainEventNotification);
         }
 
-        private INotification CreateDomainEventNotification(IDomainEvent @event)
+        private static INotification CreateDomainEventNotification(IDomainEvent @event)
         {
             var genericDispatcherType = typeof(DomainEventNotification<>).MakeGenericType(@event.GetType());
 

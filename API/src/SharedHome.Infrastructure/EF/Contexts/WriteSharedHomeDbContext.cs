@@ -32,6 +32,8 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         public DbSet<AppNotification> Notifications { get; set; } = default!;
 
+        public DbSet<AppNotificationField> NotificationsFields { get; set; } = default!;
+
 
         public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options, ITimeProvider time, ICurrentUser currentUser) : base(options)
         {

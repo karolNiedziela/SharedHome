@@ -4,38 +4,72 @@ using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Repositories;
+using SharedHome.Notifications.Validators;
 
 namespace SharedHome.Notifications.Services
 {
-    public class AppNotificationService : IAppNotificationService
+    internal class AppNotificationService : IAppNotificationService
     {
         private readonly IAppNotificationInformationResolver _notificationInformationResolver;
         private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
+        private readonly IEnumerable<IAppNotificationFieldValidator> _validators;
         private readonly IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> _hubContext;
 
-        public AppNotificationService(IAppNotificationInformationResolver notificationInformationResolver, INotificationRepository notificationRepository, IMapper mapper, IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> hubContext)
+        public AppNotificationService(
+            IAppNotificationInformationResolver notificationInformationResolver,
+            INotificationRepository notificationRepository,
+            IMapper mapper,
+            IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> hubContext,
+            IEnumerable<IAppNotificationFieldValidator> validators)
         {
             _notificationInformationResolver = notificationInformationResolver;
             _notificationRepository = notificationRepository;
             _mapper = mapper;
             _hubContext = hubContext;
+            _validators = validators;
         }
 
         public async Task<IEnumerable<AppNotificationDto>> GetAllAsync(Guid personId)
         {
             var notifications = await _notificationRepository.GetAllAsync(personId);
 
+            var appNotificationsDto = new List<AppNotificationDto>();
             foreach (var notification in notifications)
             {
-                notification.Title = _notificationInformationResolver.GetTitle(notification);
+                var notificationDto = _mapper.Map<AppNotificationDto>(notification);
+                notificationDto.Title = _notificationInformationResolver.GetTitle(notification);
+                appNotificationsDto.Add(notificationDto);
             }
 
-            return _mapper.Map<IEnumerable<AppNotificationDto>>(notifications);
+            return appNotificationsDto;
         }
-        public Task AddAsync(AppNotification notification)
+        public async Task AddAsync(AppNotification notification)
         {
-            return Task.CompletedTask;
+            var isValid = true;
+            foreach (var validator in _validators)
+            {
+                foreach (var field in notification.Fields)
+                {
+                    if (field.Type == validator.FieldType)
+                    {                        
+                        isValid = validator.IsValid(field.Value);
+                    }
+
+                    if (!isValid)
+                    {
+                        isValid = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!isValid)
+            {
+                throw new Exception("Invalid field");
+            }
+
+            await _notificationRepository.AddAsync(notification);
         }
 
         public async Task BroadcastNotificationAsync(AppNotification notification, Guid personId, Guid personIdToExclude, string? name = null)

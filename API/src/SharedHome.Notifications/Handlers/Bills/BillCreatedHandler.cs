@@ -4,20 +4,17 @@ using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Repositories;
 using SharedHome.Notifications.Services;
 
 namespace SharedHome.Notifications.Handlers.Bills
 {
     public class BillCreatedHandler : INotificationHandler<DomainEventNotification<BillCreated>>
     {
-        private readonly INotificationRepository _notificationRepository;
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
 
-        public BillCreatedHandler(INotificationRepository notificationRepository, IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
+        public BillCreatedHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
         {
-            _notificationRepository = notificationRepository;
             _houseGroupReadService = houseGroupReadService;
             _appNotificationService = appNotificationService;
         }
@@ -35,9 +32,16 @@ namespace SharedHome.Notifications.Handlers.Bills
 
             foreach (var personId in personIds)
             {
-                var appNotification = new AppNotification(billCreated.Creator.PersonId, nameof(BillCreated), TargetType.Bill, OperationType.Create);
+                var notificationFields = new List<AppNotificationField>()
+                {
+                    new AppNotificationField(AppNotificationFieldType.Name, billCreated.ServiceProviderName),
+                    new AppNotificationField(AppNotificationFieldType.Target, TargetType.ShoppingList.ToString()),
+                    new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString())
+                };
 
-                await _notificationRepository.AddAsync(appNotification);
+                var appNotification = new AppNotification(billCreated.Creator.PersonId, nameof(BillCreated), notificationFields);
+
+                await _appNotificationService.AddAsync(appNotification);
 
                 await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, billCreated.Creator.PersonId, billCreated.ServiceProviderName);
             }

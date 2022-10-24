@@ -16,13 +16,8 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                   .HasColumnName("NotificationType")
                   .HasConversion<int>();
 
-            builder.Property(notification => notification.Target)
-                  .HasColumnName("TargetType")
-                  .HasConversion<int>();
-
-            builder.Property(notification => notification.Operation)
-                  .HasColumnName("OperationType")
-                  .HasConversion<int>();
+            builder.HasMany(notification => notification.Fields)
+                   .WithOne(field => field.AppNotification);              
         }
     }
 }

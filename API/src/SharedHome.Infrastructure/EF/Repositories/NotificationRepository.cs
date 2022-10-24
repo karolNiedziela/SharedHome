@@ -17,16 +17,11 @@ namespace SharedHome.Infrastructure.EF.Repositories
 
         public async Task<IEnumerable<AppNotification>> GetAllAsync(Guid personId, NotificationType? notificationType = null, TargetType? targetType = null)
         {
-            var query = _context.Notifications.Where(x => x.PersonId == personId).AsQueryable();
+            var query = _context.Notifications.Include(x => x.Fields).Where(x => x.PersonId == personId).AsQueryable();
 
-            if (notificationType is null)
+            if (notificationType is not null)
             {
                 query = query.Where(x => x.Type == notificationType);
-            }
-
-            if (targetType is not null)
-            {
-                query = query.Where(x => x.Target == targetType);
             }
 
             query.Where(x => !x.IsRead);

@@ -2,11 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedHome.Notifications.Validators;
 
 namespace SharedHome.Notifications
 {
@@ -16,6 +12,9 @@ namespace SharedHome.Notifications
         {
             services.AddScoped<IAppNotificationService, AppNotificationService>();
             services.AddScoped<IAppNotificationInformationResolver, AppNotificationInformationResolver>();
+            services.AddScoped<IAppNotificationFieldValidator, NameFieldValidator>();
+            services.AddScoped<IAppNotificationFieldValidator, OperationTypeFieldValidator>();
+            services.AddScoped<IAppNotificationFieldValidator, TargetTypeFieldValidator>();
 
             services.AddSignalR();
 
