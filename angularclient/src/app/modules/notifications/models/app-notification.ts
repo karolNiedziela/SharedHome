@@ -6,4 +6,5 @@ export interface AppNotification {
   type?: string;
   target: TargetType;
   operation: string;
+  createdBy?: string;
 }

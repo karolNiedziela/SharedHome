@@ -28,8 +28,14 @@
           *ngFor="let notification of notifications"
         >
           <div class="item-title">{{ notification.title }}</div>
-          <div class="notification-icon">
-            <fa-icon [icon]="iconByTargetType[notification.target]"></fa-icon>
+          <div
+            class="notification-icon bg-primary"
+            *ngIf="notification.createdBy"
+          >
+            <span [title]="notification.createdBy"
+              >{{ notification.createdBy | firstLettersToTitleCase }}
+            </span>
+            <!-- <fa-icon [icon]="iconByTargetType[notification.target]"></fa-icon> -->
           </div>
         </div>
       </div>

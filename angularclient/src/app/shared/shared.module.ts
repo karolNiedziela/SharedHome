@@ -33,6 +33,7 @@ import { SingleSelectComponent } from './components/selects/single-select/single
 import { LanguageSelectComponent } from './components/selects/language-select/language-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListNotificationsComponent } from './components/notifications/list-notifications/list-notifications.component';
+import { FirstLettersToTitleCasePipe } from './pipes/first-letters-to-title-case.pipe';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ListNotificationsComponent } from './components/notifications/list-noti
     LanguageSelectComponent,
     NavbarComponent,
     ListNotificationsComponent,
+    FirstLettersToTitleCasePipe,
   ],
   imports: [
     CommonModule,
@@ -107,7 +109,8 @@ import { ListNotificationsComponent } from './components/notifications/list-noti
     SingleSelectComponent,
     LanguageSelectComponent,
     NavbarComponent,
+    FirstLettersToTitleCasePipe,
   ],
-  providers: [DatePipe, EnumAsStringPipe],
+  providers: [DatePipe, EnumAsStringPipe, FirstLettersToTitleCasePipe],
 })
 export class SharedModule {}
