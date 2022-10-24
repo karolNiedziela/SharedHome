@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import { Paged } from 'app/core/models/paged';
 
 @Injectable({
   providedIn: 'root',
@@ -34,11 +35,14 @@ export class NotificationService {
 
   get() {
     this.http
-      .get<AppNotification[]>(this.notificationsUrl, this.defaultHttpOptions)
+      .get<Paged<AppNotification>>(
+        this.notificationsUrl,
+        this.defaultHttpOptions
+      )
       .subscribe({
-        next: (notifications: AppNotification[]) => {
-          this._notifications.next(notifications);
-          this._notificationsCount.next(notifications.length);
+        next: (notifications: Paged<AppNotification>) => {
+          this._notifications.next(notifications.items);
+          this._notificationsCount.next(notifications.items.length);
         },
       });
   }

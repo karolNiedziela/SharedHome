@@ -29,21 +29,7 @@ namespace SharedHome.Notifications.Services
             _hubContext = hubContext;
             _validators = validators;
         }
-
-        public async Task<IEnumerable<AppNotificationDto>> GetAllAsync(Guid personId)
-        {
-            var notifications = await _notificationRepository.GetAllAsync(personId);
-
-            var appNotificationsDto = new List<AppNotificationDto>();
-            foreach (var notification in notifications)
-            {
-                var notificationDto = _mapper.Map<AppNotificationDto>(notification);
-                notificationDto.Title = _notificationInformationResolver.GetTitle(notification);
-                appNotificationsDto.Add(notificationDto);
-            }
-
-            return appNotificationsDto;
-        }
+       
         public async Task AddAsync(AppNotification notification)
         {
             var isValid = true;
@@ -72,7 +58,7 @@ namespace SharedHome.Notifications.Services
             await _notificationRepository.AddAsync(notification);
         }
 
-        public async Task BroadcastNotificationAsync(AppNotification notification, Guid personId, Guid personIdToExclude, string? name = null)
+        public async Task BroadcastNotificationAsync(AppNotification notification, Guid personId, Guid personIdToExclude)
         {
             var notificationDto = _mapper.Map<AppNotificationDto>(notification);
 
@@ -81,7 +67,7 @@ namespace SharedHome.Notifications.Services
                 return;
             }
 
-            notificationDto.Title = _notificationInformationResolver.GetTitle(notification, name);
+            notificationDto.Title = _notificationInformationResolver.GetTitle(notification);
 
             await _hubContext.Clients.GroupExcept(groupName!, HouseGroupNotificationHub.GetConnectionId(personIdToExclude)).BroadcastNotification(notificationDto);
         }

@@ -43,7 +43,7 @@ namespace SharedHome.Notifications.Handlers.Bills
 
                 await _appNotificationService.AddAsync(appNotification);
 
-                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, billCreated.Creator.PersonId, billCreated.ServiceProviderName);
+                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, billCreated.Creator.PersonId);
             }
         }
     }

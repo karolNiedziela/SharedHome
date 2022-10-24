@@ -1,6 +1,6 @@
 ﻿using SharedHome.Notifications.DTO;
 
-namespace SharedHome.Notifications.Services
+namespace SharedHome.Notifications.Hubs
 {
     public interface IHouseGroupNotificationHubClient
     {

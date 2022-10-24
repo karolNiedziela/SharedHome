@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
+using SharedHome.Notifications;
 using System.Reflection;
 
 namespace SharedHome.Infrastructure.Mapping
@@ -10,7 +11,7 @@ namespace SharedHome.Infrastructure.Mapping
         public static IServiceCollection AddMappings(this IServiceCollection services)
         {
             var config = TypeAdapterConfig.GlobalSettings;
-            config.Scan(Assembly.GetExecutingAssembly());
+            config.Scan(Assembly.GetExecutingAssembly(), typeof(NotificationAssemblyReference).Assembly);
 
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();

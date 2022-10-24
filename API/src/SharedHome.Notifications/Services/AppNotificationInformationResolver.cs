@@ -23,7 +23,7 @@ namespace SharedHome.Notifications.Services
             _titleBuilder = new StringBuilder();
         }
 
-        public string GetTitle(AppNotification appNotification, string? name = null)
+        public string GetTitle(AppNotification appNotification)
         {
             var targetField = appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Target);
             AppendTarget(targetField);
