@@ -7,5 +7,6 @@
         Operation = 3,
         By = 4,
         With = 5,
+        DateOfPayment = 6,
     }
 }

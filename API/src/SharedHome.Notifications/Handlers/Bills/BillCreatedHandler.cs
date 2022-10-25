@@ -36,7 +36,8 @@ namespace SharedHome.Notifications.Handlers.Bills
                 {
                     new AppNotificationField(AppNotificationFieldType.Name, billCreated.ServiceProviderName),
                     new AppNotificationField(AppNotificationFieldType.Target, TargetType.Bill.ToString()),
-                    new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString())
+                    new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString()),
+                    new AppNotificationField(AppNotificationFieldType.DateOfPayment, billCreated.DateOfPayment.ToShortDateString())
                 };
 
                 var appNotification = new AppNotification(personId, nameof(BillCreated), notificationFields);

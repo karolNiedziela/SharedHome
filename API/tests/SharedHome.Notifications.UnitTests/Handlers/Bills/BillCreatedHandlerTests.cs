@@ -32,7 +32,7 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
+            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), new CreatorDto(Guid.NewGuid(), "", ""));
 
             var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
@@ -47,7 +47,7 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
+            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), new CreatorDto(Guid.NewGuid(), "", ""));
 
             var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 
@@ -66,7 +66,7 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
+            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), new CreatorDto(Guid.NewGuid(), "", ""));
 
             var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
 

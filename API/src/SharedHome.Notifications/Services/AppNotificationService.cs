@@ -10,20 +10,17 @@ namespace SharedHome.Notifications.Services
 {
     internal class AppNotificationService : IAppNotificationService
     {
-        private readonly IAppNotificationInformationResolver _notificationInformationResolver;
         private readonly INotificationRepository _notificationRepository;
         private readonly IMapper _mapper;
         private readonly IEnumerable<IAppNotificationFieldValidator> _validators;
         private readonly IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> _hubContext;
 
         public AppNotificationService(
-            IAppNotificationInformationResolver notificationInformationResolver,
             INotificationRepository notificationRepository,
             IMapper mapper,
             IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> hubContext,
             IEnumerable<IAppNotificationFieldValidator> validators)
         {
-            _notificationInformationResolver = notificationInformationResolver;
             _notificationRepository = notificationRepository;
             _mapper = mapper;
             _hubContext = hubContext;

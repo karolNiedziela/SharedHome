@@ -135,6 +135,9 @@
   <data name="ShoppingListCreate" xml:space="preserve">
     <value>Nowa</value>
   </data>
+  <data name="with date of payment" xml:space="preserve">
+    <value>z datą zapłaty</value>
+  </data>
   <data name="with name" xml:space="preserve">
     <value>o nazwie</value>
   </data>

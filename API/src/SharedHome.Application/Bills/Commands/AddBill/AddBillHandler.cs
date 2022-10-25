@@ -34,7 +34,11 @@ namespace SharedHome.Application.Bills.Commands.AddBill
 
             await _billRepository.AddAsync(bill);
 
-            await _eventDispatcher.Dispatch(new BillCreated(request.BillId, bill.ServiceProvider, new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
+            await _eventDispatcher.Dispatch(new BillCreated(
+                request.BillId, 
+                bill.ServiceProvider, 
+                bill.DateOfPayment,
+                new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
 
             return new Response<BillDto>(_mapper.Map<BillDto>(bill));
         }

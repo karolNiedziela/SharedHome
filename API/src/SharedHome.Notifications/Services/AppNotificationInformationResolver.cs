@@ -14,7 +14,10 @@ namespace SharedHome.Notifications.Services
         private readonly IStringLocalizer _messageLocalizer;        
         private readonly ILogger<AppNotificationInformationResolver> _logger;
         private StringBuilder _titleBuilder = default!;
-        
+        private IEnumerable<AppNotificationField> _fields = new List<AppNotificationField>();
+
+        private const string DateOfPaymentResourceString = "with date of payment";
+
         public AppNotificationInformationResolver(IStringLocalizerFactory localizerFactory, ILogger<AppNotificationInformationResolver> logger)
         {
             _titleLocalizer = localizerFactory.Create(Resources.NotificationTitle, Assembly.GetEntryAssembly()!.GetName().Name!);
@@ -25,19 +28,15 @@ namespace SharedHome.Notifications.Services
         public string GetTitle(AppNotification appNotification)
         {
             _titleBuilder = new StringBuilder();
-            var targetField = appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Target);
-            AppendOperation(appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Operation), targetField?.Value);
+            _fields = appNotification.Fields;
+            var targetField = GetAppNotificationFieldByType(AppNotificationFieldType.Target);
+            AppendOperation(GetAppNotificationFieldByType(AppNotificationFieldType.Operation), targetField?.Value);
             AppendTarget(targetField);
-            AppendName(appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Name), targetField?.Value);
+            AppendName(GetAppNotificationFieldByType(AppNotificationFieldType.Name), targetField?.Value);
+            AppendDateOfPayment(GetAppNotificationFieldByType(AppNotificationFieldType.DateOfPayment));
 
             _titleBuilder.Append('.');
             return _titleBuilder.ToString();
-        }
-
-
-        public string GetMessage()
-        {
-            return string.Empty;
         }
 
         private void AppendOperation(AppNotificationField? field, string? targetType)
@@ -106,6 +105,27 @@ namespace SharedHome.Notifications.Services
 
             _titleBuilder.Append(connectorResourceString.Value);
             _titleBuilder.Append($" {field.Value}");
-        }      
+        }
+        
+        private void AppendDateOfPayment(AppNotificationField? field)
+        {
+            if (field is null)
+            {
+                return;
+            }
+
+            var dateOfPaymentResourceString = _titleLocalizer.GetString(DateOfPaymentResourceString);
+            if (dateOfPaymentResourceString.ResourceNotFound)
+            {
+                _logger.LogWarning("Resource {dateOfPayment} not found.", DateOfPaymentResourceString);
+                return;
+            }
+
+            _titleBuilder.Append($" {dateOfPaymentResourceString.Value}");
+            _titleBuilder.Append($" {field.Value}");
+        }
+
+        private AppNotificationField? GetAppNotificationFieldByType(AppNotificationFieldType fieldType)
+            => _fields.FirstOrDefault(x => x.Type == fieldType);
     }
 }
