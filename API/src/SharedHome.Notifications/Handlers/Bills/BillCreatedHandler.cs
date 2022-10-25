@@ -35,11 +35,11 @@ namespace SharedHome.Notifications.Handlers.Bills
                 var notificationFields = new List<AppNotificationField>()
                 {
                     new AppNotificationField(AppNotificationFieldType.Name, billCreated.ServiceProviderName),
-                    new AppNotificationField(AppNotificationFieldType.Target, TargetType.ShoppingList.ToString()),
+                    new AppNotificationField(AppNotificationFieldType.Target, TargetType.Bill.ToString()),
                     new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString())
                 };
 
-                var appNotification = new AppNotification(billCreated.Creator.PersonId, nameof(BillCreated), notificationFields);
+                var appNotification = new AppNotification(personId, nameof(BillCreated), notificationFields);
 
                 await _appNotificationService.AddAsync(appNotification);
 

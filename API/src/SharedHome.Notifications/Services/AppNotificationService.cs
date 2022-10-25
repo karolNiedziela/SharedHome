@@ -67,8 +67,6 @@ namespace SharedHome.Notifications.Services
                 return;
             }
 
-            notificationDto.Title = _notificationInformationResolver.GetTitle(notification);
-
             await _hubContext.Clients.GroupExcept(groupName!, HouseGroupNotificationHub.GetConnectionId(personIdToExclude)).BroadcastNotification(notificationDto);
         }
     }

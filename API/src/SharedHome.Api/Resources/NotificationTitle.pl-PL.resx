@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Bill" xml:space="preserve">
-    <value>Rachunek</value>
+    <value>rachunek</value>
   </data>
   <data name="BillCreate" xml:space="preserve">
-    <value>został dodany</value>
+    <value>Nowy</value>
   </data>
   <data name="by" xml:space="preserve">
     <value>przez</value>
@@ -130,12 +130,15 @@
     <value>nazwą</value>
   </data>
   <data name="ShoppingList" xml:space="preserve">
-    <value>Lista zakupów</value>
+    <value>lista zakupów</value>
   </data>
   <data name="ShoppingListCreate" xml:space="preserve">
-    <value>została dodana</value>
+    <value>Nowa</value>
   </data>
   <data name="with name" xml:space="preserve">
-    <value>z nazwą</value>
+    <value>o nazwie</value>
+  </data>
+  <data name="with service provider name" xml:space="preserve">
+    <value>od dostawcy</value>
   </data>
 </root>

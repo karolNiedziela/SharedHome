@@ -13,22 +13,22 @@ namespace SharedHome.Notifications.Services
         private readonly IStringLocalizer _titleLocalizer;
         private readonly IStringLocalizer _messageLocalizer;        
         private readonly ILogger<AppNotificationInformationResolver> _logger;
-        private readonly StringBuilder _titleBuilder;
+        private StringBuilder _titleBuilder = default!;
         
         public AppNotificationInformationResolver(IStringLocalizerFactory localizerFactory, ILogger<AppNotificationInformationResolver> logger)
         {
             _titleLocalizer = localizerFactory.Create(Resources.NotificationTitle, Assembly.GetEntryAssembly()!.GetName().Name!);
             _messageLocalizer = localizerFactory.Create(Resources.NotificationMessage, Assembly.GetEntryAssembly()!.GetName().Name!);
             _logger = logger;
-            _titleBuilder = new StringBuilder();
         }
 
         public string GetTitle(AppNotification appNotification)
         {
+            _titleBuilder = new StringBuilder();
             var targetField = appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Target);
+            AppendOperation(appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Operation), targetField?.Value);
             AppendTarget(targetField);
             AppendName(appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Name), targetField?.Value);
-            AppendOperation(appNotification.Fields.FirstOrDefault(x => x.Type == AppNotificationFieldType.Operation), targetField?.Value);
 
             _titleBuilder.Append('.');
             return _titleBuilder.ToString();
@@ -38,7 +38,26 @@ namespace SharedHome.Notifications.Services
         public string GetMessage()
         {
             return string.Empty;
-        }     
+        }
+
+        private void AppendOperation(AppNotificationField? field, string? targetType)
+        {
+            if (field is null)
+            {
+                return;
+            }
+
+            var targetAndOperationType = string.Join("", targetType, field.Value);
+            var targetAndOperationTypeResourceStringValue = _titleLocalizer.GetString(targetAndOperationType);
+            if (targetAndOperationTypeResourceStringValue.ResourceNotFound)
+            {
+                _logger.LogWarning("Resource {targetAndOperationType} not found.", targetAndOperationType);
+                return;
+            }
+
+            _titleBuilder.Append(targetAndOperationTypeResourceStringValue.Value);
+            _titleBuilder.Append(' ');
+        }
 
         private void AppendTarget(AppNotificationField? field)
         {
@@ -87,25 +106,6 @@ namespace SharedHome.Notifications.Services
 
             _titleBuilder.Append(connectorResourceString.Value);
             _titleBuilder.Append($" {field.Value}");
-            _titleBuilder.Append(' ');
-        }
-
-        private void AppendOperation(AppNotificationField? field, string? targetType)
-        {
-            if (field is null)
-            {
-                return;
-            }
-
-            var targetAndOperationType = string.Join("", targetType, field.Value);
-            var targetAndOperationTypeResourceStringValue = _titleLocalizer.GetString(targetAndOperationType);
-            if (targetAndOperationTypeResourceStringValue.ResourceNotFound)
-            {
-                _logger.LogWarning("Resource {targetAndOperationType} not found.", targetAndOperationType);
-                return;
-            }
-
-            _titleBuilder.Append(targetAndOperationTypeResourceStringValue.Value);
-        }
+        }      
     }
 }
