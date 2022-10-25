@@ -20,7 +20,7 @@ import { PayForBill } from '../../models/pay-for-bill';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PayForBillComponent implements Modalable, OnInit {
-  @Input() billId!: number;
+  @Input() billId!: string;
 
   @ViewChild('modal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {

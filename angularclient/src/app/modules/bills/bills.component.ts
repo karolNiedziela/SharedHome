@@ -132,9 +132,12 @@ export class BillsComponent implements OnInit, OnDestroy {
           return billEvents;
         })
       );
+
+    this.refresh.next();
   }
 
   private getBillEvent(bill: Bill): BillEvent {
+    console.log(bill);
     endOfDay(Date.parse(bill.dateOfPayment.toString()));
     const billEvent: BillEvent = {
       id: bill.id,
@@ -201,7 +204,7 @@ export class BillsComponent implements OnInit, OnDestroy {
           {
             text: 'Pay',
             onClick: () => {
-              this.payForBillModal.billId = +billEvent.id!;
+              this.payForBillModal.billId = billEvent.id?.toString()!;
               this.payForBillModal.openModal();
             },
           },
