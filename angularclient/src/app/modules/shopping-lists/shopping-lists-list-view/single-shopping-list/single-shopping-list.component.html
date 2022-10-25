@@ -30,15 +30,16 @@
     class="card-footer border-top"
     [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
   >
-    <h5>
-      {{ shoppingList.createdBy }}
-    </h5>
     <h5>{{ "Total price" | translate }}:</h5>
-    <h5>
+    <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
+    <h5 *ngIf="shoppingList.countBoughtProducts(); else boughtProducts">
       {{ shoppingList.countBoughtProducts() }} /
       {{ shoppingList.products.length }} {{ "products bought" | translate }}
     </h5>
-    <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
+    <ng-template #boughtProducts>
+      <h5>{{ "no products" | translate }}</h5>
+    </ng-template>
+    <h5>{{ shoppingList.createdBy }}</h5>
   </div>
 </div>
 
