@@ -23,7 +23,7 @@ import { ShoppingListProduct } from '../../models/shopping-list-product';
 export class EditShoppingListProductModalComponent
   implements Modalable, OnInit, OnChanges
 {
-  @Input() shoppingListId!: number;
+  @Input() shoppingListId!: string;
   @Input() shoppingListProduct?: ShoppingListProduct;
 
   @ViewChild('editShoppingListProductModal') private modal!: ModalComponent;

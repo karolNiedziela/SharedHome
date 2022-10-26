@@ -1,6 +1,6 @@
 import { NetContent } from './net-content';
 export interface UpdateShoppingListProduct {
-  shoppingListId: number;
+  shoppingListId: string;
   currentProductName: string;
   newProductName: string;
   quantity: number;

@@ -15,7 +15,7 @@ import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-s
   styleUrls: ['./add-shopping-list-product.component.scss'],
 })
 export class AddShoppingListProductComponent implements OnInit, Modalable {
-  @Input() shoppingListId!: number;
+  @Input() shoppingListId!: string;
   @ViewChild('addShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {
     modalTitle: 'Add shopping list product',

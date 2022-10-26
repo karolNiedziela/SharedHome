@@ -1,6 +1,6 @@
 import { ShoppingListProduct } from './shopping-list-product';
 export class ShoppingList {
-  id!: number;
+  id!: string;
   name!: string;
   isDone!: boolean;
   createdBy!: string;

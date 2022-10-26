@@ -21,7 +21,7 @@ export class PurchaseShoppingListProductsModalComponent
   implements Modalable, OnInit
 {
   @Input() shoppingListProductNames: string[] = [];
-  @Input() shoppingListId!: number;
+  @Input() shoppingListId!: string;
 
   @ViewChild('purchaseShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {

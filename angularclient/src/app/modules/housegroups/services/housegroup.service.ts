@@ -78,7 +78,7 @@ export class HouseGroupService {
       );
   }
 
-  leaveHouseGroup(houseGroupId: number): Observable<any> {
+  leaveHouseGroup(houseGroupId: string): Observable<any> {
     return this.httpClient
       .delete<any>(`${this.houseGroupsUrl}/${houseGroupId}/leave`, {
         headers: this.defaultHttpOptions.headers,
@@ -93,7 +93,7 @@ export class HouseGroupService {
       );
   }
 
-  delete(houseGroupId: number): Observable<any> {
+  delete(houseGroupId: string): Observable<any> {
     return this.httpClient
       .delete<any>(`${this.houseGroupsUrl}/${houseGroupId}`, {
         headers: this.defaultHttpOptions.headers,

@@ -1,3 +1,3 @@
 export interface RejectInvitation {
-  houseGroupId: number;
+  houseGroupId: string;
 }

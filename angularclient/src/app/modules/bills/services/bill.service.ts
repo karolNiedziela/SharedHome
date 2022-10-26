@@ -1,3 +1,4 @@
+import { SettingRoutingModule } from './../../settings/setting-routing.module';
 import { BillMonthlyCost } from './../models/bill-mothly-cost';
 import { PayForBill } from './../models/pay-for-bill';
 import { AddBill } from './../models/add-bill';
@@ -79,7 +80,7 @@ export class BillService {
       );
   }
 
-  cancelBillPayment(billId: number): Observable<any> {
+  cancelBillPayment(billId: SettingRoutingModule): Observable<any> {
     return this.httpClient
       .patch<any>(
         `${this.billsUrl}/${billId}/cancelpayment`,
@@ -105,7 +106,7 @@ export class BillService {
       );
   }
 
-  deleteBill(billId: number): Observable<any> {
+  deleteBill(billId: string): Observable<any> {
     return this.httpClient
       .delete<any>(`${this.billsUrl}/${billId}`, this.defaultHttpOptions)
       .pipe(

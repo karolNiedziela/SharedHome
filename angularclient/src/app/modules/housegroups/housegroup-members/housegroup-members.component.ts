@@ -22,7 +22,7 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   personId: string = '';
   isCurrentUserOwner: boolean = false;
-  houseGroupId!: number;
+  houseGroupId!: string;
 
   leaveHouseGroupIcon = faSignOut;
   deleteHouseGroupIcon = faTrash;

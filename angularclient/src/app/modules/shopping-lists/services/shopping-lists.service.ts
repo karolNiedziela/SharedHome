@@ -41,7 +41,7 @@ export class ShoppingListsService {
 
   constructor(private http: HttpClient) {}
 
-  get(shoppingListId: number): Observable<ApiResponse<ShoppingList>> {
+  get(shoppingListId: string): Observable<ApiResponse<ShoppingList>> {
     return this.http
       .get<ApiResponse<ShoppingList>>(
         `${this.shoppingListsUrl}/${shoppingListId}`
@@ -245,7 +245,7 @@ export class ShoppingListsService {
       );
   }
 
-  delete(shoppingListId: number): Observable<any> {
+  delete(shoppingListId: string): Observable<any> {
     return this.http
       .delete<any>(
         `${this.shoppingListsUrl}/${shoppingListId}`,
@@ -259,7 +259,7 @@ export class ShoppingListsService {
   }
 
   deleteShoppingListProduct(
-    shoppingListId: number,
+    shoppingListId: string,
     productName: string
   ): Observable<any> {
     return this.http
@@ -275,7 +275,7 @@ export class ShoppingListsService {
   }
 
   deleteShoppingListProducts(
-    shoppingListId: number,
+    shoppingListId: string,
     productNames: string[]
   ): Observable<any> {
     return this.http

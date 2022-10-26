@@ -12,7 +12,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./accept-invitation.component.scss'],
 })
 export class AcceptInvitationComponent implements Modalable, OnInit {
-  @Input() houseGroupId!: number;
+  @Input() houseGroupId!: string;
   @Input() houseGroupName!: string;
 
   @ViewChild('modal')

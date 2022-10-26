@@ -1,4 +1,4 @@
 export interface RemoveMember {
-  houseGroupId: number;
+  houseGroupId: string;
   personToRemoveId: string;
 }

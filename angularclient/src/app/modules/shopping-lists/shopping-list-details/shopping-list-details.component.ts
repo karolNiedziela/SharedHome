@@ -31,7 +31,7 @@ import { ApiResponse } from 'app/core/models/api-response';
   styleUrls: ['./shopping-list-details.component.scss'],
 })
 export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
-  shoppingListId!: number;
+  shoppingListId!: string;
   shoppingListProductNamesSelected: string[] = [];
 
   shoppingList$: Observable<ApiResponse<ShoppingList>> = new Observable(null!);
@@ -244,7 +244,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
     return additionalPopupMenuItems;
   }
 
-  private deleteShoppingList(shoppingListId: number): void {
+  private deleteShoppingList(shoppingListId: string): void {
     this.shoppingListService.delete(shoppingListId).subscribe({
       next: () => {
         this.router.navigate(['shoppinglists']);

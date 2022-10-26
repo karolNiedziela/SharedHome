@@ -1,4 +1,4 @@
 export interface HandOwnerRoleOver {
-  houseGroupId: number;
+  houseGroupId: string;
   newOwnerPersonId: string;
 }

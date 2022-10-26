@@ -12,7 +12,7 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
   styleUrls: ['./purchase-shopping-list-product.component.scss'],
 })
 export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
-  @Input() shoppingListId!: number;
+  @Input() shoppingListId!: string;
   @Input() productName!: string;
   @ViewChild('purchaseShoppingListProductModal') private modal!: ModalComponent;
   public modalConfig: ModalConfig = {

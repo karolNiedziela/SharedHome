@@ -1,3 +1,3 @@
 export interface AcceptInvitation {
-  houseGroupId: number;
+  houseGroupId: string;
 }

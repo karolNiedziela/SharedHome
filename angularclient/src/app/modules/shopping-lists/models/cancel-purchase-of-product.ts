@@ -1,4 +1,4 @@
 export interface CancelPurchaseOfProduct {
-  shoppingListId: number;
+  shoppingListId: string;
   productName: string;
 }

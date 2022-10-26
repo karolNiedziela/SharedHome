@@ -1,10 +1,10 @@
 import { Money } from './../../../core/models/money';
 export class PurchaseShoppingListProducts {
-  shoppingListId!: number;
+  shoppingListId!: string;
   priceByProductNames!: Record<string, Money>;
 
   constructor(
-    shoppingListId: number,
+    shoppingListId: string,
     priceByProductNames: Record<string, Money>
   ) {
     this.shoppingListId = shoppingListId;

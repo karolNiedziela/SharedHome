@@ -1,4 +1,4 @@
 export interface SendInvitation {
-  houseGroupId: number;
+  houseGroupId: string;
   requestedToPersonEmail: string;
 }

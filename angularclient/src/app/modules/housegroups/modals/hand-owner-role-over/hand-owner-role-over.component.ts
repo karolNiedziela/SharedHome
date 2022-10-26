@@ -14,7 +14,7 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
   styleUrls: ['./hand-owner-role-over.component.scss'],
 })
 export class HandOwnerRoleOverComponent implements Modalable, OnInit {
-  @Input() houseGroupId!: number;
+  @Input() houseGroupId!: string;
   @Input() member!: HouseGroupMember;
 
   @ViewChild('modal')

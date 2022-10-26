@@ -18,7 +18,7 @@ import { PurchaseShoppingListProductComponent } from '../modals/purchase-shoppin
 })
 export class ShoppingListProductComponent implements OnInit {
   @Input() shoppingListProduct!: ShoppingListProduct;
-  @Input() shoppingListId!: number;
+  @Input() shoppingListId!: string;
   @Input() isDone!: boolean;
 
   public netContentType: typeof NetContentType = NetContentType;

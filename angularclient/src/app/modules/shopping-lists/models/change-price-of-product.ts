@@ -1,5 +1,5 @@
 export interface ChangePriceOfProduct {
-  shoppingListId: number;
+  shoppingListId: string;
   productName: string;
   price: number;
 }

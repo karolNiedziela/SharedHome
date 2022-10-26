@@ -183,7 +183,7 @@ export class BillsComponent implements OnInit, OnDestroy {
         isDeleteVisible: true,
         onDelete: () => {
           this.deleteBillModalConfig.onSave = () => {
-            this.billService.deleteBill(+billEvent.id!).subscribe();
+            this.billService.deleteBill(billEvent.id?.toString()!).subscribe();
           };
           this.deleteBillModal.open();
         },

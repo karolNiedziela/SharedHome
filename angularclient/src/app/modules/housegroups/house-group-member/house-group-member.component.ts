@@ -16,7 +16,7 @@ import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmati
 export class HouseGroupMemberComponent implements OnInit {
   @Input() member!: HouseGroupMember;
   @Input() isCurrentUserOwner!: boolean;
-  @Input() houseGroupId!: number;
+  @Input() houseGroupId!: string;
 
   ownerIcon = faStar;
   popupMenuConfig!: PopupMenuConfig;

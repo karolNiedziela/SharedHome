@@ -1,7 +1,7 @@
 import { InvitationStatus } from '../enums/invitation-status';
 
 export interface Invitation {
-  houseGroupId: number;
+  houseGroupId: string;
   houseGroupName: string;
   requestedByPersonId: string;
   requestedToPersonId: string;

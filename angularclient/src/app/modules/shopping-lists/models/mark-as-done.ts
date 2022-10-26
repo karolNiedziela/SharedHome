@@ -1,4 +1,4 @@
 export interface MarkAsDone {
-  shoppingListId: number;
+  shoppingListId: string;
   isDone: boolean;
 }

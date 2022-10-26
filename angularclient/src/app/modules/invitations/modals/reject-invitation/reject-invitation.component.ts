@@ -12,7 +12,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./reject-invitation.component.scss'],
 })
 export class RejectInvitationComponent implements Modalable, OnInit {
-  @Input() houseGroupId!: number;
+  @Input() houseGroupId!: string;
   @Input() houseGroupName!: string;
 
   @ViewChild('modal')

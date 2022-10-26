@@ -14,7 +14,7 @@ import { Invitation } from 'app/modules/invitations/models/invitation';
   styleUrls: ['./invite-to-house-group.component.scss'],
 })
 export class InviteToHouseGroupComponent implements Modalable, OnInit {
-  @Input() houseGroupId!: number;
+  @Input() houseGroupId!: string;
 
   @ViewChild('modal')
   private modal!: ModalComponent;

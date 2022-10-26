@@ -78,11 +78,11 @@ export class SingleShoppingListComponent implements OnInit {
     };
   }
 
-  openShoppingList(shoppingListId: number): void {
+  openShoppingList(shoppingListId: string): void {
     this.router.navigate(['shoppinglists', shoppingListId]);
   }
 
-  deleteShoppingList(shoppingListId: number): void {
+  deleteShoppingList(shoppingListId: string): void {
     this.shoppingListService.delete(shoppingListId).subscribe();
   }
 

@@ -78,7 +78,7 @@ export class InvitationService {
       );
   }
 
-  delete(houseGroupId: number): Observable<any> {
+  delete(houseGroupId: string): Observable<any> {
     return this.httpClient
       .delete<any>(`${this.invitationsUrl}/${houseGroupId}`, {
         headers: this.defaultHttpOptions.headers,
