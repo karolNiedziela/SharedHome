@@ -1,21 +1,11 @@
 ﻿using SharedHome.Domain.Persons.Exceptions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Domain.Persons.ValueObjects
 {
     public record Email
     {
-        public string Value { get; } = default!;
-
-        private Email()
-        {
-
-        }
+        public string Value { get; }
 
         public Email(string email)
         {

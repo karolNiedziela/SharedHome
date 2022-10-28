@@ -56,14 +56,14 @@ namespace SharedHome.Infrastructure.EF.Contexts
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedAt = _time.CurrentDate();
-                        entry.Entity.CreatedBy = string.IsNullOrEmpty(_currentUser.FirstName) ? entry.Entity.CreatedBy : $"{_currentUser.FirstName} {_currentUser.LastName}";
+                        entry.Entity.CreatedBy = GetCreatedBy(entry);
                         entry.Entity.ModifiedAt = _time.CurrentDate();
-                        entry.Entity.ModifiedBy = string.IsNullOrEmpty(_currentUser.FirstName) ? entry.Entity.ModifiedBy : $"{_currentUser.FirstName} {_currentUser.LastName}";
+                        entry.Entity.ModifiedBy = GetModifiedBy(entry);
                         break;
 
                     case EntityState.Modified:
                         entry.Entity.ModifiedAt = _time.CurrentDate();
-                        entry.Entity.ModifiedBy = string.IsNullOrEmpty(_currentUser.FirstName) ? entry.Entity.ModifiedBy : $"{_currentUser.FirstName} {_currentUser.LastName}";
+                        entry.Entity.ModifiedBy = GetModifiedBy(entry);
                         break;
                 }
             }
@@ -72,5 +72,35 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
             return result;
         }  
+
+        private string GetCreatedBy(EntityEntry<IAuditable> entry)
+        {
+            if (!string.IsNullOrEmpty(_currentUser.FirstName))
+            {
+                return $"{_currentUser.FirstName} {_currentUser.LastName}";
+            }
+
+            if (string.IsNullOrEmpty(entry.Entity.CreatedBy))
+            {
+                return "System";
+            }
+
+            return entry.Entity.CreatedBy;
+        }
+
+        private string GetModifiedBy(EntityEntry<IAuditable> entry)
+        {
+            if (!string.IsNullOrEmpty(_currentUser.FirstName))
+            {
+                return $"{_currentUser.FirstName} {_currentUser.LastName}";
+            }
+
+            if (string.IsNullOrEmpty(entry.Entity.ModifiedBy))
+            {
+                return "System";
+            }
+
+            return entry.Entity.ModifiedBy;
+        }
     }
 }
