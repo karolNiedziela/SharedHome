@@ -137,7 +137,6 @@ export class BillsComponent implements OnInit, OnDestroy {
   }
 
   private getBillEvent(bill: Bill): BillEvent {
-    console.log(bill);
     endOfDay(Date.parse(bill.dateOfPayment.toString()));
     const billEvent: BillEvent = {
       id: bill.id,
@@ -149,6 +148,7 @@ export class BillsComponent implements OnInit, OnDestroy {
       serviceProvider: bill.serviceProvider,
       dateOfPayment: bill.dateOfPayment,
       billType: bill.billType,
+      createdBy: bill.createdBy,
       cost:
         bill.cost == null
           ? null

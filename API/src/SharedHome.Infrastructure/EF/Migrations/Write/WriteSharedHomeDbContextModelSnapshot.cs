@@ -139,6 +139,10 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
@@ -413,24 +417,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
 
             modelBuilder.Entity("SharedHome.Domain.Persons.Aggregates.Person", b =>
                 {
-                    b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.Email", "Email", b1 =>
-                        {
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("longtext")
-                                .HasColumnName("Email");
-
-                            b1.HasKey("PersonId");
-
-                            b1.ToTable("Persons");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PersonId");
-                        });
-
                     b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.FirstName", "FirstName", b1 =>
                         {
                             b1.Property<Guid>("PersonId")
@@ -466,9 +452,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                             b1.WithOwner()
                                 .HasForeignKey("PersonId");
                         });
-
-                    b.Navigation("Email")
-                        .IsRequired();
 
                     b.Navigation("FirstName")
                         .IsRequired();
