@@ -35,6 +35,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedHome.Notifications", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{0BAFAA2B-3CEE-4F2C-85E1-2DB365F85367}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomanModels", "DomanModels", "{35F184CB-54C8-47C3-99CF-C151AD73C415}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\DomainModels\Aggregates.Bill.md = Docs\DomainModels\Aggregates.Bill.md
+		Docs\DomainModels\Aggregates.HouseGroup.md = Docs\DomainModels\Aggregates.HouseGroup.md
+		Docs\DomainModels\Aggregates.Invitation.md = Docs\DomainModels\Aggregates.Invitation.md
+		Docs\DomainModels\Aggregates.Person.md = Docs\DomainModels\Aggregates.Person.md
+		Docs\DomainModels\Aggregates.ShoppingList.md = Docs\DomainModels\Aggregates.ShoppingList.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +116,7 @@ Global
 		{A9ABD909-33DF-4DC1-A55D-C544540F0107} = {ED800546-9678-4CDD-B283-BF87C372ABDA}
 		{10387FDF-FC3A-419C-8DAB-ADA951A8D713} = {C836921C-4886-44F6-8EA0-F48380D85CE5}
 		{272E5DCA-26FB-409B-8072-9DDEFA715AB5} = {C836921C-4886-44F6-8EA0-F48380D85CE5}
+		{35F184CB-54C8-47C3-99CF-C151AD73C415} = {0BAFAA2B-3CEE-4F2C-85E1-2DB365F85367}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6526E6B2-24EF-4AB8-A74E-51011612453E}

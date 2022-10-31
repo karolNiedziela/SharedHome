@@ -3,5 +3,6 @@ export interface Paged<T> {
   pageSize: number;
   totalPages: number;
   totalItems: number;
+  customTotalItems?: number;
   items: T[];
 }

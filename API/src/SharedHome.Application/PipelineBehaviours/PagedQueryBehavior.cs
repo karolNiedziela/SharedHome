@@ -8,7 +8,9 @@ namespace SharedHome.Application.PipelineBehaviours
     {
         private const int MaxPageSize = 100;
 
-        private const int DefaultPageSize = 10;
+        private const int MinPageSize = 10;
+
+        private const int DefaultPageSize = 25;
 
         public async Task<TResponse> Handle(TQuery request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -27,6 +29,11 @@ namespace SharedHome.Application.PipelineBehaviours
                 if (pagedQuery.PageSize > MaxPageSize)
                 {
                     pagedQuery.PageSize = DefaultPageSize;
+                }
+                
+                if (pagedQuery.PageSize < MinPageSize)
+                {
+                    pagedQuery.PageSize = MinPageSize;
                 }
             }
 

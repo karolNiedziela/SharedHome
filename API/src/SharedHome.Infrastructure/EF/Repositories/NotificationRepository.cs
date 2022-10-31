@@ -29,9 +29,20 @@ namespace SharedHome.Infrastructure.EF.Repositories
             return await query.OrderByDescending(x => x.CreatedAt).ToListAsync();
         }
 
+        public async Task<IEnumerable<AppNotification>> GetAllAsync(Guid personId, IEnumerable<int> notificationIds)
+            => await _context.Notifications
+            .Where(x => x.PersonId == personId && notificationIds.Contains(x.Id))
+            .ToListAsync();
+
         public async Task AddAsync(AppNotification notification)
         {
             await _context.Notifications.AddAsync(notification);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(IEnumerable<AppNotification> notification)
+        {
+            _context.Notifications.UpdateRange(notification);
             await _context.SaveChangesAsync();
         }
     }
