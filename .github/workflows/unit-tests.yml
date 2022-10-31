@@ -23,7 +23,5 @@ jobs:
       run: dotnet build --configuration Release API/src/SharedHome.Api
     - name: Run Domain Unit Tests
       run: dotnet test --configuration Release API/tests/SharedHome.Domain.UnitTests
-    - name: Run Notifications Unit Tests
-      run: dotnet test --configuration Release API/tests/SharedHome.Notifications.UnitTests
     - name: Run Application Unit Tests
       run: dotnet test --configuration Release API/tests/SharedHome.Application.UnitTests
