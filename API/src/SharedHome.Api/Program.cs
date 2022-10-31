@@ -29,7 +29,6 @@ try
 
     builder.Services.AddSharedHomeIdentity(builder.Configuration);
     builder.Services.AddApplication();
-    builder.Services.AddNotifications();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddShared(builder.Configuration);
     builder.Services.AddApi();

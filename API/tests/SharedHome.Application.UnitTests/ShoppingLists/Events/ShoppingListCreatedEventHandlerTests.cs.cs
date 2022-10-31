@@ -1,12 +1,10 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Bills.Events;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
+using SharedHome.Application.ShoppingLists.Events;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Handlers.Bills;
-using SharedHome.Notifications.Repositories;
 using SharedHome.Notifications.Services;
 using SharedHome.Tests.Shared.Providers;
 using System;
@@ -14,29 +12,30 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SharedHome.Notifications.UnitTests.Handlers.Bills
+namespace SharedHome.Application.UnitTests.ShoppingLists.Events
 {
-    public class BillCreatedHandlerTests
+    public class ShoppingListCreatedEventHandlerTests
     {
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
-        private readonly INotificationHandler<DomainEventNotification<BillCreated>> _notificationHandler;
+        private readonly INotificationHandler<DomainEventNotification<ShoppingListCreated>> _notificationHandler;
 
-        public BillCreatedHandlerTests()
-        {
+        public ShoppingListCreatedEventHandlerTests()
+        {            
             _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
             _appNotificationService = Substitute.For<IAppNotificationService>();
-            _notificationHandler = new BillCreatedHandler(_houseGroupReadService, _appNotificationService);
+            _notificationHandler = new ShoppingListCreatedEventHandler(_houseGroupReadService, _appNotificationService);
         }
 
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), new CreatorDto(Guid.NewGuid(), "", ""));
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
 
-            var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
+            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(false);
+            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
+                .Returns(false);
 
             await _notificationHandler.Handle(domainEvent, default);
 
@@ -47,9 +46,9 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), new CreatorDto(Guid.NewGuid(), "", ""));
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
 
-            var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
+            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
 
             _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
                 .Returns(true);
@@ -66,9 +65,9 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), new CreatorDto(Guid.NewGuid(), "", ""));
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
 
-            var domainEvent = new DomainEventNotification<BillCreated>(billCreated);
+            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
 
             _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
                 .Returns(true);
@@ -77,11 +76,10 @@ namespace SharedHome.Notifications.UnitTests.Handlers.Bills
                .Returns(new List<Guid>
                {
                    Guid.NewGuid(),
-                   Guid.NewGuid(),
+                   Guid.NewGuid(),                   
                });
 
             await _notificationHandler.Handle(domainEvent, default);
-
             await _appNotificationService.Received(2).AddAsync(Arg.Any<AppNotification>());
             await _appNotificationService.Received(2).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>());
         }

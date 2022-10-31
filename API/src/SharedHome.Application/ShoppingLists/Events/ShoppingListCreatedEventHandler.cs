@@ -1,19 +1,18 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
-using SharedHome.Application.ShoppingLists.Events;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
 
-namespace SharedHome.Notifications.Handlers.ShoppingLists
+namespace SharedHome.Application.ShoppingLists.Events
 {
-    public class ShoppingListCreatedHandler : INotificationHandler<DomainEventNotification<ShoppingListCreated>>
+    public class ShoppingListCreatedEventHandler : INotificationHandler<DomainEventNotification<ShoppingListCreated>>
     {
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
 
-        public ShoppingListCreatedHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
+        public ShoppingListCreatedEventHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
         {
             _houseGroupReadService = houseGroupReadService;
             _appNotificationService = appNotificationService;
@@ -43,7 +42,7 @@ namespace SharedHome.Notifications.Handlers.ShoppingLists
                 await _appNotificationService.AddAsync(appNotification);
 
                 await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId);
-            }           
+            }
         }
     }
 }

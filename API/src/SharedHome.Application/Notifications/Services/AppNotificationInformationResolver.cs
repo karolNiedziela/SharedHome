@@ -2,11 +2,12 @@
 using Microsoft.Extensions.Logging;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
+using SharedHome.Notifications.Services;
 using SharedHome.Shared.Constants;
 using System.Reflection;
 using System.Text;
 
-namespace SharedHome.Notifications.Services
+namespace SharedHome.Application.Notifications.Services
 {
     public class AppNotificationInformationResolver : IAppNotificationInformationResolver
     {

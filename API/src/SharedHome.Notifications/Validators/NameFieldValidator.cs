@@ -3,7 +3,7 @@ using SharedHome.Notifications.Entities;
 
 namespace SharedHome.Notifications.Validators
 {
-    internal class NameFieldValidator : IAppNotificationFieldValidator
+    public class NameFieldValidator : IAppNotificationFieldValidator
     {
         public AppNotificationFieldType FieldType { get; }
 

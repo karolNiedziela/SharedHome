@@ -6,41 +6,38 @@ using System.Threading.Tasks;
 
 namespace SharedHome.Shared.Abstractions.Domain
 {
-    public abstract class ValueObject
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
-        protected static bool EqualOperator(ValueObject left, ValueObject right)
-        {
-            if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
-            {
-                return false;
-            }
-            return ReferenceEquals(left, null) || left.Equals(right!);
-        }
+        public abstract IEnumerable<object> GetEqualityComponents();
 
-        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
-        {
-            return !(EqualOperator(left, right));
-        }
+        public static bool operator ==(ValueObject left, ValueObject right)
+            => Equals(left, right);
 
-        protected abstract IEnumerable<object> GetEqualityComponents();
+        public static bool operator !=(ValueObject left, ValueObject right)
+            => !Equals(left, right);
 
         public override bool Equals(object? obj)
         {
-            if (obj == null || obj.GetType() != GetType())
+            if (obj is null || obj.GetType() != GetType())
             {
                 return false;
             }
 
-            var other = (ValueObject)obj;
+            var valueObject = (ValueObject)obj;
 
-            return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+            return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
         }
 
         public override int GetHashCode()
         {
             return GetEqualityComponents()
-                .Select(x => x != null ? x.GetHashCode() : 0)
+                .Select(x => x?.GetHashCode() ?? 0)
                 .Aggregate((x, y) => x ^ y);
+        }
+
+        public bool Equals(ValueObject? other)
+        {
+            return Equals((object?)other);
         }
     }
 }

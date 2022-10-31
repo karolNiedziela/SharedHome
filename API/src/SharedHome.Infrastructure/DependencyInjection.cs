@@ -12,7 +12,7 @@ namespace SharedHome.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMediatR(new[] { typeof(ApplicationAssemblyReference).Assembly, typeof(NotificationAssemblyReference).Assembly, typeof(InfrastructureAssemblyReference).Assembly });
+            services.AddMediatR(new[] { typeof(ApplicationAssemblyReference).Assembly, typeof(InfrastructureAssemblyReference).Assembly });
 
             services.AddMappings();
 

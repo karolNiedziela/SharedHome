@@ -2,7 +2,7 @@
 
 namespace SharedHome.Notifications.Validators
 {
-    internal interface IAppNotificationFieldValidator
+    public interface IAppNotificationFieldValidator
     {
         AppNotificationFieldType FieldType { get; }
 

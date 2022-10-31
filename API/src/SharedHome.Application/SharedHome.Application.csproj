@@ -7,8 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\Services\**" />
+    <EmbeddedResource Remove="Common\Services\**" />
+    <None Remove="Common\Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <ProjectReference Include="..\SharedHome.Domain\SharedHome.Domain.csproj" />
 	  <ProjectReference Include="..\SharedHome.Identity\SharedHome.Identity.csproj" />
+	  <ProjectReference Include="..\SharedHome.Notifications\SharedHome.Notifications.csproj" />
 	  <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
 	  <ProjectReference Include="..\Shared\SharedHome.Shared\SharedHome.Shared.csproj" />
   </ItemGroup>
@@ -17,10 +24,6 @@
     <PackageReference Include="Mapster" Version="7.3.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\Services\" />
   </ItemGroup>
 
 </Project>

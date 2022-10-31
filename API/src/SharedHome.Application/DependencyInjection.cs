@@ -1,11 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application.Bills.Services;
 using SharedHome.Application.Common.Events;
+using SharedHome.Application.Notifications.Hubs;
+using SharedHome.Application.Notifications.Services;
 using SharedHome.Application.PipelineBehaviours;
 using SharedHome.Application.ShoppingLists.Services;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.ShoppingLists.Services;
+using SharedHome.Notifications.Services;
+using SharedHome.Notifications.Validators;
 using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Application
@@ -23,7 +28,26 @@ namespace SharedHome.Application
             services.AddScoped<IShoppingListService, ShoppingListService>();
             services.AddScoped<IBillService, BillService>();
 
+            services.AddScoped<IAppNotificationService, AppNotificationService>();
+            services.AddScoped<IAppNotificationInformationResolver, AppNotificationInformationResolver>();
+
+            services.AddScoped<IAppNotificationFieldValidator, NameFieldValidator>();
+            services.AddScoped<IAppNotificationFieldValidator, OperationTypeFieldValidator>();
+            services.AddScoped<IAppNotificationFieldValidator, TargetTypeFieldValidator>();
+
+            services.AddSignalR();
+
             return services;
+        }
+
+        public static IApplicationBuilder UseNotifications(this IApplicationBuilder applicationBuilder)
+        {
+            applicationBuilder.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<HouseGroupNotificationHub>("/notify");
+            });
+
+            return applicationBuilder;
         }
     }
 }

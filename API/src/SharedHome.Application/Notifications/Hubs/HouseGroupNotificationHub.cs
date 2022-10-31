@@ -2,10 +2,9 @@
 using Microsoft.AspNetCore.SignalR;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Notifications.Services;
 using System.Collections.Concurrent;
 
-namespace SharedHome.Notifications.Hubs
+namespace SharedHome.Application.Notifications.Hubs
 {
     [Authorize]
     public class HouseGroupNotificationHub : Hub<IHouseGroupNotificationHubClient>
