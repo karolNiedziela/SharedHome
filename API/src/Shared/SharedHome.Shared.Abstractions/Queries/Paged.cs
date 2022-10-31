@@ -12,8 +12,8 @@
         }
 
         public Paged(List<T> items, int currentPage, int pageSize,
-            int totalPages, int totalItems) :
-            base(currentPage, pageSize, totalPages, totalItems)
+            int totalPages, int totalItems, int? customTotalItems = null) :
+            base(currentPage, pageSize, totalPages, totalItems, customTotalItems)
         {
             Items = items;
         }

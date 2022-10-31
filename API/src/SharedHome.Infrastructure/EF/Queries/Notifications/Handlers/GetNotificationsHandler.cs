@@ -24,11 +24,13 @@ namespace SharedHome.Infrastructure.EF.Queries.Notifications.Handlers
         {
             var notifications = await _notifications
                 .Include(x => x.Fields)
-                .Where(x => x.PersonId == request.PersonId && !x.IsRead)
+                .Where(x => x.PersonId == request.PersonId)
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(x => _mapper.Map<AppNotificationDto>(x))
                 .PaginateAsync(request.PageNumber, request.PageSize);
 
+            var unReadNotifications = notifications.Items.Count(x => !x.IsRead);
+            notifications.CustomTotalItems = unReadNotifications;
 
             return notifications;
         }

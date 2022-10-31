@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Api.Constants;
+using SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead;
 using SharedHome.Application.Notifications.Queries;
 using SharedHome.Notifications.DTO;
 
@@ -14,6 +16,14 @@ namespace SharedHome.Api.Controllers
 
             return Ok(notifications);
         }
-        
+
+        [HttpPatch(ApiRoutes.Notications.MarkAsRead)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> MarkAsRead([FromBody] MarkNotificationsAsReadCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
     }
 }

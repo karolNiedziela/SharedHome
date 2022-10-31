@@ -9,6 +9,5 @@
         public string? Type { get; set; }
 
         public string CreatedBy { get; set; } = default!;
-
     }
 }
