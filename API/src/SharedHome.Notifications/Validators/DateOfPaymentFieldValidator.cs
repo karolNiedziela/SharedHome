@@ -2,7 +2,7 @@
 
 namespace SharedHome.Notifications.Validators
 {
-    internal class DateOfPaymentFieldValidator : IAppNotificationFieldValidator
+    public class DateOfPaymentFieldValidator : IAppNotificationFieldValidator
     {
         public AppNotificationFieldType FieldType { get; }
 

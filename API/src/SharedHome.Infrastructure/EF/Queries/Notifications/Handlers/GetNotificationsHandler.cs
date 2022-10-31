@@ -1,10 +1,10 @@
 ﻿using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
+using SharedHome.Application.Notifications.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Queries;
 using SharedHome.Shared.Abstractions.Queries;
 
 namespace SharedHome.Infrastructure.EF.Queries.Notifications.Handlers

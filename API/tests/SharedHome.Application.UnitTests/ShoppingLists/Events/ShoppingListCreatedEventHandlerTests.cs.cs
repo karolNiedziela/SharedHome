@@ -5,8 +5,6 @@ using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Events;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Handlers.ShoppingLists;
-using SharedHome.Notifications.Repositories;
 using SharedHome.Notifications.Services;
 using SharedHome.Tests.Shared.Providers;
 using System;
@@ -14,19 +12,19 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace SharedHome.Notifications.UnitTests.Handlers.ShoppingLists
+namespace SharedHome.Application.UnitTests.ShoppingLists.Events
 {
-    public class ShoppingListCreatedHandlerTests
+    public class ShoppingListCreatedEventHandlerTests
     {
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
         private readonly INotificationHandler<DomainEventNotification<ShoppingListCreated>> _notificationHandler;
 
-        public ShoppingListCreatedHandlerTests()
+        public ShoppingListCreatedEventHandlerTests()
         {            
             _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
             _appNotificationService = Substitute.For<IAppNotificationService>();
-            _notificationHandler = new ShoppingListCreatedHandler(_houseGroupReadService, _appNotificationService);
+            _notificationHandler = new ShoppingListCreatedEventHandler(_houseGroupReadService, _appNotificationService);
         }
 
         [Fact]

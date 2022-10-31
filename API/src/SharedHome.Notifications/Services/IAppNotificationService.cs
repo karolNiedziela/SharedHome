@@ -1,5 +1,4 @@
-﻿using SharedHome.Notifications.DTO;
-using SharedHome.Notifications.Entities;
+﻿using SharedHome.Notifications.Entities;
 
 namespace SharedHome.Notifications.Services
 {

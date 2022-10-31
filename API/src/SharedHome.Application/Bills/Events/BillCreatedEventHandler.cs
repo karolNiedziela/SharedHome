@@ -1,19 +1,18 @@
 ﻿using MediatR;
-using SharedHome.Application.Bills.Events;
 using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
 
-namespace SharedHome.Notifications.Handlers.Bills
+namespace SharedHome.Application.Bills.Events
 {
-    public class BillCreatedHandler : INotificationHandler<DomainEventNotification<BillCreated>>
+    public class BillCreatedEventHandler : INotificationHandler<DomainEventNotification<BillCreated>>
     {
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
 
-        public BillCreatedHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
+        public BillCreatedEventHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
         {
             _houseGroupReadService = houseGroupReadService;
             _appNotificationService = appNotificationService;

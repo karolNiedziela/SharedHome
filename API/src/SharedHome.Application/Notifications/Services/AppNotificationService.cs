@@ -1,12 +1,13 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.SignalR;
+using SharedHome.Application.Notifications.Hubs;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
-using SharedHome.Notifications.Hubs;
 using SharedHome.Notifications.Repositories;
+using SharedHome.Notifications.Services;
 using SharedHome.Notifications.Validators;
 
-namespace SharedHome.Notifications.Services
+namespace SharedHome.Application.Notifications.Services
 {
     internal class AppNotificationService : IAppNotificationService
     {

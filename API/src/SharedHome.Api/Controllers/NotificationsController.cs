@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SharedHome.Application.Notifications.Queries;
 using SharedHome.Notifications.DTO;
-using SharedHome.Notifications.Queries;
 
 namespace SharedHome.Api.Controllers
 {
