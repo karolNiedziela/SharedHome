@@ -2,7 +2,7 @@
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup;
 using SharedHome.Application.HouseGroups.Extensions;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;

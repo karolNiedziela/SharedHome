@@ -1,5 +1,5 @@
-﻿using SharedHome.Domain.Bills.Constants;
-using SharedHome.Domain.Bills.Entities;
+﻿using SharedHome.Domain.Bills;
+using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;

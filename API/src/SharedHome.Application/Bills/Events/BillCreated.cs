@@ -1,6 +1,6 @@
 ﻿using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
+using SharedHome.Domain.Common.Events;
 
 namespace SharedHome.Application.Bills.Events
 {

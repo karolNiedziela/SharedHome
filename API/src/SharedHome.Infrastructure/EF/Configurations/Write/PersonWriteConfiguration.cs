@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Persons;
 using SharedHome.Domain.Persons.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
 

@@ -1,6 +1,6 @@
-﻿using SharedHome.Domain.Persons.Repositories;
-using SharedHome.Domain.Persons.Aggregates;
-using SharedHome.Application.Persons.Exceptions;
+﻿using SharedHome.Application.Persons.Exceptions;
+using SharedHome.Domain.Persons;
+using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.Persons.ValueObjects;
 
 namespace SharedHome.Application.Persons.Extensions

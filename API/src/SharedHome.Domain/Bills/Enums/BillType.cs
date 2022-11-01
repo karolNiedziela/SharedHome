@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Domain.Bills.Constants
+﻿namespace SharedHome.Domain.Bills.Enums
 {
     public enum BillType
     {

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.ShoppingLists.Commands.DeleteManyShoppingListProducts;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using System;
@@ -36,9 +36,9 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             };
 
             var shoppingList = ShoppingListProvider.GetEmpty();
-            shoppingList.AddProduct(new ShoppingListProduct("Produkt1", 1));
-            shoppingList.AddProduct(new ShoppingListProduct("Produkt2", 1));
-            shoppingList.AddProduct(new ShoppingListProduct("Produkt3", 1));
+            shoppingList.AddProduct(ShoppingListProduct.Create("Produkt1", 1));
+            shoppingList.AddProduct(ShoppingListProduct.Create("Produkt2", 1));
+            shoppingList.AddProduct(ShoppingListProduct.Create("Produkt3", 1));
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(shoppingList);

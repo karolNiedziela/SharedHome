@@ -1,9 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Domain.Persons.Aggregates;
+﻿using SharedHome.Domain.Persons;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Tests.Shared.Providers;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SharedHome.IntegrationTests
 {

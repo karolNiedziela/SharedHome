@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Domain.ShoppingLists.Constants
+﻿namespace SharedHome.Domain.ShoppingLists.Enums
 {
     public enum NetContentType
     {

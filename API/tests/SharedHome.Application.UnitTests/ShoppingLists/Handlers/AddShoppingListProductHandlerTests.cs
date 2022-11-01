@@ -5,7 +5,7 @@ using NSubstitute;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts;
 using SharedHome.Application.ShoppingLists.DTO;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Infrastructure;

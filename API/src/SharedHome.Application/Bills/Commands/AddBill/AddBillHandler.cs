@@ -2,11 +2,11 @@
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Events;
 using SharedHome.Application.Common.DTO;
-using SharedHome.Domain.Bills.Constants;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
+using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Common.Events;
 using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Domain;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Helpers;
 

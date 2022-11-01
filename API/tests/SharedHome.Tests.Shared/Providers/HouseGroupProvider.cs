@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.HouseGroups.Aggregates;
+﻿using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Entities;
 
 namespace SharedHome.Tests.Shared.Providers

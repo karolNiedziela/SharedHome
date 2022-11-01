@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Shared.Abstractions.Domain
+﻿namespace SharedHome.Domain.Common.Events
 {
     public interface IDomainEventDispatcher
     {

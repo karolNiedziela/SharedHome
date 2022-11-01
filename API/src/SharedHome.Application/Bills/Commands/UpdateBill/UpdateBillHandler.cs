@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SharedHome.Domain.Bills.Constants;
+using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;

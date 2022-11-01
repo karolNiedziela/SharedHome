@@ -3,7 +3,7 @@ using NSubstitute;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.ChangePriceOfProduct;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Shared.Abstractions.Commands;
@@ -44,7 +44,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             await _commandHandler.Handle(command, default);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList =>
-                shoppingList.Products.First().Price!.Amount == 25));
+                shoppingList.Products[0].Price!.Amount == 25));
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Entities;
-using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Persons;
 using SharedHome.Domain.Shared.ValueObjects;
-using System.Diagnostics;
 
 namespace SharedHome.Infrastructure.EF.Configurations.Write
 {
@@ -44,8 +43,6 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
                 navigation.Property(member => member.IsOwner)
                           .HasDefaultValue(false);
-
-                navigation.HasOne<Person>().WithOne().HasForeignKey<HouseGroupMember>(member => member.PersonId);
             });
         }
     }

@@ -1,11 +1,12 @@
-﻿using SharedHome.Domain.Shared.ValueObjects;
+﻿using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.Shared.ValueObjects;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.ShoppingLists.Aggregates
+namespace SharedHome.Domain.ShoppingLists
 {
-    public class ShoppingList : AggregateRoot<ShoppingListId>
+    public sealed class ShoppingList : AggregateRoot<ShoppingListId>
     {
         private readonly List<ShoppingListProduct> _products = new();
 
@@ -14,7 +15,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
         // Indicator to mark, that list is closed
         public bool IsDone { get; private set; } = false;
 
-        public IEnumerable<ShoppingListProduct> Products => _products;
+        public IReadOnlyList<ShoppingListProduct> Products => _products.AsReadOnly();
 
         public PersonId PersonId { get; private set; } = default!;
 
@@ -93,7 +94,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductIsAlreadyBoughtException(productName);
             }
 
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, netContent: product.NetContent, isBought: true));
+            product.PurchaseProduct(price);
         }
 
         public void PurchaseProducts(Dictionary<string, Money> priceByProductNames)
@@ -116,7 +117,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
 
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, price, netContent: product.NetContent, isBought: product.IsBought));
+            product.ChangePriceOfProduct(price);
         }
 
         public void CancelPurchaseOfProduct(string productName)
@@ -128,8 +129,8 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             {
                 throw new ShoppingListProductWasNotBoughtException(productName);
             }
-            
-            product.Update(new ShoppingListProduct(product.Name, product.Quantity, null, netContent: product.NetContent, isBought: false));
+
+            product.CancelPurchaseOfProduct();
         }
 
         public void MakeListDone()
@@ -143,25 +144,7 @@ namespace SharedHome.Domain.ShoppingLists.Aggregates
             IsDone = false;
         }
 
-        public void Update(ShoppingListName shoppingListName)
-        {
-            Name = shoppingListName;
-        }
-
-        public void UpdateProduct(ShoppingListProduct shoppingListProduct, string currentProductName)
-        {
-            if (shoppingListProduct.Name != currentProductName && _products.Any(p => p.Name == shoppingListProduct.Name))
-            {
-                throw new ShoppingListProductAlreadyExistsException(shoppingListProduct.Name, Id);
-            }
-
-            var product = GetProduct(currentProductName);
-
-
-            product.Update(shoppingListProduct);
-        }
-
-        private ShoppingListProduct GetProduct(string productName)
+        public ShoppingListProduct GetProduct(string productName)
         {
             var product = _products.SingleOrDefault(p => p.Name == productName);
             if (product is null)

@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.ShoppingLists.Constants;
+﻿using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Shared.Helpers;
 

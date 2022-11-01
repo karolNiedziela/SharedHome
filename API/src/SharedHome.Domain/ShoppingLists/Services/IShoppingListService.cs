@@ -1,6 +1,4 @@
-﻿using SharedHome.Domain.ShoppingLists.Aggregates;
-
-namespace SharedHome.Domain.ShoppingLists.Services
+﻿namespace SharedHome.Domain.ShoppingLists.Services
 {
     public interface IShoppingListService
     {

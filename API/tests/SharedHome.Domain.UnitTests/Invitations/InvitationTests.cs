@@ -1,5 +1,5 @@
-﻿using SharedHome.Domain.Invitations.Aggregates;
-using SharedHome.Domain.Invitations.Constants;
+﻿using SharedHome.Domain.Invitations;
+using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Exceptions;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;

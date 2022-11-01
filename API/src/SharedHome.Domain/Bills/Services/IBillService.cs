@@ -1,6 +1,4 @@
-﻿using SharedHome.Domain.Bills.Entities;
-
-namespace SharedHome.Domain.Bills.Services
+﻿namespace SharedHome.Domain.Bills.Services
 {
     public interface IBillService
     {

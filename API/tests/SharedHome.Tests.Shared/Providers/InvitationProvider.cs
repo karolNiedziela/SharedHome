@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.Invitations.Aggregates;
+﻿using SharedHome.Domain.Invitations;
 
 namespace SharedHome.Tests.Shared.Providers
 {

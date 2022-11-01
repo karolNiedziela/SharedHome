@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
-using SharedHome.Domain.Invitations.Constants;
+using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Infrastructure.EF.Contexts;
-using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Helpers;

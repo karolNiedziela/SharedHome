@@ -1,8 +1,8 @@
-﻿using SharedHome.Domain.Persons.ValueObjects;
+﻿using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.Persons.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.Persons.Aggregates
+namespace SharedHome.Domain.Persons
 {
     public class Person : AggregateRoot<PersonId>
     {

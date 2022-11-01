@@ -1,11 +1,10 @@
 ﻿using MapsterMapper;
-using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.Persons.Extensions;
 using SharedHome.Application.ReadServices;
-using SharedHome.Domain.Invitations.Aggregates;
+using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Shared.Abstractions.Commands;

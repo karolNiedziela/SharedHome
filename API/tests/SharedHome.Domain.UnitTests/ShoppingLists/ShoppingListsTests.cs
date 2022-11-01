@@ -1,9 +1,8 @@
 ﻿using SharedHome.Domain.Shared.Exceptions;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
-using SharedHome.Domain.ShoppingLists.Constants;
+using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Exceptions;
-using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -45,7 +44,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(() 
-                => shoppingList.AddProduct(new ShoppingListProduct(shoppingListProductName, 1)));
+                => shoppingList.AddProduct(ShoppingListProduct.Create(shoppingListProductName, 1)));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<EmptyShoppingListProductNameException>();
@@ -57,7 +56,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(() 
-                => shoppingList.AddProduct(new ShoppingListProduct("Product", -5)));
+                => shoppingList.AddProduct(ShoppingListProduct.Create("Product", -5)));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<QuantityBelowZeroException>();
@@ -69,7 +68,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(() 
-                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(-10m, "zł"))));
+                => shoppingList.AddProduct(ShoppingListProduct.Create("Product", 2, new Money(-10m, "zł"))));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<MoneyAmountBelowZeroException>();
@@ -83,7 +82,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(()
-                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(10m, currency))));
+                => shoppingList.AddProduct(ShoppingListProduct.Create("Product", 2, new Money(10m, currency))));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<InvalidCurrencyException>();
@@ -95,7 +94,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
 
             var exception = Record.Exception(()
-                => shoppingList.AddProduct(new ShoppingListProduct("Product", 2, new Money(10m, "GBR"))));
+                => shoppingList.AddProduct(ShoppingListProduct.Create("Product", 2, new Money(10m, "GBR"))));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<UnsupportedCurrencyException>();
@@ -107,7 +106,7 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty(true);
 
             var exception = Record.Exception(() 
-                => shoppingList.AddProduct(new ShoppingListProduct(ShoppingListProvider.ProductName, 1)));
+                => shoppingList.AddProduct(ShoppingListProduct.Create(ShoppingListProvider.ProductName, 1)));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<ShoppingListAlreadyDoneException>();
@@ -134,10 +133,9 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             shoppingList.AddProduct(product);
 
-            shoppingList.Products.Count().ShouldBe(1);
-            var addedProduct = shoppingList.Products.First();
-            addedProduct.Name.Value.ShouldBe("Product");
-            addedProduct.Quantity.Value.ShouldBe(1);
+            shoppingList.Products.Count.ShouldBe(1);
+            shoppingList.Products[0].Name.Value.ShouldBe("Product");
+            shoppingList.Products[0].Quantity.Value.ShouldBe(1);
         }
 
         [Fact]
@@ -146,13 +144,13 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             var shoppingList = ShoppingListProvider.GetEmpty();
             var products = new List<ShoppingListProduct>
             {
-                new ShoppingListProduct("Product 1", 1),
-                new ShoppingListProduct("Product 2", 2),
+                ShoppingListProduct.Create("Product 1", 1),
+                ShoppingListProduct.Create("Product 2", 2),
             };
 
             shoppingList.AddProducts(products);
 
-            shoppingList.Products.Count().ShouldBe(2);
+            shoppingList.Products.Count.ShouldBe(2);
         }
 
         [Fact]
@@ -188,21 +186,21 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             shoppingList.RemoveProduct(ShoppingListProvider.ProductName);
 
-            shoppingList.Products.Count().ShouldBe(0);
+            shoppingList.Products.Count.ShouldBe(0);
         }
 
         [Fact]
         public void RemoveProducts_Remove_Products_With_Given_ProductNames()
         {
             var shoppingList = ShoppingListProvider.GetEmpty();
-            shoppingList.AddProduct(new ShoppingListProduct("Produkt1", 1));
-            shoppingList.AddProduct(new ShoppingListProduct("Produkt2", 1));
-            shoppingList.AddProduct(new ShoppingListProduct("Produkt3", 1));
+            shoppingList.AddProduct(ShoppingListProduct.Create("Produkt1", 1));
+            shoppingList.AddProduct(ShoppingListProduct.Create("Produkt2", 1));
+            shoppingList.AddProduct(ShoppingListProduct.Create("Produkt3", 1));
 
             shoppingList.RemoveProducts(new[] { "Produkt1", "Produkt3" });
 
-            shoppingList.Products.Count().ShouldBe(1);
-            shoppingList.Products.First().Name.Value.ShouldBe("Produkt2");
+            shoppingList.Products.Count.ShouldBe(1);
+            shoppingList.Products[0].Name.Value.ShouldBe("Produkt2");
         }
 
         [Fact]
@@ -254,10 +252,9 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł"));
 
-            var purchasedProduct = shoppingList.Products.First();
-            purchasedProduct.IsBought.ShouldBeTrue();
-            purchasedProduct.Price!.Amount.ShouldBe(10m);
-            purchasedProduct.Price.Currency.Value.ShouldBe("zł");
+            shoppingList.Products[0].IsBought.ShouldBeTrue();
+            shoppingList.Products[0].Price!.Amount.ShouldBe(10m);
+            shoppingList.Products[0].Price!.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
@@ -267,8 +264,8 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             shoppingList.AddProducts(new[]
             {
-                new ShoppingListProduct("Product", 1),
-                new ShoppingListProduct("Product2", 1),
+                ShoppingListProduct.Create("Product", 1),
+                ShoppingListProduct.Create("Product2", 1),
             });
 
             shoppingList.PurchaseProducts(new Dictionary<string, Money>
@@ -277,12 +274,12 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
                 { "Product2", new Money(30, "zł") },
             });
 
-            shoppingList.Products.First().IsBought.ShouldBeTrue();
-            shoppingList.Products.First().Price!.Amount.ShouldBe(20);
-            shoppingList.Products.First().Price!.Currency.Value.ShouldBe("zł");
-            shoppingList.Products.Last().IsBought.ShouldBeTrue();
-            shoppingList.Products.Last().Price!.Amount.ShouldBe(30);
-            shoppingList.Products.Last().Price!.Currency.Value.ShouldBe("zł");
+            shoppingList.Products[0].IsBought.ShouldBeTrue();
+            shoppingList.Products[0].Price!.Amount.ShouldBe(20);
+            shoppingList.Products[0].Price!.Currency.Value.ShouldBe("zł");
+            shoppingList.Products[1].IsBought.ShouldBeTrue();
+            shoppingList.Products[1].Price!.Amount.ShouldBe(30);
+            shoppingList.Products[1].Price!.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
@@ -332,10 +329,9 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             shoppingList.PurchaseProduct(ShoppingListProvider.ProductName, new Money(10m, "zł"));
 
             shoppingList.ChangePriceOfProduct(ShoppingListProvider.ProductName, new Money(25m, "zł"));
-
-            var changedPriceProduct = shoppingList.Products.First();
-            changedPriceProduct.Price!.Amount.ShouldBe(25m);
-            changedPriceProduct.Price!.Currency.Value.ShouldBe("zł");
+            
+            shoppingList.Products[0].Price!.Amount.ShouldBe(25m);
+            shoppingList.Products[0].Price!.Currency.Value.ShouldBe("zł");
         }
 
         [Fact]
@@ -387,10 +383,8 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
 
             shoppingList.CancelPurchaseOfProduct(ShoppingListProvider.ProductName);
 
-            var canceledProduct = shoppingList.Products.First();
-
-            canceledProduct.Price.ShouldBeNull();
-            canceledProduct.IsBought.ShouldBeFalse();
+            shoppingList.Products[0].Price.ShouldBeNull();
+            shoppingList.Products[0].IsBought.ShouldBeFalse();
         }
 
         [Fact]
@@ -422,24 +416,6 @@ namespace SharedHome.Domain.UnitTests.ShoppingLists
             shoppingList.UndoListDone();
 
             shoppingList.IsDone.ShouldBeFalse();
-        }
-
-        [Fact]
-        public void UpdateProduct_Update_ShoppingListProduct_On_Success()
-        {
-            var shoppingList = ShoppingListProvider.GetWithProduct(netContent: new NetContent("500", NetContentType.g));
-
-            var product = shoppingList.Products.First();
-
-            var quantityBeforeChanged = product.Quantity.Value;
-
-            shoppingList.UpdateProduct(new ShoppingListProduct("NewProductName", 2, netContent: new NetContent("300", NetContentType.g)), ShoppingListProvider.ProductName);
-
-            quantityBeforeChanged.ShouldBe(1);
-
-            product.Name.Value.ShouldBe("NewProductName");
-            product.Quantity.Value.ShouldBe(2);
-            product.NetContent!.Value.ShouldBe("300");
-        }
+        }      
     }
 }

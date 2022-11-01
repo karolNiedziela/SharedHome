@@ -1,5 +1,4 @@
-﻿using SharedHome.Domain.Bills.Entities;
-using SharedHome.Domain.Bills.ValueObjects;
+﻿using SharedHome.Domain.Bills.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.Bills.Repositories

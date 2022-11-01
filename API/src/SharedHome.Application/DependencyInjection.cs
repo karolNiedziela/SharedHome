@@ -8,10 +8,10 @@ using SharedHome.Application.Notifications.Services;
 using SharedHome.Application.PipelineBehaviours;
 using SharedHome.Application.ShoppingLists.Services;
 using SharedHome.Domain.Bills.Services;
+using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Notifications.Services;
 using SharedHome.Notifications.Validators;
-using SharedHome.Shared.Abstractions.Domain;
 
 namespace SharedHome.Application
 {

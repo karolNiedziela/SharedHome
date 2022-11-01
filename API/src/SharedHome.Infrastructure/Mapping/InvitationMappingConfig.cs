@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using SharedHome.Application.Invitations.Dto;
-using SharedHome.Domain.Invitations.Aggregates;
+using SharedHome.Domain.Invitations;
 using SharedHome.Infrastructure.EF.Models;
 
 namespace SharedHome.Infrastructure.Mapping

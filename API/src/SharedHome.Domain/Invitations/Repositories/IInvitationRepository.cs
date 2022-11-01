@@ -1,5 +1,5 @@
-﻿using SharedHome.Domain.Invitations.Aggregates;
-using SharedHome.Domain.Shared.ValueObjects;
+﻿using SharedHome.Domain.Shared.ValueObjects;
+using SharedHome.Domain.Invitations;
 
 namespace SharedHome.Domain.Invitations.Repositories
 {

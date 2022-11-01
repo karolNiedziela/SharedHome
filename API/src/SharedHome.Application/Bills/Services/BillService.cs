@@ -1,6 +1,6 @@
 ﻿using SharedHome.Application.Bills.Extensions;
 using SharedHome.Application.ReadServices;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;

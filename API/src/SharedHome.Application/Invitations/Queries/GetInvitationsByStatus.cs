@@ -1,5 +1,4 @@
 ﻿using SharedHome.Application.Invitations.Dto;
-using SharedHome.Domain.Invitations.Constants;
 using SharedHome.Shared.Abstractions.Queries;
 using SharedHome.Shared.Abstractions.Requests;
 using SharedHome.Shared.Abstractions.Responses;

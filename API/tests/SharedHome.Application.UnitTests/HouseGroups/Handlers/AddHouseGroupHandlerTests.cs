@@ -4,7 +4,7 @@ using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.ReadServices;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure;

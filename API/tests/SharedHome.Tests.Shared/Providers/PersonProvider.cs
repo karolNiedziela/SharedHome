@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.Persons.Aggregates;
+﻿using SharedHome.Domain.Persons;
 
 namespace SharedHome.Tests.Shared.Providers
 {

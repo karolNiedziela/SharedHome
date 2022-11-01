@@ -1,5 +1,4 @@
-﻿using SharedHome.Domain.Invitations.Constants;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace SharedHome.Application.Invitations.Dto
 {

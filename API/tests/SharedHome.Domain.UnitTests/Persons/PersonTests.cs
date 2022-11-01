@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.Persons.Aggregates;
+﻿using SharedHome.Domain.Persons;
 using SharedHome.Domain.Persons.Exceptions;
 using Shouldly;
 using System;

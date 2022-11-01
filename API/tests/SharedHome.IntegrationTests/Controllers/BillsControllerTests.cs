@@ -1,5 +1,5 @@
 ﻿using SharedHome.Api.Constants;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
 using SharedHome.IntegrationTests.Fixtures;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
