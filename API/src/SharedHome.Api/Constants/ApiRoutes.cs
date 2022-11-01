@@ -83,5 +83,10 @@
 
             public const string Delete = "{houseGroupId}";
         }
+
+        public static class Notications
+        {
+            public const string MarkAsRead = "markasread";
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace SharedHome.Notifications.Entities
 {
     public class AppNotification : IAuditable
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         public Guid PersonId { get; set; } = default!;
 
