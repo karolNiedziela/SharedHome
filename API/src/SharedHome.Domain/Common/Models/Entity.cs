@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SharedHome.Domain.Common.Events;
 
-namespace SharedHome.Shared.Abstractions.Domain
+namespace SharedHome.Domain.Common.Models
 {
     public abstract class Entity : IAuditable
     {

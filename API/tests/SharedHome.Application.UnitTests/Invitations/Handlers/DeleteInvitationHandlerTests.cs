@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Invitations.Commands.DeleteInvitation;
-using SharedHome.Domain.Invitations.Aggregates;
+using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;

@@ -2,11 +2,11 @@
 using NSubstitute;
 using SharedHome.Application.Invitations.Commands.AcceptInvitation;
 using SharedHome.Application.ReadServices;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Domain.Invitations.Aggregates;
-using SharedHome.Domain.Invitations.Constants;
+using SharedHome.Domain.Invitations;
+using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;

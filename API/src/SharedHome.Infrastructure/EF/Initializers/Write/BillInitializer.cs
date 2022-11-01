@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Domain.Bills.Constants;
-using SharedHome.Domain.Bills.Entities;
-using SharedHome.Domain.Bills.Repositories;
+using SharedHome.Domain.Bills;
+using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;
 

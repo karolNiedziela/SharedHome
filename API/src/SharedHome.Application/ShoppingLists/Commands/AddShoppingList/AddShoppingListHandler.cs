@@ -2,11 +2,11 @@
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Events;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.Common.Events;
+using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Repositories;
-using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Domain;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList

@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Shared.Abstractions.Domain
+﻿namespace SharedHome.Domain.Common.Models
 {
     public interface IAuditable
     {

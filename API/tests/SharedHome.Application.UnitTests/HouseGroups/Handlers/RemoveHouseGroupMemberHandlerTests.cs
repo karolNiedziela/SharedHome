@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;

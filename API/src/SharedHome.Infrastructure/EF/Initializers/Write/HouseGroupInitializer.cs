@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Infrastructure.EF.Contexts;
 

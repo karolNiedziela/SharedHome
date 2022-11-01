@@ -20,7 +20,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
-            shoppingList.Update(request.Name);
+            shoppingList.ChangeName(request.Name);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
 

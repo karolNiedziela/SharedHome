@@ -1,10 +1,10 @@
-﻿using SharedHome.Domain.Invitations.Constants;
+﻿using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Exceptions;
 using SharedHome.Domain.Invitations.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.Invitations.Aggregates
+namespace SharedHome.Domain.Invitations
 {
     public class Invitation : AggregateRoot<InvitationId>
     {

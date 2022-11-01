@@ -25,7 +25,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Extensions
         public async Task GetOrThrowAsync_Should_Throw_ShoppingListNotFoundException_When_ShoppingList_Not_Found()
         {
             var exception = await Record.ExceptionAsync(() =>
-                _shoppingListRepository.GetOrThrowAsync(new ShoppingListId(), Arg.Any<PersonId>()));
+                _shoppingListRepository.GetOrThrowAsync(Guid.NewGuid(), Arg.Any<PersonId>()));
 
             exception.ShouldBeOfType<ShoppingListNotFoundException>();
         }

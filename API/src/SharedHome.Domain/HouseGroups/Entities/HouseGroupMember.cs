@@ -1,5 +1,5 @@
-﻿using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
+﻿using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.HouseGroups.Entities
 {

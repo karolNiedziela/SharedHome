@@ -1,5 +1,6 @@
 ﻿using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 
 namespace SharedHome.Tests.Shared.Providers
@@ -24,6 +25,6 @@ namespace SharedHome.Tests.Shared.Providers
             return shoppingList;
         }
         public static ShoppingListProduct GetProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false)
-            => new(ProductName, quantity, price, netContent, isBought);
+            => ShoppingListProduct.Create(ProductName, quantity, price, netContent, isBought);
     }
 }

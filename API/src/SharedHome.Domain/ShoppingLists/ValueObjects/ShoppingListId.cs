@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedHome.Domain.ShoppingLists.ValueObjects
+﻿namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
-    public record ShoppingListId
+    public sealed record ShoppingListId
     {
         public Guid Value { get; }
 
-        public ShoppingListId() : this(Guid.NewGuid())
+        private ShoppingListId() : this(Guid.NewGuid())
         {
 
         }

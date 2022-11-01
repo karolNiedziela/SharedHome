@@ -9,7 +9,7 @@ using SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone;
 using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
 using SharedHome.IntegrationTests.Extensions;
 using SharedHome.IntegrationTests.Fixtures;
 using SharedHome.Shared.Abstractions.Responses;

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Persons;
 using SharedHome.Infrastructure.EF.Contexts;
 
 namespace SharedHome.Infrastructure.EF.Initializers.Write

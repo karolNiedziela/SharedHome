@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Infrastructure.EF.Contexts;

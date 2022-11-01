@@ -1,5 +1,4 @@
 ﻿using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 
 namespace SharedHome.Domain.ShoppingLists.Repositories

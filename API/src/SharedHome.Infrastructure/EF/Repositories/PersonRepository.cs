@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Domain.Persons.Aggregates;
+using SharedHome.Domain.Persons;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.Persons.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;

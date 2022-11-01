@@ -2,8 +2,8 @@
 using NSubstitute;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduct;
-using SharedHome.Domain.ShoppingLists.Aggregates;
-using SharedHome.Domain.ShoppingLists.Constants;
+using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
@@ -49,8 +49,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             await _commandHandler.Handle(command, default!);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(
-                x => x.Products.First().Quantity.Value == 2 &&
-                x.Products.First().NetContent!.Value == "300"));
+                x => x.Products[0].Quantity.Value == 2 &&
+                x.Products[0].NetContent!.Value == "300"));
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using SharedHome.Application.HouseGroups.Exceptions;
-using SharedHome.Domain.HouseGroups.Aggregates;
+using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 

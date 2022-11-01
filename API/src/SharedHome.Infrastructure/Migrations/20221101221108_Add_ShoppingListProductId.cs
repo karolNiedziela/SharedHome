@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.EF.Migrations.Write
+namespace SharedHome.Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Add_ShoppingListProductId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -82,6 +82,32 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "HouseGroupMembers",
+                columns: table => new
+                {
+                    PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    HouseGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IsOwner = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HouseGroupMembers", x => new { x.HouseGroupId, x.PersonId });
+                    table.ForeignKey(
+                        name: "FK_HouseGroupMembers_HouseGroups_HouseGroupId",
+                        column: x => x.HouseGroupId,
+                        principalTable: "HouseGroups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "NotificationFields",
                 columns: table => new
                 {
@@ -130,38 +156,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     table.PrimaryKey("PK_Bills", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Bills_Persons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "HouseGroupMembers",
-                columns: table => new
-                {
-                    PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    HouseGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    IsOwner = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HouseGroupMembers", x => new { x.HouseGroupId, x.PersonId });
-                    table.ForeignKey(
-                        name: "FK_HouseGroupMembers_HouseGroups_HouseGroupId",
-                        column: x => x.HouseGroupId,
-                        principalTable: "HouseGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HouseGroupMembers_Persons_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
@@ -241,7 +235,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 name: "ShoppingListProducts",
                 columns: table => new
                 {
-                    ShoppingListId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -252,11 +245,18 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                     NetContent = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NetContentType = table.Column<int>(type: "int", nullable: true),
-                    IsBought = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false)
+                    IsBought = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    ShoppingListId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingListProducts", x => new { x.ShoppingListId, x.Id });
+                    table.PrimaryKey("PK_ShoppingListProducts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ShoppingListProducts_ShoppingLists_ShoppingListId",
                         column: x => x.ShoppingListId,
@@ -270,12 +270,6 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 name: "IX_Bills_PersonId",
                 table: "Bills",
                 column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_HouseGroupMembers_PersonId",
-                table: "HouseGroupMembers",
-                column: "PersonId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invitations_HouseGroupId",
@@ -296,6 +290,11 @@ namespace SharedHome.Infrastructure.EF.Migrations.Write
                 name: "IX_NotificationFields_AppNotificationId",
                 table: "NotificationFields",
                 column: "AppNotificationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingListProducts_ShoppingListId",
+                table: "ShoppingListProducts",
+                column: "ShoppingListId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingLists_PersonId",

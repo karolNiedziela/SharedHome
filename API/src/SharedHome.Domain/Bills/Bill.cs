@@ -1,10 +1,10 @@
-﻿using SharedHome.Domain.Bills.Constants;
+﻿using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.Common.Models;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.Bills.Entities
+namespace SharedHome.Domain.Bills
 {
     public class Bill : AggregateRoot<BillId>
     {

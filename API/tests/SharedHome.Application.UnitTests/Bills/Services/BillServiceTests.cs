@@ -2,7 +2,7 @@
 using SharedHome.Application.Bills.Extensions;
 using SharedHome.Application.Bills.Services;
 using SharedHome.Application.ReadServices;
-using SharedHome.Domain.Bills.Constants;
+using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Bills.ValueObjects;

@@ -1,7 +1,7 @@
 ﻿using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Extensions;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 

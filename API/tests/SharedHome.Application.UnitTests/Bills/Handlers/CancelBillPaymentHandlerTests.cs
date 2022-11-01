@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.CancelBillPayment;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;

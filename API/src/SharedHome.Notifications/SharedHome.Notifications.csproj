@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SharedHome.Domain\SharedHome.Domain.csproj" />
     <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
   </ItemGroup>
 

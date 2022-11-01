@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;

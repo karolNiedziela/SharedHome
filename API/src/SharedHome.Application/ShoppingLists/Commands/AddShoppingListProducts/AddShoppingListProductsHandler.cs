@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;

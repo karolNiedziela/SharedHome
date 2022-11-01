@@ -2,10 +2,10 @@
 using NSubstitute;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.Commands.PurchaseProducts;
-using SharedHome.Domain.ShoppingLists.Aggregates;
+using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
 using SharedHome.Tests.Shared.Providers;
 using System;
@@ -52,8 +52,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
 
             shoppingList.AddProducts(new[]
             {
-                new ShoppingListProduct("Product", 1),
-                new ShoppingListProduct("Product1", 1),
+                ShoppingListProduct.Create("Product", 1),
+                ShoppingListProduct.Create("Product1", 1),
             });
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
@@ -62,12 +62,12 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
             await _commandHandler.Handle(command, default!);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList =>
-              shoppingList.Products.First().IsBought == true &&
-              shoppingList.Products.First().Price!.Amount == 50 &&
-              shoppingList.Products.First().Price!.Currency.Value == "zł" &&
-              shoppingList.Products.Last().IsBought == true &&
-              shoppingList.Products.Last().Price!.Amount == 25 &&
-              shoppingList.Products.Last().Price!.Currency.Value == "zł"));
+              shoppingList.Products[0].IsBought == true &&
+              shoppingList.Products[0].Price!.Amount == 50 &&
+              shoppingList.Products[0].Price!.Currency.Value == "zł" &&
+              shoppingList.Products[1].IsBought == true &&
+              shoppingList.Products[1].Price!.Amount == 25 &&
+              shoppingList.Products[1].Price!.Currency.Value == "zł"));
         }
     }
 }

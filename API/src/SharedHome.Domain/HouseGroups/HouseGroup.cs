@@ -1,10 +1,10 @@
-﻿using SharedHome.Domain.HouseGroups.Entities;
+﻿using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Domain;
 
-namespace SharedHome.Domain.HouseGroups.Aggregates
+namespace SharedHome.Domain.HouseGroups
 {
     public class HouseGroup : AggregateRoot<HouseGroupId>
     {        

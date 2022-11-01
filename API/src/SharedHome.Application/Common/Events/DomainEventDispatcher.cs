@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using SharedHome.Shared.Abstractions.Domain;
+using SharedHome.Domain.Common.Events;
 
 namespace SharedHome.Application.Common.Events
 {

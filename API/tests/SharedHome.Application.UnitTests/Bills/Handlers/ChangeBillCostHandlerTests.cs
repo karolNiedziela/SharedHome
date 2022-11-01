@@ -2,7 +2,7 @@
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.ChangeBillCost;
 using SharedHome.Application.Common.DTO;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;

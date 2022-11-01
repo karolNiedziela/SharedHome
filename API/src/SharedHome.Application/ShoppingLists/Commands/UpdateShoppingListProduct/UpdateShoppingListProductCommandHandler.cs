@@ -1,5 +1,7 @@
 ﻿using MediatR;
-using SharedHome.Domain.ShoppingLists.Constants;
+using SharedHome.Domain.ShoppingLists.Entities;
+using SharedHome.Domain.ShoppingLists.Enums;
+using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
@@ -24,19 +26,27 @@ namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduc
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
-
             var netContent = request.NetContent == null ? null 
                 : new NetContent(request.NetContent.NetContent, 
                     request.NetContent.NetContentType.HasValue 
                         ? EnumHelper.ToEnumByIntOrThrow<NetContentType>(request.NetContent.NetContentType.Value) 
                         : null);
+           
 
-            var shoppingListProduct = new ShoppingListProduct(request.NewProductName,
-                                                              request.Quantity,
-                                                              netContent: netContent,
-                                                              isBought: request.IsBought);
+            if (request.NewProductName != request.CurrentProductName && shoppingList.Products.Any(p => p.Name == request.NewProductName))
+            {
+                throw new ShoppingListProductAlreadyExistsException(request.NewProductName, request.ShoppingListId);
+            }
 
-            shoppingList.UpdateProduct(shoppingListProduct, request.CurrentProductName);
+            var product = shoppingList.GetProduct(request.CurrentProductName);           
+            var shoppingListProduct = ShoppingListProduct.Create(request.NewProductName,
+                                                 request.Quantity,
+                                                 product.Price,
+                                                 netContent: netContent,
+                                                 isBought: request.IsBought, 
+                                                 product.Id);
+
+            product.Update(shoppingListProduct);
 
             await _shoppingListRepository.UpdateAsync(shoppingList);
 

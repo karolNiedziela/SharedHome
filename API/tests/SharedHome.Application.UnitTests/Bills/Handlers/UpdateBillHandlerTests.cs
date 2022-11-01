@@ -2,8 +2,8 @@
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.UpdateBill;
 using SharedHome.Application.Common.DTO;
-using SharedHome.Domain.Bills.Constants;
-using SharedHome.Domain.Bills.Entities;
+using SharedHome.Domain.Bills;
+using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;

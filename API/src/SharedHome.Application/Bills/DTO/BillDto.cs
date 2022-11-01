@@ -1,5 +1,5 @@
 ﻿using SharedHome.Application.Common.DTO;
-using SharedHome.Domain.Bills.Constants;
+using SharedHome.Domain.Bills.Enums;
 
 namespace SharedHome.Application.Bills.DTO
 {

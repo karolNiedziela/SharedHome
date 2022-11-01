@@ -1,5 +1,5 @@
-﻿using SharedHome.Notifications.Constants;
-using SharedHome.Shared.Abstractions.Domain;
+﻿using SharedHome.Domain.Common.Models;
+using SharedHome.Notifications.Constants;
 
 namespace SharedHome.Notifications.Entities
 {
