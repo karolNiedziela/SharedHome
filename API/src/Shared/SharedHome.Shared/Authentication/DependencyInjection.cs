@@ -51,7 +51,7 @@ namespace SharedHome.Shared.Authentication
                             (path.StartsWithSegments("/notify")))
                         {
                             context.Token = accessToken;
-                        }
+                        }                        
 
                         return Task.CompletedTask;
                     }

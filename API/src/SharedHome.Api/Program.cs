@@ -1,14 +1,17 @@
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using SharedHome.Api;
 using SharedHome.Api.Constants;
+using SharedHome.Api.HealthChecks;
 using SharedHome.Application;
 using SharedHome.Identity;
 using SharedHome.Infrastructure;
 using SharedHome.Notifications;
 using SharedHome.Shared;
+using System.Text.Json;
 
 try
 {
@@ -28,10 +31,10 @@ try
           .ReadFrom.Configuration(configuration));
 
     builder.Services.AddSharedHomeIdentity(builder.Configuration);
-    builder.Services.AddApplication();
+    builder.Services.AddApplication(builder.Configuration);
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddShared(builder.Configuration);
-    builder.Services.AddApi();
+    builder.Services.AddApi(builder.Configuration);
 
     var app = builder.Build();
 
@@ -62,15 +65,38 @@ try
 
     app.UseShared();
 
+    app.UseHealthChecks("/health", new HealthCheckOptions
+    {
+        Predicate = _ => true,
+        ResponseWriter = async (context, report) =>
+        {
+            context.Response.ContentType = "application/json";
+
+            var response = new HealthCheckResponse
+            {
+                Status = report.Status.ToString(),
+                HealthChecks = report.Entries.Select(x => new HealthCheck
+                {
+                    Component = x.Key,
+                    Status = x.Value.Status.ToString(),
+                    Description = x.Value.Description
+                }),
+                Duration = report.TotalDuration
+            };
+
+            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+        }
+    });
+
     app.UseAuthentication();
 
     app.UseAuthorization();
 
-    app.UseNotifications();
+    app.UseNotifications(builder.Configuration);
 
     app.MapControllers();
 
-    app.Run();
+   app.Run();
 }
 catch (Exception ex)
 {

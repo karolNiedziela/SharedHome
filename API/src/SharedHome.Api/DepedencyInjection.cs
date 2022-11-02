@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.OpenApi.Models;
+using SharedHome.Api.HealthChecks;
 using SharedHome.Api.Swagger.Filters;
 using SharedHome.Shared.Constants;
 using Swashbuckle.AspNetCore.Filters;
@@ -14,7 +15,7 @@ namespace SharedHome.Api
         private const string ApiTitle = "HomeShared API";
         private const string ApiVersion = "v1";
 
-        public static IServiceCollection AddApi(this IServiceCollection services)
+        public static IServiceCollection AddApi(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers(
                 options =>
@@ -65,6 +66,8 @@ namespace SharedHome.Api
             AddCors(services);
 
             AddSwagger(services);
+
+            services.AddAppHealthChecks(configuration);
 
             services.AddRouting(options =>
             {

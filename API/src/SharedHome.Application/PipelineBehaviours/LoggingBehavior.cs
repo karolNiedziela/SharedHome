@@ -18,9 +18,9 @@ namespace SharedHome.Application.PipelineBehaviours
         public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
         {
             _logger = logger;
-        }
+        }       
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             var requestName = typeof(TRequest).Name;
 
@@ -28,7 +28,7 @@ namespace SharedHome.Application.PipelineBehaviours
 
             var uniqueId = Guid.NewGuid().ToString();
 
-            var requestJson = isRequestNotForSerialization ? 
+            var requestJson = isRequestNotForSerialization ?
                 string.Empty :
                  JsonSerializer.Serialize(request, new JsonSerializerOptions
                  {
@@ -36,9 +36,9 @@ namespace SharedHome.Application.PipelineBehaviours
                  });
             _logger.LogInformation("Begin Request Id: {UniqueId}, " +
                 "Request name: {RequestName}, " +
-                "Request json: {RequestJson}", 
-                uniqueId, 
-                requestName, 
+                "Request json: {RequestJson}",
+                uniqueId,
+                requestName,
                 requestJson);
 
             var timer = new Stopwatch();
@@ -46,7 +46,7 @@ namespace SharedHome.Application.PipelineBehaviours
 
             var response = await next();
 
-            var responseJson = isRequestNotForSerialization ? 
+            var responseJson = isRequestNotForSerialization ?
                 string.Empty :
                 JsonSerializer.Serialize(response, new JsonSerializerOptions
                 {
@@ -58,14 +58,13 @@ namespace SharedHome.Application.PipelineBehaviours
             _logger.LogInformation("End Request Id: {UniqueId}, " +
                 "Request name: {RequestName}, " +
                 "Total request time {ElapsedMs}[ms], " +
-                "Response json: {ResponseJson}", 
-                uniqueId, 
+                "Response json: {ResponseJson}",
+                uniqueId,
                 requestName,
                 timer.ElapsedMilliseconds,
                 responseJson);
 
             return response;
         }
-
     }
 }
