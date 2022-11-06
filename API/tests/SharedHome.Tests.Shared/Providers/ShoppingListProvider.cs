@@ -12,19 +12,19 @@ namespace SharedHome.Tests.Shared.Providers
         public const string ShoppingListName = "ShoppingList";
         public const string ProductName = "Product";
 
-        public static ShoppingList GetEmpty(bool isDone = false)        
-            => ShoppingList.Create(ShoppingListId, ShoppingListName, PersonId, isDone);
+        public static ShoppingList GetEmpty(bool isDone = false, Guid? personId = null, Guid? shoppingListId = null)        
+            => ShoppingList.Create(shoppingListId ?? ShoppingListId, ShoppingListName, personId ?? PersonId, isDone);
 
 
-        public static ShoppingList GetWithProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false)
+        public static ShoppingList GetWithProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false, Guid? personId = null, Guid? shoppingListId = null)
         {
-            var shoppingList = GetEmpty();
+            var shoppingList = GetEmpty(personId: personId, shoppingListId: shoppingListId);
 
             shoppingList.AddProduct(GetProduct(quantity, price, netContent, isBought));
 
             return shoppingList;
         }
-        public static ShoppingListProduct GetProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false)
-            => ShoppingListProduct.Create(ProductName, quantity, price, netContent, isBought);
+        public static ShoppingListProduct GetProduct(int quantity = 1, Money? price = null, NetContent? netContent = null, bool isBought = false, Guid? personId = null)
+            => ShoppingListProduct.Create(ProductName, quantity, price, netContent, isBought, personId);
     }
 }

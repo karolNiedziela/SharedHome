@@ -1,22 +1,64 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Configurations;
+using DotNet.Testcontainers.Containers;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using MySqlConnector;
+using Respawn;
+using Respawn.Graph;
 using SharedHome.Infrastructure.EF.Contexts;
-using System;
+using SharedHome.Infrastructure.EF.Options;
+using SharedHome.IntegrationTests.DataSeeds;
+using System.Data.Common;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace SharedHome.IntegrationTests
 {
-    internal sealed class CustomWebApplicationFactory : WebApplicationFactory<Program>
+    public sealed class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
     {
-        public HttpClient Client { get; }
+        private readonly MySqlTestcontainer _container
+            = new TestcontainersBuilder<MySqlTestcontainer>()
+            .WithDatabase(new MySqlTestcontainerConfiguration
+            {
+                Database = "SharedHomeTests",
+                Username = "root",
+                Password = "IntegrationTests",
+                Port = 3309,
+            })
+            .Build();
+
+        private DbConnection _dbConnection = default!;
+
+        private Respawner _respawner = default!;
+
+        public IConfigurationRoot Configuration { get; private set; } = default!;
+
+        public HttpClient HttpClient { get; private set; } = default!;
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            builder.ConfigureServices(services =>
+            builder.ConfigureAppConfiguration(config =>
             {
+                Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.Test.json", true)
+                .AddEnvironmentVariables()
+                .Build();
+
+                config.AddConfiguration(Configuration);
+            });
+
+            builder.UseEnvironment("Test");
+
+            builder.ConfigureTestServices(services =>
+            {              
                 var writeDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==
                         typeof(DbContextOptions<WriteSharedHomeDbContext>));
@@ -34,20 +76,61 @@ namespace SharedHome.IntegrationTests
                 {
                     services.Remove(readDescriptor);
                 }
+                var settings = new SettingsProvider();
+
+                services.AddSingleton(new SettingsProvider());                
+
+                var mySQLSettings = settings.Get<MySQLSettings>(MySQLSettings.SectionName);
+
+                services.AddDbContext<WriteSharedHomeDbContext>(options =>
+                {
+                    options.UseMySql(mySQLSettings.ConnectionString, ServerVersion.AutoDetect(mySQLSettings.ConnectionString));
+                });
+
+                services.AddDbContext<ReadSharedHomeDbContext>(options =>
+                {
+                    options.UseMySql(mySQLSettings.ConnectionString, ServerVersion.AutoDetect(mySQLSettings.ConnectionString));
+                });
+
+                services.AddTransient<BillSeed>();
+                services.AddTransient<ShoppingListSeed>();
+            });
+
+        }
+
+        public async Task ResetDatabaseAsync()
+        {
+            await _respawner.ResetAsync(_dbConnection);
+        }
+
+        public async Task InitializeAsync()
+        {
+            await _container.StartAsync();
+            _dbConnection = new MySqlConnection(_container.ConnectionString);
+
+            HttpClient = CreateClient();
+
+            await SeedDatabaseAsync();
+
+            await InitializeRespawnerAsync();  
+        }
+
+        private async Task SeedDatabaseAsync()
+        {
+            var writeContext = Services.GetRequiredService<WriteSharedHomeDbContext>();
+            await TestDbInitializer.Initialize(writeContext);
+        }
+
+        private async Task InitializeRespawnerAsync()
+        {
+            await _dbConnection.OpenAsync();
+            _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
+            {
+                DbAdapter = DbAdapter.MySql,
+                TablesToIgnore = new[] { new Table("Persons") },
             });
         }
 
-        public CustomWebApplicationFactory(Action<IServiceCollection>? services = null)
-        {
-            Client = WithWebHostBuilder(builder =>
-           {
-               if (services is not null)
-               {
-                   builder.ConfigureServices(services!);
-               }
-
-               builder.UseEnvironment("Test");
-           }).CreateClient();
-        }
+        public new async Task DisposeAsync() => await _container.StopAsync();
     }
 }

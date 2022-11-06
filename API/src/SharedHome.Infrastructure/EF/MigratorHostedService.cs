@@ -22,11 +22,6 @@ namespace SharedHome.Infrastructure.EF
 
             var webApplication = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
 
-            if (webApplication.EnvironmentName == "Test")
-            {
-                return;
-            }
-
             var writeDbContext = scope.ServiceProvider.GetRequiredService<WriteSharedHomeDbContext>();
 
             await writeDbContext.Database.MigrateAsync(default);

@@ -1,5 +1,6 @@
 ﻿using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Enums;
+using SharedHome.Domain.Bills.ValueObjects;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Tests.Shared.Providers
@@ -12,15 +13,15 @@ namespace SharedHome.Tests.Shared.Providers
         public static readonly DateOnly DateOfPayment = DateOnly.FromDateTime(new DateTime(2022, 3, 10));
         public static readonly Money DefaultBillCost = new(100m, "zł");
 
-        public static Bill Get(BillType billType = BillType.Rent, Money? billCost = null, bool isPaid = false)
+        public static Bill Get(BillType billType = BillType.Rent, Money? billCost = null,  bool isPaid = false, PersonId? personId = null, Guid? billId = null)
         {
             if (billCost is null)
             {
-                return Bill.Create(BillId, PersonId, billType, ServiceProviderName,
+                return Bill.Create(billId ?? BillId, personId ?? PersonId, billType, ServiceProviderName,
                     DateOfPayment, DefaultBillCost, isPaid);
-            }
+            }          
 
-            return Bill.Create(BillId, PersonId, billType, ServiceProviderName,
+            return Bill.Create(billId ?? BillId, personId ?? PersonId, billType, ServiceProviderName,
                     DateOfPayment, billCost, isPaid);
         }
     }
