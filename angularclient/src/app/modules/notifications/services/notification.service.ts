@@ -41,13 +41,15 @@ export class NotificationService {
       )
       .subscribe({
         next: (notifications: Paged<AppNotification>) => {
+          console.log(notifications);
           this._notifications.next(notifications.items);
-          this._notificationsCount.next(notifications.items.length);
+          this._notificationsCount.next(notifications.customTotalItems!);
         },
       });
   }
 
   add(notification: AppNotification) {
+    console.log(notification);
     this._notifications.next([...this._notifications.value, notification]);
     this._notificationsCount.next(this._notificationsCount.value + 1);
   }
