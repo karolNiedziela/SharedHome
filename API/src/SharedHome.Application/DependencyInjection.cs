@@ -44,13 +44,11 @@ namespace SharedHome.Application
             return services;
         }
 
-        public static IApplicationBuilder UseNotifications(this IApplicationBuilder applicationBuilder, IConfiguration configuration)
+        public static IApplicationBuilder UseNotifications(this IApplicationBuilder applicationBuilder)
         {
-            var signalRSettings = configuration.GetSettings<SignalRSettings>(SignalRSettings.SectionName);
-
             applicationBuilder.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<HouseGroupNotificationHub>(signalRSettings.NotificationsPattern);
+                endpoints.MapHub<HouseGroupNotificationHub>("/notify");
             });
 
             return applicationBuilder;

@@ -75,7 +75,7 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         private string GetCreatedBy(EntityEntry<IAuditable> entry)
         {
-            if (!string.IsNullOrEmpty(_currentUser.FirstName))
+            if (!string.IsNullOrEmpty(_currentUser?.FirstName))
             {
                 return $"{_currentUser.FirstName} {_currentUser.LastName}";
             }
@@ -90,7 +90,7 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         private string GetModifiedBy(EntityEntry<IAuditable> entry)
         {
-            if (!string.IsNullOrEmpty(_currentUser.FirstName))
+            if (!string.IsNullOrEmpty(_currentUser?.FirstName))
             {
                 return $"{_currentUser.FirstName} {_currentUser.LastName}";
             }

@@ -92,7 +92,7 @@ try
 
     app.UseAuthorization();
 
-    app.UseNotifications(builder.Configuration);
+    app.UseNotifications();
 
     app.MapControllers();
 
@@ -107,3 +107,7 @@ finally
     Log.Information("Shut down complete");
     Log.CloseAndFlush();
 }
+
+#pragma warning disable CA1050 // Declare types in namespaces
+public partial class Program { }
+#pragma warning restore CA1050 // Declare types in namespaces

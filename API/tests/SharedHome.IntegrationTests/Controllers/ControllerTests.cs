@@ -1,11 +1,6 @@
-﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SharedHome.Application;
-using SharedHome.Infrastructure;
 using SharedHome.Infrastructure.EF.Contexts;
-using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Shared.Abstractions.Authentication;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Authentication;
@@ -18,22 +13,27 @@ using Xunit;
 
 namespace SharedHome.IntegrationTests.Controllers
 {
-    [Collection("api")]
-    public abstract class ControllerTests : IClassFixture<SettingsProvider>
+
+    public abstract class ControllerTests
     {
         private readonly IAuthManager _authManager;
 
+        //protected readonly WriteSharedHomeDbContext _context = default!;
+
         protected HttpClient Client { get; }
 
-        //protected DatabaseFixture Database { get; }
-
-        public ControllerTests(SettingsProvider settingsProvider)
+        public ControllerTests(CustomWebApplicationFactory factory)
         {
+            Client = factory.HttpClient;
+
+            //_context = factory.Services.GetRequiredService<WriteSharedHomeDbContext>();
+
+            //Utilities.InitializeDbForTests(_context).GetAwaiter().GetResult();
+
+            var settingsProvider = factory.Services.GetRequiredService<SettingsProvider>();
+
             var jwtSettings = settingsProvider.Get<JwtSettings>(JwtSettings.SectionName);
             _authManager = new AuthManager(new OptionsWrapper<JwtSettings>(jwtSettings), new UtcTimeProvider());
-
-            var app = new CustomWebApplicationFactory(ConfigureServices);
-            Client = app.Client;
         }
 
         protected AuthenticationResponse Authorize(Guid userId, string firstName = "firstName", string lastName = "lastName", string email = "test@email.com", IEnumerable<string>? roles = null)
@@ -46,27 +46,10 @@ namespace SharedHome.IntegrationTests.Controllers
                 };
             }
 
-            var jwt = _authManager.Authenticate(userId.ToString(), firstName, lastName, email, roles);
-            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt.AccessToken);
+            var jwt = _authManager.Authenticate(userId.ToString(), firstName, lastName, email, roles);         
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt.AccessToken);            
 
             return jwt;
-        }
-
-        protected virtual void ConfigureServices(IServiceCollection services)
-        {
-            var settings = new SettingsProvider().Get<MySQLSettings>(MySQLSettings.SectionName);
-
-            services.AddDbContext<WriteSharedHomeDbContext>(options =>
-            {
-                options.UseMySql(settings.ConnectionString, ServerVersion.AutoDetect(settings.ConnectionString));
-            });
-
-            services.AddDbContext<ReadSharedHomeDbContext>(options =>
-            {
-                options.UseMySql(settings.ConnectionString, ServerVersion.AutoDetect(settings.ConnectionString));
-            });
-
-            services.AddMediatR(new[] { typeof(ApplicationAssemblyReference).Assembly, typeof(InfrastructureAssemblyReference).Assembly });
-        }
+        }     
     }
 }
