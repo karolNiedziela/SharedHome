@@ -6,6 +6,5 @@ namespace SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead
 {
     public class MarkNotificationsAsReadCommand : AuthorizeRequest, ICommand<Unit>
     {
-        public IEnumerable<int> Ids { get; set; } = new List<int>();
     }
 }

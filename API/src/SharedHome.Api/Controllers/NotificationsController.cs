@@ -3,6 +3,7 @@ using SharedHome.Api.Constants;
 using SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead;
 using SharedHome.Application.Notifications.Queries;
 using SharedHome.Notifications.DTO;
+using SharedHome.Shared.Abstractions.Queries;
 
 namespace SharedHome.Api.Controllers
 {
@@ -10,9 +11,18 @@ namespace SharedHome.Api.Controllers
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<AppNotificationDto>>> GetNotifications()
+        public async Task<ActionResult<Paged<AppNotificationDto>>> GetNotifications()
         {
             var notifications = await Mediator.Send(new GetNotifications());
+
+            return Ok(notifications);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<Paged<AppNotificationDto>>> GetNotificationsByType(GetNotificationsByType command)
+        {
+            var notifications = await Mediator.Send(command);
 
             return Ok(notifications);
         }

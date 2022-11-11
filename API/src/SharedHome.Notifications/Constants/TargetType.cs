@@ -2,11 +2,11 @@
 {
     public enum TargetType
     {
-        Other = 0,
-        ShoppingList = 1,
-        Bill = 2,
+        All = 0,
+        Bill = 1,
+        HouseGroup = 2,
         Invitation = 3,
-        HouseGroup = 4,
-        User = 5,
+        ShoppingList = 4,
+        Other = 5
     }
 }

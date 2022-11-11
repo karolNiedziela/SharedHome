@@ -32,8 +32,8 @@ import { EnumSelectComponent } from './components/selects/enum-select/enum-selec
 import { SingleSelectComponent } from './components/selects/single-select/single-select.component';
 import { LanguageSelectComponent } from './components/selects/language-select/language-select.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ListNotificationsComponent } from './components/notifications/list-notifications/list-notifications.component';
 import { FirstLettersToTitleCasePipe } from './pipes/first-letters-to-title-case.pipe';
+import { NotificationBellComponent } from './components/notifications/notification-bell/notification-bell.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +65,7 @@ import { FirstLettersToTitleCasePipe } from './pipes/first-letters-to-title-case
     SingleSelectComponent,
     LanguageSelectComponent,
     NavbarComponent,
-    ListNotificationsComponent,
+    NotificationBellComponent,
     FirstLettersToTitleCasePipe,
   ],
   imports: [

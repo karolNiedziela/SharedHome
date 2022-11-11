@@ -1,10 +1,9 @@
 <div class="icon-wrapper">
-  <div class="dropdown">
+  <div class="dropdown" id="notificationDropdown">
     <fa-icon
       class="shared-home-icon btn"
       [title]="'notifications' | translate"
       [icon]="notificationIcon"
-      id="dropdownMenuLink"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
@@ -20,6 +19,11 @@
     >
       <div class="notification-heading">
         <h4 class="menu-title">{{ "notifications" | translate }}</h4>
+        <a
+          ><h5 class="view-all" [routerLink]="['notifications']">
+            {{ "view all" | translate }}
+          </h5></a
+        >
       </div>
       <li class="divider"></li>
       <div class="notifications-wrapper">
@@ -27,15 +31,18 @@
           class="notification-item"
           *ngFor="let notification of notifications"
         >
-          <div class="item-title">{{ notification.title }}</div>
+          <div class="notification-item__title">{{ notification.title }}</div>
           <div
-            class="notification-icon bg-primary"
+            class="notification-item__status bg-primary"
+            *ngIf="!notification.isRead"
+          ></div>
+          <div
+            class="notification-item__creator bg-primary"
             *ngIf="notification.createdBy"
           >
             <span [title]="notification.createdBy"
               >{{ notification.createdBy | firstLettersToTitleCase }}
             </span>
-            <!-- <fa-icon [icon]="iconByTargetType[notification.target]"></fa-icon> -->
           </div>
         </div>
       </div>

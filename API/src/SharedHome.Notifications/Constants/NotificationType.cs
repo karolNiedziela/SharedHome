@@ -2,7 +2,8 @@
 {
     public enum NotificationType
     {
-        Other = 0,
-        Email = 1
+        All = 0,
+        Email = 1,
+        Other = 2
     }
 }

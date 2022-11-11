@@ -22,7 +22,9 @@
         <span class="badge bg-primary">{{ notificationsCount }}</span>
       </div>
     </div> -->
-    <app-list-notifications></app-list-notifications>
-    <span class="account btn btn-primary"> {{ userFullName | firstLettersToTitleCase }} </span>
+    <app-notification-bell></app-notification-bell>
+    <span class="account btn btn-primary">
+      {{ userFullName | firstLettersToTitleCase }}
+    </span>
   </div>
 </nav>
