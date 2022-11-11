@@ -41,15 +41,43 @@ export class NotificationService {
       )
       .subscribe({
         next: (notifications: Paged<AppNotification>) => {
-          console.log(notifications);
           this._notifications.next(notifications.items);
           this._notificationsCount.next(notifications.customTotalItems!);
         },
       });
   }
 
+  getByType(
+    targetType: number,
+    notificationType: number
+  ): Observable<Paged<AppNotification>> {
+    return this.http.post<Paged<AppNotification>>(
+      `${this.notificationsUrl}`,
+      {
+        targetType,
+        notificationType,
+      },
+      this.defaultHttpOptions
+    );
+  }
+
+  markAsRead(): Observable<any> {
+    return this.http
+      .patch(`${this.notificationsUrl}/markasread`, {}, this.defaultHttpOptions)
+      .pipe(
+        tap(() => {
+          const allAsRead = this._notifications.value.map((x) => {
+            x.isRead = true;
+            return x;
+          });
+
+          this._notifications.next(allAsRead);
+          this._notificationsCount.next(0);
+        })
+      );
+  }
+
   add(notification: AppNotification) {
-    console.log(notification);
     this._notifications.next([...this._notifications.value, notification]);
     this._notificationsCount.next(this._notificationsCount.value + 1);
   }

@@ -15,7 +15,7 @@ namespace SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead
 
         public async Task<Unit> Handle(MarkNotificationsAsReadCommand request, CancellationToken cancellationToken)
         {
-            var notifications = await _notificationRepository.GetAllAsync(request.PersonId, request.Ids);
+            var notifications = await _notificationRepository.GetAllAsync(request.PersonId, false);
 
             foreach (var notification in notifications)
             {

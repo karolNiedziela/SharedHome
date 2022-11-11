@@ -29,9 +29,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
             return await query.OrderByDescending(x => x.CreatedAt).ToListAsync();
         }
 
-        public async Task<IEnumerable<AppNotification>> GetAllAsync(Guid personId, IEnumerable<int> notificationIds)
+        public async Task<IEnumerable<AppNotification>> GetAllAsync(Guid personId, bool isRead)
             => await _context.Notifications
-            .Where(x => x.PersonId == personId && notificationIds.Contains(x.Id))
+            .Where(x => x.PersonId == personId && x.IsRead == isRead)
             .ToListAsync();
 
         public async Task AddAsync(AppNotification notification)

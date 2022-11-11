@@ -42,12 +42,9 @@ namespace SharedHome.Application.UnitTests.Notifications.Handlers
                 }
             };
 
-            var command = new MarkNotificationsAsReadCommand
-            {
-                Ids = new int[] { 1, 2 }
-            };
+            var command = new MarkNotificationsAsReadCommand();
 
-            _notificationRepository.GetAllAsync(Arg.Any<Guid>(), Arg.Any<IEnumerable<int>>()).Returns(notifications);
+            _notificationRepository.GetAllAsync(Arg.Any<Guid>(), Arg.Any<bool>()).Returns(notifications);
 
             await _commandHandler.Handle(command, default);
 

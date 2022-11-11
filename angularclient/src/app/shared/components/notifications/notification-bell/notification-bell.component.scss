@@ -34,7 +34,11 @@
 }
 
 .notification-heading {
-  padding: 2px 10px;
+  margin: 0 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dropdown-menu.divider {
@@ -50,40 +54,37 @@
 }
 
 .notification-item {
-  padding: 5px;
-  margin-right: 5px;
-  margin-left: 5px;
+  margin: 0 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 0;
 
-  gap: 10px;
-
-  &:first-child {
-    margin-top: 5px;
+  &__title {
+    overflow-wrap: break-word;
+    font-size: 1rem;
+    width: 80%;
   }
 
-  &:not(:first-child) {
-    margin-top: 10px;
-    margin-bottom: 10px;
+  &__status {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
   }
-}
 
-.notification-icon {
-  margin-left: 5px;
-  margin-right: 5px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.item-title {
-  overflow-wrap: break-word;
-  font-size: 1rem;
+  &__creator {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @media (max-width: 768px) {
