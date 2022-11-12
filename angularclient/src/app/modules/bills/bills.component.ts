@@ -4,7 +4,11 @@ import { ModalConfig } from './../../shared/components/modals/modal/modal.config
 import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ConfirmationModalComponent } from './../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import { PopupMenuConfig } from './../../shared/components/menus/popup-menu/popup-menu.config';
 import { ColumnSetting } from './../../shared/components/tables/column-setting';
 import { BillEvent } from './models/bill-event';
@@ -39,6 +43,8 @@ import { PayForBillComponent } from './modals/pay-for-bill/pay-for-bill.componen
 })
 export class BillsComponent implements OnInit, OnDestroy {
   addIcon = faPlus;
+  previousMonthIcon = faChevronLeft;
+  nextMonthIcon = faChevronRight;
 
   events$!: Observable<BillEvent[]>;
   eventsSubscription!: Subscription;
