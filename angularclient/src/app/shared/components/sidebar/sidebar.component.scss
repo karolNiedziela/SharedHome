@@ -6,88 +6,13 @@
   flex-direction: column;
 }
 
-.menu-toggle {
-  position: fixed;
-  display: none;
-  top: 2px;
-  left: 0.5rem;
-  border-radius: 99px;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  z-index: 3;
-
-  &:hover &__hamburger span::before {
-    top: -10px;
-  }
-  &:hover &__hamburger span::after {
-    bottom: -10px;
-  }
-
-  &.is-active &__hamburger > span {
-    transform: rotate(45deg);
-  }
-
-  &.is-active &__hamburger > span::before {
-    top: 0;
-    transform: rotate(0deg);
-  }
-
-  &.is-active &__hamburger > span::after {
-    top: 0;
-    transform: rotate(90deg);
-  }
-
-  &__hamburger {
-    position: relative;
-    top: calc(50% - 2px);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 24px;
-  }
-
-  &__hamburger span {
-    position: relative;
-    display: inline-block;
-    width: 24px;
-    height: 3px;
-
-    vertical-align: middle;
-    -webkit-transform: translateY(-2px);
-    -moz-transform: translateY(-2px);
-    -ms-transform: translateY(-2px);
-    -o-transform: translateY(-2px);
-    transform: translateY(-px);
-  }
-
-  &__hamburger span::before,
-  &__hamburger span::after {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    -webkit-transition: all 0.2s;
-    -moz-transition: all 0.2s;
-    transition: all 0.2s;
-  }
-
-  &__hamburger span::before {
-    content: "";
-    top: -8px;
-  }
-
-  &__hamburger span::after {
-    content: "";
-    bottom: -8px;
-  }
-}
-
 .sidenav {
   display: flex;
   flex-direction: column;
-  flex: 1 1 0;
+  top: 65px;
+  bottom: 0;
+  position: fixed;
+  min-width: 240px;
 
   ul {
     display: flex;
@@ -138,20 +63,17 @@
 }
 
 @media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
   .sidebar {
-    position: fixed;
+    position: absolute;
     overflow: scroll;
     top: 0;
+    bottom: 0;
     left: -300px;
-    height: 100%;
-    width: 100%;
     max-width: 300px;
-    transition: 0.2s linear;
+
     z-index: 3;
+    overflow-y: scroll;
+    margin-bottom: 10px;
   }
 
   .sidebar.is-active {

@@ -32,41 +32,9 @@ export class SidebarComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService) {}
 
-  ngOnInit(): void {
-    const navItems = document.querySelectorAll('.nav-item');
-    Array.from(navItems).map((x) =>
-      x.addEventListener('click', () => {
-        this.toggleMenu();
-      })
-    );
-  }
-
-  toggleMenu(): void {
-    let sidebar = document.querySelector('.sidebar');
-    sidebar?.classList.toggle('is-active');
-
-    const menuToggle = document.querySelector('.menu-toggle');
-    menuToggle?.classList.toggle('is-active');
-
-    const media = window.matchMedia('(max-width: 768px)');
-    if (media.matches) {
-      this.blurContent(menuToggle);
-    }
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.authenticationService.logout();
-  }
-
-  private blurContent(menuToggle: Element | null): void {
-    const content = document.querySelector('.content') as HTMLDivElement;
-    const navbar = document.querySelector('.navbar') as HTMLDivElement;
-    if (menuToggle?.classList.contains('is-active')) {
-      content.style.opacity = '0.1';
-      navbar.style.opacity = '0.1';
-    } else {
-      content.style.opacity = '1';
-      navbar.style.opacity = '1';
-    }
   }
 }
