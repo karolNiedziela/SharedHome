@@ -1,29 +1,17 @@
-<nav class="navbar">
-  <span class="navbar-brand">
+<nav
+  class="d-flex align-content-center justify-content-end justify-content-sm-between align-items-center flex-row border-bottom py-1"
+  (window:resize)="screenSizeHelper.isMobile()"
+>
+  <span class="navbar-brand" *ngIf="!screenSizeHelper.isMobile()">
     <img
       src="../../../../assets/images/sharedhomeLogo.png"
       alt="logo"
       class="logo"
     />
   </span>
-  <div class="navbar__left">
-    <!-- <div class="icon-wrapper">
-      <span (click)="loadNotifications()">
-        <fa-icon
-          class="shared-home-icon btn"
-          data-toggle="tooltip"
-          [title]="'notifications' | translate"
-          [icon]="notificationIcon"
-        >
-        </fa-icon>
-        <ng-template appNotifications></ng-template>
-      </span>
-      <div *ngIf="notificationsCount$ | async as notificationsCount">
-        <span class="badge bg-primary">{{ notificationsCount }}</span>
-      </div>
-    </div> -->
+  <div class="d-flex justify-content-sm-end align-items-center flex-row">
     <app-notification-bell></app-notification-bell>
-    <span class="account btn btn-primary">
+    <span class="account btn btn-primary ms-2">
       {{ userFullName | firstLettersToTitleCase }}
     </span>
   </div>

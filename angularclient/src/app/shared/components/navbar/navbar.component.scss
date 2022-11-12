@@ -1,42 +1,47 @@
 @import "/src/assets/_variables.scss";
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 100%;
-  padding: 0.2rem 1rem 0.2rem 1rem;
-  border-bottom: 1px solid lightgrey;
-
-  &__left {
-    display: flex;
-    flex-direction: row;
-    gap: 7px;
-    justify-content: center;
-    align-items: center;
-
-    .icon-wrapper {
-      position: relative;
-
-      fa-icon {
-        font-size: 30px;
-        text-align: center;
-        vertical-align: middle;
-      }
-
-      .badge {
-        width: auto;
-        height: auto;
-        margin: 0;
-        border-radius: 50%;
-        position: absolute;
-        top: 0px;
-        right: -4px;
-        padding: 5px;
-      }
-    }
-  }
+nav {
+  padding: 0 1rem;
+  height: 56px;
 }
+
+// .navbar {
+//   display: flex;
+//   justify-content: space-between;
+//   margin: 0 auto;
+//   width: 100%;
+//   padding: 0.2rem 1rem 0.2rem 1rem;
+//   border-bottom: 1px solid lightgrey;
+
+//   &__left {
+//     display: flex;
+//     flex-direction: row;
+//     gap: 7px;
+//     justify-content: center;
+//     align-items: center;
+
+//     .icon-wrapper {
+//       position: relative;
+
+//       fa-icon {
+//         font-size: 30px;
+//         text-align: center;
+//         vertical-align: middle;
+//       }
+
+//       .badge {
+//         width: auto;
+//         height: auto;
+//         margin: 0;
+//         border-radius: 50%;
+//         position: absolute;
+//         top: 0px;
+//         right: -4px;
+//         padding: 5px;
+//       }
+//     }
+//   }
+// }
 
 .account {
   display: flex;
@@ -50,10 +55,4 @@
 .logo {
   width: 200px;
   height: 30px;
-}
-
-@media (max-width: 768px) {
-  .navbar {
-    justify-content: flex-start;
-  }
 }

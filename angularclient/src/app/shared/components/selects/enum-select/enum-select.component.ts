@@ -12,7 +12,7 @@ import {
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
-import { getEnumKeys } from 'app/core/utils/enum.utils';
+import { getEnumKeys } from 'app/core/helpers/enum.helper';
 
 @Component({
   selector: 'app-enum-select',
