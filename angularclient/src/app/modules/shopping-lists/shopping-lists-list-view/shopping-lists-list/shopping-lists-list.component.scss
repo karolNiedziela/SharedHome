@@ -3,36 +3,6 @@
 :host {
   height: 100%;
 }
-.shopping-lists-list-view {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  margin: 0 auto;
-  gap: 10px;
-}
-
-.operations {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  &:last-child {
-    margin-right: auto;
-  }
-
-  &__left {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
-
-    & > div {
-      max-width: 160px;
-    }
-  }
-}
 
 .bottom-tab {
   margin-top: auto;

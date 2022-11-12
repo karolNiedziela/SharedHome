@@ -1,14 +1,15 @@
 <div
+  (window:resize)="isMobile()"
   class="card shopping-list"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
   <div class="card-header">
-    <h3
+    <h4
       class="card-title"
       [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
     >
       {{ shoppingList.name }}
-    </h3>
+    </h4>
 
     <div class="card-header__operations">
       <fa-icon
@@ -39,7 +40,15 @@
     <ng-template #boughtProducts>
       <h5>{{ "no products" | translate }}</h5>
     </ng-template>
-    <h5>{{ shoppingList.createdBy }}</h5>
+    <h5
+      [title]="shoppingList.createdBy"
+      *ngIf="isMobile(); else createdByLetters"
+    >
+      {{ shoppingList.createdBy | firstLettersToTitleCase }}
+    </h5>
+    <ng-template #createdByLetters>
+      <h5>{{ shoppingList.createdBy }}</h5>
+    </ng-template>
   </div>
 </div>
 

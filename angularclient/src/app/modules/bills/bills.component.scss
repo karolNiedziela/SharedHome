@@ -1,42 +1,9 @@
 @import "/src/assets/_variables.scss";
 
-.calendar {
+:host {
   height: 100%;
+}
+
+.calendar {
   position: relative;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  &__title {
-    display: flex;
-    justify-content: flex-start;
-    width: 20%;
-  }
-  &__buttons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-  }
-
-  &__operations {
-    display: flex;
-    justify-content: flex-end;
-    width: 20%;
-  }
-}
-
-@media (max-width: 768px) {
-  .header {
-    &__buttons {
-      display: flex;
-      flex-direction: column;
-    }
-  }
 }

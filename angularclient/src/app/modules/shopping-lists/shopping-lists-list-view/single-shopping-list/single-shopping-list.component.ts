@@ -94,6 +94,15 @@ export class SingleShoppingListComponent implements OnInit {
     this.shoppingListService.markAsDone(markAsDone, false).subscribe();
   }
 
+  isMobile(): boolean {
+    const width =
+      window.innerWidth ||
+      document.documentElement.clientWidth ||
+      document.body.clientWidth;
+
+    return width < 992;
+  }
+
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
     if (this.shoppingList?.isDone) {

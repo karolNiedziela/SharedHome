@@ -1,43 +1,52 @@
 <div class="calendar">
-  <div *ngIf="events$ | async as evs; else loading">
-    <div class="header">
-      <div class="header__title">
-        <h4>
-          {{ viewDate | calendarDate: view + "ViewTitle":locale | titlecase }}
-        </h4>
-      </div>
-      <div class="header__buttons">
-        <div
-          class="btn btn-primary sharedhome-btn"
+  <div
+    *ngIf="events$ | async as evs; else loading"
+    class="row align-items-center"
+  >
+    <h4 class="col-12 col-sm-4 col-md-4 col-lg-2 text-center text-sm-start">
+      {{ viewDate | calendarDate: view + "ViewTitle":locale | titlecase }}
+    </h4>
+    <div
+      class="col-8 col-sm-6 col-md-6 col-lg-8 text-center justify-content-center"
+    >
+      <div class="row justify-content-center align-items-center">
+        <fa-icon
+          class="col-2 col-sm-2 col shared-home-icon"
+          [icon]="previousMonthIcon"
+          [title]="'Previous' | translate"
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
           (viewDateChange)="onMonthChanged($event)"
         >
           {{ "Previous" | translate }}
-        </div>
+        </fa-icon>
+
         <div
-          class="btn btn-primary sharedhome-btn"
+          class="col-4 col-sm-4 col-lg-2 justify-content-center btn btn-outline-primary"
           mwlCalendarToday
           [(viewDate)]="viewDate"
           (viewDateChange)="onMonthChanged($event)"
         >
           {{ "Current" | translate }}
         </div>
-        <div
-          class="btn btn-primary sharedhome-btn"
+        <fa-icon
+          class="col-2 col-sm-2 shared-home-icon"
+          [icon]="nextMonthIcon"
+          [title]="'Next' | translate"
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
           (viewDateChange)="onMonthChanged($event)"
         >
           {{ "Next" | translate }}
-        </div>
-      </div>
-      <div class="header__operations">
-        <app-add-bill></app-add-bill>
+        </fa-icon>
       </div>
     </div>
+
+    <app-add-bill
+      class="col-4 col-sm-2 col-md-2 col-lg-2 text-end"
+    ></app-add-bill>
 
     <mwl-calendar-month-view
       [viewDate]="viewDate"
