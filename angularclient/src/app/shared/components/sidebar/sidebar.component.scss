@@ -10,7 +10,7 @@
   position: fixed;
   display: none;
   top: 2px;
-  right: 1.7rem;
+  left: 0.5rem;
   border-radius: 99px;
   width: 50px;
   height: 50px;
@@ -144,9 +144,10 @@
 
   .sidebar {
     position: fixed;
+    overflow: scroll;
     top: 0;
     left: -300px;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     max-width: 300px;
     transition: 0.2s linear;
@@ -154,11 +155,13 @@
   }
 
   .sidebar.is-active {
+    top: 56px;
     left: 0;
   }
 
   .nav-link {
     transition: none;
+    margin-top: 10px;
 
     &:hover {
       border-right: 5px solid;

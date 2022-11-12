@@ -1,3 +1,4 @@
+import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
@@ -15,9 +16,10 @@ export class NavbarComponent implements OnInit {
   userFullName: string = 'FN';
 
   constructor(
+    public screenSizeHelper: ScreenSizeHelper,
     private notificationService: NotificationService,
     private authenticationService: AuthenticationService
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.notificationsCount$ = this.notificationService.notificationsCount$;
@@ -25,6 +27,10 @@ export class NavbarComponent implements OnInit {
   }
 
   private buildUserFullName(): string {
-    return this.authenticationService.authenticationResponseValue.firstName + ' ' + this.authenticationService.authenticationResponseValue.lastName;
+    return (
+      this.authenticationService.authenticationResponseValue.firstName +
+      ' ' +
+      this.authenticationService.authenticationResponseValue.lastName
+    );
   }
 }

@@ -1,5 +1,5 @@
 <div
-  (window:resize)="isMobile()"
+  (window:resize)="screenSizeHelper.isMobile()"
   class="card shopping-list"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
@@ -42,7 +42,7 @@
     </ng-template>
     <h5
       [title]="shoppingList.createdBy"
-      *ngIf="isMobile(); else createdByLetters"
+      *ngIf="screenSizeHelper.isMobile(); else createdByLetters"
     >
       {{ shoppingList.createdBy | firstLettersToTitleCase }}
     </h5>

@@ -11,6 +11,7 @@ import { ConfirmationModalComponent } from 'app/shared/components/modals/confirm
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { MarkAsDone } from '../../models/mark-as-done';
 import { EditShoppingListModalComponent } from '../../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
+import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
 
 @Component({
   selector: 'app-single-shopping-list',
@@ -58,6 +59,7 @@ export class SingleShoppingListComponent implements OnInit {
   private editShoppingListModal!: EditShoppingListModalComponent;
 
   constructor(
+    public screenSizeHelper: ScreenSizeHelper,
     private router: Router,
     private shoppingListService: ShoppingListsService
   ) {}
@@ -92,15 +94,6 @@ export class SingleShoppingListComponent implements OnInit {
       isDone: isDone,
     };
     this.shoppingListService.markAsDone(markAsDone, false).subscribe();
-  }
-
-  isMobile(): boolean {
-    const width =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
-
-    return width < 992;
   }
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
