@@ -1,7 +1,16 @@
 <nav
-  class="d-flex align-content-center justify-content-end justify-content-sm-between align-items-center flex-row border-bottom py-1"
+  class="navbar d-flex align-content-center justify-content-between justify-content-sm-between align-items-center flex-row border-bottom py-1"
   (window:resize)="screenSizeHelper.isMobile()"
 >
+  <div
+    class="d-flex"
+    (click)="toggleMenu()"
+    *ngIf="screenSizeHelper.isMobile()"
+  >
+    <div class="hamburger">
+      <span></span>
+    </div>
+  </div>
   <span class="navbar-brand" *ngIf="!screenSizeHelper.isMobile()">
     <img
       src="../../../../assets/images/sharedhomeLogo.png"
@@ -9,6 +18,7 @@
       class="logo"
     />
   </span>
+
   <div class="d-flex justify-content-sm-end align-items-center flex-row">
     <app-notification-bell></app-notification-bell>
     <span class="account btn btn-primary ms-2">

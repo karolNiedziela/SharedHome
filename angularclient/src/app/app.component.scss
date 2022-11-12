@@ -26,16 +26,18 @@
   &__main {
     width: 100%;
     margin: 0 auto;
-    padding: 0 1rem;
+
     display: flex;
     flex-direction: column;
     height: 100%;
-  }
-}
 
-app-footer {
-  display: flex;
-  flex-direction: column;
-  margin-top: auto;
-  justify-content: flex-end;
+    app-footer {
+      margin-top: auto;
+      padding: 0 !important;
+    }
+  }
+
+  .main-app {
+    padding: 0 1rem;
+  }
 }

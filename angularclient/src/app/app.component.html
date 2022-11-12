@@ -3,8 +3,12 @@
   <div class="sharedhome-container">
     <app-sidebar class="sidebar" *ngIf="authenticationResponse"></app-sidebar>
     <div class="content">
-      <div class="content__main"><router-outlet></router-outlet></div>
-      <app-footer *ngIf="authenticationResponse"></app-footer>
+      <div class="content__main">
+        <div class="main-app">
+          <router-outlet></router-outlet>
+        </div>
+        <app-footer *ngIf="authenticationResponse"></app-footer>
+      </div>
     </div>
   </div>
 </div>
