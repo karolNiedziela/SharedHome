@@ -32,7 +32,7 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<AddShoppingListProductDto, ShoppingListProduct>()
                 .ConstructUsing(src => 
                 ShoppingListProduct.Create(src.Name, 
-                    src.Quantity, 
+                    new Quantity(src.Quantity), 
                     null,
                     src.NetContent == null || src.NetContent.NetContent == null ? null : new NetContent(src.NetContent.NetContent,
                         src.NetContent.NetContentType.HasValue ? 

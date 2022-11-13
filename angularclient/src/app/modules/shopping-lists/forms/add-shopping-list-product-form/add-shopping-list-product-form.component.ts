@@ -36,7 +36,7 @@ export class AddShoppingListProductFormComponent implements OnInit {
 
     const shoppingListProduct: ShoppingListProduct = {
       name: productName,
-      quantity: quantity,
+      quantity: quantity ?? 1,
       netContent: {
         netContent: netContent,
         netContentType: netContentType,

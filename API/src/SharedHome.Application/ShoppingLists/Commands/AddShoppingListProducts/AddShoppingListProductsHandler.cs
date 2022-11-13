@@ -1,10 +1,12 @@
 ﻿using MapsterMapper;
 using MediatR;
 using SharedHome.Domain.ShoppingLists.Entities;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Abstractions.Commands;
+using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts
 {
@@ -12,20 +14,38 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly IMapper _mapper;
 
-        public AddShoppingListProductsHandler(IShoppingListRepository shoppingListRepository, IShoppingListService shoppingListService, IMapper mapper)
+        public AddShoppingListProductsHandler(IShoppingListRepository shoppingListRepository, IShoppingListService shoppingListService)
         {
             _shoppingListRepository = shoppingListRepository;
             _shoppingListService = shoppingListService;
-            _mapper = mapper;
         }
 
         public async Task<Unit> Handle(AddShoppingListProductsCommand request, CancellationToken cancellationToken)
         {
             var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
-            var products = _mapper.Map<IEnumerable<ShoppingListProduct>>(request.Products);
+            var products = new List<ShoppingListProduct>();
+
+            foreach (var product in request.Products)
+            {
+                NetContent? netContent;
+
+                if (product.NetContent == null || product.NetContent.NetContent == null)
+                {
+                    netContent = null;
+                }
+                else if (!product.NetContent.NetContentType.HasValue)
+                {
+                    netContent = null;
+                }
+                else
+                {
+                    netContent = new NetContent(product.NetContent.NetContent, EnumHelper.ToEnumByIntOrThrow<NetContentType>(product.NetContent.NetContentType.Value));
+                }
+             
+                products.Add(ShoppingListProduct.Create(product.Name, product.Quantity, null, netContent, false, Guid.NewGuid()));
+            }
 
             shoppingList.AddProducts(products);
 

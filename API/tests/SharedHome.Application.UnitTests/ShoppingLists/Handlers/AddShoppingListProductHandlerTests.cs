@@ -23,17 +23,14 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly IMapper _mapper;
         private readonly ICommandHandler<AddShoppingListProductsCommand, Unit> _commandHandler;
 
         public AddShoppingListProductHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
             _shoppingListService = Substitute.For<IShoppingListService>();
-            var config = new TypeAdapterConfig();
-            config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
-            _mapper = new Mapper(config);
-            _commandHandler = new AddShoppingListProductsHandler(_shoppingListRepository, _shoppingListService, _mapper);
+
+            _commandHandler = new AddShoppingListProductsHandler(_shoppingListRepository, _shoppingListService);
         }
 
         [Fact]
