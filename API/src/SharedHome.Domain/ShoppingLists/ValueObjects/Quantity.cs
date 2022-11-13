@@ -9,7 +9,7 @@ namespace SharedHome.Domain.ShoppingLists.ValueObjects
 {
     public record Quantity
     {
-        public int Value { get; }
+        public int Value { get; init; }
 
         public Quantity(int value)
         {

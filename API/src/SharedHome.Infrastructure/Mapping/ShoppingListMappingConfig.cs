@@ -28,20 +28,6 @@ namespace SharedHome.Infrastructure.Mapping
             config.NewConfig<ShoppingListProductReadModel, ShoppingListProductDto>()
                 .Map(dest => dest.NetContent, src => src.NetContent == null ? null : new NetContentDto(src.NetContent, src.NetContentType))                
                 .Map(dest => dest.Price, src => src.Price == null ? null : new MoneyDto(src.Price.Value, src.Currency!));
-
-            config.NewConfig<AddShoppingListProductDto, ShoppingListProduct>()
-                .ConstructUsing(src => 
-                ShoppingListProduct.Create(src.Name, 
-                    src.Quantity, 
-                    null,
-                    src.NetContent == null || src.NetContent.NetContent == null ? null : new NetContent(src.NetContent.NetContent,
-                        src.NetContent.NetContentType.HasValue ? 
-                            EnumHelper.ToEnumByIntOrThrow<NetContentType>(src.NetContent.NetContentType.Value)
-                            : null),
-                    false,
-                    Guid.NewGuid()
-                    )
-                );
         }
     }
 }
