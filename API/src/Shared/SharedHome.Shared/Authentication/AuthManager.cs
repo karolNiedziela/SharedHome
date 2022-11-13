@@ -37,15 +37,15 @@ namespace SharedHome.Shared.Authentication
 
             var expires = now.Add(_jwtOptions.Expiry);
 
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(_jwtOptions.Secret);
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
             var jwt = new JwtSecurityToken(
                 claims: jwtClaims,
                 notBefore: now,
                 expires: expires,
                 signingCredentials: signingCredentials,
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience
+                issuer: _jwtOptions.Issuer,
+                audience: _jwtOptions.Audience
             );
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
