@@ -83,5 +83,7 @@ export class AddManyShoppingListProductsFormComponent implements OnDestroy {
       (componentRef: ComponentRef<AddShoppingListProductFormComponent>) =>
         componentRef.destroy()
     );
+
+    this.addShoppingListProductComponents = [];
   }
 }

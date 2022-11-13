@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
   notificationsCount$!: Observable<number>;
   userFullName: string = '';
   menuToggled: boolean = false;
-
   constructor(
     public screenSizeHelper: ScreenSizeHelper,
     private notificationService: NotificationService,

@@ -66,7 +66,7 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
 
     const firstShoppingListProduct: ShoppingListProduct = {
       name: productName,
-      quantity: quantity,
+      quantity: quantity ?? 1,
       netContent: {
         netContent: netContent,
         netContentType: netContentType,

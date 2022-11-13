@@ -58,6 +58,8 @@ export class ShoppingListProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log(this.shoppingListProduct);
+
     this.productPopupMenuConfig = {
       isHidden: this.isDone,
       onDelete: () => {

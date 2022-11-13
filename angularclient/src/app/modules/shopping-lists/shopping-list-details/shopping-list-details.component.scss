@@ -1,10 +1,9 @@
 @import "/src/assets/_variables.scss";
 
 .shopping-list {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 
   &__products {
-    gap: 10px;
     list-style: none;
   }
 
@@ -20,7 +19,6 @@
 .card-footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 10px;
   border-top: 1px solid rgba(0, 0, 0, 12.5%);
 
   :nth-child(odd) {

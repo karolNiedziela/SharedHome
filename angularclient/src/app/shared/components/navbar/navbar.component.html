@@ -1,17 +1,17 @@
 <nav
   class="navbar d-flex align-content-center justify-content-between justify-content-sm-between align-items-center flex-row border-bottom py-1"
-  (window:resize)="screenSizeHelper.isMobile()"
+  (window:resize)="screenSizeHelper.isLowerThanMD()"
 >
   <div
-    class="d-flex"
+    class="d-flex menu-toggle"
     (click)="toggleMenu()"
-    *ngIf="screenSizeHelper.isMobile()"
+    *ngIf="screenSizeHelper.isLowerThanMD()"
   >
     <div class="hamburger">
       <span></span>
     </div>
   </div>
-  <span class="navbar-brand" *ngIf="!screenSizeHelper.isMobile()">
+  <span class="navbar-brand" *ngIf="!screenSizeHelper.isLowerThanMD()">
     <img
       src="../../../../assets/images/sharedhomeLogo.png"
       alt="logo"

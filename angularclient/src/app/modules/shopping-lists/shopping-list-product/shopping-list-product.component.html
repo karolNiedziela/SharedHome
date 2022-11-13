@@ -24,9 +24,7 @@
       </h5></ng-template
     >
 
-    <ng-template #elseBlock
-      ><h5>{{ "No price" | translate }}</h5></ng-template
-    >
+    <ng-template #elseBlock><h5>-</h5></ng-template>
   </h5>
   <h5 class="product__item product__net-content">
     <div *ngIf="shoppingListProduct.netContent != null; else emptyNetContent">

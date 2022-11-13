@@ -177,25 +177,6 @@ $input-group-addon-bg: $l_white_color !default;
 }
 
 /*
------------ MENU TOGGLE -----------
-*/
-
-.menu-toggle {
-  &__hamburger span {
-    background-color: $l_black_color !important;
-  }
-
-  &:hover &__hamburger span {
-    background-color: $l_primary_color !important;
-  }
-
-  &__hamburger span::before,
-  &__hamburger span::after {
-    background-color: inherit;
-  }
-}
-
-/*
 ----------- MODAL -----------
 */
 
