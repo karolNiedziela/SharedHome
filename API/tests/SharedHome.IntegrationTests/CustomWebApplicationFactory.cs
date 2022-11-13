@@ -80,7 +80,7 @@ namespace SharedHome.IntegrationTests
 
                 services.AddSingleton(new SettingsProvider());                
 
-                var mySQLSettings = settings.Get<MySQLSettings>(MySQLSettings.SectionName);
+                var mySQLSettings = settings.Get<MySQLOptions>(MySQLOptionsSetup.SectionName);
 
                 services.AddDbContext<WriteSharedHomeDbContext>(options =>
                 {

@@ -1,13 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace SharedHome.Infrastructure.EF.Initializers
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInitializer(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInitializer(this IServiceCollection services)
         {
-            services.Configure<InitializerSettings>(configuration.GetSection(InitializerSettings.SectionName));
+            services.ConfigureOptions<InitializerOptionsSetup>();
 
             services.Scan(s => s.FromCallingAssembly()
                 .AddClasses(c => c.AssignableTo(typeof(IDataInitializer)))

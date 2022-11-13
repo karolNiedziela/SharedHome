@@ -1,6 +1,6 @@
-﻿namespace SharedHome.Application.Notifications
+﻿namespace SharedHome.Application.Notifications.Options
 {
-    public class SignalRSettings
+    public class SignalROptions
     {
         public const string SectionName = "SignalR";
 

@@ -9,21 +9,21 @@ namespace SharedHome.Shared.Email
 {
     public class ConfirmationEmailSender : BaseEmailSender, IIdentityEmailSender
     {
-        private readonly GeneralSettings _generalSettings;
+        private readonly GeneralOptions _generalOptions;
 
         private readonly Dictionary<string, string> Replacements = new();
 
-        public ConfirmationEmailSender(IOptions<EmailSettings> emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralSettings> generalOptions) 
+        public ConfirmationEmailSender(IOptions<EmailOptions> emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralOptions> generalOptions) 
             : base(emailOptions, logger, localizerFactory)
         {
-            _generalSettings = generalOptions.Value;
+            _generalOptions = generalOptions.Value;
         }
 
         public async Task SendAsync(string email, string code)
         {
             var emailMessage = new EmailMessage();
 
-            Replacements.Add(EmailConstants.ConfirmationEmailConstants.ConfirmationLink, string.Format(_generalSettings.ConfirmationEmailAngularClient, email, code));
+            Replacements.Add(EmailConstants.ConfirmationEmailConstants.ConfirmationLink, string.Format(_generalOptions.ConfirmationEmailAngularClient, email, code));
 
             emailMessage
                 .WithSubject(_localizer.GetString(EmailConstants.ConfirmationEmailConstants.Subject))

@@ -5,7 +5,6 @@ using SharedHome.Shared.Abstractions.Time;
 using SharedHome.Shared.Abstractions.User;
 using SharedHome.Shared.Email;
 using SharedHome.Shared.Exceptions;
-using SharedHome.Shared.MySQL;
 using SharedHome.Shared.Time;
 using SharedHome.Shared.User;
 
@@ -13,10 +12,9 @@ namespace SharedHome.Shared
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddShared(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddShared(this IServiceCollection services)
         {
-            services.AddEmail(configuration);
-            services.AddMySQL(configuration);
+            services.AddEmail();
 
             services.AddErrorHandling();
 
@@ -26,7 +24,7 @@ namespace SharedHome.Shared
 
             services.AddEndpointsApiExplorer();      
 
-            services.Configure<GeneralSettings>(configuration.GetSection(GeneralSettings.SectionName));
+            services.ConfigureOptions<GeneralOptionsSetup>();
 
             return services;
         }

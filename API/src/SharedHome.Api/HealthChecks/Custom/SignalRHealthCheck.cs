@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
-using SharedHome.Application.Notifications;
+using SharedHome.Application.Notifications.Options;
 using SharedHome.Shared.Abstractions.Authentication;
 
 namespace SharedHome.Api.HealthChecks.Custom
@@ -20,12 +20,12 @@ namespace SharedHome.Api.HealthChecks.Custom
             HubConnection? connection = null;
 
             var authManager = _serviceProvider.GetService<IAuthManager>();
-            var signalRSettings = _serviceProvider.GetService<IOptions<SignalRSettings>>();
+            var signalROptions = _serviceProvider.GetService<IOptions<SignalROptions>>()!.Value;
 
             try
             {
                 connection = new HubConnectionBuilder()
-                    .WithUrl(signalRSettings!.Value.NotificationsUri, options =>
+                    .WithUrl(signalROptions.NotificationsUri, options =>
                     {
                         options.AccessTokenProvider = () =>
                         {

@@ -7,9 +7,9 @@ namespace SharedHome.Shared.Email
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddEmail(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddEmail(this IServiceCollection services)
         {
-            services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
+            services.ConfigureOptions<EmailOptionsSetup>();
 
             services.AddTransient<IIdentityEmailSender, ConfirmationEmailSender>();
 
