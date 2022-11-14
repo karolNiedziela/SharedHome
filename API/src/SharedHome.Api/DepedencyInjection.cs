@@ -15,7 +15,7 @@ namespace SharedHome.Api
         private const string ApiTitle = "HomeShared API";
         private const string ApiVersion = "v1";
 
-        public static IServiceCollection AddApi(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddApi(this IServiceCollection services)
         {
             services.AddControllers(
                 options =>
@@ -67,7 +67,7 @@ namespace SharedHome.Api
 
             AddSwagger(services);
 
-            services.AddAppHealthChecks(configuration);
+            services.AddAppHealthChecks();
 
             services.AddRouting(options =>
             {

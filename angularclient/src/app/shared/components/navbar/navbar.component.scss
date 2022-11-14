@@ -1,6 +1,6 @@
 @import "/src/assets/_variables.scss";
 
-.navbar {
+nav {
   padding: 0 1rem;
   height: 56px;
 }
@@ -53,6 +53,7 @@
   content: "";
   top: -8px;
 }
+
 .hamburger > span::after {
   content: "";
   top: 8px;
@@ -61,10 +62,12 @@
 .navbar.is-active .hamburger > span {
   transform: rotate(45deg);
 }
+
 .navbar.is-active .hamburger > span::before {
   top: 0;
   transform: rotate(0deg);
 }
+
 .navbar.is-active .hamburger > span::after {
   top: 0;
   transform: rotate(90deg);

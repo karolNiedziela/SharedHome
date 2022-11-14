@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Shared.Abstractions.Authentication;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Authentication;
@@ -9,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Xunit;
 
 namespace SharedHome.IntegrationTests.Controllers
 {
@@ -32,8 +30,8 @@ namespace SharedHome.IntegrationTests.Controllers
 
             var settingsProvider = factory.Services.GetRequiredService<SettingsProvider>();
 
-            var jwtSettings = settingsProvider.Get<JwtSettings>(JwtSettings.SectionName);
-            _authManager = new AuthManager(new OptionsWrapper<JwtSettings>(jwtSettings), new UtcTimeProvider());
+            var jwtSettings = settingsProvider.Get<JwtOptions>(JwtOptionsSetup.SectionName);
+            _authManager = new AuthManager(new OptionsWrapper<JwtOptions>(jwtSettings), new UtcTimeProvider());
         }
 
         protected AuthenticationResponse Authorize(Guid userId, string firstName = "firstName", string lastName = "lastName", string email = "test@email.com", IEnumerable<string>? roles = null)

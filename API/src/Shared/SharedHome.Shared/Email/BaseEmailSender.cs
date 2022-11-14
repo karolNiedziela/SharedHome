@@ -12,13 +12,13 @@ namespace SharedHome.Shared.Email
 {
     public abstract class BaseEmailSender
     {
-        private readonly EmailSettings _emailSettings;
+        private readonly EmailOptions _emailSettings;
         private readonly ILogger _logger;
 
         protected readonly IStringLocalizer _localizer;
 
 
-        public BaseEmailSender(IOptions<EmailSettings> emailOptions, ILogger logger, IStringLocalizerFactory localizerFactory)
+        public BaseEmailSender(IOptions<EmailOptions> emailOptions, ILogger logger, IStringLocalizerFactory localizerFactory)
         {
             _emailSettings = emailOptions.Value;
             _logger = logger;

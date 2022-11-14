@@ -1,14 +1,12 @@
-<div class="sharedhome-app">
+<div class="d-flex h-100 w-100 flex-column overflow-hidden">
   <app-navbar *ngIf="authenticationResponse"></app-navbar>
-  <div class="sharedhome-container">
+  <div class="d-flex flex-row pt-2 overflow-auto w-100 h-100">
     <app-sidebar class="sidebar" *ngIf="authenticationResponse"></app-sidebar>
-    <div class="content">
-      <div class="content__main">
-        <div class="main-app">
-          <router-outlet></router-outlet>
-        </div>
-        <app-footer *ngIf="authenticationResponse"></app-footer>
+    <div class="content d-flex flex-column w-100">
+      <div class="content-main">
+        <router-outlet></router-outlet>
       </div>
+      <app-footer class="mt-auto"></app-footer>
     </div>
   </div>
 </div>

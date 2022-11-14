@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SharedHome.Shared.Settings;
+using SharedHome.Shared.Options;
 
 namespace SharedHome.IntegrationTests
 {
@@ -12,7 +12,7 @@ namespace SharedHome.IntegrationTests
             _configuration = GetConfigurationRoot();
         }
 
-        public T Get<T>(string sectionName) where T : class, new() => _configuration.GetSettings<T>(sectionName);
+        public T Get<T>(string sectionName) where T : class, new() => _configuration.GetOptions<T>(sectionName);
 
         private static IConfigurationRoot GetConfigurationRoot()
             => new ConfigurationBuilder()

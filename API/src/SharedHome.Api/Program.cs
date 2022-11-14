@@ -30,11 +30,11 @@ try
     builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
           .ReadFrom.Configuration(configuration));
 
-    builder.Services.AddSharedHomeIdentity(builder.Configuration);
-    builder.Services.AddApplication(builder.Configuration);
-    builder.Services.AddInfrastructure(builder.Configuration);
-    builder.Services.AddShared(builder.Configuration);
-    builder.Services.AddApi(builder.Configuration);
+    builder.Services.AddSharedHomeIdentity();
+    builder.Services.AddApplication();
+    builder.Services.AddInfrastructure();
+    builder.Services.AddShared();
+    builder.Services.AddApi();
 
     var app = builder.Build();
 

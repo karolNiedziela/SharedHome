@@ -11,7 +11,7 @@ namespace SharedHome.Identity
 {
     public static class DepedencyInjection
     {
-        public static IServiceCollection AddSharedHomeIdentity(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSharedHomeIdentity(this IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -35,11 +35,9 @@ namespace SharedHome.Identity
             .AddEntityFrameworkStores<IdentitySharedHomeDbContext>()
             .AddDefaultTokenProviders();
 
-            services.AddAuth(configuration);
+            services.AddAuth();
 
             services.AddScoped<IIdentityService, IdentityService>();
-
-            services.AddIdentitySQL(configuration);
 
             return services;
         }

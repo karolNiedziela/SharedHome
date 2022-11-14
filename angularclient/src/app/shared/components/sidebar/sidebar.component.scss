@@ -1,58 +1,27 @@
 @import "/src/assets/_variables.scss";
 
-.sidebar {
-  min-width: 240px;
-  display: flex;
-  flex-direction: column;
-}
-
 .sidenav {
-  display: flex;
-  flex-direction: column;
   top: 65px;
   bottom: 0;
   position: fixed;
   min-width: 240px;
 
-  ul {
+  .nav-link {
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    list-style: none;
+    transition: none;
 
-    .nav-item {
-      position: relative;
-      width: 100%;
-      text-align: center;
-
-      .nav-link {
-        display: flex;
-        transition: none;
-
-        &:hover {
-          border-right: 5px solid;
-        }
-
-        &.active {
-          border-right: 5px solid;
-        }
-
-        fa-icon {
-          text-align: center;
-          min-width: 30px;
-        }
-
-        .links_name {
-          flex-grow: 1;
-          text-align: center;
-          pointer-events: none;
-        }
-      }
+    &:hover {
+      border-right: 5px solid;
     }
-  }
 
-  &__bottom {
-    justify-content: flex-end;
+    &.active {
+      border-right: 5px solid;
+    }
+
+    fa-icon {
+      text-align: center;
+      min-width: 30px;
+    }
   }
 }
 

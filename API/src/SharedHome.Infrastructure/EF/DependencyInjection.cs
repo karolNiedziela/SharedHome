@@ -1,26 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.ShoppingLists.Repositories;
+using SharedHome.Identity.EF.Contexts;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Initializers;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Infrastructure.EF.Repositories;
-using SharedHome.Shared.Settings;
-using SharedHome.Identity.EF.Contexts;
 using SharedHome.Notifications.Repositories;
 
 namespace SharedHome.Infrastructure.EF
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddMySharedHomeSQL(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddMySharedHomeSQL(this IServiceCollection services)
         {
             // Repositories
             services.AddScoped<IShoppingListRepository, ShoppingListRepository>();
@@ -34,25 +33,51 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IInvitationReadService, InvitationReadService>();
             services.AddScoped<IHouseGroupReadService, HouseGroupService>();
 
-            var mySQLOptions = configuration.GetSettings<MySQLSettings>(MySQLSettings.SectionName);
+            services.ConfigureOptions<MySQLOptionsSetup>();
 
-            services.AddDbContext<WriteSharedHomeDbContext>(options =>
+            services.AddDbContext<WriteSharedHomeDbContext>((servicePrvoider, options) =>
             {
-                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString));
+                var mySQLOptions = servicePrvoider.GetService<IOptions<MySQLOptions>>()!.Value;
+
+                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString), mySqlOptionsAction =>
+                {
+                    mySqlOptionsAction.EnableRetryOnFailure(mySQLOptions.MaxRetryCount);
+                });
+
+                options.EnableDetailedErrors(mySQLOptions.EnableDetailedErrors);
+
+                options.EnableSensitiveDataLogging(mySQLOptions.EnableSensitiveDataLogging);
             });
 
-            services.AddDbContext<ReadSharedHomeDbContext>(options =>
+            services.AddDbContext<ReadSharedHomeDbContext>((servicePrvoider, options) =>
             {
-                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString));
+                var mySQLOptions = servicePrvoider.GetService<IOptions<MySQLOptions>>()!.Value;
+
+                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString), mySqlOptionsAction =>
+                {
+                    mySqlOptionsAction.EnableRetryOnFailure(mySQLOptions.MaxRetryCount);
+                });
+
+                options.EnableDetailedErrors(mySQLOptions.EnableDetailedErrors);
+
+                options.EnableSensitiveDataLogging(mySQLOptions.EnableSensitiveDataLogging);
             });
 
-            services.AddDbContext<IdentitySharedHomeDbContext>(options =>
+            services.AddDbContext<IdentitySharedHomeDbContext>((servicePrvoider, options) =>
             {
-                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString));
+                var mySQLOptions = servicePrvoider.GetService<IOptions<MySQLOptions>>()!.Value;
+
+                options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString), mySqlOptionsAction =>
+                {
+                    mySqlOptionsAction.EnableRetryOnFailure(mySQLOptions.MaxRetryCount);
+                });
+
+                options.EnableDetailedErrors(mySQLOptions.EnableDetailedErrors);
+
+                options.EnableSensitiveDataLogging(mySQLOptions.EnableSensitiveDataLogging);
             });
 
-
-            services.AddInitializer(configuration);
+            services.AddInitializer();
             services.AddHostedService<MigratorHostedService>();
             services.AddHostedService<SeedDataService>();
 

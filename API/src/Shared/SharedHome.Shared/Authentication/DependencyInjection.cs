@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SharedHome.Shared.Abstractions.Authentication;
-using SharedHome.Shared.Settings;
 using System.Text;
 
 namespace SharedHome.Shared.Authentication
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuth(this IServiceCollection services)
         {
-            services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
-            var jwtSettings = configuration.GetSettings<JwtSettings>(JwtSettings.SectionName);
+            services.ConfigureOptions<JwtOptionsSetup>();
+
+            var serviceProvider = services.BuildServiceProvider();
+            var jwtOptions = serviceProvider.GetService<IOptions<JwtOptions>>()!.Value;
 
             services.AddSingleton<IAuthManager, AuthManager>();
 
-            var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(jwtOptions.Secret);
 
             services.AddAuthentication(options =>
             {
@@ -33,9 +34,9 @@ namespace SharedHome.Shared.Authentication
                 {
                     ValidateIssuerSigningKey = true,
                     ValidateIssuer = true,
-                    ValidIssuer = jwtSettings.Issuer,
+                    ValidIssuer = jwtOptions.Issuer,
                     ValidateAudience = false,
-                    ValidAudience = jwtSettings.Audience,
+                    ValidAudience = jwtOptions.Audience,
                     RequireExpirationTime = true,
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),

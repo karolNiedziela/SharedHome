@@ -11,12 +11,12 @@ namespace SharedHome.Shared.Authentication
 {
     public class AuthManager : IAuthManager
     {
-        private readonly JwtSettings _jwtSettings;
+        private readonly JwtOptions _jwtOptions;
         private readonly ITimeProvider _time;
 
-        public AuthManager(IOptions<JwtSettings> jwtOptions, ITimeProvider time)
+        public AuthManager(IOptions<JwtOptions> jwtOptions, ITimeProvider time)
         {
-            _jwtSettings = jwtOptions.Value;
+            _jwtOptions = jwtOptions.Value;
             _time = time;
         }
 
@@ -35,17 +35,17 @@ namespace SharedHome.Shared.Authentication
                 new(ClaimTypes.Role, string.Join(",", roles))
             };
 
-            var expires = now.Add(_jwtSettings.Expiry);
+            var expires = now.Add(_jwtOptions.Expiry);
 
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(_jwtOptions.Secret);
             var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
             var jwt = new JwtSecurityToken(
                 claims: jwtClaims,
                 notBefore: now,
                 expires: expires,
                 signingCredentials: signingCredentials,
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience
+                issuer: _jwtOptions.Issuer,
+                audience: _jwtOptions.Audience
             );
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);

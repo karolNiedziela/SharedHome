@@ -1,9 +1,7 @@
 ﻿namespace SharedHome.Shared.Email.Options
 {
-    public class EmailSettings
+    public class EmailOptions
     {
-        public const string SectionName = "Email";
-
         public string Host { get; set; } = default!;
 
         public int Port { get; set; }

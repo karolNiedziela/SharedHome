@@ -1,5 +1,5 @@
-<div class="sidenav">
-  <ul class="nav sidenav__top">
+<div class="sidenav d-flex flex-column overflow-auto">
+  <ul class="nav d-flex flex-column h-100">
     <li class="nav-item">
       <a
         href="#"
@@ -10,7 +10,9 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="shoppingListsIcon"></fa-icon>
-        <span class="links_name">{{ "shoppingLists" | translate }} </span>
+        <span class="text-center flex-grow-1"
+          >{{ "shoppingLists" | translate }}
+        </span>
       </a>
     </li>
     <hr />
@@ -23,7 +25,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="billsIcon"></fa-icon>
-        <span class="links_name">{{ "bills" | translate }}</span>
+        <span class="text-center flex-grow-1">{{ "bills" | translate }}</span>
       </a>
     </li>
     <hr />
@@ -36,7 +38,9 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="houseGroupIcon"></fa-icon>
-        <span class="links_name">{{ "houseGroup" | translate }}</span>
+        <span class="text-center flex-grow-1">{{
+          "houseGroup" | translate
+        }}</span>
       </a>
     </li>
     <hr />
@@ -49,7 +53,9 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="expensesIcon"></fa-icon>
-        <span class="links_name">{{ "expenses" | translate }}</span>
+        <span class="text-center flex-grow-1">{{
+          "expenses" | translate
+        }}</span>
       </a>
     </li>
     <hr />
@@ -62,11 +68,13 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="invitationsIcon"></fa-icon>
-        <span class="links_name">{{ "invitations" | translate }}</span>
+        <span class="text-center flex-grow-1">{{
+          "invitations" | translate
+        }}</span>
       </a>
     </li>
   </ul>
-  <ul class="nav sidenav__bottom">
+  <ul class="nav d-flex flex-column justify-content-end">
     <hr />
     <li class="nav-item">
       <a
@@ -77,14 +85,16 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <fa-icon [icon]="settingsIcon"></fa-icon>
-        <span class="links_name">{{ "settings" | translate }}</span>
+        <span class="text-center flex-grow-1">{{
+          "settings" | translate
+        }}</span>
       </a>
     </li>
     <hr />
     <li class="nav-item">
       <a (click)="logout()" class="nav-link link-dark">
         <fa-icon [icon]="logoutIcon"></fa-icon>
-        <span class="links_name">{{ "logOut" | translate }}</span>
+        <span class="text-center flex-grow-1">{{ "logOut" | translate }}</span>
       </a>
     </li>
   </ul>
