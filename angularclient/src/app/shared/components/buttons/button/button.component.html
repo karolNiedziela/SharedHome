@@ -1,8 +1,8 @@
 <button
   [type]="type"
-  [disabled]="isDisabled"
+  [disabled]="disabled"
   (click)="onClick()"
   class="btn btn-primary .shared-home-btn"
 >
-  {{ text }}
+  {{ text | translate }}
 </button>

@@ -1,34 +1,48 @@
-<div [formGroup]="shoppingListForm" class="row align-items-center g-md-2 g-1">
-  <app-text-input
-    class="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
-    formControlName="yearAndMonth"
-    [labelText]="'yearAndMonth' | translate"
-    [placeholder]="'yearAndMonth' | translate"
-    (change)="onCurrentYearAndMonthChange()"
-  ></app-text-input>
-  <app-enum-select
-    class="col-4 col-sm-3 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
-    #statusSelect
-    [labelText]="'status' | translate"
-    [enumType]="shoppingListStatus"
-    [isFormControl]="false"
-    formControlName="status"
-  ></app-enum-select>
-  <app-add-shopping-list
-    class="col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto ms-auto text-end"
-    [year]="year"
-    [month]="month"
-  ></app-add-shopping-list>
-</div>
+<div class="d-flex flex-column h-100">
+  <div [formGroup]="shoppingListForm" class="row align-items-center g-md-2 g-1">
+    <app-text-input
+      class="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+      formControlName="yearAndMonth"
+      [labelText]="'yearAndMonth' | translate"
+      [placeholder]="'yearAndMonth' | translate"
+      (change)="onCurrentYearAndMonthChange()"
+    ></app-text-input>
+    <app-enum-select
+      class="col-4 col-sm-3 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+      #statusSelect
+      [labelText]="'status' | translate"
+      [enumType]="shoppingListStatus"
+      [isFormControl]="false"
+      formControlName="status"
+    ></app-enum-select>
+    <app-add-shopping-list
+      class="col-auto col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto ms-auto text-end"
+      [year]="year"
+      [month]="month"
+    ></app-add-shopping-list>
+  </div>
 
-<div class="row mt-2" *ngIf="paged$ | async as paged; else loading">
   <div
-    class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-    *ngFor="let shoppingList of paged.items"
+    class="flex-grow-1 d-flex flex-column justify-content-between mb-1"
+    *ngIf="paged$ | async as paged; else loading"
   >
-    <app-single-shopping-list
-      [shoppingList]="shoppingList"
-    ></app-single-shopping-list>
+    <div class="row mt-2">
+      <div
+        class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
+        *ngFor="let shoppingList of paged.items"
+      >
+        <app-single-shopping-list
+          [shoppingList]="shoppingList"
+        ></app-single-shopping-list>
+      </div>
+    </div>
+    <app-pagination
+      [currentPage]="paged.currentPage"
+      [totalPages]="paged.totalPages"
+      (nextPage)="onNext()"
+      (previousPage)="onPrevious()"
+      (goToPage)="goTo($event)"
+    ></app-pagination>
   </div>
 </div>
 <ng-template #loading>

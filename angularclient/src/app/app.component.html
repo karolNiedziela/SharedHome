@@ -3,7 +3,7 @@
   <div class="d-flex flex-row pt-2 overflow-auto w-100 h-100">
     <app-sidebar class="sidebar" *ngIf="authenticationResponse"></app-sidebar>
     <div class="content d-flex flex-column w-100">
-      <div class="content-main">
+      <div class="content-main flex-grow-1">
         <router-outlet></router-outlet>
       </div>
       <app-footer class="mt-auto"></app-footer>

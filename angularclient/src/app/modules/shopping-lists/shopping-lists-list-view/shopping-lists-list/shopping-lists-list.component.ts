@@ -1,6 +1,7 @@
+import { Paginatable } from './../../../../core/models/paginatable';
 import { EnumSelectComponent } from './../../../../shared/components/selects/enum-select/enum-select.component';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ShoppingListStatus } from './../../enums/shopping-list-status';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -22,7 +23,7 @@ import { ShoppingListsService } from '../../services/shopping-lists.service';
   styleUrls: ['./shopping-lists-list.component.scss'],
 })
 export class ShoppingListsComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  implements OnInit, AfterViewInit, OnDestroy, Paginatable
 {
   detailsIcon = faList;
   public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
@@ -38,6 +39,8 @@ export class ShoppingListsComponent
   statusSelectSubscription!: Subscription;
 
   loading$!: Observable<boolean>;
+
+  public currentPage: number = 1;
 
   constructor(
     private shoppingListService: ShoppingListsService,
@@ -56,11 +59,11 @@ export class ShoppingListsComponent
       status: new FormControl(ShoppingListStatus['To do']),
     });
 
-    this.getAllShoppingLists(this.year, this.month, this.isDone);
+    this.getAllShoppingLists();
 
     this.singleRefreshSubscription =
       this.shoppingListService.allShoppingListRefreshNeeded.subscribe(() => {
-        this.getAllShoppingLists(this.year, this.month, this.isDone);
+        this.getAllShoppingLists();
       });
   }
 
@@ -77,16 +80,19 @@ export class ShoppingListsComponent
     this.statusSelectSubscription.unsubscribe();
   }
 
-  private getAllShoppingLists(
-    year: number,
-    month: number,
-    isDone: boolean = false
-  ) {
-    this.paged$ = this.shoppingListService.getAllByYearAndMonthAndIsDone(
-      year,
-      month,
-      isDone
-    );
+  private getAllShoppingLists() {
+    this.paged$ = this.shoppingListService
+      .getAllByYearAndMonthAndIsDone(
+        this.year,
+        this.month,
+        this.isDone,
+        this.currentPage
+      )
+      .pipe(
+        tap((paged: Paged<ShoppingList>) => {
+          this.currentPage = paged.currentPage;
+        })
+      );
   }
 
   onCurrentYearAndMonthChange(): void {
@@ -101,7 +107,7 @@ export class ShoppingListsComponent
     this.year = +yearAndMonthSplitted[0];
     this.month = +yearAndMonthSplitted[1];
 
-    this.getAllShoppingLists(this.year, this.month, this.isDone);
+    this.getAllShoppingLists();
   }
 
   onStatusChange(selectedStatus: number): void {
@@ -110,10 +116,28 @@ export class ShoppingListsComponent
     }
     this.isDone = selectedStatus == 0;
 
-    this.getAllShoppingLists(this.year, this.month, this.isDone);
+    this.getAllShoppingLists();
   }
 
   openShoppingList(shoppingListId: number): void {
     this.router.navigate(['shoppinglists', shoppingListId]);
+  }
+
+  public onPrevious(): void {
+    this.currentPage -= 1;
+
+    this.getAllShoppingLists();
+  }
+
+  public onNext(): void {
+    this.currentPage += 1;
+
+    this.getAllShoppingLists();
+  }
+
+  public goTo(page: number): void {
+    this.currentPage = page;
+
+    this.getAllShoppingLists();
   }
 }

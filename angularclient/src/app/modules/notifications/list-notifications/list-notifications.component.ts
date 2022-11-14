@@ -1,3 +1,4 @@
+import { Paginatable } from './../../../core/models/paginatable';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { NotificationType } from './../constants/notification-type';
 import { TargetType } from './../constants/target-type';
@@ -12,12 +13,15 @@ import { Paged } from 'app/core/models/paged';
   templateUrl: './list-notifications.component.html',
   styleUrls: ['./list-notifications.component.scss'],
 })
-export class ListNotificationsComponent implements OnInit {
+export class ListNotificationsComponent implements OnInit, Paginatable {
   notificationsForm!: FormGroup;
   notifications$!: Observable<Paged<AppNotification>>;
 
   public targetType: typeof TargetType = TargetType;
   public notificationType: typeof NotificationType = NotificationType;
+
+  public currentPage: number = 1;
+  private formValues!: any;
 
   constructor(private notificationService: NotificationService) {}
 
@@ -29,17 +33,37 @@ export class ListNotificationsComponent implements OnInit {
 
     this.notificationsForm.valueChanges.pipe(debounceTime(300)).subscribe({
       next: (formValues: any) => {
-        this.getNotifications(formValues);
+        this.formValues = formValues;
+        this.getNotifications();
       },
     });
   }
 
-  private getNotifications(formValues: any): void {
-    const targetType: number = formValues.targetType;
-    const notificationType: number = formValues.notificationType;
+  public onPrevious(): void {
+    this.currentPage -= 1;
+
+    this.getNotifications();
+  }
+
+  public onNext(): void {
+    this.currentPage += 1;
+
+    this.getNotifications();
+  }
+
+  public goTo(page: number): void {
+    this.currentPage = page;
+
+    this.getNotifications();
+  }
+
+  private getNotifications(): void {
+    const targetType: number = this.formValues.targetType;
+    const notificationType: number = this.formValues.notificationType;
     this.notifications$ = this.notificationService.getByType(
       targetType,
-      notificationType
+      notificationType,
+      this.currentPage
     );
   }
 }

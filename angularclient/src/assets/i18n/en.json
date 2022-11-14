@@ -113,5 +113,12 @@
   "Delete house group": "Delete house group",
   "Are you sure to delete the house group?": "Are you sure to delete the house group?",
   "amount": "Amount",
-  "view all": "View All"
+  "view all": "View All",
+  "previous_page": "Previous",
+  "next_page": "Next",
+  "All": "All",
+  "Bill": "Bill",
+  "HouseGroup": "House group",
+  "Invitation": "Invitation",
+  "ShoppingList": "Shopping list"
 }

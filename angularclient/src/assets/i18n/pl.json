@@ -113,5 +113,12 @@
   "Delete house group": "Usuń grupę domową",
   "Are you sure to delete the house group?": "Czy na pewno chcesz usunąć grupę domową?",
   "amount": "Kwota",
-  "view all": "Zobacz wszystkie"
+  "view all": "Zobacz wszystkie",
+  "previous_page": "Poprzednia",
+  "next_page": "Następna",
+  "All": "Wszystkie",
+  "Bill": "Rachunek",
+  "HouseGroup": "Grupa domowa",
+  "Invitation": "Zaproszenie",
+  "ShoppingList": "Lista zakupów"
 }
