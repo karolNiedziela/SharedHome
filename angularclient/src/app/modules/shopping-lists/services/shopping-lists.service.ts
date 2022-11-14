@@ -61,12 +61,15 @@ export class ShoppingListsService {
   getAllByYearAndMonthAndIsDone(
     year: number,
     month: number,
-    isDone: boolean
+    isDone: boolean,
+    pageNumber: number
   ): Observable<Paged<ShoppingList>> {
     let params = new HttpParams();
     params = params.append('year', year);
     params = params.append('month', month);
     params = params.append('isdone', isDone);
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', 10);
 
     return this.http
       .get<Paged<ShoppingList>>(this.shoppingListsUrl, {

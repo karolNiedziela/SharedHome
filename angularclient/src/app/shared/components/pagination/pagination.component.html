@@ -1,0 +1,51 @@
+<nav
+  class="d-flex align-items-center justify-content-center mt-auto"
+  aria-label="pagination"
+>
+  <ul class="d-flex justify-content-end list-unstyled m-0 p-0">
+    <li
+      class="d-flex flex-column mx-2 align-items-center justify-content-center"
+    >
+      <app-button
+        aria-label="Go To Previos Page"
+        text="previous_page"
+        [hidden]="totalPages === 1"
+        [disabled]="currentPage === 1"
+        (click)="onPrevious()"
+      >
+      </app-button>
+    </li>
+    <li
+      class="d-flex flex-column mx-2 align-items-center justify-content-center"
+      *ngFor="let page of pages"
+    >
+      <a
+        class="text-decoration-none fw-bold"
+        [attr.aria-current]="page === currentPage ? 'page' : null"
+        [attr.aria-label]="
+          page === currentPage
+            ? 'Current Page, Page ' + page
+            : 'Go to Page ' + page
+        "
+        [class.current]="page === currentPage"
+        tabindex="0"
+        (click)="onGoTo(page)"
+        (keyup.enter)="onGoTo(page)"
+      >
+        {{ page }}</a
+      >
+    </li>
+    <li
+      class="d-flex flex-column mx-2 align-items-center justify-content-center"
+    >
+      <app-button
+        aria-label="Go To Next Page"
+        text="next_page"
+        [hidden]="totalPages === 1"
+        [disabled]="currentPage === totalPages"
+        (click)="onNext()"
+      >
+      </app-button>
+    </li>
+  </ul>
+</nav>

@@ -131,11 +131,18 @@ $btn-color: $l_white_color !default;
 
 a {
   text-decoration: none;
+  color: $l_black_color !important;
 }
 
 a:hover {
   color: $l_primary_color !important;
   cursor: pointer;
+}
+
+a.current {
+  color: $l_white_color !important;
+  background-color: $l_primary_color !important;
+  padding: 8px;
 }
 
 /*

@@ -1,6 +1,6 @@
 import { AppNotification } from '../models/app-notification';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Paged } from 'app/core/models/paged';
@@ -49,13 +49,16 @@ export class NotificationService {
 
   getByType(
     targetType: number,
-    notificationType: number
+    notificationType: number,
+    pageNumber: number
   ): Observable<Paged<AppNotification>> {
     return this.http.post<Paged<AppNotification>>(
       `${this.notificationsUrl}`,
       {
         targetType,
         notificationType,
+        pageNumber,
+        pageSize: 10,
       },
       this.defaultHttpOptions
     );

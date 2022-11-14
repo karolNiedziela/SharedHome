@@ -1,39 +1,53 @@
-<div [formGroup]="notificationsForm" class="row gy-2 gx-4 filters">
-  <app-enum-select
-    class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
-    [labelText]="'Target' | translate"
-    [enumType]="targetType"
-    [isFormControl]="false"
-    formControlName="targetType"
-    [firstValueSelected]="true"
-  ></app-enum-select>
+<div class="d-flex flex-column h-100">
+  <div [formGroup]="notificationsForm" class="row gy-2 gx-4 filters">
+    <app-enum-select
+      class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
+      [labelText]="'Target' | translate"
+      [enumType]="targetType"
+      [isFormControl]="false"
+      formControlName="targetType"
+      [firstValueSelected]="true"
+    ></app-enum-select>
 
-  <app-enum-select
-    class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
-    [labelText]="'Type' | translate"
-    [enumType]="notificationType"
-    [isFormControl]="false"
-    formControlName="notificationType"
-    [firstValueSelected]="true"
-  ></app-enum-select>
-</div>
+    <app-enum-select
+      class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
+      [labelText]="'Type' | translate"
+      [enumType]="notificationType"
+      [isFormControl]="false"
+      formControlName="notificationType"
+      [firstValueSelected]="true"
+    ></app-enum-select>
+  </div>
 
-<div class="mt-2" *ngIf="notifications$ | async as paged; else loading">
-  <ul class="list-group" *ngFor="let notification of paged.items">
-    <li
-      class="list-group-item d-flex justify-content-between align-items-center"
-    >
-      <div class="px-2">
-        <div>{{ notification.title }}</div>
-      </div>
-      <div class="text-end">
-        <div class="ms-2 me-auto">
-          {{ notification.createdAt | date: "shortDate" }}
-        </div>
-        {{ notification.createdBy }}
-      </div>
-    </li>
-  </ul>
+  <div
+    class="flex-grow-1 d-flex flex-column justify-content-between mb-1"
+    *ngIf="notifications$ | async as paged; else loading"
+  >
+    <div class="mt-2">
+      <ul class="list-group" *ngFor="let notification of paged.items">
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div class="px-2">
+            <div>{{ notification.title }}</div>
+          </div>
+          <div class="text-end">
+            <div class="ms-2 me-auto">
+              {{ notification.createdAt | date: "shortDate" }}
+            </div>
+            {{ notification.createdBy }}
+          </div>
+        </li>
+      </ul>
+    </div>
+    <app-pagination
+      [currentPage]="paged.currentPage"
+      [totalPages]="paged.totalPages"
+      (nextPage)="onNext()"
+      (previousPage)="onPrevious()"
+      (goToPage)="goTo($event)"
+    ></app-pagination>
+  </div>
 </div>
 <ng-template #loading>
   <app-loading-spinner></app-loading-spinner>

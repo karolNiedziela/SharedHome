@@ -124,11 +124,18 @@ $card-border-radius: 4px !default;
 
 a {
   text-decoration: none;
+  color: $l_white_color !important;
 }
 
 a:hover {
   color: $l_primary_color !important;
   cursor: pointer;
+}
+
+a.current {
+  color: $l_white_color !important;
+  background-color: $l_primary_color !important;
+  padding: 8px;
 }
 
 /*

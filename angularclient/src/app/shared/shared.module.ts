@@ -34,6 +34,7 @@ import { LanguageSelectComponent } from './components/selects/language-select/la
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FirstLettersToTitleCasePipe } from './pipes/first-letters-to-title-case.pipe';
 import { NotificationBellComponent } from './components/notifications/notification-bell/notification-bell.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { NotificationBellComponent } from './components/notifications/notificati
     NavbarComponent,
     NotificationBellComponent,
     FirstLettersToTitleCasePipe,
+    PaginationComponent,
   ],
   imports: [
     CommonModule,
@@ -110,6 +112,7 @@ import { NotificationBellComponent } from './components/notifications/notificati
     LanguageSelectComponent,
     NavbarComponent,
     FirstLettersToTitleCasePipe,
+    PaginationComponent,
   ],
   providers: [DatePipe, EnumAsStringPipe, FirstLettersToTitleCasePipe],
 })
