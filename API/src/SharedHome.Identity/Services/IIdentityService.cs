@@ -10,8 +10,11 @@ namespace SharedHome.Infrastructure.Identity.Services
 
         IEnumerable<string> MapIdentityErrorToIEnumerableString(IEnumerable<IdentityError> errors);
 
+        Task AddUserImage(string userId, UserImage image);
+
         string Encode(string token);
 
         string Decode(string code);
+
     }
 }

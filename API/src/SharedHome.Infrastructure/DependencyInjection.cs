@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application;
 using SharedHome.Infrastructure.EF;
+using SharedHome.Infrastructure.ImagesCloudinary;
 using SharedHome.Infrastructure.Mapping;
 using SharedHome.Notifications;
 
@@ -17,6 +18,8 @@ namespace SharedHome.Infrastructure
             services.AddMappings();
 
             services.AddMySharedHomeSQL();
+
+            services.AddCloudinary();
 
             return services;
         }

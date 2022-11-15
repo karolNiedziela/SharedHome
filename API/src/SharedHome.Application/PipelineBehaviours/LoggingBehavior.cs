@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using SharedHome.Application.Authentication.Commands.ConfirmEmail;
-using SharedHome.Application.Authentication.Commands.Register;
-using SharedHome.Application.Authentication.Queries.Login;
+using SharedHome.Application.Identity.Commands.ConfirmEmail;
+using SharedHome.Application.Identity.Commands.Register;
+using SharedHome.Application.Identity.Queries.Login;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.Json;

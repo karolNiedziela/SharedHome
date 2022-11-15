@@ -3,7 +3,7 @@ using SharedHome.Api.Constants;
 using SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead;
 using SharedHome.Application.Notifications.Queries;
 using SharedHome.Notifications.DTO;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Api.Controllers
 {

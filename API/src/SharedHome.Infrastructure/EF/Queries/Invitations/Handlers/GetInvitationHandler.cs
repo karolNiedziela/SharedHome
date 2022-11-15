@@ -4,7 +4,7 @@ using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers

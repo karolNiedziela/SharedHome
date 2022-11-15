@@ -5,7 +5,7 @@ using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Infrastructure.EF.Queries.Notifications.Handlers
 {

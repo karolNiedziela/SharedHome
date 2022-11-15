@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Application.Authentication.Models
+﻿namespace SharedHome.Application.Identity.Models
 {
     public class LoginRequest
     {

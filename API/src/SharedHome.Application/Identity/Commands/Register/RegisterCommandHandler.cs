@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using SharedHome.Application.Identity.Commands.Register;
 using SharedHome.Domain.Persons;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Identity;
@@ -10,7 +11,7 @@ using SharedHome.Shared.Abstractions.Email;
 using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Abstractions.Responses;
 
-namespace SharedHome.Application.Authentication.Commands.Register
+namespace SharedHome.Application.Identity.Commands.Identity
 {
     public class RegisterCommandHandler : ICommandHandler<RegisterCommand, Response<string>>
     {

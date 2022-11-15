@@ -4,7 +4,7 @@ using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
 using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Infrastructure.EF.Contexts;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Helpers;
 

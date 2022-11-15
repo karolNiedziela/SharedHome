@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Requests;
+using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.Invitations.Commands.RejectInvitation
 {

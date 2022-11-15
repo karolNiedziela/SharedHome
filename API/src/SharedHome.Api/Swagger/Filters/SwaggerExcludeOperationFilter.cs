@@ -5,7 +5,7 @@ namespace SharedHome.Api.Swagger.Filters
 {
     public class SwaggerExcludeOperationFilter : IOperationFilter
     {
-        private List<string> _excludedProperties = new List<string> { "PersonId" };
+        private readonly List<string> _excludedProperties = new() { "PersonId" };
 
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {

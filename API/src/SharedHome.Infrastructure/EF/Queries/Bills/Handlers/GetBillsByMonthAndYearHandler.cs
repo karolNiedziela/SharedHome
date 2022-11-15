@@ -5,7 +5,7 @@ using SharedHome.Application.Bills.Queries;
 using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 using SharedHome.Shared.Abstractions.Time;
 

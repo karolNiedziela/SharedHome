@@ -71,6 +71,8 @@
             public const string Login = "login";
 
             public const string ConfirmEmail = "confirmemail";
+
+            public const string UploadProfileImage = "uploadprofileimage";
         }
 
         public static class Invitations

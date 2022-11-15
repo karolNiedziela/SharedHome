@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Application.PipelineBehaviours
 {

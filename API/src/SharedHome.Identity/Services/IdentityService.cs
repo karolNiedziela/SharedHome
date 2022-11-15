@@ -8,6 +8,7 @@ namespace SharedHome.Infrastructure.Identity.Services
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+
         public IdentityService(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
@@ -24,6 +25,15 @@ namespace SharedHome.Infrastructure.Identity.Services
 
         public IEnumerable<string> MapIdentityErrorToIEnumerableString(IEnumerable<IdentityError> errors)
             => errors.Select(error => error.Description);
+
+        public async Task AddUserImage(string userId, UserImage image)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            user.Images.Add(image);
+
+            await _userManager.UpdateAsync(user);
+        }
 
         public string Encode(string token)
         {

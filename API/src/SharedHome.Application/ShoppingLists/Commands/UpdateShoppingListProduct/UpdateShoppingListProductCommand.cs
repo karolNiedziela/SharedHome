@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Requests;
+using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduct
 {
