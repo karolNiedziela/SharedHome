@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using System.Linq.Expressions;
 
 namespace SharedHome.Infrastructure.EF.Extensions

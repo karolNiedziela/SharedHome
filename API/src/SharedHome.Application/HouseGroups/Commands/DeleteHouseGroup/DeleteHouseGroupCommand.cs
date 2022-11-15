@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Requests;
+using SharedHome.Application.Common.Requests;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup

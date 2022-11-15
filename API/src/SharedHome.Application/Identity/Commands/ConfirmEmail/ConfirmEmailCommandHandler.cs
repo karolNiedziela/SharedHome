@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedHome.Application.Authentication.Commands.ConfirmEmail
+namespace SharedHome.Application.Identity.Commands.ConfirmEmail
 {
     public class ConfirmEmailCommandHandler : ICommandHandler<ConfirmEmailCommand, Unit>
     {

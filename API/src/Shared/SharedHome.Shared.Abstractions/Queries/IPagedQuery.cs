@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Shared.Abstractions.Queries
+﻿namespace SharedHome.Application.Common.Queries
 {
     public interface IPagedQuery<TResponse> : IQuery<TResponse>
     {

@@ -12,5 +12,7 @@ namespace SharedHome.Identity.Entities
         public string FirstName { get; set; } = default!;
 
         public string LastName { get; set; } = default!;
+
+        public List<UserImage> Images { get; set; } = new();
     }
 }

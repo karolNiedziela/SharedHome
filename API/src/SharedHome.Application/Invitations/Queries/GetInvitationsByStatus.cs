@@ -1,6 +1,6 @@
 ﻿using SharedHome.Application.Invitations.Dto;
-using SharedHome.Shared.Abstractions.Queries;
-using SharedHome.Shared.Abstractions.Requests;
+using SharedHome.Application.Common.Queries;
+using SharedHome.Application.Common.Requests;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Application.Invitations.Queries

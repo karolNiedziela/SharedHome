@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
-namespace SharedHome.Application.Authentication.Queries.Login
+namespace SharedHome.Application.Identity.Queries.Login
 {
     public record LoginQuery(string Email, string Password) : IQuery<AuthenticationResponse>;
 }

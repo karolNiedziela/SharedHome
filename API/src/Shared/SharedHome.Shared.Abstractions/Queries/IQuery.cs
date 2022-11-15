@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace SharedHome.Shared.Abstractions.Queries
+namespace SharedHome.Application.Common.Queries
 {
     public interface IQuery<out TResponse> : IRequest<TResponse>
     {

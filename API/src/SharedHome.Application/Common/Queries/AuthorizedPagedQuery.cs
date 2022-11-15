@@ -1,6 +1,7 @@
-﻿using SharedHome.Shared.Abstractions.Requests;
+﻿using SharedHome.Application.Common.Requests;
+using SharedHome.Application.Common.Queries;
 
-namespace SharedHome.Shared.Abstractions.Queries
+namespace SharedHome.Application.Common.Queries
 {
     public class AuthorizedPagedQuery<TResponse> : AuthorizeRequest, IPagedQuery<Paged<TResponse>>
     {

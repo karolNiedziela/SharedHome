@@ -1,20 +1,20 @@
 ﻿using SharedHome.Shared.Abstractions.Attributes;
 using System.Text.Json.Serialization;
 
-namespace SharedHome.Shared.Abstractions.Requests
+namespace SharedHome.Application.Common.Requests
 {
     public abstract class AuthorizeRequest
     {
         [JsonIgnore]
         [SwaggerExclude]
-        public Guid PersonId { get; set; } = default!;
+        internal Guid PersonId { get; set; } = default!;
 
         [JsonIgnore]
         [SwaggerExclude]
-        public string? FirstName { get; set; } = default!;
+        internal string? FirstName { get; set; } = default!;
 
         [JsonIgnore]
         [SwaggerExclude]
-        public string? LastName { get; set; } = default!;
+        internal string? LastName { get; set; } = default!;
     }
 }

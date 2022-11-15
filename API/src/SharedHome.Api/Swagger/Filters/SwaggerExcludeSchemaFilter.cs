@@ -5,7 +5,7 @@ namespace SharedHome.Api.Swagger.Filters
 {
     public class SwaggerExcludeSchemaFilter : ISchemaFilter
     {
-        private List<string> _excludedProperties = new List<string> { "personId" };
+        private readonly List<string> _excludedProperties = new() { "personId" };
 
         public void Apply(OpenApiSchema schema, SchemaFilterContext context)
         {

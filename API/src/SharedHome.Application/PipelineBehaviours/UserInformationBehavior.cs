@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Requests;
+using SharedHome.Application.Common.Requests;
 using SharedHome.Shared.Abstractions.User;
 
 namespace SharedHome.Application.PipelineBehaviours

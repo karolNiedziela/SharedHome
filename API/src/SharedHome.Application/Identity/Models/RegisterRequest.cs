@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SharedHome.Application.Authentication.Models
+namespace SharedHome.Application.Identity.Models
 {
     public class RegisterRequest
     {

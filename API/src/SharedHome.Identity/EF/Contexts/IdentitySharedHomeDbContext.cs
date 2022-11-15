@@ -7,6 +7,8 @@ namespace SharedHome.Identity.EF.Contexts
 {
     public class IdentitySharedHomeDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<UserImage> UserImages { get; set; } = default!;
+
         public IdentitySharedHomeDbContext(DbContextOptions<IdentitySharedHomeDbContext> options) : base(options)
         {
         }

@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using SharedHome.Identity.Entities;
 using SharedHome.Identity.Exceptions;
 using SharedHome.Shared.Abstractions.Authentication;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
-namespace SharedHome.Application.Authentication.Queries.Login
+namespace SharedHome.Application.Identity.Queries.Login
 {
     public class LoginQueryHandler : IQueryHandler<LoginQuery, AuthenticationResponse>
     {

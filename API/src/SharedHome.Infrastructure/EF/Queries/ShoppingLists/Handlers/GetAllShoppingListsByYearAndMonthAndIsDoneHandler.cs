@@ -6,7 +6,7 @@ using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Time;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers

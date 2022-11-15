@@ -4,7 +4,7 @@ using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Shared.Abstractions.Queries;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.HouseGroups.Handlers
