@@ -1,78 +1,80 @@
-<div class="calendar d-flex position-relative w-100 justify-content-center">
-  <div
-    *ngIf="events$ | async as evs; else loading"
-    class="row align-items-center w-100 g-0"
-  >
-    <h4 class="col-12 col-sm-4 col-md-4 col-lg-2 text-center text-sm-start">
-      {{ viewDate | calendarDate: view + "ViewTitle":locale | titlecase }}
-    </h4>
-    <div
-      class="col-8 col-sm-6 col-md-6 col-lg-8 text-center justify-content-center g-0"
-    >
-      <div class="row justify-content-center align-items-center">
-        <fa-icon
-          class="col-2 col-sm-2 col shared-home-icon"
-          [icon]="previousMonthIcon"
-          [title]="'Previous' | translate"
-          mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="onMonthChanged($event)"
-        >
-          {{ "Previous" | translate }}
-        </fa-icon>
+<div
+  class="d-flex flex-column h-100"
+  *ngIf="events$ | async as evs; else loading"
+>
+  <div class="calendar d-flex position-relative w-100 justify-content-center">
+    <div class="row align-items-center w-100 g-0">
+      <h4 class="col-12 col-sm-4 col-md-4 col-lg-2 text-center text-sm-start">
+        {{ viewDate | calendarDate: view + "ViewTitle":locale | titlecase }}
+      </h4>
+      <div
+        class="col-8 col-sm-6 col-md-6 col-lg-8 text-center justify-content-center g-0"
+      >
+        <div class="row justify-content-center align-items-center">
+          <fa-icon
+            class="col-2 col-sm-2 col shared-home-icon"
+            [icon]="previousMonthIcon"
+            [title]="'Previous' | translate"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="onMonthChanged($event)"
+          >
+            {{ "Previous" | translate }}
+          </fa-icon>
 
-        <div
-          class="col-4 col-sm-4 col-lg-2 justify-content-center btn btn-outline-primary"
-          mwlCalendarToday
-          [(viewDate)]="viewDate"
-          (viewDateChange)="onMonthChanged($event)"
-        >
-          {{ "Current" | translate }}
+          <div
+            class="col-4 col-sm-4 col-lg-2 justify-content-center btn btn-outline-primary"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+            (viewDateChange)="onMonthChanged($event)"
+          >
+            {{ "Current" | translate }}
+          </div>
+          <fa-icon
+            class="col-2 col-sm-2 shared-home-icon"
+            [icon]="nextMonthIcon"
+            [title]="'Next' | translate"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (viewDateChange)="onMonthChanged($event)"
+          >
+            {{ "Next" | translate }}
+          </fa-icon>
         </div>
-        <fa-icon
-          class="col-2 col-sm-2 shared-home-icon"
-          [icon]="nextMonthIcon"
-          [title]="'Next' | translate"
-          mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="onMonthChanged($event)"
-        >
-          {{ "Next" | translate }}
-        </fa-icon>
       </div>
+
+      <app-add-bill
+        class="col-4 col-sm-2 col-md-2 col-lg-2 justify-content-end float-end text-end"
+      ></app-add-bill>
+
+      <mwl-calendar-month-view
+        [viewDate]="viewDate"
+        [events]="evs"
+        [locale]="locale"
+        [weekStartsOn]="weekStartsOn"
+        [activeDayIsOpen]="activeDayIsOpen"
+        [openDayEventsTemplate]="openDayEventsTemplate"
+        (dayClicked)="dayClicked($event.day.date, evs)"
+        [refresh]="refresh"
+        [cellTemplate]="customCellTemplate"
+        [activeDay]="dateSelected"
+      >
+      </mwl-calendar-month-view>
+
+      <app-table
+        *ngIf="currentDayEvents.length > 0"
+        [settings]="columnSettings"
+        [records]="currentDayEvents"
+        [actions]="getPopupMenuConfigs(currentDayEvents)"
+      ></app-table>
     </div>
-
-    <app-add-bill
-      class="col-4 col-sm-2 col-md-2 col-lg-2 justify-content-end float-end text-end"
-    ></app-add-bill>
-
-    <mwl-calendar-month-view
-      [viewDate]="viewDate"
-      [events]="evs"
-      [locale]="locale"
-      [weekStartsOn]="weekStartsOn"
-      [activeDayIsOpen]="activeDayIsOpen"
-      [openDayEventsTemplate]="openDayEventsTemplate"
-      (dayClicked)="dayClicked($event.day.date, evs)"
-      [refresh]="refresh"
-      [cellTemplate]="customCellTemplate"
-      [activeDay]="dateSelected"
-    >
-    </mwl-calendar-month-view>
-
-    <app-table
-      *ngIf="currentDayEvents.length > 0"
-      [settings]="columnSettings"
-      [records]="currentDayEvents"
-      [actions]="getPopupMenuConfigs(currentDayEvents)"
-    ></app-table>
   </div>
-  <ng-template #loading>
-    <app-loading-spinner></app-loading-spinner>
-  </ng-template>
 </div>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
 
 <ng-template
   #openDayEventsTemplate
