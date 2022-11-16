@@ -1,11 +1,12 @@
 ﻿using SharedHome.Application.ShoppingLists.DTO;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
+using MediatR;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 {
-    public class AddShoppingListCommand : AuthorizeRequest, ICommand<Response<ShoppingListDto>>
+    public class AddShoppingListCommand : AuthorizeRequest, IRequest<Response<ShoppingListDto>>
     {
         public Guid ShoppingListId { get; init; } = Guid.NewGuid();
 

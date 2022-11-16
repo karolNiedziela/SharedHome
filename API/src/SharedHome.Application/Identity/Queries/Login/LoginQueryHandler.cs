@@ -1,14 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using SharedHome.Identity.Authentication;
+using SharedHome.Identity.Authentication.Services;
 using SharedHome.Identity.Entities;
 using SharedHome.Identity.Exceptions;
-using SharedHome.Shared.Abstractions.Authentication;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
 
-namespace SharedHome.Application.Identity.Queries.Login
+namespace SharedHome.Application.Authentication.Queries.Login
 {
-    public class LoginQueryHandler : IQueryHandler<LoginQuery, AuthenticationResponse>
+    public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResponse>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IAuthManager _authManager;

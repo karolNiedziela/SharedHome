@@ -1,5 +1,5 @@
-﻿using SharedHome.Shared.Abstractions.Attributes;
-using SharedHome.Shared.Abstractions.Exceptions;
+﻿using SharedHome.Shared.Attributes;
+using SharedHome.Shared.Exceptions.Common;
 using System.Net;
 
 namespace SharedHome.Domain.ShoppingLists.Exceptions

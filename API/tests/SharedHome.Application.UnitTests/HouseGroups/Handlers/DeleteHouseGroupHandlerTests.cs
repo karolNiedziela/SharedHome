@@ -5,8 +5,8 @@ using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+
+using SharedHome.Shared.Application.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class DeleteHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<DeleteHouseGroupCommand, Response<Unit>> _commandHandler;
+        private readonly IRequestHandler<DeleteHouseGroupCommand, Response<Unit>> _commandHandler;
 
         public DeleteHouseGroupHandlerTests()
         {

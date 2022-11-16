@@ -5,7 +5,7 @@ using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Linq;
@@ -18,7 +18,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly ICommandHandler<CancelPurchaseOfProductCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<CancelPurchaseOfProductCommand, Unit> _commandHandler;
 
         public CancelPurchaseofProductHandlerTests()
         {

@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
-namespace SharedHome.Application.Identity.Commands.UploadProfileImage
+namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
 {
-    public class UploadProfileImageCommand : AuthorizeRequest, ICommand<Unit>
+    public class UploadProfileImageCommand : AuthorizeRequest, IRequest<Unit>
     {
         public IFormFile File { get; set; } = default!;
     }

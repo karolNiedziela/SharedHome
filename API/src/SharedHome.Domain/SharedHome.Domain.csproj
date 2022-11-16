@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
     <ProjectReference Include="..\Shared\SharedHome.Shared\SharedHome.Shared.csproj" />
   </ItemGroup>
 

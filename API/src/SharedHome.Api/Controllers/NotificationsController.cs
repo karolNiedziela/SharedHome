@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead;
 using SharedHome.Application.Notifications.Queries;
 using SharedHome.Notifications.DTO;
-using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Api.Controllers
 {

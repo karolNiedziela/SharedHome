@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using SharedHome.Application.ShoppingLists.DTO;
-using SharedHome.Application.Common.Queries;
+using MediatR;
 using SharedHome.Application.Common.Requests;
+using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Application.ShoppingLists.Queries
 {

@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Shared.Abstractions.Email;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Shared.Email.Options;
+using SharedHome.Shared.Email.Senders;
 
 namespace SharedHome.Shared.Email
 {

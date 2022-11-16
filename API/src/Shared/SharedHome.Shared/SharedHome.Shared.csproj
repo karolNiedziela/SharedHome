@@ -24,7 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
+    <InternalsVisibleTo Include="SharedHome.IntegrationTests" />
   </ItemGroup>
-
 </Project>

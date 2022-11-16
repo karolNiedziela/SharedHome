@@ -5,12 +5,12 @@ using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduct
 {
-    public class UpdateShoppingListProductCommandHandler : ICommandHandler<UpdateShoppingListProductCommand, Unit>
+    public class UpdateShoppingListProductCommandHandler : IRequestHandler<UpdateShoppingListProductCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

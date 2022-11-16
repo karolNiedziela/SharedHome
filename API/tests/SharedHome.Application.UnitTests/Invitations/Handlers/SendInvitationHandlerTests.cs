@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Commands.SendInvitation;
@@ -13,8 +14,8 @@ using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.Persons.ValueObjects;
 using SharedHome.Infrastructure;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+
+using SharedHome.Shared.Application.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -31,7 +32,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
         private readonly IPersonRepository _personRepository;
-        private readonly ICommandHandler<SendInvitationCommand, Response<InvitationDto>> _commandHandler;
+        private readonly IRequestHandler<SendInvitationCommand, Response<InvitationDto>> _commandHandler;
 
         public SendInvitationHandlerTests()
         {

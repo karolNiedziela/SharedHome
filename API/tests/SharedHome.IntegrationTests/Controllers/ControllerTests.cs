@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SharedHome.Shared.Abstractions.Authentication;
-using SharedHome.Shared.Abstractions.Responses;
-using SharedHome.Shared.Authentication;
+using SharedHome.Identity.Authentication;
+using SharedHome.Identity.Authentication.Services;
+using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Time;
 using System;
 using System.Collections.Generic;

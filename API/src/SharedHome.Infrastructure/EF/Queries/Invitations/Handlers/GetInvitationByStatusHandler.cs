@@ -4,13 +4,13 @@ using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
 using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Infrastructure.EF.Contexts;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using MediatR;
+using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    internal class GetInvitationByStatusHandler : IQueryHandler<GetInvitationsByStatus, Response<List<InvitationDto>>>
+    internal class GetInvitationByStatusHandler : IRequestHandler<GetInvitationsByStatus, Response<List<InvitationDto>>>
     {
         private readonly ReadSharedHomeDbContext _context;
         private readonly IMapper _mapper;

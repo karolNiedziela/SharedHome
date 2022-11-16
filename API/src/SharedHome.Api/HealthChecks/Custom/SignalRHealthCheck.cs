@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using SharedHome.Application.Notifications.Options;
-using SharedHome.Shared.Abstractions.Authentication;
+using SharedHome.Identity.Authentication.Services;
 
 namespace SharedHome.Api.HealthChecks.Custom
 {

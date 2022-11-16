@@ -4,12 +4,12 @@ using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.HouseGroups.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using MediatR;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.HouseGroups.Handlers
 {
-    internal class GetHouseGroupHandler : IQueryHandler<GetHouseGroup, Response<HouseGroupDto>>
+    internal class GetHouseGroupHandler : IRequestHandler<GetHouseGroup, Response<HouseGroupDto>>
     {
         private readonly DbSet<HouseGroupReadModel> _houseGroups;
         private readonly IMapper _mapper;

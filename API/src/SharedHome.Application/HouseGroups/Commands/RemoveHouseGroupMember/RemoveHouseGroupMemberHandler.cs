@@ -2,11 +2,11 @@
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember
 {
-    public class RemoveHouseGroupMemberHandler : ICommandHandler<RemoveHouseGroupMemberCommand, Unit>
+    public class RemoveHouseGroupMemberHandler : IRequestHandler<RemoveHouseGroupMemberCommand, Unit>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
 

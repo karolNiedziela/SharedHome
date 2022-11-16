@@ -4,7 +4,7 @@ using SharedHome.Application.Invitations.Commands.DeleteInvitation;
 using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     public class DeleteInvitationHandlerTests
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly ICommandHandler<DeleteInvitationCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<DeleteInvitationCommand, Unit> _commandHandler;
 
         public DeleteInvitationHandlerTests()
         {

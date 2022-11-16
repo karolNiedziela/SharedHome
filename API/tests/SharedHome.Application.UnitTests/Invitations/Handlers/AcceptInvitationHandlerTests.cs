@@ -9,7 +9,7 @@ using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -23,7 +23,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupReadService _houseGroupReadService;
-        private readonly ICommandHandler<AcceptInvitationCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<AcceptInvitationCommand, Unit> _commandHandler;
 
         public AcceptInvitationHandlerTests()
         {

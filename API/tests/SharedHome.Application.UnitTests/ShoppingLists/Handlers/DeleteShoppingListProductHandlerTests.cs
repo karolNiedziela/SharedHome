@@ -4,7 +4,7 @@ using SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;
-        private readonly ICommandHandler<DeleteShoppingListProductCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<DeleteShoppingListProductCommand, Unit> _commandHandler;
 
         public DeleteShoppingListProductHandlerTests()
         {

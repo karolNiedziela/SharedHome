@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.Bills.Commands.DeleteBill
 {
-    public class DeleteBillHandler : ICommandHandler<DeleteBillCommand, Unit>
+    public class DeleteBillHandler : IRequestHandler<DeleteBillCommand, Unit>
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;

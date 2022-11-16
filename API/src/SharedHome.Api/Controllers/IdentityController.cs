@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
-using SharedHome.Application.Identity.Commands.ConfirmEmail;
-using SharedHome.Application.Identity.Commands.Register;
-using SharedHome.Application.Identity.Commands.UploadProfileImage;
-using SharedHome.Application.Identity.Models;
-using SharedHome.Application.Identity.Queries.Login;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Application.Authentication.Commands.ConfirmEmail;
+using SharedHome.Application.Authentication.Commands.Register;
+using SharedHome.Application.Authentication.Commands.UploadProfileImage;
+using SharedHome.Application.Authentication.Models;
+using SharedHome.Application.Authentication.Queries.Login;
+using SharedHome.Identity.Authentication;
 
 namespace SharedHome.Api.Controllers
 {

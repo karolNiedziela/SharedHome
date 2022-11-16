@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct
 {
-    public class CancelPurchaseOfProductHandler : ICommandHandler<CancelPurchaseOfProductCommand, Unit>
+    public class CancelPurchaseOfProductHandler : IRequestHandler<CancelPurchaseOfProductCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

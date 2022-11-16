@@ -7,7 +7,7 @@ using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace SharedHome.Application.UnitTests.Bills.AddHouseGroup
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<UpdateBillCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<UpdateBillCommand, Unit> _commandHandler;
 
         public UpdateBillHandlerTests()
         {

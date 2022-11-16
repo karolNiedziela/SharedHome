@@ -3,12 +3,12 @@ using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.Bills.Commands.UpdateBill
 {
-    public class UpdateBillHandler : ICommandHandler<UpdateBillCommand, Unit>
+    public class UpdateBillHandler : IRequestHandler<UpdateBillCommand, Unit>
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;

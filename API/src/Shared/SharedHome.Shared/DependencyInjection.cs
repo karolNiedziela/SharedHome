@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Shared.Abstractions.Time;
-using SharedHome.Shared.Abstractions.User;
 using SharedHome.Shared.Email;
 using SharedHome.Shared.Exceptions;
 using SharedHome.Shared.Time;

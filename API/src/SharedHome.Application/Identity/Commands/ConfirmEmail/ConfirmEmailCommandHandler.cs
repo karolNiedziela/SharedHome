@@ -4,17 +4,17 @@ using Microsoft.Extensions.Logging;
 using SharedHome.Identity.Entities;
 using SharedHome.Identity.Exceptions;
 using SharedHome.Infrastructure.Identity.Services;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Exceptions;
+
+using SharedHome.Shared.Exceptions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedHome.Application.Identity.Commands.ConfirmEmail
+namespace SharedHome.Application.Authentication.Commands.ConfirmEmail
 {
-    public class ConfirmEmailCommandHandler : ICommandHandler<ConfirmEmailCommand, Unit>
+    public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, Unit>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IIdentityService _identityService;

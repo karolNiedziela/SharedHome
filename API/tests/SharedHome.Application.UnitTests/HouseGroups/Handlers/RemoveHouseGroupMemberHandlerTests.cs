@@ -4,7 +4,7 @@ using SharedHome.Application.HouseGroups.Commands.RemoveHouseGroupMember;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -17,7 +17,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class RemoveHouseGroupMemberHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<RemoveHouseGroupMemberCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<RemoveHouseGroupMemberCommand, Unit> _commandHandler;
 
         public RemoveHouseGroupMemberHandlerTests()
         {

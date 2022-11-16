@@ -1,6 +1,6 @@
 ﻿using SharedHome.Api.Constants;
 using SharedHome.Application.ShoppingLists.DTO;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System.Net;

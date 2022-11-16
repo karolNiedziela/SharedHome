@@ -2,11 +2,11 @@
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.Bills.Commands.PayForBill
 {
-    public class PayForBillHandler : ICommandHandler<PayForBillCommand, Unit>
+    public class PayForBillHandler : IRequestHandler<PayForBillCommand, Unit>
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;

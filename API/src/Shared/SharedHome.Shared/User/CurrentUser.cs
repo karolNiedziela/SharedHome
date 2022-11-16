@@ -1,16 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using SharedHome.Shared.Abstractions.User;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedHome.Shared.User
 {
-    public class CurrentUser : ICurrentUser
+    internal class CurrentUser : ICurrentUser
     {
         private readonly HttpContext _context;
 

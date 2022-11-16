@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct
 {
-    public class DeleteShoppingListProductHandler : ICommandHandler<DeleteShoppingListProductCommand, Unit>
+    public class DeleteShoppingListProductHandler : IRequestHandler<DeleteShoppingListProductCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

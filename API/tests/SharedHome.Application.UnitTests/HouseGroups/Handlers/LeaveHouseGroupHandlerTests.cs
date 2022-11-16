@@ -5,7 +5,7 @@ using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class LeaveHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<LeaveHouseGroupCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<LeaveHouseGroupCommand, Unit> _commandHandler;
 
         public LeaveHouseGroupHandlerTests()
         {

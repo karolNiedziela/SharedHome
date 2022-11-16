@@ -4,13 +4,13 @@ using SharedHome.Application.Invitations.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.Invitations.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Exceptions;
 
 namespace SharedHome.Application.Invitations.Commands.AcceptInvitation
 {
-    public class AcceptInvitationHandler : ICommandHandler<AcceptInvitationCommand, Unit>
+    public class AcceptInvitationHandler : IRequestHandler<AcceptInvitationCommand, Unit>
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupRepository _houseGroupRepository;

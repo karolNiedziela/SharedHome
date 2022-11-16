@@ -1,5 +1,4 @@
 ﻿using MimeKit;
-using SharedHome.Shared.Abstractions.Email;
 
 namespace SharedHome.Shared.Email
 {
@@ -34,9 +33,6 @@ namespace SharedHome.Shared.Email
         }
 
         private static string GetTemplatesPath(string emailTemplate)
-        {
-            var dir = Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.FullName;            
-            return Path.Combine(dir, string.Format(@"src\Shared\SharedHome.Shared\Email\Templates\{0}", emailTemplate));
-        }
+            => string.Format(@"Email\Templates\{0}", emailTemplate);
     }
 }

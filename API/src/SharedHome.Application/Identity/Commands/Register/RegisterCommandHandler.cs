@@ -1,19 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using SharedHome.Application.Identity.Commands.Register;
+using SharedHome.Application.Authentication.Commands.Register;
 using SharedHome.Domain.Persons;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Identity;
 using SharedHome.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Services;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Email;
-using SharedHome.Shared.Abstractions.Exceptions;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Exceptions.Common;
+using SharedHome.Shared.Application.Responses;
+using SharedHome.Shared.Email.Senders;
 
-namespace SharedHome.Application.Identity.Commands.Identity
+namespace SharedHome.Application.Authentication.Commands.Identity
 {
-    public class RegisterCommandHandler : ICommandHandler<RegisterCommand, Response<string>>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Response<string>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IIdentityEmailSender _emailSender;

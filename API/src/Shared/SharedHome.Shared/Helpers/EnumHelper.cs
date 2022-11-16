@@ -1,4 +1,4 @@
-﻿using SharedHome.Shared.Abstractions.Exceptions;
+﻿using SharedHome.Shared.Exceptions.Common;
 
 namespace SharedHome.Shared.Helpers
 {

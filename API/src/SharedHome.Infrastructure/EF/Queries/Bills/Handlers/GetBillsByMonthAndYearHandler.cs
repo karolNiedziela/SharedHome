@@ -1,17 +1,17 @@
 ﻿using MapsterMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
 using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
-using SharedHome.Shared.Abstractions.Time;
+using SharedHome.Shared.Application.Responses;
+using SharedHome.Shared.Time;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 {
-    internal class GetBillsByMonthAndYearHandler : IQueryHandler<GetBillsByMonthAndYear, Response<List<BillDto>>>
+    internal class GetBillsByMonthAndYearHandler : IRequestHandler<GetBillsByMonthAndYear, Response<List<BillDto>>>
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;

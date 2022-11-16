@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Commands;
 
-namespace SharedHome.Application.Identity.Commands.ConfirmEmail
+
+namespace SharedHome.Application.Authentication.Commands.ConfirmEmail
 {
-    public record ConfirmEmailCommand(string Email, string Code) : ICommand<Unit>;
+    public record ConfirmEmailCommand(string Email, string Code) : IRequest<Unit>;
 }

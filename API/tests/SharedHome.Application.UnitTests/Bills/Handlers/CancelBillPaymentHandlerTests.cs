@@ -5,7 +5,7 @@ using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
     {
         private readonly IBillRepository _billRepository;
         private readonly IBillService _billService;
-        private readonly ICommandHandler<CancelBillPaymentCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<CancelBillPaymentCommand, Unit> _commandHandler;
 
         public CancelBillPaymentHandlerTests()
         {

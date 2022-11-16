@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
-using SharedHome.Shared.Abstractions.Exceptions;
 using SharedHome.Shared.Constants;
+using SharedHome.Shared.Exceptions;
 
 namespace SharedHome.Api.Controllers
 {

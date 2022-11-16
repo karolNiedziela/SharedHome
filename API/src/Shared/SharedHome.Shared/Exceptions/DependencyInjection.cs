@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Shared.Abstractions.Exceptions;
+using SharedHome.Shared.Exceptions.Common;
 
 namespace SharedHome.Shared.Exceptions
 {

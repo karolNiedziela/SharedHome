@@ -14,7 +14,7 @@ using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList;
 using SharedHome.Application.ShoppingLists.Commands.UpdateShoppingListProduct;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Api.Controllers
 {

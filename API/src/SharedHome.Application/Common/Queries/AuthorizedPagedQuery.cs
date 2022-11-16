@@ -1,9 +1,9 @@
 ﻿using SharedHome.Application.Common.Requests;
-using SharedHome.Application.Common.Queries;
+using MediatR;
 
 namespace SharedHome.Application.Common.Queries
 {
-    public class AuthorizedPagedQuery<TResponse> : AuthorizeRequest, IPagedQuery<Paged<TResponse>>
+    public class AuthorizedPagedQuery<TResponse> : AuthorizeRequest, IRequest<Paged<TResponse>>
     {
         public int PageNumber { get; set; }
 

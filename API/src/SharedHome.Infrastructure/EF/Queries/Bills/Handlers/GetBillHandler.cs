@@ -1,16 +1,16 @@
 ﻿using MapsterMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
 using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 {
-    internal class GetBillHandler : IQueryHandler<GetBill, Response<BillDto>>
+    internal class GetBillHandler : IRequestHandler<GetBill, Response<BillDto>>
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;
