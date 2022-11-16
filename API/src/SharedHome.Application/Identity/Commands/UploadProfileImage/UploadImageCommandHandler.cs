@@ -3,12 +3,12 @@ using CloudinaryDotNet.Actions;
 using MediatR;
 using SharedHome.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 using System.Globalization;
 
-namespace SharedHome.Application.Identity.Commands.UploadProfileImage
+namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
 {
-    public class UploadImageCommandHandler : ICommandHandler<UploadProfileImageCommand, Unit>
+    public class UploadImageCommandHandler : IRequestHandler<UploadProfileImageCommand, Unit>
     {
         private readonly Cloudinary _cloudinary;
         private readonly IIdentityService _identityService;

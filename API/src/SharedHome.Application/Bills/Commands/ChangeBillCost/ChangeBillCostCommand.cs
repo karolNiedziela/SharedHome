@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.DTO;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.Bills.Commands.ChangeBillCost
 {
-    public class ChangeBillCostCommand : AuthorizeRequest, ICommand<Unit>
+    public class ChangeBillCostCommand : AuthorizeRequest, IRequest<Unit>
     {
         public Guid BillId { get; set; }
 

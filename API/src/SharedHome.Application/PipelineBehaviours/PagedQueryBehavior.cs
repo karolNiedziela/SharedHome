@@ -3,8 +3,8 @@ using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Application.PipelineBehaviours
 {
-    public class PagedQueryBehavior<TQuery, TResponse> : IPipelineBehavior<TQuery, TResponse>
-        where TQuery : IQuery<TResponse>
+    public class PagedQueryBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
         private const int MaxPageSize = 100;
 
@@ -12,7 +12,7 @@ namespace SharedHome.Application.PipelineBehaviours
 
         private const int DefaultPageSize = 25;
 
-        public async Task<TResponse> Handle(TQuery request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (request is IPagedQuery<TResponse> pagedQuery)
             {

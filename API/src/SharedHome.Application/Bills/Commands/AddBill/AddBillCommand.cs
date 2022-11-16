@@ -1,11 +1,11 @@
-﻿using SharedHome.Application.Bills.DTO;
-using SharedHome.Shared.Abstractions.Commands;
+﻿using MediatR;
+using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Common.Requests;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Bills.Commands.AddBill
 {
-    public class AddBillCommand : AuthorizeRequest, ICommand<Response<BillDto>>
+    public class AddBillCommand : AuthorizeRequest, IRequest<Response<BillDto>>
     {
         public Guid BillId { get; init; } = Guid.NewGuid();
 

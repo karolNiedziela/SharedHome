@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using SharedHome.Notifications.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead
 {
-    public class MarkNotificationsAsReadHandler : ICommandHandler<MarkNotificationsAsReadCommand, Unit>
+    public class MarkNotificationsAsReadHandler : IRequestHandler<MarkNotificationsAsReadCommand, Unit>
     {
         private readonly INotificationRepository _notificationRepository;
 

@@ -8,8 +8,8 @@ using SharedHome.Domain.Persons;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Infrastructure.EF.Configurations.Write;
 using SharedHome.Notifications.Entities;
-using SharedHome.Shared.Abstractions.Time;
-using SharedHome.Shared.Abstractions.User;
+using SharedHome.Shared.Time;
+using SharedHome.Shared.User;
 using System.Reflection;
 
 namespace SharedHome.Infrastructure.EF.Contexts

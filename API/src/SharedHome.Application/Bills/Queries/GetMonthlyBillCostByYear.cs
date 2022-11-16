@@ -1,11 +1,11 @@
 ﻿using SharedHome.Application.Bills.DTO;
-using SharedHome.Application.Common.Queries;
+using MediatR;
 using SharedHome.Application.Common.Requests;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Bills.Queries
 {
-    public class GetMonthlyBillCostByYear : AuthorizeRequest, IQuery<Response<List<BillMonthlyCostDto>>>
+    public class GetMonthlyBillCostByYear : AuthorizeRequest, IRequest<Response<List<BillMonthlyCostDto>>>
     {
         public int? Year { get; set; }
     }

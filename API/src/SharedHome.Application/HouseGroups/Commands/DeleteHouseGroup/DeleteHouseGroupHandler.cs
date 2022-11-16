@@ -3,12 +3,12 @@ using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
 {
-    public class DeleteHouseGroupHandler : ICommandHandler<DeleteHouseGroupCommand, Response<Unit>>
+    public class DeleteHouseGroupHandler : IRequestHandler<DeleteHouseGroupCommand, Response<Unit>>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
 

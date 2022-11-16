@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup
 {
-    public class LeaveHouseGroupCommand : AuthorizeRequest, ICommand<Unit>
+    public class LeaveHouseGroupCommand : AuthorizeRequest, IRequest<Unit>
     {
         public Guid HouseGroupId { get; set; }
     }

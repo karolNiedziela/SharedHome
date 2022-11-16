@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.HouseGroups.Commands.LeaveHouseGroup
 {
-    public class LeaveHouseGroupHandler : ICommandHandler<LeaveHouseGroupCommand, Unit>
+    public class LeaveHouseGroupHandler : IRequestHandler<LeaveHouseGroupCommand, Unit>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
 

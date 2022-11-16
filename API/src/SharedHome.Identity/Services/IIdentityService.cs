@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SharedHome.Identity.Entities;
-using SharedHome.Shared.Abstractions.Responses;
 
 namespace SharedHome.Infrastructure.Identity.Services
 {

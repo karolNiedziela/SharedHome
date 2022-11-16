@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
 {
-    public class DeleteHouseGroupCommand : AuthorizeRequest, ICommand<Response<Unit>>
+    public class DeleteHouseGroupCommand : AuthorizeRequest, IRequest<Response<Unit>>
     {
         public Guid HouseGroupId { get; set; }
     }

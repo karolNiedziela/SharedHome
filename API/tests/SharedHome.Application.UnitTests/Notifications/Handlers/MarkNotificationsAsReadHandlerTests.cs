@@ -3,7 +3,7 @@ using NSubstitute;
 using SharedHome.Application.Notifications.Commands.MarkNotificationsAsRead;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.UnitTests.Notifications.Handlers
     public class MarkNotificationsAsReadHandlerTests
     {
         private readonly INotificationRepository _notificationRepository;
-        private readonly ICommandHandler<MarkNotificationsAsReadCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<MarkNotificationsAsReadCommand, Unit> _commandHandler;
 
 
         public MarkNotificationsAsReadHandlerTests()

@@ -5,11 +5,12 @@ using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
+using MediatR;
 using SharedHome.Application.Common.Queries;
 
 namespace SharedHome.Infrastructure.EF.Queries.Notifications.Handlers
 {
-    internal class GetNotificationsHandler : IQueryHandler<GetNotifications, Paged<AppNotificationDto>>
+    internal class GetNotificationsHandler : IRequestHandler<GetNotifications, Paged<AppNotificationDto>>
     {
         private readonly IMapper _mapper;
         private readonly DbSet<AppNotification> _notifications;

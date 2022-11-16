@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList
 {
-    public class UpdateShoppingListCommand : AuthorizeRequest, ICommand<Unit>
+    public class UpdateShoppingListCommand : AuthorizeRequest, IRequest<Unit>
     {
         public Guid ShoppingListId { get; set; }
 

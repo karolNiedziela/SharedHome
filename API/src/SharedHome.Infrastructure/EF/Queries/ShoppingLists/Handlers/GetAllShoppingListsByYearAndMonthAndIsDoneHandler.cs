@@ -1,17 +1,18 @@
 ﻿using MapsterMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SharedHome.Application.Common.Queries;
 using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Time;
+using SharedHome.Shared.Time;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
-    internal class GetAllShoppingListsByYearAndMonthAndIsDoneHandler : IQueryHandler<GetAllShoppingListsByYearAndMonthAndIsDone, Paged<ShoppingListDto>>
+    internal class GetAllShoppingListsByYearAndMonthAndIsDoneHandler : IRequestHandler<GetAllShoppingListsByYearAndMonthAndIsDone, Paged<ShoppingListDto>>
     {
         private readonly IMapper _mapper;
         private readonly ITimeProvider _time;

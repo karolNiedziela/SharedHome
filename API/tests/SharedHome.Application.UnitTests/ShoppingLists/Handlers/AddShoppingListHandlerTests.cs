@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using MediatR;
 using NSubstitute;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using SharedHome.Application.ShoppingLists.DTO;
@@ -7,8 +8,7 @@ using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 using Shouldly;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
         private readonly IDomainEventDispatcher _eventDispatcher;
-        private readonly ICommandHandler<AddShoppingListCommand, Response<ShoppingListDto>> _commandHandler;
+        private readonly IRequestHandler<AddShoppingListCommand, Response<ShoppingListDto>> _commandHandler;
 
         public AddShoppingListHandlerTests()
         {

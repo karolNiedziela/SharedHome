@@ -5,7 +5,7 @@ using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     public class RejectInvitationHandlerTests
     {
         private readonly IInvitationRepository _invitationRepository;
-        private readonly ICommandHandler<RejectInvitationCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<RejectInvitationCommand, Unit> _commandHandler;
 
         public RejectInvitationHandlerTests()
         {

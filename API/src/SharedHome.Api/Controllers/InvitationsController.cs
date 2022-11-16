@@ -6,7 +6,7 @@ using SharedHome.Application.Invitations.Commands.RejectInvitation;
 using SharedHome.Application.Invitations.Commands.SendInvitation;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Api.Controllers
 {

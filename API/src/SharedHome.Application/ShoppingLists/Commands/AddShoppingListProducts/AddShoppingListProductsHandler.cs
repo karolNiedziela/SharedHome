@@ -5,12 +5,12 @@ using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts
 {
-    public class AddShoppingListProductsHandler : ICommandHandler<AddShoppingListProductsCommand, Unit>
+    public class AddShoppingListProductsHandler : IRequestHandler<AddShoppingListProductsCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

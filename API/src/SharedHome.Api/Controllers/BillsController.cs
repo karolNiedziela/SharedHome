@@ -9,7 +9,7 @@ using SharedHome.Application.Bills.Commands.PayForBill;
 using SharedHome.Application.Bills.Commands.UpdateBill;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Api.Controllers
 {

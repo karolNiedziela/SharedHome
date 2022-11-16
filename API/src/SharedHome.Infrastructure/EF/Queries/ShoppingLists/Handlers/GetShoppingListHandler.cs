@@ -5,12 +5,12 @@ using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using MediatR;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
-    internal class GetShoppingListHandler : IQueryHandler<GetShoppingList, Response<ShoppingListDto>>
+    internal class GetShoppingListHandler : IRequestHandler<GetShoppingList, Response<ShoppingListDto>>
     {
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SharedHome.Identity.Entities;
+using SharedHome.Identity.Authentication;
 using SharedHome.Identity.EF.Contexts;
+using SharedHome.Identity.Entities;
 using SharedHome.Infrastructure.Identity.Services;
-using SharedHome.Shared.Authentication;
-using SharedHome.Identity.EF;
 
 namespace SharedHome.Identity
 {

@@ -1,11 +1,11 @@
 ﻿using SharedHome.Application.Bills.DTO;
-using SharedHome.Application.Common.Queries;
+using MediatR;
 using SharedHome.Application.Common.Requests;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Bills.Queries
 {
-    public class GetBill : AuthorizeRequest, IQuery<Response<BillDto>>
+    public class GetBill : AuthorizeRequest, IRequest<Response<BillDto>>
     {
         public Guid Id { get; set; }
     }

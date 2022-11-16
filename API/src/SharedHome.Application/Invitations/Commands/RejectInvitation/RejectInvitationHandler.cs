@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Application.Invitations.Extensions;
 using SharedHome.Domain.Invitations.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.Invitations.Commands.RejectInvitation
 {
-    public class RejectInvitationHandler : ICommandHandler<RejectInvitationCommand, Unit>
+    public class RejectInvitationHandler : IRequestHandler<RejectInvitationCommand, Unit>
     {
         private readonly IInvitationRepository _invitationRepository;
 

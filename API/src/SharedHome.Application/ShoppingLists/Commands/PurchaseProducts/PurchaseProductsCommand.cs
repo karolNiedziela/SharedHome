@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.DTO;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProducts
 {
-    public class PurchaseProductsCommand : AuthorizeRequest, ICommand<Unit>
+    public class PurchaseProductsCommand : AuthorizeRequest, IRequest<Unit>
     {
         public Guid ShoppingListId { get; set; }
 

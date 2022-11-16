@@ -1,4 +1,4 @@
-﻿using SharedHome.Shared.Abstractions.Exceptions;
+﻿using SharedHome.Shared.Exceptions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

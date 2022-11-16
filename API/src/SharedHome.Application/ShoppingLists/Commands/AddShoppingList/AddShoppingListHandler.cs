@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using MediatR;
 using SharedHome.Application.Common.DTO;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Events;
@@ -6,12 +7,12 @@ using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 {
-    public class AddShoppingListHandler : ICommandHandler<AddShoppingListCommand, Response<ShoppingListDto>>
+    public class AddShoppingListHandler : IRequestHandler<AddShoppingListCommand, Response<ShoppingListDto>>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;

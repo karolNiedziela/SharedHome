@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using MediatR;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Events;
 using SharedHome.Application.Common.DTO;
@@ -6,13 +7,12 @@ using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Common.Events;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.Bills.Commands.AddBill
 {
-    public class AddBillHandler : ICommandHandler<AddBillCommand, Response<BillDto>>
+    public class AddBillHandler : IRequestHandler<AddBillCommand, Response<BillDto>>
     {
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;

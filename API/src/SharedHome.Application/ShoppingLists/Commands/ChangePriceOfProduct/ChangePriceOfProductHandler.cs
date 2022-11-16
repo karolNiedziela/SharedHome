@@ -2,11 +2,11 @@
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.ShoppingLists.Commands.ChangePriceOfProduct
 {
-    public class ChangePriceOfProductHandler : ICommandHandler<ChangePriceOfProductCommand, Unit>
+    public class ChangePriceOfProductHandler : IRequestHandler<ChangePriceOfProductCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

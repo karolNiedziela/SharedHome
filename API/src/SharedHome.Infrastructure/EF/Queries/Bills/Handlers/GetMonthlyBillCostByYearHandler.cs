@@ -5,15 +5,15 @@ using SharedHome.Application.Bills.Queries;
 using SharedHome.Application.ReadServices;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
-using SharedHome.Shared.Abstractions.Time;
+using MediatR;
+using SharedHome.Shared.Application.Responses;
+using SharedHome.Shared.Time;
 using SharedHome.Shared.Extensionss;
 using System.Globalization;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 {
-    internal class GetMonthlyBillCostByYearHandler : IQueryHandler<GetMonthlyBillCostByYear, Response<List<BillMonthlyCostDto>>>
+    internal class GetMonthlyBillCostByYearHandler : IRequestHandler<GetMonthlyBillCostByYear, Response<List<BillMonthlyCostDto>>>
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly ITimeProvider _time;

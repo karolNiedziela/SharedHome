@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.ShoppingLists.Commands.UpdateShoppingList
 {
-    public class UpdateShoppingListHandler : ICommandHandler<UpdateShoppingListCommand, Unit>
+    public class UpdateShoppingListHandler : IRequestHandler<UpdateShoppingListCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

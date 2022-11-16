@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using MediatR;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
@@ -7,12 +8,12 @@ using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Invitations.Commands.SendInvitation
 {
-    public class SendInvitationHandler : ICommandHandler<SendInvitationCommand, Response<InvitationDto>>
+    public class SendInvitationHandler : IRequestHandler<SendInvitationCommand, Response<InvitationDto>>
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupReadService _houseGroupService;

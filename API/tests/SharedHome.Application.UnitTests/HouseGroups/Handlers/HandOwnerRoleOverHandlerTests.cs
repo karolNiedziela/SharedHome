@@ -4,7 +4,7 @@ using SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Tests.Shared.Providers;
 using System;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class HandOwnerRoleOverHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly ICommandHandler<HandOwnerRoleOverCommand, Unit> _commandHandler;
+        private readonly IRequestHandler<HandOwnerRoleOverCommand, Unit> _commandHandler;
 
         public HandOwnerRoleOverHandlerTests()
         {

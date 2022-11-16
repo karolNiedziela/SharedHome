@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands.CancelPurchaseOfProduct
 {
-    public class CancelPurchaseOfProductCommand : AuthorizeRequest, ICommand<Unit>
+    public class CancelPurchaseOfProductCommand : AuthorizeRequest, IRequest
     {
         public Guid ShoppingListId { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using SharedHome.Shared.Abstractions.Attributes;
+﻿using SharedHome.Shared.Attributes;
 using System.Text.Json.Serialization;
 
 namespace SharedHome.Application.Common.Requests

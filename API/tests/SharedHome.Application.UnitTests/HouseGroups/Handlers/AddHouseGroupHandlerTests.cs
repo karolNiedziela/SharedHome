@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
 using SharedHome.Application.HouseGroups.DTO;
@@ -8,8 +9,7 @@ using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 using Shouldly;
 using System;
 using System.Linq;
@@ -24,9 +24,8 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
-        private readonly ICommandHandler<AddHouseGroupCommand, Response<HouseGroupDto>> _commandHandler;
+        private readonly IRequestHandler<AddHouseGroupCommand, Response<HouseGroupDto>> _commandHandler;
         
-
         public AddHouseGroupHandlerTests()
         {
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();

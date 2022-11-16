@@ -4,12 +4,12 @@ using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
+using MediatR;
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    internal class GetInvitationHandler : IQueryHandler<GetInvitation, Response<InvitationDto>>
+    internal class GetInvitationHandler : IRequestHandler<GetInvitation, Response<InvitationDto>>
     {
         private readonly DbSet<InvitationReadModel> _invitations;
         private readonly IMapper _mapper;        

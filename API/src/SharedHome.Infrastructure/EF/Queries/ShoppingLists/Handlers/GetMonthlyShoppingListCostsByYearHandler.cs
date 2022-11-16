@@ -4,15 +4,15 @@ using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using SharedHome.Application.Common.Queries;
-using SharedHome.Shared.Abstractions.Responses;
-using SharedHome.Shared.Abstractions.Time;
+using MediatR;
+using SharedHome.Shared.Application.Responses;
+using SharedHome.Shared.Time;
 using SharedHome.Shared.Extensionss;
 using System.Globalization;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
-    internal class GetMonthlyShoppingListCostsByYearHandler : IQueryHandler<GetMonthlyShoppingListCostsByYear, Response<List<ShoppingListMonthlyCostDto>>>
+    internal class GetMonthlyShoppingListCostsByYearHandler : IRequestHandler<GetMonthlyShoppingListCostsByYear, Response<List<ShoppingListMonthlyCostDto>>>
     {
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
         private readonly ITimeProvider _time;
@@ -92,14 +92,14 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
             return new Response<List<ShoppingListMonthlyCostDto>>(shoppingListsCostsGroupedByMonth);
         }
 
-        private decimal SumProductPrices(IEnumerable<ShoppingListReadModel> shoppingLists)
+        private static decimal SumProductPrices(IEnumerable<ShoppingListReadModel> shoppingLists)
              => shoppingLists
             .Where(shoppingList => shoppingList.IsDone)
             .SelectMany(shoppingList => shoppingList.Products)
             .Where(product => product.IsBought)
             .Aggregate((decimal)0, (count, product) => count + (product.Quantity * (decimal)product.Price!));
 
-        private string GetCurrency(IEnumerable<ShoppingListReadModel> shoppingLists)
+        private static string GetCurrency(IEnumerable<ShoppingListReadModel> shoppingLists)
             => shoppingLists.Where(x => x.IsDone)
             .SelectMany(shoppingList => shoppingList.Products)
             .Where(product => product.IsBought)

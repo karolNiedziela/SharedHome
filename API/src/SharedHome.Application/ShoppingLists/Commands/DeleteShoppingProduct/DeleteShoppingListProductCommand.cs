@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using SharedHome.Shared.Abstractions.Commands;
+
 using SharedHome.Application.Common.Requests;
 
 namespace SharedHome.Application.ShoppingLists.Commands.DeleteShoppingListProduct
 {
-    public class DeleteShoppingListProductCommand : AuthorizeRequest, ICommand<Unit>
+    public class DeleteShoppingListProductCommand : AuthorizeRequest, IRequest<Unit>
     {
          public Guid ShoppingListId { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using MediatR;
 using NSubstitute;
 using SharedHome.Application.Bills.Commands.AddBill;
 using SharedHome.Application.Bills.DTO;
@@ -7,8 +8,7 @@ using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Common.Events;
 using SharedHome.Infrastructure;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+using SharedHome.Shared.Application.Responses;
 using Shouldly;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;
         private readonly IDomainEventDispatcher _eventDispatcher;
-        private readonly ICommandHandler<AddBillCommand, Response<BillDto>> _commandHandler;
+        private readonly IRequestHandler<AddBillCommand, Response<BillDto>> _commandHandler;
 
         public AddBillHandlerTests()
         {

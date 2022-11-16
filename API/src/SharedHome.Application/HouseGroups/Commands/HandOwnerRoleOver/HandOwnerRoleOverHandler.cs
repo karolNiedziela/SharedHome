@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.HouseGroups.Commands.HandOwnerRoleOver
 {
-    public class HandOwnerRoleOverHandler : ICommandHandler<HandOwnerRoleOverCommand, Unit>
+    public class HandOwnerRoleOverHandler : IRequestHandler<HandOwnerRoleOverCommand, Unit>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
 

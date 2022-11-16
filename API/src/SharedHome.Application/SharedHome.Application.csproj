@@ -16,7 +16,6 @@
 	  <ProjectReference Include="..\SharedHome.Domain\SharedHome.Domain.csproj" />
 	  <ProjectReference Include="..\SharedHome.Identity\SharedHome.Identity.csproj" />
 	  <ProjectReference Include="..\SharedHome.Notifications\SharedHome.Notifications.csproj" />
-	  <ProjectReference Include="..\Shared\SharedHome.Shared.Abstractions\SharedHome.Shared.Abstractions.csproj" />
 	  <ProjectReference Include="..\Shared\SharedHome.Shared\SharedHome.Shared.csproj" />
   </ItemGroup>
 

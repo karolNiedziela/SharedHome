@@ -2,11 +2,11 @@
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-using SharedHome.Shared.Abstractions.Commands;
+
 
 namespace SharedHome.Application.ShoppingLists.Commands.PurchaseProducts
 {
-    public class PurchaseProductsHandler : ICommandHandler<PurchaseProductsCommand, Unit>
+    public class PurchaseProductsHandler : IRequestHandler<PurchaseProductsCommand, Unit>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IShoppingListService _shoppingListService;

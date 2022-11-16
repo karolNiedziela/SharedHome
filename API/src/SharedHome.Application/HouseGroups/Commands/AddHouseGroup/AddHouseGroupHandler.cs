@@ -1,16 +1,17 @@
 ﻿using MapsterMapper;
+using MediatR;
 using SharedHome.Application.HouseGroups.DTO;
 using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
-using SharedHome.Shared.Abstractions.Commands;
-using SharedHome.Shared.Abstractions.Responses;
+
+using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 {
-    public class AddHouseGroupHandler : ICommandHandler<AddHouseGroupCommand, Response<HouseGroupDto>>
+    public class AddHouseGroupHandler : IRequestHandler<AddHouseGroupCommand, Response<HouseGroupDto>>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupReadService _houseGroupService;
