@@ -1,5 +1,5 @@
 import { SettingRoutingModule } from './../../settings/setting-routing.module';
-import { BillMonthlyCost } from './../models/bill-mothly-cost';
+import { BillMonthlyCost } from '../models/bill-monthly-cost';
 import { PayForBill } from './../models/pay-for-bill';
 import { AddBill } from './../models/add-bill';
 import { Bill } from './../models/bill';

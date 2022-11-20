@@ -1,0 +1,26 @@
+<div class="d-flex flex-column">
+  <div
+    class="flex-grow-1"
+    *ngIf="
+      billMonthlyCost$ | async as billResponse;
+      else loadingBills
+    "
+  >
+    <div class="chart-container" *ngIf="anyCosts; else noBills">
+      <canvas
+        baseChart
+        [data]="getBarChartData(billResponse.data)"
+        [options]="getBarChartOptions(billResponse.data)"
+        [plugins]="barChartPlugins"
+        [type]="barChartService.barChartType"
+      >
+      </canvas>
+    </div>
+    <ng-template #noBills
+      ><div class="text-center"> {{ "No bills paid" | translate }} </div></ng-template
+    >
+  </div>
+  <ng-template #loadingBills>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+</div>

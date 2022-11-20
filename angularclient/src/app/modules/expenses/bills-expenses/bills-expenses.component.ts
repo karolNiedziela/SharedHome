@@ -1,49 +1,44 @@
 import { TranslateService } from '@ngx-translate/core';
-import { ShoppingListsService } from './../../shopping-lists/services/shopping-lists.service';
-import { ShoppingListMonthlyCost } from './../../shopping-lists/models/shopping-list-monthly-cost';
+import { BillService } from './../../bills/services/bill.service';
+import { BillMonthlyCost } from 'app/modules/bills/models/bill-monthly-cost';
 import { ApiResponse } from 'app/core/models/api-response';
-import { BarChartService } from './../../../core/services/charts/bar-chart.service';
-import {
-  Component,
-  ViewChild,
-  OnInit,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { ChartConfiguration, ChartData, Tick } from 'chart.js';
+import { Observable, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import * as DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { Observable, tap } from 'rxjs';
+import { BarChartService } from 'app/core/services/charts/bar-chart.service';
+import { ChartConfiguration, ChartData, Tick } from 'chart.js';
 
 @Component({
-  selector: 'app-shopping-lists-expenses',
-  templateUrl: './shopping-lists-expenses.component.html',
-  styleUrls: ['./shopping-lists-expenses.component.scss'],
+  selector: 'app-bills-expenses',
+  templateUrl: './bills-expenses.component.html',
+  styleUrls: ['./bills-expenses.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ShoppingListsExpensesComponent implements OnInit {
+export class BillsExpensesComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  public shoppingListMonthlyCost$!: Observable<
-    ApiResponse<ShoppingListMonthlyCost[]>
+  public billMonthlyCost$!: Observable<
+    ApiResponse<BillMonthlyCost[]>
   >;
 
   public anyCosts: boolean = false;
-  public toTranslateTexts: string[] = ['shoppingLists', 'amount'];
+  public toTranslateTexts: string[] = ['bills', 'amount'];
   public translatedTexts: Record<string, string> = {};
 
   public barChartPlugins = [DataLabelsPlugin];
 
   constructor(
     public barChartService: BarChartService,
-    private shoppingListService: ShoppingListsService,
+    private billService: BillService,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.shoppingListMonthlyCost$ = this.shoppingListService
-      .getMonthlyCostByYear(2022)
+    this.billMonthlyCost$ = this.billService
+      .getMonthlyCost(2022) // TODO: I think it should be changed to dynamic. Here and in the shopping-lists-expenses.component also.
       .pipe(
-        tap((response: ApiResponse<ShoppingListMonthlyCost[]>) => {
+        tap((response: ApiResponse<BillMonthlyCost[]>) => {
           this.anyCosts = response.data.some((x) => x.totalCost > 0);
         })
       );
@@ -56,9 +51,9 @@ export class ShoppingListsExpensesComponent implements OnInit {
   }
 
   public getBarChartOptions(
-    shoppingListMonthlyCost: ShoppingListMonthlyCost[]
+    billMonthlyCost: BillMonthlyCost[]
   ): ChartConfiguration['options'] {
-    const currency: string = shoppingListMonthlyCost.filter(
+    const currency: string = billMonthlyCost.filter(
       (x) => x.currency != ''
     )[0].currency;
     let barChartOptions: ChartConfiguration['options'] = {
@@ -86,7 +81,7 @@ export class ShoppingListsExpensesComponent implements OnInit {
           },
           title: {
             display: true,
-            text: this.translatedTexts['shoppingLists'],
+            text: this.translatedTexts['bills'],
             font: {
               size: 24,
             },
@@ -115,13 +110,13 @@ export class ShoppingListsExpensesComponent implements OnInit {
   }
 
   public getBarChartData(
-    shoppingListMonthlyCost: ShoppingListMonthlyCost[]
+    billMonthlyCost: BillMonthlyCost[]
   ): ChartData<'bar'> {
     const barChartData: ChartData<'bar'> = {
-      labels: shoppingListMonthlyCost.map((x) => x.monthName),
+      labels: billMonthlyCost.map((x) => x.monthName),
       datasets: [
         {
-          data: shoppingListMonthlyCost.map((x) => x.totalCost!),
+          data: billMonthlyCost.map((x) => x.totalCost!),
           label: `${this.translatedTexts['amount']}`,
         },
       ],
