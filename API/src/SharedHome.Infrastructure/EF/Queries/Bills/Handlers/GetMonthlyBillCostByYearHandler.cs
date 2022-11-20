@@ -57,7 +57,8 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                         (month, billReadModels) => new BillMonthlyCostDto
                         {
                             MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month).FirstCharToUpper(),
-                            TotalCost = billReadModels.Sum(bill => bill.Cost)
+                            TotalCost = SumCost(billReadModels),
+                            Currency = GetCurrency(billReadModels)
                         }
                     )
                     .ToList();
@@ -78,12 +79,20 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                     (month, billReadModels) => new BillMonthlyCostDto
                     {
                         MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month).FirstCharToUpper(),
-                        TotalCost = billReadModels.Sum(bill => bill.Cost)
+                        TotalCost = SumCost(billReadModels),
+                        Currency = GetCurrency(billReadModels)
                     }
                 )
                 .ToList();
 
             return new Response<List<BillMonthlyCostDto>>(billCostsGroupedByMonth);
         }
+
+        private static decimal? SumCost(IEnumerable<BillReadModel> bills)
+        => bills.Sum(bill => bill.Cost);
+
+        private static string GetCurrency(IEnumerable<BillReadModel> bills)
+          => bills.Where(x => x.IsPaid)
+          .FirstOrDefault()?.Currency ?? string.Empty;
     }
 }
