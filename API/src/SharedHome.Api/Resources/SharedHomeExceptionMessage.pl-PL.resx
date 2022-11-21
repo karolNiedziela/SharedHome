@@ -162,6 +162,9 @@
   <data name="InvalidEnum" xml:space="preserve">
     <value>Niepoprawna wartość słownika.</value>
   </data>
+  <data name="InvalidImageFormat" xml:space="preserve">
+    <value>Niepoprawny format zdjęcia.</value>
+  </data>
   <data name="InvalidRefreshToken" xml:space="preserve">
     <value>Problem autoryzacyjny.</value>
   </data>

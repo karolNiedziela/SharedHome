@@ -120,5 +120,8 @@
   "Bill": "Bill",
   "HouseGroup": "House group",
   "Invitation": "Invitation",
-  "ShoppingList": "Shopping list"
+  "ShoppingList": "Shopping list",
+  "Drag and drop file here": "Drag and drop file here",
+  "or": "or",
+  "Browse for file": "Browse for file"
 }

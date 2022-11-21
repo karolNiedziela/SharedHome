@@ -1,3 +1,4 @@
+import { ProfileImage } from './../../../modules/identity/models/profile-image';
 import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { faBell, faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +16,8 @@ export class NavbarComponent implements OnInit {
   notificationsCount$!: Observable<number>;
   userFullName: string = '';
   menuToggled: boolean = false;
+  profileImage$!: Observable<ProfileImage>;
+
   constructor(
     public screenSizeHelper: ScreenSizeHelper,
     private notificationService: NotificationService,
@@ -31,6 +34,10 @@ export class NavbarComponent implements OnInit {
         this.toggleMenu();
       })
     );
+
+    this.authenticationService.getProfileImage().subscribe();
+
+    this.profileImage$ = this.authenticationService.profileImage$;
   }
 
   toggleMenu(): void {

@@ -35,6 +35,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FirstLettersToTitleCasePipe } from './pipes/first-letters-to-title-case.pipe';
 import { NotificationBellComponent } from './components/notifications/notification-bell/notification-bell.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { UploadImageComponent } from './components/inputs/upload-image/upload-image.component';
+import { ProgressComponent } from './components/progress/progress.component';
+import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     NotificationBellComponent,
     FirstLettersToTitleCasePipe,
     PaginationComponent,
+    UploadImageComponent,
+    ProgressComponent,
+    DragAndDropDirective,
   ],
   imports: [
     CommonModule,
@@ -113,6 +119,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     NavbarComponent,
     FirstLettersToTitleCasePipe,
     PaginationComponent,
+    UploadImageComponent,
+    DragAndDropDirective,
   ],
   providers: [DatePipe, EnumAsStringPipe, FirstLettersToTitleCasePipe],
 })

@@ -22,11 +22,6 @@
       <a
         class="text-decoration-none fw-bold"
         [attr.aria-current]="page === currentPage ? 'page' : null"
-        [attr.aria-label]="
-          page === currentPage
-            ? 'Current Page, Page ' + page
-            : 'Go to Page ' + page
-        "
         [class.current]="page === currentPage"
         tabindex="0"
         (click)="onGoTo(page)"

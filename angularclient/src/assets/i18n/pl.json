@@ -120,5 +120,8 @@
   "Bill": "Rachunek",
   "HouseGroup": "Grupa domowa",
   "Invitation": "Zaproszenie",
-  "ShoppingList": "Lista zakupów"
+  "ShoppingList": "Lista zakupów",
+  "Drag and drop file here": "Przeciągnij i upuść plik tutaj",
+  "or": "lub",
+  "Browse for file": "Przeglądaj pliki"
 }
