@@ -40,6 +40,13 @@ namespace SharedHome.Infrastructure.Identity.Services
             await _userManager.UpdateAsync(user);
         }
 
+        public async Task<string> GetProfileImage(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return user.Images.Any() ? user.Images.First().Url : string.Empty;
+        }
+
         public string Encode(string token)
         {
             return WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
@@ -48,6 +55,6 @@ namespace SharedHome.Infrastructure.Identity.Services
         public string Decode(string code)
         {
             return Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        }       
+        }
     }
 }

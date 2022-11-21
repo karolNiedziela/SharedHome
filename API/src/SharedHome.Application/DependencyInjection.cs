@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application.Bills.Services;
 using SharedHome.Application.Common.Events;
+using SharedHome.Application.Common.User;
 using SharedHome.Application.Notifications.Hubs;
 using SharedHome.Application.Notifications.Options;
 using SharedHome.Application.Notifications.Services;
@@ -39,6 +40,8 @@ namespace SharedHome.Application
 
             services.AddSignalR();
             services.ConfigureOptions<SignalROptionsSetup>();
+
+            services.AddScoped<ICurrentUser, CurrentUser>();
 
             return services;
         }

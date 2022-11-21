@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Shared.Email;
 using SharedHome.Shared.Exceptions;
 using SharedHome.Shared.Time;
-using SharedHome.Shared.User;
 
 namespace SharedHome.Shared
 {
@@ -17,7 +16,6 @@ namespace SharedHome.Shared
 
             services.AddSingleton<ITimeProvider, UtcTimeProvider>();
             services.AddHttpContextAccessor();
-            services.AddScoped<ICurrentUser, CurrentUser>();
 
             services.AddEndpointsApiExplorer();      
 

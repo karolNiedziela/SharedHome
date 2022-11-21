@@ -11,6 +11,8 @@ namespace SharedHome.Infrastructure.Identity.Services
 
         Task AddUserImage(string userId, UserImage image);
 
+        Task<string> GetProfileImage(string userId);
+
         string Encode(string token);
 
         string Decode(string code);

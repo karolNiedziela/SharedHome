@@ -29,7 +29,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
         {
             var products = _mapper.Map<IEnumerable<ShoppingListProduct>>(request.Products);
 
-            var shoppingList = ShoppingList.Create(request.ShoppingListId, request.Name, request.PersonId, products: products);
+            var shoppingList = ShoppingList.Create(Guid.NewGuid(), request.Name, request.PersonId, products: products);
 
             await _shoppingListRepository.AddAsync(shoppingList);
             await _eventDispatcher.Dispatch(new ShoppingListCreated(shoppingList.Id, shoppingList.Name, new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));

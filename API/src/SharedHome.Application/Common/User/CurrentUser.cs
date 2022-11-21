@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using SharedHome.Identity.Entities;
+using SharedHome.Infrastructure.Identity.Services;
 using System.Security.Claims;
 
-namespace SharedHome.Shared.User
+namespace SharedHome.Application.Common.User
 {
     internal class CurrentUser : ICurrentUser
     {
@@ -50,7 +53,7 @@ namespace SharedHome.Shared.User
 
                 return string.IsNullOrWhiteSpace(email) ? string.Empty : email;
             }
-        }
+        }     
 
         public Dictionary<string, IEnumerable<string>> Claims
         {
@@ -60,7 +63,5 @@ namespace SharedHome.Shared.User
                     .ToDictionary(x => x.Key, x => x.Select(c => c.Value.ToString()));
             }
         }
-
-      
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.Requests;
-using SharedHome.Shared.User;
+using SharedHome.Application.Common.User;
 
 namespace SharedHome.Application.PipelineBehaviours
 {
