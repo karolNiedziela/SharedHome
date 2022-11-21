@@ -34,7 +34,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
             await _shoppingListRepository.AddAsync(shoppingList);
             await _eventDispatcher.Dispatch(new ShoppingListCreated(shoppingList.Id, shoppingList.Name, new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
 
-            return new Response<ShoppingListDto>(_mapper.From<ShoppingListDto>(shoppingList));
+            return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList));
         }
     }
 }
