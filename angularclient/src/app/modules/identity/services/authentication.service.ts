@@ -1,20 +1,32 @@
+import { UploadProfileImage } from './../models/upload-profile-image';
+import { ProfileImage } from './../models/profile-image';
 import { Register } from './../models/register';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationResponse } from 'app/core/models/authentication-response';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   private authenticationResponseSubject: BehaviorSubject<AuthenticationResponse>;
-
   public authenticationResponse: Observable<AuthenticationResponse>;
 
+  private _profileImageSubject: BehaviorSubject<ProfileImage> =
+    new BehaviorSubject<ProfileImage>(null!);
+  public readonly profileImage$: Observable<ProfileImage> =
+    this._profileImageSubject.asObservable();
+
   private identityUrl: string = `${environment.apiUrl}/identity`;
+
+  private defaultHttpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+  };
 
   constructor(
     private router: Router,
@@ -57,6 +69,8 @@ export class AuthenticationService {
             this.router.navigate(['']);
           }
 
+          this.getProfileImage;
+
           return result;
         })
       );
@@ -75,9 +89,33 @@ export class AuthenticationService {
     });
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('jwt');
     this.authenticationResponseSubject.next(null!);
     this.router.navigate(['/identity/login']);
+    this._profileImageSubject.next(null!);
+  }
+
+  getProfileImage() {
+    return this.http
+      .get<ProfileImage>(
+        `${this.identityUrl}/getprofileimage`,
+        this.defaultHttpOptions
+      )
+      .subscribe({
+        next: (profileImage: ProfileImage) => {
+          this._profileImageSubject.next(profileImage);
+        },
+      });
+  }
+
+  uploadProfileImage(uploadProfileImage: any) {
+    return this.http
+      .put<any>(`${this.identityUrl}/uploadprofileimage`, uploadProfileImage)
+      .subscribe({
+        next: (profileImage: ProfileImage) => {
+          this._profileImageSubject.next(profileImage);
+        },
+      });
   }
 }

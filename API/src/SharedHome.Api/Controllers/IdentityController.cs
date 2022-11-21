@@ -6,6 +6,8 @@ using SharedHome.Application.Authentication.Commands.Register;
 using SharedHome.Application.Authentication.Commands.UploadProfileImage;
 using SharedHome.Application.Authentication.Models;
 using SharedHome.Application.Authentication.Queries.Login;
+using SharedHome.Application.Identity.Dto;
+using SharedHome.Application.Identity.Queries.GetProfileImage;
 using SharedHome.Identity.Authentication;
 
 namespace SharedHome.Api.Controllers
@@ -63,11 +65,26 @@ namespace SharedHome.Api.Controllers
         }
 
         [HttpPut(ApiRoutes.Identity.UploadProfileImage)]
-        public async Task<IActionResult> UploadProfileImageAsync([FromForm] UploadProfileImageCommand command)
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ProfileImageDto>> UploadProfileImageAsync([FromForm] UploadProfileImageCommand command)
         {
-            await Mediator.Send(command);
+            var profileImage = await Mediator.Send(command);
 
-            return Ok();
+            return Ok(profileImage);
+        }
+
+        [HttpGet(ApiRoutes.Identity.GetProfileImage)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<ProfileImageDto>> GetProfileImage()
+        {
+            var profileImage = await Mediator.Send(new GetProfileImage());
+
+            return Ok(profileImage);
         }
     }
 }

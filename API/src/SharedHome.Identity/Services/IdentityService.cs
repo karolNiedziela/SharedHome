@@ -25,10 +25,15 @@ namespace SharedHome.Infrastructure.Identity.Services
 
         public IEnumerable<string> MapIdentityErrorToIEnumerableString(IEnumerable<IdentityError> errors)
             => errors.Select(error => error.Description);
-
+       
         public async Task AddUserImage(string userId, UserImage image)
         {
             var user = await _userManager.FindByIdAsync(userId);
+
+            if (user.Images.Any())
+            {
+                user.Images.Clear();                
+            }
 
             user.Images.Add(image);
 
@@ -43,6 +48,6 @@ namespace SharedHome.Infrastructure.Identity.Services
         public string Decode(string code)
         {
             return Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        }        
+        }       
     }
 }

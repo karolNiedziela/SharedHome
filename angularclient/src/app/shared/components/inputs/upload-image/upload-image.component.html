@@ -1,0 +1,24 @@
+<div class="container" appDragAndDrop (fileDropped)="onFileDropped($event)">
+  <div class="test">
+    <h4>{{ "Drag and drop file here" | translate }}</h4>
+    <h4>{{ "or" | translate }}</h4>
+    <input
+      type="file"
+      #fileDropRef
+      id="fileDropRef"
+      accept="image/*"
+      (change)="selectFile($event)"
+    />
+    <app-button text="Browse for file" for="fileDropRef"></app-button>
+    <div *ngIf="error" class="text-danger">{{ error }}</div>
+  </div>
+</div>
+<div *ngIf="file">
+  <img [src]="preview" class="preview" />
+  {{ formatBytes(file.size) }}
+  <fa-icon
+    class="shared-home-icon"
+    [icon]="deleteIcon"
+    (click)="deleteFile()"
+  ></fa-icon>
+</div>

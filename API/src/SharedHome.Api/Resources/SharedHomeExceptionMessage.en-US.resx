@@ -162,13 +162,14 @@
   <data name="InvalidEnum" xml:space="preserve">
     <value>Invalid dictionary value.</value>
   </data>
+  <data name="InvalidImageFormat" xml:space="preserve">
+    <value>Invalid format of image.</value>
+  </data>
   <data name="InvalidRefreshToken" xml:space="preserve">
     <value>Authorization problem.</value>
   </data>
   <data name="InvitationAccepted" xml:space="preserve">
     <value>Invitation is already accepted.</value>
-    <comment>
-</comment>
   </data>
   <data name="InvitationAlreadySent" xml:space="preserve">
     <value>Invitation was already sent to giiven person.</value>
@@ -228,6 +229,6 @@
     <value>Given currency is unsupported.</value>
   </data>
   <data name="UserNotFound" xml:space="preserve">
-    <value>User was not found</value>
+    <value>User was not found.</value>
   </data>
 </root>
