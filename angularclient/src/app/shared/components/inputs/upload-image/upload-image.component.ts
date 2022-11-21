@@ -62,7 +62,7 @@ export class UploadImageComponent {
       const formData = new FormData();
       formData.append('file', file, file.name);
 
-      this.identityService.uploadProfileImage(formData).subscribe();
+      this.identityService.uploadProfileImage(formData);
     }
   }
 

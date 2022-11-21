@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit {
       })
     );
 
-    this.authenticationService.getProfileImage().subscribe();
+    this.authenticationService.getProfileImage();
 
     this.profileImage$ = this.authenticationService.profileImage$;
   }

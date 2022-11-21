@@ -17,7 +17,7 @@ export class AuthenticationService {
 
   private _profileImageSubject: BehaviorSubject<ProfileImage> =
     new BehaviorSubject<ProfileImage>(null!);
-  public profileImage$: Observable<ProfileImage> =
+  public readonly profileImage$: Observable<ProfileImage> =
     this._profileImageSubject.asObservable();
 
   private identityUrl: string = `${environment.apiUrl}/identity`;
@@ -96,28 +96,26 @@ export class AuthenticationService {
     this._profileImageSubject.next(null!);
   }
 
-  getProfileImage(): Observable<ProfileImage> {
+  getProfileImage() {
     return this.http
       .get<ProfileImage>(
         `${this.identityUrl}/getprofileimage`,
         this.defaultHttpOptions
       )
-      .pipe(
-        tap((profileImage: ProfileImage) => {
+      .subscribe({
+        next: (profileImage: ProfileImage) => {
           this._profileImageSubject.next(profileImage);
-        })
-      );
+        },
+      });
   }
 
-  uploadProfileImage(uploadProfileImage: any): Observable<any> {
+  uploadProfileImage(uploadProfileImage: any) {
     return this.http
       .put<any>(`${this.identityUrl}/uploadprofileimage`, uploadProfileImage)
-      .pipe(
-        tap((profileImage: ProfileImage) => {
-          if (profileImage.url != null) {
-            this._profileImageSubject.next(profileImage);
-          }
-        })
-      );
+      .subscribe({
+        next: (profileImage: ProfileImage) => {
+          this._profileImageSubject.next(profileImage);
+        },
+      });
   }
 }
