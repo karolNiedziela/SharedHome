@@ -1,4 +1,5 @@
 export interface BillMonthlyCost {
   monthName: string;
-  totalCost?: number;
+  totalCost: number;
+  currency: string;
 }

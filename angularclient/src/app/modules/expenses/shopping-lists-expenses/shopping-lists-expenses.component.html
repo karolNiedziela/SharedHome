@@ -1,4 +1,4 @@
-<div class="d-flex flex-column h-100">
+<div class="d-flex flex-column">
   <div
     class="flex-grow-1"
     *ngIf="
@@ -17,7 +17,7 @@
       </canvas>
     </div>
     <ng-template #noShoppingLists
-      ><div class="text-center">No shopping lists</div></ng-template
+      ><div class="text-center"> {{ "No shopping lists done" | translate }} </div></ng-template
     >
   </div>
   <ng-template #loadingShoppingLists>
