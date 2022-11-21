@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Shared.User
+﻿namespace SharedHome.Application.Common.User
 {
     public interface ICurrentUser
     {

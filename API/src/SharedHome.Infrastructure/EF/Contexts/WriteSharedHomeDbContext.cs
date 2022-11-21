@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SharedHome.Application.Common.User;
 using SharedHome.Domain.Bills;
 using SharedHome.Domain.Common.Models;
 using SharedHome.Domain.HouseGroups;
@@ -9,7 +10,6 @@ using SharedHome.Domain.ShoppingLists;
 using SharedHome.Infrastructure.EF.Configurations.Write;
 using SharedHome.Notifications.Entities;
 using SharedHome.Shared.Time;
-using SharedHome.Shared.User;
 using System.Reflection;
 
 namespace SharedHome.Infrastructure.EF.Contexts

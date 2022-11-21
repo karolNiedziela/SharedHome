@@ -7,8 +7,6 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 {
     public class AddHouseGroupCommand : AuthorizeRequest, IRequest<Response<HouseGroupDto>>
     {
-        public Guid HouseGroupId { get; init; } = Guid.NewGuid();
-
         public string Name { get; set; } = default!;
     }
 }

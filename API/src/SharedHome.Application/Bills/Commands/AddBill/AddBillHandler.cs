@@ -29,13 +29,13 @@ namespace SharedHome.Application.Bills.Commands.AddBill
         {
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
-            var bill = Bill.Create(request.BillId, request.PersonId, billType, request.ServiceProviderName,
+            var bill = Bill.Create(Guid.NewGuid(), request.PersonId, billType, request.ServiceProviderName,
                 DateOnly.FromDateTime(request.DateOfPayment));
 
             await _billRepository.AddAsync(bill);
 
             await _eventDispatcher.Dispatch(new BillCreated(
-                request.BillId, 
+                bill.Id, 
                 bill.ServiceProvider, 
                 bill.DateOfPayment,
                 new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
