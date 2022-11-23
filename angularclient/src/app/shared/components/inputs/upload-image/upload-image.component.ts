@@ -1,6 +1,11 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Output,
+  ViewChild,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: 'app-upload-image',
@@ -8,6 +13,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./upload-image.component.scss'],
 })
 export class UploadImageComponent {
+  @Output() profileImage: EventEmitter<File> = new EventEmitter<File>();
+
   @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
 
   private allowedFormats: Array<string> = [
@@ -26,7 +33,7 @@ export class UploadImageComponent {
 
   deleteIcon = faXmark;
 
-  constructor(private identityService: AuthenticationService) {}
+  constructor() {}
 
   selectFile(event: any): void {
     this.uploadFile(event.target.files);
@@ -59,10 +66,10 @@ export class UploadImageComponent {
 
       reader.readAsDataURL(this.file);
 
-      const formData = new FormData();
-      formData.append('file', file, file.name);
+      // const formData = new FormData();
+      // formData.append('file', file, file.name);
 
-      this.identityService.uploadProfileImage(formData);
+      this.profileImage.emit(file);
     }
   }
 

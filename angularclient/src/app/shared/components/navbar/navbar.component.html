@@ -21,16 +21,6 @@
 
   <div class="d-flex justify-content-sm-end align-items-center flex-row">
     <app-notification-bell></app-notification-bell>
-    <span
-      class="account btn btn-primary ms-2"
-      *ngIf="profileImage$ | async as profileImage"
-    >
-      <div *ngIf="profileImage.url != null; else noProfileImage">
-        <img [src]="profileImage.url" />
-      </div>
-      <ng-template #noProfileImage>
-        {{ userFullName | firstLettersToTitleCase }}
-      </ng-template>
-    </span>
+    <app-profile-dropdown></app-profile-dropdown>
   </div>
 </nav>

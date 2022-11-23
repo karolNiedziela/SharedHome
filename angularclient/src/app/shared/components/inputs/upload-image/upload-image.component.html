@@ -1,24 +1,31 @@
-<div class="container" appDragAndDrop (fileDropped)="onFileDropped($event)">
-  <div class="test">
-    <h4>{{ "Drag and drop file here" | translate }}</h4>
-    <h4>{{ "or" | translate }}</h4>
-    <input
-      type="file"
-      #fileDropRef
-      id="fileDropRef"
-      accept="image/*"
-      (change)="selectFile($event)"
-    />
-    <app-button text="Browse for file" for="fileDropRef"></app-button>
-    <div *ngIf="error" class="text-danger">{{ error }}</div>
-  </div>
+<div
+  class="container w-50 mx-auto"
+  appDragAndDrop
+  (fileDropped)="onFileDropped($event)"
+>
+  <h4>{{ "Drag and drop file here" | translate }}</h4>
+  <h4>{{ "or" | translate }}</h4>
+  <input
+    type="file"
+    #fileDropRef
+    id="fileDropRef"
+    accept="image/*"
+    (change)="selectFile($event)"
+  />
+  <app-button text="Browse for file" for="fileDropRef"></app-button>
+  <div *ngIf="error" class="text-danger">{{ error }}</div>
 </div>
-<div *ngIf="file">
-  <img [src]="preview" class="preview" />
+<div class="d-flex flex-column just align-items-end mt-2" *ngIf="file">
+  <div class="d-flex flex-row mb-1">
+    <img [src]="preview" class="preview px-2" />
+    <span class="d-flex justify-content-center align-items-center fs-4">
+      <fa-icon
+        class="shared-home-icon"
+        [icon]="deleteIcon"
+        (click)="deleteFile()"
+      ></fa-icon>
+    </span>
+  </div>
+
   {{ formatBytes(file.size) }}
-  <fa-icon
-    class="shared-home-icon"
-    [icon]="deleteIcon"
-    (click)="deleteFile()"
-  ></fa-icon>
 </div>
