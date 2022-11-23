@@ -1,0 +1,21 @@
+.account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  img {
+    border-radius: 50%;
+  }
+}
+
+.logo {
+  width: 200px;
+  height: 30px;
+}
+
+.shared-home-icon {
+  font-size: 25px;
+}

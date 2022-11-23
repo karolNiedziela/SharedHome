@@ -1,3 +1,4 @@
+import { ProfileModule } from './modules/profile/profile.module';
 import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { ExpensesModule } from './modules/expenses/expenses.module';
@@ -51,6 +52,7 @@ import { SettingModule } from './modules/settings/setting.module';
     ToastrModule.forRoot(),
     ExpensesModule,
     NotificationsModule,
+    ProfileModule,
   ],
   providers: [
     {

@@ -1,8 +1,6 @@
-import { ProfileImage } from './../../../modules/identity/models/profile-image';
 import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { faBell, faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { Observable } from 'rxjs';
 
@@ -14,19 +12,15 @@ import { Observable } from 'rxjs';
 export class NavbarComponent implements OnInit {
   notificationIcon = faBell;
   notificationsCount$!: Observable<number>;
-  userFullName: string = '';
   menuToggled: boolean = false;
-  profileImage$!: Observable<ProfileImage>;
 
   constructor(
     public screenSizeHelper: ScreenSizeHelper,
-    private notificationService: NotificationService,
-    private authenticationService: AuthenticationService
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
     this.notificationsCount$ = this.notificationService.notificationsCount$;
-    this.userFullName = this.buildUserFullName();
 
     const navItems = document.querySelectorAll('.nav-item');
     Array.from(navItems).map((x) =>
@@ -34,10 +28,6 @@ export class NavbarComponent implements OnInit {
         this.toggleMenu();
       })
     );
-
-    this.authenticationService.getProfileImage();
-
-    this.profileImage$ = this.authenticationService.profileImage$;
   }
 
   toggleMenu(): void {
@@ -55,10 +45,6 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  logout() {
-    this.authenticationService.logout();
-  }
-
   private blurContent(): void {
     const content = document.querySelector('.content') as HTMLDivElement;
 
@@ -67,13 +53,5 @@ export class NavbarComponent implements OnInit {
     } else {
       content.style.opacity = '1';
     }
-  }
-
-  private buildUserFullName(): string {
-    return (
-      this.authenticationService.authenticationResponseValue.firstName +
-      ' ' +
-      this.authenticationService.authenticationResponseValue.lastName
-    );
   }
 }

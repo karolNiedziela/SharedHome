@@ -38,6 +38,7 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { UploadImageComponent } from './components/inputs/upload-image/upload-image.component';
 import { ProgressComponent } from './components/progress/progress.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
+import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     UploadImageComponent,
     ProgressComponent,
     DragAndDropDirective,
+    ProfileDropdownComponent,
   ],
   imports: [
     CommonModule,
@@ -121,6 +123,7 @@ import { DragAndDropDirective } from './directives/drag-and-drop.directive';
     PaginationComponent,
     UploadImageComponent,
     DragAndDropDirective,
+    ProfileDropdownComponent,
   ],
   providers: [DatePipe, EnumAsStringPipe, FirstLettersToTitleCasePipe],
 })
