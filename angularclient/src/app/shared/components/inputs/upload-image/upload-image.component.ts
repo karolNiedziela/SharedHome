@@ -37,10 +37,12 @@ export class UploadImageComponent {
 
   selectFile(event: any): void {
     this.uploadFile(event.target.files);
+    event.target.value = null;
   }
 
   onFileDropped(event: any): void {
     this.uploadFile(event);
+    event.target.value = null;
   }
 
   uploadFile(files: Array<any>): void {
@@ -65,9 +67,6 @@ export class UploadImageComponent {
       };
 
       reader.readAsDataURL(this.file);
-
-      // const formData = new FormData();
-      // formData.append('file', file, file.name);
 
       this.profileImage.emit(file);
     }

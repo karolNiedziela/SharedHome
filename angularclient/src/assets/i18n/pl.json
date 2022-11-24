@@ -125,5 +125,13 @@
   "ShoppingList": "Lista zakupów",
   "Drag and drop file here": "Przeciągnij i upuść plik tutaj",
   "or": "lub",
-  "Browse for file": "Przeglądaj pliki"
+  "Browse for file": "Przeglądaj pliki",
+  "Upload": "Prześlij",
+  "Upload profile image": "Prześlij zdjęcie avatara",
+  "Change": "Zmień",
+  "Change password": "Zmień hasło",
+  "Personal data": "Dane osobowe",
+  "General information": "Ogólne informacje",
+  "Account": "Konto",
+  "Profile image": "Zdjęcie avatara"
 }
