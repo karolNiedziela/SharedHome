@@ -40,7 +40,7 @@ namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
             var uploadParams = new ImageUploadParams
             {
                 File = new FileDescription(request.File.FileName, stream),
-                Folder = $"{request.FirstName}_{request.LastName}",
+                Folder = $"{request.FirstName}_{request.LastName}_{request.PersonId}",
                 UseFilename = true,
                 UniqueFilename = true,
                 Transformation = new Transformation().Width(50).Height(50),
