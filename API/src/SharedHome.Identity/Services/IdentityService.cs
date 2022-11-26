@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using SharedHome.Identity.Entities;
 using System.Text;
@@ -8,10 +10,12 @@ namespace SharedHome.Infrastructure.Identity.Services
     public class IdentityService : IIdentityService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly Cloudinary _cloudinary;
 
-        public IdentityService(UserManager<ApplicationUser> userManager)
+        public IdentityService(UserManager<ApplicationUser> userManager, Cloudinary cloudinary)
         {
             _userManager = userManager;
+            _cloudinary = cloudinary;
         }
 
         public async Task<string> GetEmailConfirmationTokenAsync(ApplicationUser user)
@@ -32,6 +36,13 @@ namespace SharedHome.Infrastructure.Identity.Services
 
             if (user.Images.Any())
             {
+                var deleteParams = new DeletionParams(user.Images.First().PublicId)
+                {
+                    ResourceType = ResourceType.Image
+                };
+
+                var results = await _cloudinary.DestroyAsync(deleteParams);
+
                 user.Images.Clear();                
             }
 

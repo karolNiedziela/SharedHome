@@ -125,5 +125,13 @@
   "ShoppingList": "Shopping list",
   "Drag and drop file here": "Drag and drop file here",
   "or": "or",
-  "Browse for file": "Browse for file"
+  "Browse for file": "Browse for file",
+  "Upload": "Upload",
+  "Upload profile image": "Upload avatar image",
+  "Change": "Change",
+  "Change password": "Change password",
+  "Personal data": "Personal data",
+  "General information": "General information",
+  "Account": "Account",
+  "Profile image": "Profile image"
 }

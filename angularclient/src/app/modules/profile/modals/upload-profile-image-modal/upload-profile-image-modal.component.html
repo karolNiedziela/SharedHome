@@ -1,7 +1,9 @@
-<app-circle-button
-  [tooltipText]="'Upload profile image' | translate"
-  (click)="openModal()"
-></app-circle-button>
+<button class="btn btn-outline-primary" (click)="openModal()">
+  {{ "Upload" | translate }}
+</button>
 <app-modal #modal [modalConfig]="modalConfig">
-  <app-upload-image (profileImage)="getProfileImage($event)"></app-upload-image>
+  <app-upload-image
+    #uploadImage
+    (profileImage)="getProfileImage($event)"
+  ></app-upload-image>
 </app-modal>
