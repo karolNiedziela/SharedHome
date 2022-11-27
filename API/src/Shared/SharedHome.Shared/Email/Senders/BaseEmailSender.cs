@@ -12,10 +12,8 @@ namespace SharedHome.Shared.Email.Senders
     public abstract class BaseEmailSender
     {
         private readonly EmailOptions _emailSettings;
-        private readonly ILogger _logger;
-
+        protected readonly ILogger _logger;
         protected readonly IStringLocalizer _localizer;
-
 
         public BaseEmailSender(IOptions<EmailOptions> emailOptions, ILogger logger, IStringLocalizerFactory localizerFactory)
         {

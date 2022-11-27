@@ -13,9 +13,9 @@ namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
     public class UploadImageCommandHandler : IRequestHandler<UploadProfileImageCommand, ProfileImageDto>
     {
         private readonly Cloudinary _cloudinary;
-        private readonly IIdentityService _identityService;
+        private readonly IApplicationUserService _identityService;
 
-        public UploadImageCommandHandler(Cloudinary cloudinary, IIdentityService identityService)
+        public UploadImageCommandHandler(Cloudinary cloudinary, IApplicationUserService identityService)
         {
             _cloudinary = cloudinary;
             _identityService = identityService;
@@ -33,8 +33,6 @@ namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
                 throw new InvalidImageFormatException();
             }           
 
-            var uploadResult = new ImageUploadResult();
-
             using var stream = request.File.OpenReadStream();
 
             var uploadParams = new ImageUploadParams
@@ -46,7 +44,7 @@ namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
                 Transformation = new Transformation().Width(50).Height(50),
             };
 
-            uploadResult = await _cloudinary.UploadAsync(uploadParams);
+            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
             var formatProvider = CultureInfo.CreateSpecificCulture("en-US");
             var image = new UserImage

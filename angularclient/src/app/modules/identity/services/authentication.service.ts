@@ -81,11 +81,9 @@ export class AuthenticationService {
   }
 
   confirmEmail(email: string, code: string): Observable<any> {
-    return this.http.get<any>(`${this.identityUrl}/confirmemail`, {
-      params: {
-        email: email,
-        code: code,
-      },
+    return this.http.post<any>(`${this.identityUrl}/confirmemail`, {
+      email: email,
+      code: code,
     });
   }
 

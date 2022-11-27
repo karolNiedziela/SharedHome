@@ -123,4 +123,10 @@
   <data name="confirmationemail.html" xml:space="preserve">
     <value>confirmationemail.pl-PL.html</value>
   </data>
+  <data name="Forgot Password" xml:space="preserve">
+    <value>Zapomniane hasło</value>
+  </data>
+  <data name="forgotpassword.html" xml:space="preserve">
+    <value>forgotpassword.pl-PL.html</value>
+  </data>
 </root>

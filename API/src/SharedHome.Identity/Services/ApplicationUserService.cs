@@ -1,34 +1,20 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using SharedHome.Identity.Entities;
-using System.Text;
 
 namespace SharedHome.Infrastructure.Identity.Services
 {
-    public class IdentityService : IIdentityService
+    public class ApplicationUserService : IApplicationUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly Cloudinary _cloudinary;
 
-        public IdentityService(UserManager<ApplicationUser> userManager, Cloudinary cloudinary)
+        public ApplicationUserService(UserManager<ApplicationUser> userManager, Cloudinary cloudinary)
         {
             _userManager = userManager;
             _cloudinary = cloudinary;
         }
-
-        public async Task<string> GetEmailConfirmationTokenAsync(ApplicationUser user)
-        {
-            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            var code = Encode(token);
-
-            return code;
-        }
-
-        public IEnumerable<string> MapIdentityErrorToIEnumerableString(IEnumerable<IdentityError> errors)
-            => errors.Select(error => error.Description);
        
         public async Task AddUserImage(string userId, UserImage image)
         {
@@ -41,7 +27,7 @@ namespace SharedHome.Infrastructure.Identity.Services
                     ResourceType = ResourceType.Image
                 };
 
-                var results = await _cloudinary.DestroyAsync(deleteParams);
+                var result = await _cloudinary.DestroyAsync(deleteParams);
 
                 user.Images.Clear();                
             }
@@ -56,16 +42,6 @@ namespace SharedHome.Infrastructure.Identity.Services
             var user = await _userManager.FindByIdAsync(userId);
 
             return user.Images.Any() ? user.Images.First().Url : string.Empty;
-        }
-
-        public string Encode(string token)
-        {
-            return WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-        }
-
-        public string Decode(string code)
-        {
-            return Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        }
+        }         
     }
 }

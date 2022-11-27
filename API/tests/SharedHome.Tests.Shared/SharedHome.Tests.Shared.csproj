@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\SharedHome.Domain\SharedHome.Domain.csproj" />
+    <ProjectReference Include="..\..\src\SharedHome.Identity\SharedHome.Identity.csproj" />
   </ItemGroup>
 
 </Project>

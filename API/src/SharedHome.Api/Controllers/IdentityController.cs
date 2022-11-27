@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
 using SharedHome.Application.Authentication.Commands.ConfirmEmail;
-using SharedHome.Application.Authentication.Commands.Register;
 using SharedHome.Application.Authentication.Commands.UploadProfileImage;
 using SharedHome.Application.Authentication.Models;
 using SharedHome.Application.Authentication.Queries.Login;
+using SharedHome.Application.Identity.Commands.ChangePassword;
+using SharedHome.Application.Identity.Commands.ForgotPassword;
+using SharedHome.Application.Identity.Commands.Register;
+using SharedHome.Application.Identity.Commands.ResetPassword;
 using SharedHome.Application.Identity.Dto;
 using SharedHome.Application.Identity.Queries.GetProfileImage;
 using SharedHome.Identity.Authentication;
@@ -49,19 +52,58 @@ namespace SharedHome.Api.Controllers
         /// <summary>
         /// Confirm email address
         /// </summary>
-        [HttpGet(ApiRoutes.Identity.ConfirmEmail)]
+        [HttpPost(ApiRoutes.Identity.ConfirmEmail)]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail([FromQuery] string email, [FromQuery] string code)
+        public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailCommand command)
         {
-            if (code is null || string.IsNullOrWhiteSpace(code) || email is null || string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(command.Code) || string.IsNullOrWhiteSpace(command.Email))
             {
                 return BadRequest();
             }
 
-            var command = new ConfirmEmailCommand(email, code);
             await Mediator.Send(command);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Reset password
+        /// </summary>
+        [HttpPost(ApiRoutes.Identity.ResetPassword)]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordCommand command)
+        {
+            if (string.IsNullOrWhiteSpace(command.Code))
+            {
+                return BadRequest();
+            }
+
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Forgot password
+        /// </summary>
+        [HttpPost(ApiRoutes.Identity.ForgotPassword)]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPasswordCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Change password
+        /// </summary>
+        [HttpPut(ApiRoutes.Identity.ChangePassword)]
+        public async Task<IActionResult> ForgotPasswordAsync([FromBody] ChangePasswordCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
         }
 
         [HttpPut(ApiRoutes.Identity.UploadProfileImage)]

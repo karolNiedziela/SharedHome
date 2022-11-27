@@ -27,7 +27,6 @@ namespace SharedHome.Application.Authentication.Queries.Login
             }
 
             var isPasswordValid = await _userManager.CheckPasswordAsync(user, request.Password);
-
             if (!isPasswordValid)
             {
                 throw new InvalidCredentialsException();

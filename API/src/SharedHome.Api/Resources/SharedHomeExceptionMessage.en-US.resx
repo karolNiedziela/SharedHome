@@ -126,6 +126,9 @@
   <data name="BillPaid" xml:space="preserve">
     <value>Bill is already paid.</value>
   </data>
+  <data name="EmailAlreadyConfirmed" xml:space="preserve">
+    <value>Email address is already confirmed.</value>
+  </data>
   <data name="EmptyFirstName" xml:space="preserve">
     <value>First name cannot be empty.</value>
   </data>

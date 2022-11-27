@@ -35,7 +35,7 @@ namespace SharedHome.Identity
 
             services.AddAuth();
 
-            services.AddScoped<IIdentityService, IdentityService>();
+            services.AddScoped<IApplicationUserService, ApplicationUserService>();
 
             return services;
         }
