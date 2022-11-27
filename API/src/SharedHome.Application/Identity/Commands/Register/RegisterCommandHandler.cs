@@ -1,33 +1,35 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using SharedHome.Application.Authentication.Commands.Register;
 using SharedHome.Domain.Persons;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Identity;
 using SharedHome.Identity.Entities;
-using SharedHome.Infrastructure.Identity.Services;
-using SharedHome.Shared.Exceptions.Common;
 using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Email.Senders;
+using SharedHome.Shared.Exceptions.Common;
+using System.Text;
 
-namespace SharedHome.Application.Authentication.Commands.Identity
+namespace SharedHome.Application.Identity.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Response<string>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IIdentityEmailSender _emailSender;
+        private readonly IIdentityEmailSender<ConfirmationEmailSender> _emailSender;
         private readonly IPersonRepository _personRepository;
-        private readonly ILogger<IdentityService> _logger;
-        private readonly IIdentityService _identityService;
+        private readonly ILogger<RegisterCommandHandler> _logger;
 
-        public RegisterCommandHandler(UserManager<ApplicationUser> userManager, IIdentityEmailSender emailSender, IPersonRepository personRepository, ILogger<IdentityService> logger, IIdentityService identityService)
+        public RegisterCommandHandler(
+            UserManager<ApplicationUser> userManager,
+            IIdentityEmailSender<ConfirmationEmailSender> emailSender,
+            IPersonRepository personRepository,
+            ILogger<RegisterCommandHandler> logger)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _personRepository = personRepository;
             _logger = logger;
-            _identityService = identityService;
         }
 
         public async Task<Response<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
@@ -41,10 +43,9 @@ namespace SharedHome.Application.Authentication.Commands.Identity
             };
 
             var result = await _userManager.CreateAsync(applicationUser, request.Password);
-
             if (!result.Succeeded)
             {
-                throw new IdentityException(_identityService.MapIdentityErrorToIEnumerableString(result.Errors.Where(x => x.Code != "DuplicateUserName")));
+                throw new IdentityException(result);
             }
             _logger.LogInformation("User with id '{userId}' created.", applicationUser.Id);
 
@@ -56,7 +57,8 @@ namespace SharedHome.Application.Authentication.Commands.Identity
 
             if (_userManager.Options.SignIn.RequireConfirmedEmail)
             {
-                var code = await _identityService.GetEmailConfirmationTokenAsync(applicationUser);
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
+                var code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
                 await _emailSender.SendAsync(applicationUser.Email, code);
 

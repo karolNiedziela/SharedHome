@@ -17,7 +17,7 @@ namespace SharedHome.Shared.Email
 
             foreach (var replacement in replacements)
             {
-                file = file.Replace(replacement.Key, replacement.Value); 
+                file = file.Replace(replacement.Key, replacement.Value);
             }
 
             emailMessage.Body = file;
@@ -33,6 +33,9 @@ namespace SharedHome.Shared.Email
         }
 
         private static string GetTemplatesPath(string emailTemplate)
-            => string.Format(@"Email\Templates\{0}", emailTemplate);
+        {
+            var dir = Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.FullName;
+            return Path.Combine(dir, string.Format(@"src\Shared\SharedHome.Shared\Email\Templates\{0}", emailTemplate));
+        }
     }
 }

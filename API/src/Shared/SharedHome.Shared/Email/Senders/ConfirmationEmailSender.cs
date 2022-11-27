@@ -6,7 +6,7 @@ using SharedHome.Shared.Email.Options;
 
 namespace SharedHome.Shared.Email.Senders
 {
-    public class ConfirmationEmailSender : BaseEmailSender, IIdentityEmailSender
+    public class ConfirmationEmailSender : BaseEmailSender, IIdentityEmailSender<ConfirmationEmailSender>
     {
         private readonly GeneralOptions _generalOptions;
 

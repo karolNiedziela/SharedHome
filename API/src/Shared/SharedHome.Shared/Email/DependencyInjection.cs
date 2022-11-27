@@ -10,7 +10,8 @@ namespace SharedHome.Shared.Email
         {
             services.ConfigureOptions<EmailOptionsSetup>();
 
-            services.AddTransient<IIdentityEmailSender, ConfirmationEmailSender>();
+            services.AddScoped<IIdentityEmailSender<ConfirmationEmailSender>, ConfirmationEmailSender>();
+            services.AddScoped<IIdentityEmailSender<ForgotPasswordEmailSender>, ForgotPasswordEmailSender>();
 
             return services;
         }

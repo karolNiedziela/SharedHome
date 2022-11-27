@@ -72,6 +72,12 @@
 
             public const string ConfirmEmail = "confirmemail";
 
+            public const string ForgotPassword = "forgotpassword";
+
+            public const string ResetPassword = "resetpassword";
+
+            public const string ChangePassword = "changepassword";
+
             public const string UploadProfileImage = "uploadprofileimage";
 
             public const string GetProfileImage = "getprofileimage";

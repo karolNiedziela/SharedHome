@@ -126,6 +126,9 @@
   <data name="BillPaid" xml:space="preserve">
     <value>Rachunek został już opłacony.</value>
   </data>
+  <data name="EmailAlreadyConfirmed" xml:space="preserve">
+    <value>Adres email został już potwierdzony.</value>
+  </data>
   <data name="EmptyFirstName" xml:space="preserve">
     <value>Imię nie może być puste.</value>
   </data>

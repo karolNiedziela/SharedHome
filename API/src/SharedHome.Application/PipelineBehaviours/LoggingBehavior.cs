@@ -1,8 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using SharedHome.Application.Authentication.Commands.ConfirmEmail;
-using SharedHome.Application.Authentication.Commands.Register;
 using SharedHome.Application.Authentication.Queries.Login;
+using SharedHome.Application.Identity.Commands.ForgotPassword;
+using SharedHome.Application.Identity.Commands.Register;
+using SharedHome.Application.Identity.Commands.ResetPassword;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -12,7 +14,15 @@ namespace SharedHome.Application.PipelineBehaviours
     {
         private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
 
-        private static readonly List<string> _requestsNotForSerialization = new() { typeof(ConfirmEmailCommand).Name, typeof(RegisterCommand).Name, typeof(LoginQuery).Name };
+        private static readonly List<string> _requestsNotForSerialization = new() 
+        { 
+            typeof(ConfirmEmailCommand).Name, 
+            typeof(RegisterCommand).Name, 
+            typeof(LoginQuery).Name,
+            typeof(ConfirmEmailCommand).Name,
+            typeof(ForgotPasswordCommand).Name,
+            typeof(ResetPasswordCommand).Name
+        };
 
         public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
         {
