@@ -7,6 +7,8 @@ import { IdentityComponent } from './identity.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { IdentityRoutingModule } from './identity-routing.module';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { IdentityRoutingModule } from './identity-routing.module';
     RegisterComponent,
     EmailConfirmationComponent,
     EmailConfirmedComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [SharedModule, IdentityRoutingModule, TranslateModule],
 })

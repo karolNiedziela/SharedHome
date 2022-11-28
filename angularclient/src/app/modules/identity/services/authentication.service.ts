@@ -1,3 +1,5 @@
+import { ResetPassword } from './../models/reset-password';
+import { ChangePassword } from './../../profile/models/change-password';
 import { UploadProfileImage } from './../models/upload-profile-image';
 import { ProfileImage } from './../models/profile-image';
 import { Register } from './../models/register';
@@ -86,6 +88,24 @@ export class AuthenticationService {
       code: code,
     });
   }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.identityUrl}/forgotpassword`, {
+      email: email,
+    });
+  }
+
+  resetPassword(resetPassword: ResetPassword): Observable<any> {
+    return this.http.post<any>(
+      `${this.identityUrl}/resetpassword`,
+      resetPassword,
+      this.defaultHttpOptions
+    );
+  }
+
+  // changePassword(changePassword: ChangePassword): Observable<any> {
+
+  // }
 
   logout(): void {
     localStorage.removeItem('jwt');

@@ -3,26 +3,24 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SharedHome.Shared.Email.Constants;
 using SharedHome.Shared.Email.Options;
+using static SharedHome.Shared.Email.Constants.EmailConstants;
 
 namespace SharedHome.Shared.Email.Senders
 {
     public class ConfirmationEmailSender : BaseEmailSender, IIdentityEmailSender<ConfirmationEmailSender>
     {
-        private readonly GeneralOptions _generalOptions;
-
         private readonly Dictionary<string, string> Replacements = new();
 
         public ConfirmationEmailSender(IOptions<EmailOptions> emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralOptions> generalOptions) 
-            : base(emailOptions, logger, localizerFactory)
+            : base(emailOptions, logger, localizerFactory, generalOptions)
         {
-            _generalOptions = generalOptions.Value;
         }
 
         public async Task SendAsync(string email, string code)
         {
             var emailMessage = new EmailMessage();
 
-            Replacements.Add(EmailConstants.ConfirmationEmailConstants.ConfirmationLink, string.Format(_generalOptions.ConfirmationEmailAngularClient, email, code));
+            Replacements.Add(ConfirmationEmailConstants.ConfirmationLink, string.Format(BuildClientRedirect(ConfirmationEmailConstants.ClientUriSuffix), email, code));
 
             emailMessage
                 .WithSubject(_localizer.GetString(EmailConstants.ConfirmationEmailConstants.Subject))

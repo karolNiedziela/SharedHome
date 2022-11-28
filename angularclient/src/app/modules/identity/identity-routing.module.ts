@@ -1,3 +1,5 @@
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -13,10 +15,21 @@ const routes: Routes = [
     path: 'identity',
     component: IdentityComponent,
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
+      { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        canActivate: [LoginGuard],
+      },
+      {
+        path: 'resetpassword',
+        component: ResetPasswordComponent,
+      },
+      {
+        path: 'forgotpassword',
+        component: ForgotPasswordComponent,
+      },
     ],
-    canActivate: [LoginGuard],
   },
   {
     path: 'emailconfirmation',

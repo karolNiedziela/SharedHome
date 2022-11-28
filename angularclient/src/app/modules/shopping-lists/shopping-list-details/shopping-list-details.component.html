@@ -1,5 +1,5 @@
 <div
-  class="card shopping-list"
+  class="card shopping-list-card"
   *ngIf="(shoppingList$ | async)?.data as shoppingList; else loading"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
@@ -31,7 +31,7 @@
       ></ng-template>
     </div>
   </div>
-  <ul class="list-group list-group-flush shopping-list__products">
+  <ul class="list-group list-group-flush shopping-list-card__products">
     <li *ngFor="let product of shoppingList.products">
       <app-shopping-list-product
         #product

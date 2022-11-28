@@ -10,7 +10,8 @@ namespace SharedHome.Shared.Email.Senders
     {
         private readonly Dictionary<string, string> Replacements = new();
 
-        public ForgotPasswordEmailSender(IOptions<EmailOptions> emailOptions, ILogger<ForgotPasswordEmailSender> logger, IStringLocalizerFactory localizerFactory) : base(emailOptions, logger, localizerFactory)
+        public ForgotPasswordEmailSender(IOptions<EmailOptions> emailOptions, ILogger<ForgotPasswordEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralOptions> generalOptions) 
+            : base(emailOptions, logger, localizerFactory, generalOptions)
         {
         }
 
@@ -18,7 +19,7 @@ namespace SharedHome.Shared.Email.Senders
         {
             var emailMessage = new EmailMessage();
 
-            Replacements.Add(ForgotPasswordConstants.Link, string.Format(ForgotPasswordConstants.LinkReplacement, email, code));
+            Replacements.Add(ForgotPasswordConstants.Link, string.Format(BuildClientRedirect(ForgotPasswordConstants.ClientUriSuffix), email, code));
 
             emailMessage
                .WithSubject(_localizer.GetString(ForgotPasswordConstants.Subject))
