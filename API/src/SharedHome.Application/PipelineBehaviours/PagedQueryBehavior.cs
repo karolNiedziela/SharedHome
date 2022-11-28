@@ -6,12 +6,6 @@ namespace SharedHome.Application.PipelineBehaviours
     public class PagedQueryBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
-        private const int MaxPageSize = 100;
-
-        private const int MinPageSize = 10;
-
-        private const int DefaultPageSize = 25;
-
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (request is IPagedQuery<TResponse> pagedQuery)
@@ -23,17 +17,17 @@ namespace SharedHome.Application.PipelineBehaviours
 
                 if (pagedQuery.PageSize <= 0)
                 {
-                    pagedQuery.PageSize = DefaultPageSize;
+                    pagedQuery.PageSize = PagedBase.DefaultPageSize;
                 }
 
-                if (pagedQuery.PageSize > MaxPageSize)
+                if (pagedQuery.PageSize > PagedBase.MaxPageSize)
                 {
-                    pagedQuery.PageSize = DefaultPageSize;
+                    pagedQuery.PageSize = PagedBase.DefaultPageSize;
                 }
 
-                if (pagedQuery.PageSize < MinPageSize)
+                if (pagedQuery.PageSize < PagedBase.MinPageSize)
                 {
-                    pagedQuery.PageSize = MinPageSize;
+                    pagedQuery.PageSize = PagedBase.MinPageSize;
                 }
             }
 

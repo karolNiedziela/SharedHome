@@ -2,6 +2,12 @@
 {
     public abstract class PagedBase
     {
+        public const int MaxPageSize = 100;
+
+        public const int MinPageSize = 10;
+
+        public const int DefaultPageSize = 10;
+
         public int CurrentPage { get; set; }
 
         // Number of elements per page

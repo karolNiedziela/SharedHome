@@ -99,7 +99,7 @@ namespace SharedHome.Api.Controllers
         /// Change password
         /// </summary>
         [HttpPut(ApiRoutes.Identity.ChangePassword)]
-        public async Task<IActionResult> ForgotPasswordAsync([FromBody] ChangePasswordCommand command)
+        public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordCommand command)
         {
             await Mediator.Send(command);
 
