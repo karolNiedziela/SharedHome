@@ -1,6 +1,7 @@
+import { PasswordsFormComponent } from './../../../shared/components/forms/passwords-form/passwords-form.component';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Register } from './../models/register';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -10,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./register.component.scss', '../identity.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild('passwordForm') passwordForm!: PasswordsFormComponent;
+
   errorMessages: string[] = [];
   information?: string | null = null;
 
@@ -30,6 +33,8 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      this.passwordForm.passwordForm.markAllAsTouched();
       return;
     }
 

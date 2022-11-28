@@ -12,7 +12,10 @@
     [placeholder]="'Last name' | translate"
     formControlName="lastName"
   ></app-text-input>
-  <app-passwords-form formControlName="password"></app-passwords-form>
+  <app-passwords-form
+    #passwordForm
+    formControlName="password"
+  ></app-passwords-form>
   <app-button
     class="d-grid col-12"
     [text]="'Sign up' | translate"

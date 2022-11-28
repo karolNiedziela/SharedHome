@@ -12,14 +12,16 @@ namespace SharedHome.Shared.Email.Senders
     public abstract class BaseEmailSender
     {
         private readonly EmailOptions _emailSettings;
+        private readonly GeneralOptions _generalOptions;
         protected readonly ILogger _logger;
         protected readonly IStringLocalizer _localizer;
 
-        public BaseEmailSender(IOptions<EmailOptions> emailOptions, ILogger logger, IStringLocalizerFactory localizerFactory)
+        public BaseEmailSender(IOptions<EmailOptions> emailOptions, ILogger logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralOptions> generalOptions)
         {
             _emailSettings = emailOptions.Value;
             _logger = logger;
             _localizer = localizerFactory.Create(Resources.EmailTemplates, Assembly.GetEntryAssembly()!.GetName().Name!);
+            _generalOptions = generalOptions.Value;
         }
 
         public async Task SendAsync(EmailMessage emailMessage)
@@ -46,6 +48,9 @@ namespace SharedHome.Shared.Email.Senders
                 smtp.Dispose();
             }
         }
+
+        protected string BuildClientRedirect(string redirectUrl) 
+            => _generalOptions.AngularClientUri + redirectUrl;
 
         private MimeMessage ConvertToMimeMessage(EmailMessage emailMessage)
         {

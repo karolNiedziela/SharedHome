@@ -8,7 +8,7 @@
 
             public const string ConfirmationLink = "{confirmation_link}";
 
-            public const string ConfirmationLinkReplacement = "https://localhost:7073/api/identity/confirmemail?email={0}&code={1}";
+            public const string ClientUriSuffix = "emailconfirmation?email={0}&code={1}";
 
             public const string Subject = "Confirmation Email";
         }
@@ -19,7 +19,7 @@
 
             public const string Link = "{link}";
 
-            public const string LinkReplacement = "https://localhost:7073/api/identity/forgotpassword?email={0}&code={1}";
+            public const string ClientUriSuffix = "identity/resetpassword?email={0}&code={1}";
 
             public const string Subject = "Forgot Password";
         }

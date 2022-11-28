@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnDestroy } from '@angular/core';
+import { Component, forwardRef, Input, OnDestroy } from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALIDATORS,
@@ -32,6 +32,9 @@ import { Subscription } from 'rxjs/internal/Subscription';
   ],
 })
 export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
+  @Input() passwordLabel: string = 'Password';
+  @Input() confirmPasswordLabel: string = 'Confirm password';
+
   passwordForm!: FormGroup;
   subscriptions: Subscription[] = [];
   eyeSlashIcon: any = faEyeSlash;

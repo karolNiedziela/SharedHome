@@ -26,11 +26,8 @@ $primary: $l_primary_color !default;
 $success: $l_success_color !default;
 $danger: $l_error_color !default;
 
-$card-border-color: rgba(0, 0, 0, 12.5%) !default;
 $card-color: $l_black_color !default;
-$card-border-radius: 4px !default;
 $card-bg: $l_white_color !default;
-$card-border-radius: 4px !default;
 
 $btn-color: $l_white_color !default;
 
@@ -57,16 +54,17 @@ $btn-color: $l_white_color !default;
 }
 
 /*
------------ CARDS -----------
+----------- SHOPPING LIST CARD -----------
 */
 
-.card {
+.shopping-list-card {
   box-shadow: rgb(0 0 0 / 12%) 0px 8px 40px 0px !important;
   border-right: none !important;
   border-top: none !important;
   border-bottom: none !important;
   border-left: 8px solid $l_primary_color !important;
   transition: box-shadow 0.2s ease 0s, transform 0.2s ease 0s;
+  border-radius: 4px !important;
 
   &:hover {
     box-shadow: rgb(0 0 0 / 36%) 0px 16px 32px 0px !important;

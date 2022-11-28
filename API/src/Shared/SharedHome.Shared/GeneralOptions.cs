@@ -4,6 +4,6 @@
     {
         public string ApiName { get; set; } = default!;
 
-        public string ConfirmationEmailAngularClient { get; set; } = default!;
+        public string AngularClientUri { get; set; } = default!;
     }
 }
