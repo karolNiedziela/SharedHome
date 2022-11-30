@@ -3,12 +3,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmailConfirmedComponent } from './email-confirmed/email-confirmed.component';
-import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 import { LoginGuard } from 'app/core/guards/login.guard';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { IdentityComponent } from './identity.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
   {
@@ -34,10 +33,6 @@ const routes: Routes = [
   {
     path: 'emailconfirmation',
     component: EmailConfirmationComponent,
-  },
-  {
-    path: 'emailconfirmed',
-    component: EmailConfirmedComponent,
   },
 ];
 
