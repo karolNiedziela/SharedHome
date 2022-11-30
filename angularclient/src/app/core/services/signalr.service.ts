@@ -26,7 +26,9 @@ export class SignalrService {
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
-      this.getNotifications();
+      this.listenNotifications();
+
+      this.notificationService.get();
 
       this.connection
         .start()
@@ -40,7 +42,7 @@ export class SignalrService {
     });
   }
 
-  private getNotifications(): void {
+  private listenNotifications(): void {
     this.connection.on(
       'BroadcastNotification',
       (notification: AppNotification) => {

@@ -3,7 +3,7 @@ import { AuthenticationService } from 'app/modules/identity/services/authenticat
 import { Register } from './../models/register';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -15,12 +15,10 @@ export class RegisterComponent implements OnInit {
 
   errorMessages: string[] = [];
   information?: string | null = null;
+  disabled: boolean = false;
 
   registerForm!: FormGroup;
-  constructor(
-    private authenticationService: AuthenticationService,
-    private toastr: ToastrService
-  ) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -38,6 +36,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    this.disabled = true;
+
     const email = this.registerForm.get('email')?.value;
     const firstName = this.registerForm.get('firstName')?.value;
     const lastName = this.registerForm.get('lastName')?.value;
@@ -51,14 +51,21 @@ export class RegisterComponent implements OnInit {
       confirmPassword: password,
     };
 
-    this.authenticationService.register(register).subscribe({
-      next: (response: any) => {
-        this.information = response.data;
-        this.registerForm.reset();
-      },
-      error: (error: string[]) => {
-        this.errorMessages = error;
-      },
-    });
+    this.authenticationService
+      .register(register)
+      .pipe(
+        finalize(() => {
+          this.disabled = false;
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          this.information = response.data;
+          this.registerForm.reset();
+        },
+        error: (error: string[]) => {
+          this.errorMessages = error;
+        },
+      });
   }
 }
