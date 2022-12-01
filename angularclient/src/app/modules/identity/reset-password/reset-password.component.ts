@@ -42,7 +42,6 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(): void {
     if (this.resetPasswordForm.invalid) {
       this.passwordForm.passwordForm.markAllAsTouched();
-
       return;
     }
 
