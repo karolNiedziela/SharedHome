@@ -49,7 +49,9 @@ export class PasswordInputComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: string): void {
-    this.controlDir.control?.setValue(value);
+    if (this.control && this.control?.value != value) {
+      this.controlDir.control?.setValue(value);
+    }
   }
   registerOnChange(fn: any): void {
     this.onChanged = fn;

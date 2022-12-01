@@ -103,9 +103,13 @@ export class AuthenticationService {
     );
   }
 
-  // changePassword(changePassword: ChangePassword): Observable<any> {
-
-  // }
+  changePassword(changePassword: ChangePassword): Observable<any> {
+    return this.http.put<any>(
+      `${this.identityUrl}/changepassword`,
+      changePassword,
+      this.defaultHttpOptions
+    );
+  }
 
   logout(): void {
     localStorage.removeItem('jwt');
