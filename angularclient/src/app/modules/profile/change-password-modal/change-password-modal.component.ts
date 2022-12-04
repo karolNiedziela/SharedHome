@@ -3,8 +3,8 @@ import { AuthenticationService } from 'app/modules/identity/services/authenticat
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Modalable } from './../../../core/models/modalable';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { PasswordsFormComponent } from 'app/shared/components/forms/passwords-form/passwords-form.component';
 
 @Component({
@@ -14,10 +14,10 @@ import { PasswordsFormComponent } from 'app/shared/components/forms/passwords-fo
 })
 export class ChangePasswordModalComponent implements OnInit, Modalable {
   @ViewChild('modal')
-  private changePasswordModal!: ModalComponent;
+  private changePasswordModal!: FormModalComponent;
   @ViewChild('passwordForm') passwordForm!: PasswordsFormComponent;
 
-  public modalConfig: ModalConfig = {
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Change password',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -25,7 +25,6 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
   };
 
   changePasswordForm!: FormGroup;
-  errorMessages: string[] = [];
 
   constructor(private authenticationService: AuthenticationService) {}
 
@@ -40,12 +39,6 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
     this.changePasswordModal.open();
   }
   onSave(): void {
-    if (this.changePasswordForm.invalid) {
-      this.changePasswordForm.markAllAsTouched();
-      this.passwordForm.passwordForm.markAllAsTouched();
-      return;
-    }
-
     const currentPassword: string =
       this.changePasswordForm.controls['currentPassword'].value;
     const newPassword: string =
@@ -57,22 +50,12 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
       confirmNewPassword: newPassword,
     };
 
-    console.log(changePassword);
-
     this.authenticationService.changePassword(changePassword).subscribe({
       next: () => {
-        this.changePasswordForm.reset();
         this.changePasswordModal.close();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }
-  onClose(): void {
-    this.changePasswordForm.reset();
-  }
-  onDismiss(): void {
-    this.changePasswordForm.reset();
-  }
+  onClose(): void {}
+  onDismiss(): void {}
 }

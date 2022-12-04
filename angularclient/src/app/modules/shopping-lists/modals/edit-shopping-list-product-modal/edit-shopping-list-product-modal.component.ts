@@ -9,8 +9,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NetContentType } from '../../enums/net-content-type';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
@@ -26,15 +26,13 @@ export class EditShoppingListProductModalComponent
   @Input() shoppingListId!: string;
   @Input() shoppingListProduct?: ShoppingListProduct;
 
-  @ViewChild('editShoppingListProductModal') private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  @ViewChild('editShoppingListProductModal') private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Edit shopping list product',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
   };
-
-  errorMessages: string[] = [];
 
   editShoppingListProductForm!: FormGroup;
 
@@ -60,16 +58,11 @@ export class EditShoppingListProductModalComponent
   }
 
   openModal(): void {
+    this.setFormValues();
     this.modal.open();
   }
 
   onSave(): void {
-    if (this.editShoppingListProductForm.invalid) {
-      this.editShoppingListProductForm.markAllAsTouched();
-
-      return;
-    }
-
     const productName =
       this.editShoppingListProductForm.get('productName')?.value;
     const quantity = this.editShoppingListProductForm.get('quantity')?.value;
@@ -94,21 +87,13 @@ export class EditShoppingListProductModalComponent
       .updateShoppingListProduct(updateShoppingListProduct)
       .subscribe({
         next: () => {
-          this.resetForm();
-
           this.modal.close();
-        },
-        error: (error: string[]) => {
-          this.errorMessages = error;
         },
       });
   }
-  onClose(): void {
-    this.resetForm();
-  }
-  onDismiss(): void {
-    this.resetForm();
-  }
+
+  onClose(): void {}
+  onDismiss(): void {}
 
   private setFormValues(): void {
     if (this.shoppingListProduct == null) {
@@ -121,9 +106,5 @@ export class EditShoppingListProductModalComponent
       netContent: this.shoppingListProduct.netContent?.netContent,
       netContentType: this.shoppingListProduct.netContent?.netContentType,
     });
-  }
-
-  private resetForm(): void {
-    this.setFormValues();
   }
 }

@@ -163,6 +163,13 @@ a.current {
 */
 
 $input-group-addon-bg: $l_background_color !default;
+input:disabled {
+  background-color: $l_background_color !important;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  color-scheme: dark;
+}
 
 .form-control:focus {
   color: $l_white_color !important;

@@ -1,4 +1,4 @@
-import { ModalComponent } from './components/modals/modal/modal.component';
+import { FormModalComponent } from './components/modals/form-modal/form-modal.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { PasswordsFormComponent } from './components/forms/passwords-form/passwords-form.component';
 import { PasswordInputComponent } from './components/inputs/password-input/password-input.component';
@@ -49,7 +49,7 @@ import { ProfileDropdownComponent } from './components/profile-dropdown/profile-
     PasswordsFormComponent,
     SidebarComponent,
     FooterComponent,
-    ModalComponent,
+    FormModalComponent,
     ConfirmationModalComponent,
     PopupMenuComponent,
     NumberInputComponent,
@@ -100,7 +100,7 @@ import { ProfileDropdownComponent } from './components/profile-dropdown/profile-
     PasswordsFormComponent,
     SidebarComponent,
     FooterComponent,
-    ModalComponent,
+    FormModalComponent,
     ConfirmationModalComponent,
     PopupMenuComponent,
     EnumSelectComponent,

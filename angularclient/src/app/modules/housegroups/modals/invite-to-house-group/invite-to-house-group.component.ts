@@ -1,7 +1,7 @@
 import { ApiResponse } from './../../../../core/models/api-response';
 import { SendInvitation } from '../../../invitations/models/send-invitation';
-import { ModalConfig } from './../../../../shared/components/modals/modal/modal.config';
-import { ModalComponent } from './../../../../shared/components/modals/modal/modal.component';
+import { FormModalConfig } from '../../../../shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from '../../../../shared/components/modals/form-modal/form-modal.component';
 import { Modalable } from './../../../../core/models/modalable';
 import { InvitationService } from '../../../invitations/services/invitation.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -17,8 +17,8 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
   @Input() houseGroupId!: string;
 
   @ViewChild('modal')
-  private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Invite to house group',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -41,12 +41,6 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
-    if (this.inviteToHouseGroupForm.invalid) {
-      this.inviteToHouseGroupForm.markAllAsTouched();
-
-      return;
-    }
-
     const requestToPersonEmail = this.inviteToHouseGroupForm.get(
       'requestedToPersonEmail'
     )?.value;
@@ -58,18 +52,10 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
 
     this.invitationService.send(sendInvitation).subscribe({
       next: (response: ApiResponse<Invitation>) => {
-        this.inviteToHouseGroupForm.reset();
         this.modal.close();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }
-  onClose(): void {
-    this.inviteToHouseGroupForm.reset();
-  }
-  onDismiss(): void {
-    this.inviteToHouseGroupForm.reset();
-  }
+  onClose(): void {}
+  onDismiss(): void {}
 }

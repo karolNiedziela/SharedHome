@@ -1,12 +1,11 @@
 import { HouseGroupMember } from './../../models/housegroup-member';
-import { tap } from 'rxjs';
 import { HouseGroupService } from './../../services/housegroup.service';
 import { HandOwnerRoleOver } from './../../models/hand-owner-role-over';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Modalable } from './../../../../core/models/modalable';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-hand-owner-role-over',
@@ -18,8 +17,8 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
   @Input() member!: HouseGroupMember;
 
   @ViewChild('modal')
-  private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Change house group owner',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -36,22 +35,15 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
     this.handOwnerRoleOverForm = new FormGroup({
       newOwnerPerson: new FormControl({ value: '', disabled: true }),
     });
-
-    this.handOwnerRoleOverForm.patchValue({
-      newOwnerPerson: this.member.fullName,
-    });
   }
 
   openModal(): void {
+    this.handOwnerRoleOverForm.patchValue({
+      newOwnerPerson: this.member.fullName,
+    });
     this.modal.open();
   }
   onSave(): void {
-    if (this.handOwnerRoleOverForm.invalid) {
-      this.handOwnerRoleOverForm.markAllAsTouched();
-
-      return;
-    }
-
     const handOwnerRoleOver: HandOwnerRoleOver = {
       houseGroupId: this.houseGroupId,
       newOwnerPersonId: this.member.personId,
@@ -61,23 +53,9 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
       next: () => {
         this.onClose();
       },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
-      },
     });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
-  onDismiss(): void {
-    this.resetForm();
-  }
-
-  private resetForm(): void {
-    this.handOwnerRoleOverForm.reset();
-    this.handOwnerRoleOverForm.patchValue({
-      newOwnerPerson: this.member.fullName,
-    });
-  }
+  onClose(): void {}
+  onDismiss(): void {}
 }

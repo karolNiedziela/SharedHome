@@ -3,8 +3,8 @@ import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { PurchaseShoppingListProduct } from './../../models/purchase-shopping-list-product';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-purchase-shopping-list-product',
@@ -14,8 +14,9 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
   @Input() shoppingListId!: string;
   @Input() productName!: string;
-  @ViewChild('purchaseShoppingListProductModal') private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  @ViewChild('purchaseShoppingListProductModal')
+  private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Purchase shopping list product',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -23,8 +24,6 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
   };
 
   public purchaseShoppingListProductForm!: FormGroup;
-
-  public errorMessages: string[] = [];
 
   constructor(private shoppingListService: ShoppingListsService) {}
 
@@ -39,11 +38,6 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
   }
 
   onSave(): void {
-    if (this.purchaseShoppingListProductForm.invalid) {
-      this.purchaseShoppingListProductForm.markAllAsTouched();
-      return;
-    }
-
     const price = this.purchaseShoppingListProductForm
       .get('money')
       ?.get('price')?.value;
@@ -64,25 +58,12 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
       .purchaseProduct(purchaseShoppingListProduct)
       .subscribe({
         next: () => {
-          this.resetForm();
-
           this.modal.close();
-        },
-        error: (errors: string[]) => {
-          this.errorMessages = errors;
         },
       });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
-    this.resetForm();
-  }
-
-  private resetForm() {
-    this.purchaseShoppingListProductForm.reset();
-  }
+  onDismiss(): void {}
 }

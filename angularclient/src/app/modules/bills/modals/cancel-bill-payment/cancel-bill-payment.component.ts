@@ -2,13 +2,7 @@ import { ConfirmationModalConfig } from './../../../../shared/components/modals/
 import { ConfirmationModalComponent } from './../../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Modalable } from './../../../../core/models/modalable';
 import { BillService } from './../../services/bill.service';
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-cancel-bill-payment',

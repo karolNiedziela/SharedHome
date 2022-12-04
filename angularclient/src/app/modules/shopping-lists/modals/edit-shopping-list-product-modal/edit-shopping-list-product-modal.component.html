@@ -1,6 +1,9 @@
-<app-modal #editShoppingListProductModal [modalConfig]="modalConfig">
+<app-form-modal
+  #editShoppingListProductModal
+  [modalConfig]="modalConfig"
+  [formGroup]="editShoppingListProductForm"
+>
   <div class="row g-3" [formGroup]="editShoppingListProductForm">
-    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="productName"
       [labelText]="'Product Name' | translate"
@@ -26,4 +29,4 @@
       ></app-enum-select>
     </div>
   </div>
-</app-modal>
+</app-form-modal>

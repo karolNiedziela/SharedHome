@@ -1,3 +1,4 @@
+import { ErrorService } from './../services/error.service';
 import { ErrorResponse } from './../models/error-response';
 import { Injectable } from '@angular/core';
 import {
@@ -7,12 +8,15 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { catchError, Observable, retry, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private errorService: ErrorService
+  ) {}
 
   intercept(
     request: HttpRequest<unknown>,
@@ -29,6 +33,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         errorResponse = error.error as ErrorResponse;
+        this.errorService.propagateErrors(errorResponse.errors);
         return throwError(() => errorResponse.errors);
       })
     );

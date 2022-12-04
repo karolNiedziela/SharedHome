@@ -1,11 +1,18 @@
+import { AddShoppingListProductFormComponent } from './../../forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 import { Modalable } from './../../../../core/models/modalable';
 import { AddManyShoppingListProductsFormComponent } from './../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 import { AddShoppingList } from './../../models/add-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
+import {
+  Component,
+  ComponentRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
 
 @Component({
@@ -22,13 +29,14 @@ export class AddShoppingListComponent implements OnInit, Modalable {
   @ViewChild('addManyShoppingListProducts')
   addManyShoppingListProducts!: AddManyShoppingListProductsFormComponent;
 
-  @ViewChild('modal') private modal!: ModalComponent;
+  @ViewChild('modal') private modal!: FormModalComponent;
 
-  public modalConfig: ModalConfig = {
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Add shopping list',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
+    onReset: () => this.onReset(),
   };
 
   constructor(private shoppingListService: ShoppingListsService) {}
@@ -47,10 +55,14 @@ export class AddShoppingListComponent implements OnInit, Modalable {
   }
 
   onSave(): void {
-    this.addManyShoppingListProducts.markAllAsTouchedOnSave();
-
-    if (this.addShoppingListForm.invalid) {
-      this.addShoppingListForm.markAllAsTouched();
+    if (
+      this.addManyShoppingListProducts.addShoppingListProductComponents.some(
+        (
+          shoppingListProductForm: ComponentRef<AddShoppingListProductFormComponent>
+        ) => shoppingListProductForm.instance.addShoppingListProductForm.invalid
+      )
+    ) {
+      this.addManyShoppingListProducts.markAllAsTouchedOnSave();
       return;
     }
 
@@ -66,26 +78,16 @@ export class AddShoppingListComponent implements OnInit, Modalable {
 
     this.shoppingListService.add(addShoppingList).subscribe({
       next: () => {
-        this.resetForm();
-
         this.modal.close();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
-    this.resetForm();
-  }
+  onDismiss(): void {}
 
-  private resetForm(): void {
-    this.addShoppingListForm.reset();
+  onReset(): void {
     this.addManyShoppingListProducts.ngOnDestroy();
   }
 }
