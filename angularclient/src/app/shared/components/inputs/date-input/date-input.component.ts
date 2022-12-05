@@ -61,8 +61,8 @@ export class DateInputComponent
   }
 
   writeValue(value: any): void {
-    if (this.controlDir.control && this.controlDir.control?.value != value) {
-      this.controlDir.control?.setValue(value, { emitEvent: false });
+    if (this.control && this.control?.value != value) {
+      this.control?.setValue(value);
     }
   }
 

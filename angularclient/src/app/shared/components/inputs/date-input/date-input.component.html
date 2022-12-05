@@ -4,11 +4,12 @@
     class="form-control sharedhome__input"
     [placeholder]="placeholder"
     (input)="onChanged($any($event.target).value)"
+    (blur)="onTouched()"
     [disabled]="disabled"
     [ngClass]="{
-      'is-invalid': control.touched && !control.valid
+      'is-invalid': control?.touched && !control?.valid
     }"
-    [value]="control.value"
+    [value]="control?.value"
   />
   <label class="sharedhome__label"
     >{{ labelText | translate }}
@@ -18,8 +19,8 @@
     </span></label
   >
 
-  <div class="invalid-feedback" *ngIf="control.touched && !control.valid">
-    <div *ngIf="control.errors?.['required']">
+  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
+    <div *ngIf="control?.errors?.['required']">
       {{ "This field is required." | translate }}
     </div>
   </div>

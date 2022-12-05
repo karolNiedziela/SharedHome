@@ -10,7 +10,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./cancel-bill-payment.component.scss'],
 })
 export class CancelBillPaymentComponent implements Modalable, OnInit {
-  @Input() billId!: number;
+  @Input() billId!: string;
 
   @ViewChild('modal') private modal!: ConfirmationModalComponent;
   public modalConfig: ConfirmationModalConfig = {

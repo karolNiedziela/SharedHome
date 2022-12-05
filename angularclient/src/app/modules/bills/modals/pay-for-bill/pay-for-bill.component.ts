@@ -8,9 +8,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { PayForBill } from '../../models/pay-for-bill';
 import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
 import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
-import { PayForBill } from '../../models/pay-for-bill';
 
 @Component({
   selector: 'app-pay-for-bill',
