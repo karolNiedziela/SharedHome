@@ -2,8 +2,8 @@ import { UploadImageComponent } from './../../../../shared/components/inputs/upl
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Modalable } from './../../../../core/models/modalable';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 @Component({
   selector: 'app-upload-profile-image-modal',
   templateUrl: './upload-profile-image-modal.component.html',
@@ -11,18 +11,19 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 })
 export class UploadProfileImageModalComponent implements OnInit, Modalable {
   @ViewChild('modal')
-  private uploadProfileImageModal!: ModalComponent;
+  private uploadProfileImageModal!: FormModalComponent;
 
   @ViewChild('uploadImage')
   private uploadImage!: UploadImageComponent;
 
   profileImage?: File | null;
 
-  public modalConfig: ModalConfig = {
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Upload profile image',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
+    onReset: () => this.onReset(),
   };
 
   constructor(private authenticationService: AuthenticationService) {}
@@ -30,7 +31,6 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
   ngOnInit(): void {}
 
   openModal(): void {
-    this.uploadProfileImageModal.ngOnInit();
     this.uploadProfileImageModal.open();
   }
   onSave(): void {
@@ -46,11 +46,11 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
     this.uploadProfileImageModal.close();
   }
 
-  onClose(): void {
-    this.uploadImage.deleteFile();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
+  onDismiss(): void {}
+
+  onReset(): void {
     this.uploadImage.deleteFile();
   }
 

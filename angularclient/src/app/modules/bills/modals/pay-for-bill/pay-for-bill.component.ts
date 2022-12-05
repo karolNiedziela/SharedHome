@@ -1,4 +1,3 @@
-import { MoneyFormComponent } from './../../../../shared/components/forms/money-form/money-form.component';
 import { BillService } from './../../services/bill.service';
 import { Modalable } from './../../../../core/models/modalable';
 import {
@@ -8,9 +7,9 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormGroup } from '@angular/forms';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { PayForBill } from '../../models/pay-for-bill';
 
 @Component({
@@ -22,8 +21,8 @@ import { PayForBill } from '../../models/pay-for-bill';
 export class PayForBillComponent implements Modalable, OnInit {
   @Input() billId!: string;
 
-  @ViewChild('modal') private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  @ViewChild('modal') private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Pay for bill',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -31,8 +30,6 @@ export class PayForBillComponent implements Modalable, OnInit {
   };
 
   payForBillForm!: FormGroup;
-
-  public errorMessages: string[] = [];
 
   constructor(private billService: BillService) {}
 
@@ -46,12 +43,6 @@ export class PayForBillComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
-    if (this.payForBillForm.invalid) {
-      this.payForBillForm.markAllAsTouched();
-
-      return;
-    }
-
     const cost = this.payForBillForm.get('money')?.get('price')?.value;
 
     const currency = this.payForBillForm.get('money')?.get('currency')?.value;
@@ -67,23 +58,11 @@ export class PayForBillComponent implements Modalable, OnInit {
     this.billService.payForBill(payForBill).subscribe({
       next: () => {
         this.modal.close();
-        this.resetForm();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
-    this.resetForm();
-  }
-
-  private resetForm(): void {
-    this.payForBillForm.reset();
-  }
+  onDismiss(): void {}
 }

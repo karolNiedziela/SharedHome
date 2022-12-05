@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })
-export class ButtonComponent {
+export class ButtonComponent implements OnInit {
   @Input() text: string = '';
   @Input() type: string = 'button';
   @Input() disabled: boolean = false;
@@ -13,6 +13,8 @@ export class ButtonComponent {
   @Output() onButtonClick: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
+
+  ngOnInit(): void {}
 
   onClick(): void {
     this.onButtonClick?.emit(null);

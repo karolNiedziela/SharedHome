@@ -4,8 +4,8 @@ import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
 import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 
@@ -16,12 +16,13 @@ import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-s
 })
 export class AddShoppingListProductComponent implements OnInit, Modalable {
   @Input() shoppingListId!: string;
-  @ViewChild('addShoppingListProductModal') private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  @ViewChild('addShoppingListProductModal') private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Add shopping list product',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
+    onReset: () => this.onReset(),
   };
   @ViewChild('addManyShoppingListProducts')
   addManyShoppingListProducts!: AddManyShoppingListProductsFormComponent;
@@ -29,8 +30,6 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
   public addShoppingListProductForm!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
-
-  public errorMessages: string[] = [];
 
   constructor(private shoppingListService: ShoppingListsService) {}
 
@@ -43,6 +42,7 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
   }
 
   openModal(): void {
+    this.addShoppingListProductForm.patchValue({ quantity: 1 });
     this.modal.open();
   }
 
@@ -89,28 +89,16 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
       .addShoppingListProducts(addShoppingListProduct)
       .subscribe({
         next: () => {
-          this.resetForm();
-
           this.modal.close();
-        },
-        error: (error: string[]) => {
-          this.errorMessages = error;
         },
       });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
-    this.resetForm();
-  }
+  onDismiss(): void {}
 
-  private resetForm() {
-    this.addShoppingListProductForm.reset();
-    this.addShoppingListProductForm.patchValue({ quantity: 1 });
+  onReset(): void {
     this.addManyShoppingListProducts.ngOnDestroy();
-    this.errorMessages = [];
   }
 }

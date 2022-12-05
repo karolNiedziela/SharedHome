@@ -1,9 +1,9 @@
 <button class="btn btn-outline-primary" (click)="openModal()">
   {{ "Upload" | translate }}
 </button>
-<app-modal #modal [modalConfig]="modalConfig">
+<app-form-modal #modal [modalConfig]="modalConfig">
   <app-upload-image
     #uploadImage
     (profileImage)="getProfileImage($event)"
   ></app-upload-image>
-</app-modal>
+</app-form-modal>

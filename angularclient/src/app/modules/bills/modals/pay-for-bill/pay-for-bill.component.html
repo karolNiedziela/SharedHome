@@ -1,8 +1,7 @@
-<app-modal #modal [modalConfig]="modalConfig">
+<app-form-modal #modal [modalConfig]="modalConfig" [formGroup]="payForBillForm">
   <div class="row g-3" [formGroup]="payForBillForm">
-    <app-error [errorMessages]="errorMessages"></app-error>
     <app-money-form
       [moneyFormGroup]="payForBillForm.get('money') | formGroup"
     ></app-money-form>
   </div>
-</app-modal>
+</app-form-modal>

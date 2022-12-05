@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-bill-payment.component';
-import { ModalConfig } from './../../shared/components/modals/modal/modal.config';
+import { FormModalConfig } from '../../shared/components/modals/form-modal/form-modal.config';
 import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ConfirmationModalComponent } from './../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -22,11 +22,7 @@ import {
   ChangeDetectionStrategy,
   ViewEncapsulation,
 } from '@angular/core';
-import {
-  CalendarDateFormatter,
-  CalendarView,
-  DAYS_OF_WEEK,
-} from 'angular-calendar';
+import { CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
 import { Subject, Observable, map, of } from 'rxjs';
 import { startOfDay, endOfDay } from 'date-fns';
 import { Bill } from './models/bill';

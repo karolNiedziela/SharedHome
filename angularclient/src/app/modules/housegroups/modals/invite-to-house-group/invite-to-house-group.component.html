@@ -3,9 +3,12 @@
   (onButtonClick)="openModal()"
 ></app-circle-button>
 
-<app-modal #modal [modalConfig]="modalConfig">
+<app-form-modal
+  #modal
+  [modalConfig]="modalConfig"
+  [formGroup]="inviteToHouseGroupForm"
+>
   <div class="row g-3" [formGroup]="inviteToHouseGroupForm">
-    <app-error [errorMessages]="errorMessages"></app-error>
     <app-email-input formControlName="requestedToPersonEmail"></app-email-input>
   </div>
-</app-modal>
+</app-form-modal>
