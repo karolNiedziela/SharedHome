@@ -7,9 +7,9 @@
     (blur)="onTouched()"
     [disabled]="disabled"
     [ngClass]="{
-      'is-invalid': control?.touched && !control?.valid
+      'is-invalid': control.touched && !control.valid
     }"
-    [value]="control?.value"
+    [value]="control.value"
   />
   <label class="sharedhome__label"
     >{{ labelText | translate }}

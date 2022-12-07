@@ -126,14 +126,13 @@ export class FormModalComponent implements OnInit, OnDestroy, AfterViewInit {
     return true;
   }
 
-  private beforeCloseModal(): void {
+  private beforeCloseModal(): void {}
+
+  private afterModalClose(): void {
     if (this.resetForm) {
       this.formGroup?.reset();
       this.modalConfig?.onReset?.();
     }
-  }
-
-  private afterModalClose(): void {
     this.errorService.clearErrors();
   }
 }
