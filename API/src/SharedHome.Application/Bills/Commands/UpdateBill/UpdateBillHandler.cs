@@ -27,7 +27,7 @@ namespace SharedHome.Application.Bills.Commands.UpdateBill
 
             var money = request.Cost == null ? null : new Money(request.Cost.Price, request.Cost.Currency);
 
-            bill.Update(billType, request.ServiceProviderName, bill.DateOfPayment, money);
+            bill.Update(billType, request.ServiceProviderName, DateOnly.FromDateTime(request.DateOfPayment), money);
 
             await _billRepository.UpdateAsync(bill);
 

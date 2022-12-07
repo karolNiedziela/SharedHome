@@ -5,4 +5,5 @@ export interface UpdateBill {
   billType: number;
   serviceProviderName: string;
   cost: Money | null;
+  dateOfPayment: Date;
 }
