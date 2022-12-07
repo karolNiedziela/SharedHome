@@ -4,6 +4,5 @@ export interface UpdateBill {
   billId: string;
   billType: number;
   serviceProviderName: string;
-  dateOfPayment: Date;
   cost: Money | null;
 }

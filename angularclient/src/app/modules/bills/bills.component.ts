@@ -1,6 +1,6 @@
+import { EditBillComponent } from './modals/edit-bill/edit-bill.component';
 import { TranslateService } from '@ngx-translate/core';
 import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-bill-payment.component';
-import { FormModalConfig } from '../../shared/components/modals/form-modal/form-modal.config';
 import { ConfirmationModalConfig } from './../../shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ConfirmationModalComponent } from './../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -97,6 +97,9 @@ export class BillsComponent implements OnInit, OnDestroy {
   @ViewChild('cancelBillPaymentModal')
   cancelBillPaymentModal!: CancelBillPaymentComponent;
 
+  @ViewChild('editBillModal')
+  edtiBillModal!: EditBillComponent;
+
   constructor(
     private billService: BillService,
     private translateService: TranslateService
@@ -190,13 +193,17 @@ export class BillsComponent implements OnInit, OnDestroy {
           this.deleteBillModal.open();
         },
         isEditVisible: true,
+        onEdit: () => {
+          this.edtiBillModal.bill = billEvent;
+          this.edtiBillModal.openModal();
+        },
       };
       if (billEvent.isPaid) {
         popupMenuConfig.additionalPopupMenuItems = [
           {
             text: 'Cancel payment',
             onClick: () => {
-              this.cancelBillPaymentModal.billId = +billEvent.id!;
+              this.cancelBillPaymentModal.billId = billEvent.id!.toString();
               this.cancelBillPaymentModal.openModal();
             },
           },

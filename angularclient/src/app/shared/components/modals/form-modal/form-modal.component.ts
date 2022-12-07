@@ -66,7 +66,6 @@ export class FormModalComponent implements OnInit, OnDestroy, AfterViewInit {
     this.formGroup?.valueChanges.subscribe({
       next: () => {
         this.disabled = this.formGroup?.valid ? false : true;
-        console.log(this.disabled);
       },
     });
   }
