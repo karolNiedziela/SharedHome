@@ -28,6 +28,8 @@ export class BillsExpensesComponent implements OnInit {
 
   public barChartPlugins = [DataLabelsPlugin];
 
+  chosenYear?: number;
+
   constructor(
     public barChartService: BarChartService,
     private billService: BillService,
@@ -35,19 +37,29 @@ export class BillsExpensesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.billMonthlyCost$ = this.billService
-      .getMonthlyCost(2022) // TODO: I think it should be changed to dynamic. Here and in the shopping-lists-expenses.component also.
-      .pipe(
-        tap((response: ApiResponse<BillMonthlyCost[]>) => {
-          this.anyCosts = response.data.some((x) => x.totalCost > 0);
-        })
-      );
+    this.chosenYear = new Date().getFullYear();
+    this.billMonthlyCost$ = this.getBillMonthlyCost(this.chosenYear);
 
     this.translateService
       .get(this.toTranslateTexts)
       .subscribe((translations) => {
         this.translatedTexts = translations;
       });
+  }
+
+  getBillMonthlyCost(year: number) : Observable<ApiResponse<BillMonthlyCost[]>> {
+    return this.billService
+      .getMonthlyCost(year)
+      .pipe(
+        tap((response: ApiResponse<BillMonthlyCost[]>) => {
+          this.anyCosts = response.data.some((x) => x.totalCost > 0);
+        })
+      );
+  }
+
+  setDataOnYearChange(year: number) : void {
+    this.chosenYear = year;
+    this.billMonthlyCost$ = this.getBillMonthlyCost(year);
   }
 
   public getBarChartOptions(
@@ -81,7 +93,7 @@ export class BillsExpensesComponent implements OnInit {
           },
           title: {
             display: true,
-            text: this.translatedTexts['bills'],
+            text: this.translatedTexts['bills'] + " [" + this.chosenYear + "]",
             font: {
               size: 24,
             },

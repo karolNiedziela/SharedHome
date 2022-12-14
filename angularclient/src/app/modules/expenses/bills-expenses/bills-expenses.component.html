@@ -1,4 +1,8 @@
 <div class="d-flex flex-column">
+  <app-year-select
+      class="col-5 col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+      (changeYearEvent)="setDataOnYearChange($event)"
+  ></app-year-select>
   <div
     class="flex-grow-1"
     *ngIf="
@@ -17,7 +21,7 @@
       </canvas>
     </div>
     <ng-template #noBills
-      ><div class="text-center"> {{ "No bills paid" | translate }} </div></ng-template
+      ><div class="text-center"> {{ "No bills paid" | translate }} [{{chosenYear}}] </div></ng-template
     >
   </div>
   <ng-template #loadingBills>
