@@ -1,8 +1,11 @@
+import { Subscription } from 'rxjs/internal/Subscription';
 import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
 import { Component, OnInit } from '@angular/core';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
+import { AuthenticationResponse } from 'app/core/models/authentication-response';
 
 @Component({
   selector: 'app-navbar',
@@ -13,10 +16,13 @@ export class NavbarComponent implements OnInit {
   notificationIcon = faBell;
   notificationsCount$!: Observable<number>;
   menuToggled: boolean = false;
+  authenticationSubscription!: Subscription;
+  authenticationResponse: AuthenticationResponse = null!;
 
   constructor(
     public screenSizeHelper: ScreenSizeHelper,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +34,12 @@ export class NavbarComponent implements OnInit {
         this.toggleMenu();
       })
     );
+
+    this.authenticationSubscription =
+      this.authenticationService?.authenticationResponse.subscribe(
+        (result: AuthenticationResponse) =>
+          (this.authenticationResponse = result)
+      );
   }
 
   toggleMenu(): void {

@@ -21,8 +21,6 @@ namespace SharedHome.Infrastructure.EF.Queries.Identity.Handlers
 
             var profileImageUrl = user.Images.FirstOrDefault()?.Url;
 
-
-
             return new ProfileImageDto
             {
                 Url = profileImageUrl,

@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationResponse } from 'app/core/models/authentication-response';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { UserInformation } from '../models/user-information';
 
 @Injectable({
   providedIn: 'root',
@@ -139,5 +140,11 @@ export class AuthenticationService {
           this._profileImageSubject.next(profileImage);
         },
       });
+  }
+
+  getUserInformation(): Observable<UserInformation> {
+    return this.http.get<UserInformation>(
+      `${this.identityUrl}/userinformation`
+    );
   }
 }

@@ -65,6 +65,7 @@ $btn-color: $l_white_color !default;
   border-left: 8px solid $l_primary_color !important;
   transition: box-shadow 0.2s ease 0s, transform 0.2s ease 0s;
   border-radius: 4px !important;
+  background-color: $l_white_color !important;
 
   &:hover {
     box-shadow: rgb(0 0 0 / 36%) 0px 16px 32px 0px !important;

@@ -1,1 +1,6 @@
-<button class="btn btn-secondary" (click)="switchTheme()">Switch theme</button>
+<fa-icon
+  class="shared-home-icon"
+  [icon]="themeIcon"
+  (click)="switchTheme()"
+  [title]="'Switch theme' | translate"
+></fa-icon>

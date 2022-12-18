@@ -24,8 +24,10 @@
           >{{ "settings" | translate }}</a
         >
       </li>
-      <li (click)="logout()">
-        <a class="dropdown-item">{{ "logOut" | translate }}</a>
+      <li>
+        <a class="dropdown-item" (click)="logout()">{{
+          "logOut" | translate
+        }}</a>
       </li>
     </ul>
   </div>

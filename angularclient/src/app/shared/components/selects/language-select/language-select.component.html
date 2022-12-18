@@ -1,11 +1,12 @@
 <div class="form-floating">
-  <div class="dropdown shared__home form-control">
+  <div class="shared__home">
     <span
-      class="dropdown-toggle"
+      class="toggle"
       id="dropdownMenuLink"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
+      <img [src]="flags[languageService.language]" alt="poland" class="flag" />
       {{ languageService.language | translate }}
     </span>
 
@@ -15,9 +16,9 @@
         *ngFor="let lang of translateService.getLangs()"
         (click)="onLanguageChanged(lang)"
       >
+        <img [src]="flags[lang]" alt="poland" class="flag" />
         {{ lang }}
       </li>
     </ul>
   </div>
-  <label class="sharedhome__label">{{ "Language" | translate }} </label>
 </div>

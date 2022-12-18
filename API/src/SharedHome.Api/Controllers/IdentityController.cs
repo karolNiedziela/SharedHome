@@ -11,6 +11,7 @@ using SharedHome.Application.Identity.Commands.Register;
 using SharedHome.Application.Identity.Commands.ResetPassword;
 using SharedHome.Application.Identity.Dto;
 using SharedHome.Application.Identity.Queries.GetProfileImage;
+using SharedHome.Application.Identity.Queries.GetUserInformation;
 using SharedHome.Identity.Authentication;
 
 namespace SharedHome.Api.Controllers
@@ -127,6 +128,16 @@ namespace SharedHome.Api.Controllers
             var profileImage = await Mediator.Send(new GetProfileImage());
 
             return Ok(profileImage);
+        }
+
+        [HttpGet(ApiRoutes.Identity.UserInformation)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<UserInformationDto>> GetUserInformation()
+        {
+            var userInformation = await Mediator.Send(new GetUserInformationQuery());
+
+            return Ok(userInformation);
         }
     }
 }

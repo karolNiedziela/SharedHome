@@ -6,13 +6,14 @@
     }"
   >
     <span
-      class="dropdown-toggle"
+      class="dropdown-toggle selected-value"
       id="dropdownMenuLink"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
+      {{ enumType[selectedValue] | translate }}
     </span>
-    {{ enumType[selectedValue] | translate }}
+
     <ul
       class="dropdown-menu"
       [ngClass]="{

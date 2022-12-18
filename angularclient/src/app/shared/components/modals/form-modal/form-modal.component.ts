@@ -75,6 +75,8 @@ export class FormModalComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   open(): void {
+    this.errorService.clearErrors();
+
     this.modalRef = this.modalService.open(this.modalContent, {
       beforeDismiss: () => this.beforeDismiss(),
       backdrop: 'static',
