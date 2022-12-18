@@ -4,8 +4,13 @@
   text-align: left;
 }
 
+.dropdown-menu {
+  width: 100%;
+}
+
 .dropdown-toggle {
   cursor: pointer;
+  width: 100%;
 }
 
 .dropdown-toggle::after {

@@ -20,7 +20,11 @@
   </span>
 
   <div class="d-flex justify-content-sm-end align-items-center flex-row">
-    <app-notification-bell></app-notification-bell>
-    <app-profile-dropdown></app-profile-dropdown>
+    <app-theme-switcher class="mx-2"></app-theme-switcher>
+    <app-language-select class="mx-2"></app-language-select>
+    <app-notification-bell
+      *ngIf="authenticationResponse"
+    ></app-notification-bell>
+    <app-profile-dropdown *ngIf="authenticationResponse"></app-profile-dropdown>
   </div>
 </nav>
