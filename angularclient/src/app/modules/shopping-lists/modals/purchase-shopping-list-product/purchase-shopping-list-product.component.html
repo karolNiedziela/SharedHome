@@ -1,17 +1,13 @@
-<app-modal #purchaseShoppingListProductModal [modalConfig]="modalConfig">
+<app-form-modal
+  #purchaseShoppingListProductModal
+  [modalConfig]="modalConfig"
+  [formGroup]="purchaseShoppingListProductForm"
+>
   <div class="row g-3" [formGroup]="purchaseShoppingListProductForm">
-    <div *ngIf="errorMessages.length > 0" class="col-md-12">
-      <div
-        *ngFor="let errorMessage of errorMessages"
-        class="sharedhome-errormessage"
-      >
-        {{ errorMessage }}
-      </div>
-    </div>
     <app-money-form
       [moneyFormGroup]="
         purchaseShoppingListProductForm.get('money') | formGroup
       "
     ></app-money-form>
   </div>
-</app-modal>
+</app-form-modal>

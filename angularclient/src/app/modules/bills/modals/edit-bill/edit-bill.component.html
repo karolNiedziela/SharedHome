@@ -1,0 +1,23 @@
+<app-form-modal #modal [modalConfig]="modalConfig" [formGroup]="editBillForm">
+  <div class="row g-3" [formGroup]="editBillForm">
+    <app-text-input
+      formControlName="serviceProviderName"
+      [labelText]="'Service Provider' | translate"
+      [placeholder]="'Service Provider' | translate"
+    ></app-text-input>
+    <app-enum-select
+      formControlName="billType"
+      [labelText]="'Type' | translate"
+      [enumType]="billTypeType"
+      [firstValueSelected]="true"
+    ></app-enum-select>
+    <app-money-form
+      *ngIf="bill?.cost"
+      [moneyFormGroup]="editBillForm.get('money') | formGroup"
+    ></app-money-form>
+    <app-date-input
+      [labelText]="'Date of Payment' | translate"
+      formControlName="dateOfPayment"
+    ></app-date-input>
+  </div>
+</app-form-modal>

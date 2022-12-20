@@ -1,7 +1,7 @@
 import { AcceptInvitation } from './../../models/accept-invitation';
 import { InvitationService } from './../../services/invitation.service';
-import { ModalConfig } from './../../../../shared/components/modals/modal/modal.config';
-import { ModalComponent } from './../../../../shared/components/modals/modal/modal.component';
+import { FormModalConfig } from '../../../../shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from '../../../../shared/components/modals/form-modal/form-modal.component';
 import { Modalable } from './../../../../core/models/modalable';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -16,8 +16,8 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
   @Input() houseGroupName!: string;
 
   @ViewChild('modal')
-  private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Accept invitation',
     onSave: () => {
       this.onSave();
@@ -29,9 +29,6 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
       this.onDismiss();
     },
   };
-
-  errorMessages: string[] = [];
-
   acceptInvitationForm!: FormGroup;
 
   constructor(private invitationService: InvitationService) {}
@@ -52,12 +49,6 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
-    if (this.acceptInvitationForm.invalid) {
-      this.acceptInvitationForm.markAllAsTouched();
-
-      return;
-    }
-
     const acceptInvitation: AcceptInvitation = {
       houseGroupId: this.houseGroupId,
     };
@@ -65,9 +56,6 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
     this.invitationService.accept(acceptInvitation).subscribe({
       next: () => {
         this.modal.close();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }

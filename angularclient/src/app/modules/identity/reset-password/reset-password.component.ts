@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { ResetPassword } from './../models/reset-password';
 import { PasswordsFormComponent } from './../../../shared/components/forms/passwords-form/passwords-form.component';
@@ -16,12 +17,13 @@ export class ResetPasswordComponent implements OnInit {
   resetPasswordForm!: FormGroup;
   code!: string;
   email!: string;
-  information: string | null = null;
+  errorMessages: string[] = [];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +42,6 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(): void {
     if (this.resetPasswordForm.invalid) {
       this.passwordForm.passwordForm.markAllAsTouched();
-
       return;
     }
 
@@ -54,11 +55,11 @@ export class ResetPasswordComponent implements OnInit {
 
     this.authenticationService.resetPassword(resetPassword).subscribe({
       next: () => {
-        this.information = 'Password successfully set.';
+        this.toastrService.info('Password successfully changed.');
         this.router.navigateByUrl('/identity/login');
       },
-      error: (err: any) => {
-        console.log(err);
+      error: () => {
+        this.errorMessages.push("Couldn't reset your password, try again.");
       },
     });
   }

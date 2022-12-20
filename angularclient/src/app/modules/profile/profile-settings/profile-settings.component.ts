@@ -1,4 +1,7 @@
+import { Observable } from 'rxjs';
+import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
+import { UserInformation } from 'app/modules/identity/models/user-information';
 
 @Component({
   selector: 'app-profile-settings',
@@ -6,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-settings.component.scss'],
 })
 export class ProfileSettingsComponent implements OnInit {
-  constructor() {}
+  userInformation$!: Observable<UserInformation>;
 
-  ngOnInit(): void {}
+  constructor(private authenticationService: AuthenticationService) {}
+
+  ngOnInit(): void {
+    this.userInformation$ = this.authenticationService.getUserInformation();
+  }
 }

@@ -3,9 +3,8 @@
   (click)="openModal()"
 ></app-circle-button>
 
-<app-modal #modal [modalConfig]="modalConfig">
+<app-form-modal #modal [modalConfig]="modalConfig" [formGroup]="addBillForm">
   <div class="row g-3" [formGroup]="addBillForm">
-    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="serviceProviderName"
       [labelText]="'Service Provider' | translate"
@@ -22,4 +21,4 @@
       [labelText]="'Date of Payment' | translate"
     ></app-date-input>
   </div>
-</app-modal>
+</app-form-modal>

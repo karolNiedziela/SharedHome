@@ -81,6 +81,8 @@
             public const string UploadProfileImage = "uploadprofileimage";
 
             public const string GetProfileImage = "getprofileimage";
+
+            public const string UserInformation = "userinformation";
         }
 
         public static class Invitations

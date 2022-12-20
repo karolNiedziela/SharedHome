@@ -1,14 +1,14 @@
 <div class="d-flex flex-column h-100">
   <div [formGroup]="shoppingListForm" class="row align-items-center g-md-2 g-1">
     <app-text-input
-      class="col-6 col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+      class="col-5 col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
       formControlName="yearAndMonth"
       [labelText]="'yearAndMonth' | translate"
       [placeholder]="'yearAndMonth' | translate"
       (change)="onCurrentYearAndMonthChange()"
     ></app-text-input>
     <app-enum-select
-      class="col-4 col-sm-3 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+      class="col-5 col-sm-3 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
       #statusSelect
       [labelText]="'status' | translate"
       [enumType]="shoppingListStatus"

@@ -1,4 +1,8 @@
-<app-modal #modal [modalConfig]="modalConfig">
+<app-form-modal
+  #modal
+  [modalConfig]="modalConfig"
+  [formGroup]="handOwnerRoleOverForm"
+>
   <div class="row g-3" [formGroup]="handOwnerRoleOverForm">
     <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
@@ -7,4 +11,4 @@
       [placeholder]="'New Owner' | translate"
     ></app-text-input>
   </div>
-</app-modal>
+</app-form-modal>

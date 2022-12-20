@@ -11,6 +11,7 @@
     </h4>
   </div>
   <div class="modal-body">
+    <app-error [errorMessages]="errorMessages"></app-error>
     <ng-content></ng-content>
   </div>
   <div class="modal-footer">
@@ -28,6 +29,7 @@
       *ngIf="modalConfig.isSaveButtonVisible"
       [text]="modalConfig.saveButtonLabel! | translate"
       type="button"
+      [disabled]="disabled"
       (onButtonClick)="save()"
     ></app-button>
   </div>

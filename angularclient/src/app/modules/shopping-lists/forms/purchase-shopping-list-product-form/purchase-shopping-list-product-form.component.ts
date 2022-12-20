@@ -12,8 +12,6 @@ export class PurchaseShoppingListProductFormComponent implements OnInit {
 
   public purchaseShoppingListProductForm!: FormGroup;
 
-  public errorMessages: string[] = [];
-
   ngOnInit(): void {
     this.purchaseShoppingListProductForm = new FormGroup({
       money: new FormGroup({}),

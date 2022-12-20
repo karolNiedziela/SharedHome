@@ -11,7 +11,11 @@
     }"
     [value]="control?.value"
   />
-  <label class="sharedhome__label"
+  <label
+    class="sharedhome__label"
+    [ngClass]="{
+      'text-decoration-line-through': disabled
+    }"
     >{{ labelText }}
     <span *ngIf="isRequired" class="required" aria-required="true">
       *

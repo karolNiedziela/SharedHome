@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import {
   Component,
   OnInit,
@@ -61,7 +62,7 @@ export class DateInputComponent
   }
 
   writeValue(value: any): void {
-    if (this.controlDir.control && this.controlDir.control?.value != value) {
+    if (this.control && this.control?.value != value) {
       this.controlDir.control?.setValue(value, { emitEvent: false });
     }
   }

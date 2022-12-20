@@ -1,4 +1,11 @@
-import { Component, forwardRef, Input, OnDestroy } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  OnInit,
+} from '@angular/core';
 import {
   ControlValueAccessor,
   NG_VALIDATORS,
@@ -31,7 +38,9 @@ import { Subscription } from 'rxjs/internal/Subscription';
     },
   ],
 })
-export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
+export class PasswordsFormComponent
+  implements ControlValueAccessor, OnInit, OnDestroy
+{
   @Input() passwordLabel: string = 'Password';
   @Input() confirmPasswordLabel: string = 'Confirm password';
 
@@ -42,7 +51,9 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
   passwordTextField: boolean = false;
   confirmPasswordTextField: boolean = false;
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
     this.passwordForm = new FormGroup(
       {
         password: new FormControl('', [
@@ -63,6 +74,10 @@ export class PasswordsFormComponent implements ControlValueAccessor, OnDestroy {
         this.onTouched();
       })
     );
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
   }
 
   get value(): any {

@@ -3,8 +3,8 @@ import { HouseGroupService } from './../../services/housegroup.service';
 import { Modalable } from './../../../../core/models/modalable';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-add-house-group',
@@ -13,10 +13,9 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 })
 export class AddHouseGroupComponent implements Modalable, OnInit {
   addHouseGroupForm!: FormGroup;
-  errorMessages: string[] = [];
 
-  @ViewChild('modal') private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  @ViewChild('modal') private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Add house group',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -38,11 +37,6 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
-    if (this.addHouseGroupForm.invalid) {
-      this.addHouseGroupForm.markAllAsTouched();
-      return;
-    }
-
     const name = this.addHouseGroupForm.get('name')?.value;
 
     const addHouseGroup: AddHouseGroup = {
@@ -51,19 +45,10 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
 
     this.houseGroupService.add(addHouseGroup).subscribe({
       next: () => {
-        this.addHouseGroupForm.reset();
-
         this.modal.close();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }
-  onClose(): void {
-    this.addHouseGroupForm.reset();
-  }
-  onDismiss(): void {
-    this.addHouseGroupForm.reset();
-  }
+  onClose(): void {}
+  onDismiss(): void {}
 }

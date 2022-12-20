@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   faBars,
   faBell,
@@ -10,16 +10,13 @@ import {
   faSignOut,
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
-
-declare var bootstrap: any;
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   barsIcon = faBars;
   shoppingListsIcon = faCartShopping;
   billsIcon = faFileInvoice;
@@ -30,11 +27,5 @@ export class SidebarComponent implements OnInit {
   settingsIcon = faGear;
   logoutIcon = faSignOut;
 
-  constructor(private authenticationService: AuthenticationService) {}
-
-  ngOnInit(): void {}
-
-  logout() {
-    this.authenticationService.logout();
-  }
+  constructor() {}
 }

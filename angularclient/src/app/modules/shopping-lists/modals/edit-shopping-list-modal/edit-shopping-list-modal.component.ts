@@ -2,7 +2,7 @@ import { UpdateShoppingList } from './../../models/update-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { ShoppingList } from './../../models/shopping-list';
 import { Modalable } from './../../../../core/models/modalable';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   Component,
@@ -12,7 +12,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-edit-shopping-list-modal',
@@ -25,12 +25,11 @@ export class EditShoppingListModalComponent
   @Input() shoppingList!: ShoppingList;
   @Input() isSingleRefresh!: boolean;
   editShoppingListForm!: FormGroup;
-  errorMessages: string[] = [];
 
   @ViewChild('modal')
-  private editShoppingListModal!: ModalComponent;
+  private editShoppingListModal!: FormModalComponent;
 
-  public modalConfig: ModalConfig = {
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Edit shopping list',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -57,16 +56,11 @@ export class EditShoppingListModalComponent
   }
 
   openModal(): void {
+    this.setFormValues();
     this.editShoppingListModal.open();
   }
 
   onSave(): void {
-    if (this.editShoppingListForm.invalid) {
-      this.editShoppingListForm.markAllAsTouched();
-
-      return;
-    }
-
     const name = this.editShoppingListForm.get('name')?.value;
 
     const updateShoppingList: UpdateShoppingList = {
@@ -78,23 +72,14 @@ export class EditShoppingListModalComponent
       .update(updateShoppingList, this.isSingleRefresh)
       .subscribe({
         next: () => {
-          this.resetForm();
-
           this.editShoppingListModal.close();
-        },
-        error: (error: string[]) => {
-          this.errorMessages = error;
         },
       });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
-    this.resetForm();
-  }
+  onDismiss(): void {}
 
   private setFormValues(): void {
     if (this.shoppingList == null) {
@@ -102,9 +87,5 @@ export class EditShoppingListModalComponent
     }
 
     this.editShoppingListForm?.patchValue({ name: this.shoppingList.name });
-  }
-
-  private resetForm(): void {
-    this.setFormValues();
   }
 }

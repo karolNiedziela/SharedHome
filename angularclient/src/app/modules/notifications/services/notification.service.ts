@@ -27,13 +27,13 @@ export class NotificationService {
   public notificationsCount$: Observable<number> =
     this._notificationsCount.asObservable();
 
-  constructor(private http: HttpClient) {
-    if (this._notifications.value == null) {
-      this.get();
-    }
-  }
+  constructor(private http: HttpClient) {}
 
   get() {
+    if (this._notifications.value != null) {
+      return;
+    }
+
     this.http
       .get<Paged<AppNotification>>(
         this.notificationsUrl,

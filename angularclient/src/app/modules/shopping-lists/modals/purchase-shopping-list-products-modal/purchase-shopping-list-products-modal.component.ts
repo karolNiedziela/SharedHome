@@ -8,8 +8,8 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { PurchaseShoppingListProductFormComponent } from '../../forms/purchase-shopping-list-product-form/purchase-shopping-list-product-form.component';
 import { PurchaseShoppingListProducts } from '../../models/purchase-shopping-list-products';
 @Component({
@@ -23,12 +23,14 @@ export class PurchaseShoppingListProductsModalComponent
   @Input() shoppingListProductNames: string[] = [];
   @Input() shoppingListId!: string;
 
-  @ViewChild('purchaseShoppingListProductModal') private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  @ViewChild('purchaseShoppingListProductModal')
+  private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Purchase shopping list products',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
     onDismiss: () => this.onDismiss(),
+    onReset: () => this.onReset(),
   };
 
   @ViewChildren(PurchaseShoppingListProductFormComponent)
@@ -79,21 +81,15 @@ export class PurchaseShoppingListProductsModalComponent
       .purchaseProducts(purchaseShoppingListProducts)
       .subscribe({
         next: () => {
-          this.resetForms();
-
           this.modal.close();
         },
       });
   }
 
-  onClose(): void {
-    this.resetForms();
-  }
-  onDismiss(): void {
-    this.resetForms();
-  }
+  onClose(): void {}
+  onDismiss(): void {}
 
-  private resetForms(): void {
+  private onReset(): void {
     this.purchaseProductsViewChildren.map(
       (component: PurchaseShoppingListProductFormComponent) => {
         component.purchaseShoppingListProductForm.reset();

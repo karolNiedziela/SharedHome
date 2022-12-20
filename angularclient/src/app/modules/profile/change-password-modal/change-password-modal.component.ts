@@ -3,8 +3,9 @@ import { AuthenticationService } from 'app/modules/identity/services/authenticat
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Modalable } from './../../../core/models/modalable';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ModalComponent } from 'app/shared/components/modals/modal/modal.component';
-import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { PasswordsFormComponent } from 'app/shared/components/forms/passwords-form/passwords-form.component';
 
 @Component({
   selector: 'app-change-password-modal',
@@ -13,9 +14,10 @@ import { ModalConfig } from 'app/shared/components/modals/modal/modal.config';
 })
 export class ChangePasswordModalComponent implements OnInit, Modalable {
   @ViewChild('modal')
-  private uploadProfileImageModal!: ModalComponent;
+  private changePasswordModal!: FormModalComponent;
+  @ViewChild('passwordForm') passwordForm!: PasswordsFormComponent;
 
-  public modalConfig: ModalConfig = {
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Change password',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -34,7 +36,7 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
   }
 
   openModal(): void {
-    this.uploadProfileImageModal.open();
+    this.changePasswordModal.open();
   }
   onSave(): void {
     const currentPassword: string =
@@ -47,6 +49,12 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
       newPassword: newPassword,
       confirmNewPassword: newPassword,
     };
+
+    this.authenticationService.changePassword(changePassword).subscribe({
+      next: () => {
+        this.changePasswordModal.close();
+      },
+    });
   }
   onClose(): void {}
   onDismiss(): void {}

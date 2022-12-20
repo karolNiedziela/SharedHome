@@ -1,7 +1,7 @@
 import { RejectInvitation } from './../../models/reject-invitation';
 import { InvitationService } from './../../services/invitation.service';
-import { ModalConfig } from './../../../../shared/components/modals/modal/modal.config';
-import { ModalComponent } from './../../../../shared/components/modals/modal/modal.component';
+import { FormModalConfig } from '../../../../shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from '../../../../shared/components/modals/form-modal/form-modal.component';
 import { Modalable } from './../../../../core/models/modalable';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
@@ -16,8 +16,8 @@ export class RejectInvitationComponent implements Modalable, OnInit {
   @Input() houseGroupName!: string;
 
   @ViewChild('modal')
-  private modal!: ModalComponent;
-  public modalConfig: ModalConfig = {
+  private modal!: FormModalComponent;
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Reject invitation',
     onSave: () => {
       this.onSave();
@@ -31,8 +31,6 @@ export class RejectInvitationComponent implements Modalable, OnInit {
   };
 
   rejectInvitationForm!: FormGroup;
-
-  errorMessages: string[] = [];
 
   constructor(private invitationService: InvitationService) {}
 
@@ -53,12 +51,6 @@ export class RejectInvitationComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
-    if (this.rejectInvitationForm.invalid) {
-      this.rejectInvitationForm.markAllAsTouched();
-
-      return;
-    }
-
     const rejectInvitation: RejectInvitation = {
       houseGroupId: this.houseGroupId,
     };
@@ -66,9 +58,6 @@ export class RejectInvitationComponent implements Modalable, OnInit {
     this.invitationService.reject(rejectInvitation).subscribe({
       next: () => {
         this.modal.close();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }

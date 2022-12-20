@@ -9,6 +9,7 @@ import { BillTypeIconsComponent } from './bill-type-icons/bill-type-icons.compon
 import { AddBillComponent } from './modals/add-bill/add-bill.component';
 import { PayForBillComponent } from './modals/pay-for-bill/pay-for-bill.component';
 import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-bill-payment.component';
+import { EditBillComponent } from './modals/edit-bill/edit-bill.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CancelBillPaymentComponent } from './modals/cancel-bill-payment/cancel-
     AddBillComponent,
     PayForBillComponent,
     CancelBillPaymentComponent,
+    EditBillComponent,
   ],
   imports: [
     CalendarModule.forRoot({

@@ -2,13 +2,7 @@ import { ConfirmationModalConfig } from './../../../../shared/components/modals/
 import { ConfirmationModalComponent } from './../../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { Modalable } from './../../../../core/models/modalable';
 import { BillService } from './../../services/bill.service';
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-cancel-bill-payment',
@@ -16,7 +10,7 @@ import {
   styleUrls: ['./cancel-bill-payment.component.scss'],
 })
 export class CancelBillPaymentComponent implements Modalable, OnInit {
-  @Input() billId!: number;
+  @Input() billId!: string;
 
   @ViewChild('modal') private modal!: ConfirmationModalComponent;
   public modalConfig: ConfirmationModalConfig = {

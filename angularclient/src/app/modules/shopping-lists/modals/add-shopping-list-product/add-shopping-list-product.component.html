@@ -1,6 +1,9 @@
-<app-modal #addShoppingListProductModal [modalConfig]="modalConfig">
+<app-form-modal
+  #addShoppingListProductModal
+  [modalConfig]="modalConfig"
+  [formGroup]="addShoppingListProductForm"
+>
   <div class="row g-3" [formGroup]="addShoppingListProductForm">
-    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="productName"
       [labelText]="'Product Name' | translate"
@@ -20,4 +23,4 @@
   <app-add-many-shopping-list-products-form
     #addManyShoppingListProducts
   ></app-add-many-shopping-list-products-form>
-</app-modal>
+</app-form-modal>

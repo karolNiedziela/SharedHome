@@ -1,10 +1,13 @@
-<app-modal #modal [modalConfig]="modalConfig">
+<app-form-modal
+  #modal
+  [modalConfig]="modalConfig"
+  [formGroup]="rejectInvitationForm"
+>
   <div class="row g-3" [formGroup]="rejectInvitationForm">
-    <app-error [errorMessages]="errorMessages"></app-error>
     <app-text-input
       formControlName="houseGroupName"
       [labelText]="'House Group Name' | translate"
       [placeholder]="'House Group Name' | translate"
     ></app-text-input>
   </div>
-</app-modal>
+</app-form-modal>

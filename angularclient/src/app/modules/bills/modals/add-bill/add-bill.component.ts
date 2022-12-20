@@ -1,11 +1,11 @@
 import { BillType } from './../../enums/bill-type';
 import { AddBill } from './../../models/add-bill';
 import { BillService } from './../../services/bill.service';
-import { ModalConfig } from './../../../../shared/components/modals/modal/modal.config';
 import { Modalable } from './../../../../core/models/modalable';
-import { ModalComponent } from './../../../../shared/components/modals/modal/modal.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-add-bill',
@@ -14,13 +14,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AddBillComponent implements Modalable, OnInit {
   addBillForm!: FormGroup;
-  errorMessages: string[] = [];
 
   public billTypeType: typeof BillType = BillType;
 
-  @ViewChild('modal') private modal!: ModalComponent;
+  @ViewChild('modal') private modal!: FormModalComponent;
 
-  public modalConfig: ModalConfig = {
+  public modalConfig: FormModalConfig = {
     modalTitle: 'Add bill',
     onSave: () => this.onSave(),
     onClose: () => this.onClose(),
@@ -41,11 +40,6 @@ export class AddBillComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
-    if (this.addBillForm.invalid) {
-      this.addBillForm.markAllAsTouched();
-      return;
-    }
-
     const billType = this.addBillForm.get('billType')?.value;
     const serviceProviderName = this.addBillForm.get(
       'serviceProviderName'
@@ -61,23 +55,11 @@ export class AddBillComponent implements Modalable, OnInit {
     this.billService.addBill(addBill).subscribe({
       next: () => {
         this.modal.close();
-        this.resetForm();
-      },
-      error: (errors: string[]) => {
-        this.errorMessages = errors;
       },
     });
   }
 
-  onClose(): void {
-    this.resetForm();
-  }
+  onClose(): void {}
 
-  onDismiss(): void {
-    this.resetForm();
-  }
-
-  private resetForm(): void {
-    this.addBillForm.reset();
-  }
+  onDismiss(): void {}
 }
