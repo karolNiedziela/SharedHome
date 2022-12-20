@@ -33,6 +33,8 @@ export class ShoppingListsExpensesComponent implements OnInit {
 
   public barChartPlugins = [DataLabelsPlugin];
 
+  chosenYear?: number;
+
   constructor(
     public barChartService: BarChartService,
     private shoppingListService: ShoppingListsService,
@@ -40,19 +42,29 @@ export class ShoppingListsExpensesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.shoppingListMonthlyCost$ = this.shoppingListService
-      .getMonthlyCostByYear(2022)
-      .pipe(
-        tap((response: ApiResponse<ShoppingListMonthlyCost[]>) => {
-          this.anyCosts = response.data.some((x) => x.totalCost > 0);
-        })
-      );
+    this.chosenYear = new Date().getFullYear();
+    this.shoppingListMonthlyCost$ = this.getShoppingListMonthlyCost(this.chosenYear);
 
     this.translateService
       .get(this.toTranslateTexts)
       .subscribe((translations) => {
         this.translatedTexts = translations;
       });
+  }
+
+  getShoppingListMonthlyCost(year: number) : Observable<ApiResponse<ShoppingListMonthlyCost[]>> {
+    return this.shoppingListService
+      .getMonthlyCostByYear(year)
+      .pipe(
+        tap((response: ApiResponse<ShoppingListMonthlyCost[]>) => {
+          this.anyCosts = response.data.some((x) => x.totalCost > 0);
+        })
+      );
+  }
+
+  setDataOnYearChange(year: number) : void {
+    this.chosenYear = year;
+    this.shoppingListMonthlyCost$ = this.getShoppingListMonthlyCost(year);
   }
 
   public getBarChartOptions(
@@ -86,7 +98,7 @@ export class ShoppingListsExpensesComponent implements OnInit {
           },
           title: {
             display: true,
-            text: this.translatedTexts['shoppingLists'],
+            text: this.translatedTexts['shoppingLists'] + " [" + this.chosenYear + "]",
             font: {
               size: 24,
             },

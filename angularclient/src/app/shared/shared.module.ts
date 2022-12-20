@@ -39,6 +39,7 @@ import { UploadImageComponent } from './components/inputs/upload-image/upload-im
 import { ProgressComponent } from './components/progress/progress.component';
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { ProfileDropdownComponent } from './components/profile-dropdown/profile-dropdown.component';
+import { YearSelectComponent } from './components/selects/year-select/year-select.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { ProfileDropdownComponent } from './components/profile-dropdown/profile-
     ProgressComponent,
     DragAndDropDirective,
     ProfileDropdownComponent,
+    YearSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -124,6 +126,7 @@ import { ProfileDropdownComponent } from './components/profile-dropdown/profile-
     UploadImageComponent,
     DragAndDropDirective,
     ProfileDropdownComponent,
+    YearSelectComponent,
   ],
   providers: [DatePipe, EnumAsStringPipe, FirstLettersToTitleCasePipe],
 })
