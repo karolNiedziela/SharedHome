@@ -1,4 +1,4 @@
-import { UtilityService } from './../../../../core/services/utility.service';
+import { DateHelper } from './../../../helpers/date-helper';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -12,12 +12,10 @@ export class YearSelectComponent implements OnInit {
   years: number [] = [];
   chosenYear?: number;
 
-  constructor(
-    private utilityService : UtilityService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.years = this.utilityService.getYearListSince2022();
+    this.years = DateHelper.getYearListSince2022();
     this.chosenYear = this.getCurrentYear();
   }
 

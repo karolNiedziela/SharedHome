@@ -1,13 +1,8 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class UtilityService {
+export class DateHelper {
 
   constructor() { }
 
-  getYearListSince2022() : number[] {
+  public static getYearListSince2022() : number[] {
     let years = [];
     let currentYear: number = new Date().getFullYear();
 
