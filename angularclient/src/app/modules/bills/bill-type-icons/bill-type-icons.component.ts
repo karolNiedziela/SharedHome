@@ -35,7 +35,7 @@ export class BillTypeIconsComponent implements OnInit {
     [BillType.Other]: faQuestion,
     [BillType.Rent]: faHouse,
     [BillType.Gas]: faGasPump,
-    [BillType.Electricity]: faBolt,
+    [BillType.ElectricCurrent]: faBolt,
     [BillType.Trash]: faTrash,
     [BillType.Phone]: faPhone,
     [BillType.Internet]: faWifi,

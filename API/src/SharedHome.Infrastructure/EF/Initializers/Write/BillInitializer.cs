@@ -32,7 +32,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             var secondBill = Bill.Create(Guid.NewGuid(), InitializerConstants.CharlesUserId, BillType.Water, "MPWIK", DateOnly.FromDateTime(new DateTime(2022, 1, 15)), new Money(250m, "zł"));
             secondBill.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             secondBill.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
-            var thirdBill = Bill.Create(Guid.NewGuid(), InitializerConstants.CharlesUserId, BillType.Electricity, "Tauron", DateOnly.FromDateTime(new DateTime(2022, 1, 20)), new Money(1000m, "zł"));
+            var thirdBill = Bill.Create(Guid.NewGuid(), InitializerConstants.CharlesUserId, BillType.ElectricCurrent, "Tauron", DateOnly.FromDateTime(new DateTime(2022, 1, 20)), new Money(1000m, "zł"));
             thirdBill.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             thirdBill.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             var fourthBill = Bill.Create(Guid.NewGuid(), InitializerConstants.FrancUserId, BillType.Gas, "PGE", DateOnly.FromDateTime(new DateTime(2022, 1, 8)), new Money(2200m, "zł"));
@@ -41,7 +41,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             var fifthBill = Bill.Create(Guid.NewGuid(), InitializerConstants.FrancUserId, BillType.Water, "MPWIK", DateOnly.FromDateTime(new DateTime(2022, 1, 5)), new Money(120m, "zł"));
             fifthBill.CreatedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             fifthBill.ModifiedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
-            var sixthBill = Bill.Create(Guid.NewGuid(), InitializerConstants.FrancUserId, BillType.Electricity, "Tauron", DateOnly.FromDateTime(new DateTime(2022, 1, 18)), new Money(750m, "zł"));
+            var sixthBill = Bill.Create(Guid.NewGuid(), InitializerConstants.FrancUserId, BillType.ElectricCurrent, "Tauron", DateOnly.FromDateTime(new DateTime(2022, 1, 18)), new Money(750m, "zł"));
             sixthBill.CreatedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             sixthBill.ModifiedBy = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
 
