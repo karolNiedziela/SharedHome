@@ -32,6 +32,11 @@ namespace SharedHome.Application.Authentication.Queries.Login
                 throw new InvalidCredentialsException();
             }
 
+            if (!user.EmailConfirmed)
+            {
+                throw new EmailNotConfirmedException();
+            }
+
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var authenticationResponse = _authManager.Authenticate(user.Id, user.FirstName, user.LastName, user.Email, userRoles);

@@ -1,3 +1,4 @@
+import { finalize } from 'rxjs';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm!: FormGroup;
   errorMessages: string[] = [];
+  disabled: boolean = false;
 
   constructor(
     private router: Router,
@@ -26,16 +28,25 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.disabled = true;
     const email: string = this.forgotPasswordForm.controls['email'].value;
 
-    this.authenticationService.forgotPassword(email).subscribe({
-      next: () => {
-        this.toastrService.success('Email sent, check your mailbox.');
-        this.router.navigate(['/identity/login']);
-      },
-      error: (errors: any) => {
-        this.errorMessages = errors;
-      },
-    });
+    this.authenticationService
+      .forgotPassword(email)
+      .pipe(
+        finalize(() => {
+          this.disabled = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.toastrService.success('Email sent, check your mailbox.');
+          this.router.navigate(['/identity/login']);
+          this.errorMessages = [];
+        },
+        error: (errors: any) => {
+          this.errorMessages = errors;
+        },
+      });
   }
 }

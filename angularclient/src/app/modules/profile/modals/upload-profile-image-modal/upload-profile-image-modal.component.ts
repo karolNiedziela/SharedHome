@@ -17,6 +17,7 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
   private uploadImage!: UploadImageComponent;
 
   profileImage?: File | null;
+  error?: string;
 
   public modalConfig: FormModalConfig = {
     modalTitle: 'Upload profile image',
@@ -35,6 +36,7 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
   }
   onSave(): void {
     if (!this.profileImage) {
+      this.error = 'This field is required.';
       return;
     }
 

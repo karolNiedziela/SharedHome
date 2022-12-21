@@ -138,5 +138,15 @@
   "Language": "Język",
   "Choose year": "Wybierz rok"
   "Edit bill": "Edytuj rachunek",
-  "Switch theme": "Zmień motyw"
+  "Switch theme": "Zmień motyw",
+  "Forgot password": "Zapomniałeś hasła",
+  "Thanks for signing up. Check your mailbox and confirm email to get fully access.": "Dziękujemy za rejestrację. Sprawdź swoją skrzynkę mailową aby potwierdzić adres email i uzyskać pełny dostęp.",
+  "Thanks for signing up.": "Dziękujemy za rejestrację.",
+  "If the account with the specified email address exists, we will send an email to complete the operation.": "Jeśli konto z podanym adresem email istnieje, zostanie wysłany do zakończenia operacji.",
+  "Have an account": "Masz konto",
+  "Remind": "Przypomnij",
+  "Reset password": "Zresetuj hasło",
+  "Reset": "Zresetuj",
+  "Password successfully changed.": "Hasło zmienione pomyślnie.",
+  "Invalid format": "Niepoprawny format"
 }

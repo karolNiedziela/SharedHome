@@ -45,7 +45,6 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
         [Fact]
         public async Task Handle_Should_Throw_InvalidCredentialsException_When_Password_Is_Invalid()
         {
-
             _userManagerStub.FindByEmailAsync(Arg.Any<string>())
                .Returns(new ApplicationUser());
 
@@ -60,11 +59,33 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
         }
 
         [Fact]
+        public async Task Handle_Should_Throw_EmailNotConfirmedException_When_User_Did_Not_Confirm_Email()
+        {
+            _userManagerStub.FindByEmailAsync(Arg.Any<string>())
+                .Returns(new ApplicationUser()
+                {
+                    EmailConfirmed = false
+                });
+
+            _userManagerStub.CheckPasswordAsync(Arg.Any<ApplicationUser>(), Arg.Any<string>())
+                .Returns(true);
+
+            var command = new LoginQuery("test@email.com", "testPassword");
+            var exception = await Record.ExceptionAsync(() => _queryHandler.Handle(command, default));
+
+            exception.ShouldNotBeNull();
+            exception.ShouldBeOfType<EmailNotConfirmedException>();
+        }
+
+        [Fact]
         public async Task Handle_Should_Return_AuthenticationResponse()
         {
 
             _userManagerStub.FindByEmailAsync(Arg.Any<string>())
-               .Returns(new ApplicationUser());
+               .Returns(new ApplicationUser() 
+               {
+                   EmailConfirmed = true
+               });
 
             _userManagerStub.CheckPasswordAsync(Arg.Any<ApplicationUser>(), Arg.Any<string>())
                 .Returns(true);

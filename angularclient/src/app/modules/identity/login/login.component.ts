@@ -1,7 +1,7 @@
 import { SignalrService } from './../../../core/services/signalr.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { first } from 'rxjs';
+import { first, finalize } from 'rxjs';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { AuthenticationService } from 'app/modules/identity/services/authenticat
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessages: string[] = [];
+  disabled: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -26,7 +27,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
+    this.disabled = true;
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
@@ -37,7 +40,12 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService
       .login(email, password)
-      .pipe(first())
+      .pipe(
+        first(),
+        finalize(() => {
+          this.disabled = false;
+        })
+      )
       .subscribe({
         next: () => {
           this.signalRService.initiateSignalRConnection(

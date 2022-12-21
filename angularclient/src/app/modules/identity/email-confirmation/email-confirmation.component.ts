@@ -1,3 +1,4 @@
+import { finalize } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -24,12 +25,20 @@ export class EmailConfirmationComponent implements OnInit {
       this.router.navigate(['']);
     }
 
-    this.authenticationService.confirmEmail(email, code).subscribe({
-      next: () => {
-        this.toastrService.success('Email adress confirmed.');
-        this.router.navigate(['/identity/login']);
-      },
-      error: (error: string[]) => {},
-    });
+    this.authenticationService
+      .confirmEmail(email, code)
+      .pipe(
+        finalize(() => {
+          this.router.navigate(['/identity/login']);
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.toastrService.success('Email adress confirmed.');
+        },
+        error: (error: string[]) => {
+          this.toastrService.error(error.join(' '));
+        },
+      });
   }
 }

@@ -5,7 +5,7 @@ namespace SharedHome.Application.Identity.Commands.ChangePassword
 {
     public class ChangePasswordCommand : AuthorizeRequest, IRequest<Unit>
     {
-        public string Password { get; set; } = default!;
+        public string CurrentPassword { get; set; } = default!;
 
         public string NewPassword { get; set; } = default!;
 

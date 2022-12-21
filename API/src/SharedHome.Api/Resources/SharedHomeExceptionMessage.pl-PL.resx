@@ -129,6 +129,9 @@
   <data name="EmailAlreadyConfirmed" xml:space="preserve">
     <value>Adres email został już potwierdzony.</value>
   </data>
+  <data name="EmailNotConfirmed" xml:space="preserve">
+    <value>Adres email nie został potwierdzony. Sprawdź skrzynkę mailową i potwierdź adres email.</value>
+  </data>
   <data name="EmptyFirstName" xml:space="preserve">
     <value>Imię nie może być puste.</value>
   </data>

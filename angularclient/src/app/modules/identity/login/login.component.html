@@ -6,13 +6,14 @@
     class="d-grid col-12"
     [text]="'Login' | translate"
     type="submit"
+    [disabled]="disabled"
   ></app-button>
 </form>
 <div class="col-12 text-center">
   <a
     class="text-decoration-none fw-bold"
     [routerLink]="['/identity/forgotpassword']"
-    >Forgot password?</a
+    >{{ "Forgot password" | translate }}?</a
   >
 </div>
 <hr class="mt-4" />
