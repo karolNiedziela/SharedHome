@@ -17,7 +17,7 @@ namespace SharedHome.Application.Identity.Commands.ChangePassword
         public async Task<Unit> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByIdAsync(request.PersonId.ToString());
-            var result = await _userManager.ChangePasswordAsync(user, request.Password, request.NewPassword);
+            var result = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
             if (!result.Succeeded)
             {
                 throw new IdentityException(result);

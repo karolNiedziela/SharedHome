@@ -3,6 +3,7 @@
 </button>
 <app-form-modal #modal [modalConfig]="modalConfig">
   <app-upload-image
+    [error]="error"
     #uploadImage
     (profileImage)="getProfileImage($event)"
   ></app-upload-image>

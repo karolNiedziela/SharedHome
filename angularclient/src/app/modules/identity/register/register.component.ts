@@ -62,6 +62,7 @@ export class RegisterComponent implements OnInit {
         next: (response: any) => {
           this.information = response.data;
           this.registerForm.reset();
+          this.errorMessages = [];
         },
         error: (error: string[]) => {
           this.errorMessages = error;

@@ -23,7 +23,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { SettingModule } from './modules/settings/setting.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +36,6 @@ import { SettingModule } from './modules/settings/setting.module';
     ShoppingListsModule,
     BillsModule,
     AppRoutingModule,
-    SettingModule,
     IdentityModule,
     NgbModule,
     HousegroupModule,

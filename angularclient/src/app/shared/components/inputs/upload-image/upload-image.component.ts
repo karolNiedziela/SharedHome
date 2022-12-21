@@ -5,6 +5,7 @@ import {
   Output,
   ViewChild,
   EventEmitter,
+  Input,
 } from '@angular/core';
 
 @Component({
@@ -13,6 +14,8 @@ import {
   styleUrls: ['./upload-image.component.scss'],
 })
 export class UploadImageComponent {
+  @Input() error?: string;
+
   @Output() profileImage: EventEmitter<File> = new EventEmitter<File>();
 
   @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
@@ -29,7 +32,6 @@ export class UploadImageComponent {
   file?: File;
   progress: number = 0;
   preview = '';
-  error?: string;
 
   deleteIcon = faXmark;
 

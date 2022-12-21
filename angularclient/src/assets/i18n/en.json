@@ -136,5 +136,15 @@
   "Profile image": "Profile image",
   "Current password": "Current password",
   "Edit bill": "Edit bill",
-  "Switch theme": "Switch theme"
+  "Switch theme": "Switch theme",
+  "Forgot password": "Forgot password",
+  "Thanks for signing up. Check your mailbox and confirm email to get fully access.": "Thanks for signing up. Check your mailbox and confirm email to get fully access.",
+  "Thanks for signing up.": "Thanks for signing up.",
+  "If the account with the specified email address exists, we will send an email to complete the operation.": "If the account with the specified email address exists, we will send an email to complete the operation.",
+  "Have an account": "Have an account",
+  "Remind": "Remind",
+  "Reset password": "Reset password",
+  "Reset": "Reset",
+  "Password successfully changed.": "Password successfully changed.",
+  "Invalid format": "Invalid format"
 }
