@@ -21,17 +21,18 @@ namespace SharedHome.Domain.Invitations
 
         }
 
-        private Invitation(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId)
+        private Invitation(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId, bool sentStatus = false)
         {
             Id = id;
             HouseGroupId = houseGroupId;
             RequestedByPersonId = requestedByPersonId;
             RequestedToPersonId = requestedToPersonId;
-            Status = InvitationStatus.Pending;
+            Status = sentStatus ? InvitationStatus.Sent : InvitationStatus.Pending;
         }
 
-        public static Invitation Create(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId)
-            => new(id, houseGroupId, requestedByPersonId, requestedToPersonId);
+        public static Invitation Create(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId, bool sentStatus = false)
+            => new(id, houseGroupId, requestedByPersonId, requestedToPersonId, sentStatus);
+
 
         public void Accept()
         {

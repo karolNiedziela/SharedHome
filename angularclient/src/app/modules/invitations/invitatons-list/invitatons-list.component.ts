@@ -56,22 +56,7 @@ export class InvitatonsListComponent
 
   invitationsSubscription!: Subscription;
 
-  columnSettings: ColumnSetting[] = [
-    {
-      propertyName: 'houseGroupName',
-      header: 'House Group Name',
-    },
-    {
-      propertyName: 'invitationStatus',
-      header: 'Status',
-      format: CellPipeFormat.ENUM,
-      enumType: InvitationStatus,
-    },
-    {
-      propertyName: 'sentByFullName',
-      header: 'Send By',
-    },
-  ];
+  columnSettings: ColumnSetting[] = [];
 
   constructor(private invitationService: InvitationService) {}
 
@@ -86,6 +71,8 @@ export class InvitatonsListComponent
       this.invitationService.allInvitationsRefreshNeeded.subscribe(() => {
         this.getInvitations(this.statusSelected);
       });
+
+    this.setColumnsBasedOnStatus();
   }
 
   ngAfterViewInit(): void {
@@ -93,6 +80,7 @@ export class InvitatonsListComponent
       this.statusSelect.selectedChanged.subscribe((selectedValue: number) => {
         this.onStatusChange(selectedValue!);
         this.statusSelected = selectedValue;
+        this.setColumnsBasedOnStatus();
       });
   }
 
@@ -174,5 +162,32 @@ export class InvitatonsListComponent
     }
 
     this.getInvitations(selectedStatus);
+  }
+
+  setColumnsBasedOnStatus(): void {
+    this.columnSettings = [
+      {
+        propertyName: 'houseGroupName',
+        header: 'House Group Name',
+      },
+      {
+        propertyName: 'invitationStatus',
+        header: 'Status',
+        format: CellPipeFormat.ENUM,
+        enumType: InvitationStatus,
+      },
+    ];
+
+    if (this.statusSelected == InvitationStatus.Sent) {
+      this.columnSettings.push({
+        propertyName: 'sentByFullName',
+        header: 'Sent To',
+      });
+    } else {
+      this.columnSettings.push({
+        propertyName: 'sentByFullName',
+        header: 'Sent By',
+      });
+    }
   }
 }

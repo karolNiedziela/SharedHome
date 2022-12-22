@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.ReadServices;
+using SharedHome.Domain.Invitations;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
 
@@ -13,6 +14,13 @@ namespace SharedHome.Infrastructure.EF.ReadServices
         {
             _invitations = context.Invitations;
         }
+
+        public async Task<InvitationReadModel?> GetByIdAsync(Guid id)
+            => await _invitations
+            .Include(x => x.RequestedByPerson)
+            .Include(x => x.RequestedToPerson)
+            .Include(x => x.HouseGroup)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(Guid houseGroupId, Guid requestedToPersonId)
            => await _invitations.AnyAsync(invitation => invitation.HouseGroupId == houseGroupId &&

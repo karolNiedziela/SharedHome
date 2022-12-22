@@ -62,7 +62,7 @@
   "Other": "Inne",
   "Rent": "Wynajem",
   "Gas": "Gaz",
-  "Eletricity": "Prąd",
+  "ElectricCurrent": "Prąd",
   "Trash": "Śmieci",
   "Phone": "Telefon",
   "Internet": "Internet",
@@ -107,7 +107,8 @@
   "Accepted": "Zaakceptowane",
   "Rejected": "Odrzucone",
   "House Group Name": "Nazwa grupy domowej",
-  "Send By": "Wysłane przez",
+  "Sent By": "Wysłane przez",
+  "Sent To": "Wysłane do",
   "Accept": "Zaakceptuj",
   "Reject": "Odrzuć",
   "Accept invitation": "Zaakceptuj zaproszenie",
@@ -148,5 +149,8 @@
   "Reset password": "Zresetuj hasło",
   "Reset": "Zresetuj",
   "Password successfully changed.": "Hasło zmienione pomyślnie.",
-  "Invalid format": "Niepoprawny format"
+  "Invalid format": "Niepoprawny format",
+  "Delete invitation": "Usuń zaproszenie",
+  "Are you sure to delete the invitation?": "Czy na pewno chcesz usunąć zaproszenie?",
+  "Sent": "Wysłane"
 }

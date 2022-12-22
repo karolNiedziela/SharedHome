@@ -1,4 +1,6 @@
-﻿namespace SharedHome.Application.ReadServices
+﻿using SharedHome.Domain.Invitations;
+
+namespace SharedHome.Application.ReadServices
 {
     public interface IInvitationReadService
     {

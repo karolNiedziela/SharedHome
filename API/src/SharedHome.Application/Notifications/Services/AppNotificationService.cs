@@ -56,6 +56,13 @@ namespace SharedHome.Application.Notifications.Services
             await _notificationRepository.AddAsync(notification);
         }
 
+        public async Task BroadcastNotificationAsync(AppNotification notification, Guid personId)
+        {
+            var notificationDto = _mapper.Map<AppNotificationDto>(notification);
+
+            await _hubContext.Clients.User(personId.ToString()).BroadcastNotification(notificationDto);
+        }
+
         public async Task BroadcastNotificationAsync(AppNotification notification, Guid personId, Guid personIdToExclude)
         {
             var notificationDto = _mapper.Map<AppNotificationDto>(notification);

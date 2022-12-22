@@ -9,18 +9,18 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    internal class GetInvitationHandler : IRequestHandler<GetInvitation, Response<InvitationDto>>
+    internal class GetInvitationByHouseGroupIdHandler : IRequestHandler<GetInvitationByHouseGroupId, Response<InvitationDto>>
     {
         private readonly DbSet<InvitationReadModel> _invitations;
         private readonly IMapper _mapper;        
 
-        public GetInvitationHandler(ReadSharedHomeDbContext context, IMapper mapper)
+        public GetInvitationByHouseGroupIdHandler(ReadSharedHomeDbContext context, IMapper mapper)
         {
             _invitations = context.Invitations;
             _mapper = mapper;
         }
 
-        public async Task<Response<InvitationDto>> Handle(GetInvitation request, CancellationToken cancellationToken)
+        public async Task<Response<InvitationDto>> Handle(GetInvitationByHouseGroupId request, CancellationToken cancellationToken)
         {
             var invitation = await _invitations
                 .Include(x => x.RequestedToPersonId == request.PersonId!)
