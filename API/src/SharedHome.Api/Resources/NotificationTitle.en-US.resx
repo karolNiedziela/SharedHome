@@ -126,8 +126,20 @@
   <data name="by" xml:space="preserve">
     <value>by</value>
   </data>
+  <data name="from house group with name" xml:space="preserve">
+    <value>from house group with name</value>
+  </data>
+  <data name="Invitation" xml:space="preserve">
+    <value>Invitation</value>
+  </data>
+  <data name="InvitationSend" xml:space="preserve">
+    <value>New</value>
+  </data>
   <data name="name" xml:space="preserve">
     <value>name</value>
+  </data>
+  <data name="SentBy" xml:space="preserve">
+    <value>sent by</value>
   </data>
   <data name="ShoppingList" xml:space="preserve">
     <value>shopping list</value>

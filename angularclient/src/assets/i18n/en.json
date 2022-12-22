@@ -107,7 +107,8 @@
   "Accepted": "Accepted",
   "Rejected": "Rejected",
   "House Group Name": "House Group Name",
-  "Send By": "Send By",
+  "Sent By": "Sent by",
+  "Sent To": "Sent to",
   "Accept": "Accept",
   "Accept invitation": "Accept invitation",
   "Reject invitation": "Reject invitation",
@@ -146,5 +147,8 @@
   "Reset password": "Reset password",
   "Reset": "Reset",
   "Password successfully changed.": "Password successfully changed.",
-  "Invalid format": "Invalid format"
+  "Invalid format": "Invalid format",
+  "Delete invitation": "Delete invitation",
+  "Are you sure to delete the invitation?": "Are you sure to delete the invitation?",
+  "Sent": "Sent"
 }

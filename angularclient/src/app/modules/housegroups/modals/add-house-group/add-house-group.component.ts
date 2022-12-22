@@ -28,7 +28,7 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
     this.addHouseGroupForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
-        Validators.maxLength(40),
+        Validators.maxLength(30),
       ]),
     });
   }

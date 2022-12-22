@@ -8,6 +8,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -19,7 +20,7 @@ import { FormModalConfig } from './form-modal.config';
   templateUrl: './form-modal.component.html',
   styleUrls: ['../modal.scss', './form-modal.component.scss'],
 })
-export class FormModalComponent implements OnInit, OnDestroy, AfterViewInit {
+export class FormModalComponent implements OnInit, OnDestroy {
   @Input() public modalConfig!: FormModalConfig;
   @Input() public formGroup?: FormGroup | null;
   @Input() public resetForm: boolean = true;
@@ -32,6 +33,7 @@ export class FormModalComponent implements OnInit, OnDestroy, AfterViewInit {
   disabled: boolean = false;
   errorMessages: string[] = [];
   errorSubscription!: Subscription;
+  formGroupSubscription: undefined | Subscription;
 
   constructor(
     private modalService: NgbModal,
@@ -60,18 +62,17 @@ export class FormModalComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessages = errors;
       },
     });
-  }
 
-  ngAfterViewInit(): void {
-    this.formGroup?.valueChanges.subscribe({
+    this.formGroupSubscription = this.formGroup?.valueChanges.subscribe({
       next: () => {
-        this.disabled = this.formGroup?.valid ? false : true;
+        this.disabled = this.formGroup?.invalid ? true : false;
       },
     });
   }
 
   ngOnDestroy(): void {
     this.errorSubscription.unsubscribe();
+    this.formGroupSubscription?.unsubscribe();
   }
 
   open(): void {

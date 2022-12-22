@@ -175,7 +175,7 @@
     <value>Invitation is already accepted.</value>
   </data>
   <data name="InvitationAlreadySent" xml:space="preserve">
-    <value>Invitation was already sent to giiven person.</value>
+    <value>Invitation is already sent to given person.</value>
   </data>
   <data name="InvitationNotFound" xml:space="preserve">
     <value>Invitation was not found.</value>

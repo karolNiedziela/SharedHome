@@ -8,6 +8,7 @@ using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.Persons.Extensions;
 using SharedHome.Application.ReadServices;
+using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Repositories;
@@ -32,6 +33,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
         private readonly IPersonRepository _personRepository;
+        private readonly IDomainEventDispatcher _domainEventDispatcher;
         private readonly IRequestHandler<SendInvitationCommand, Response<InvitationDto>> _commandHandler;
 
         public SendInvitationHandlerTests()
@@ -40,10 +42,11 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _houseGroupService = Substitute.For<IHouseGroupReadService>();
             _invitationService = Substitute.For<IInvitationReadService>();
             _personRepository = Substitute.For<IPersonRepository>();
+            _domainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _mapper, _personRepository);
+            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _mapper, _personRepository, _domainEventDispatcher);
         }
 
         [Fact]
@@ -84,7 +87,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         }
 
         [Fact]
-        public async Task Handle_Shoudl_Call_Repository_OnSuccess()
+        public async Task Handle_Should_Call_Repository_OnSuccess()
         {
             var person = PersonProvider.Get();
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
@@ -107,6 +110,9 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
 
             await _invitationRepository.Received(1).AddAsync(Arg.Is<Invitation>(invitation =>
                 invitation.Status == InvitationStatus.Pending));
+
+            await _invitationRepository.Received(1).AddAsync(Arg.Is<Invitation>(invitation =>
+                invitation.Status == InvitationStatus.Sent));
 
             response.Data.ShouldNotBeNull();
         }
