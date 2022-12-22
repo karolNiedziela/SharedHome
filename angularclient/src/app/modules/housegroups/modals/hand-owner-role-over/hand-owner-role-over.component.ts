@@ -51,7 +51,7 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
 
     this.houseGroupService.handOwnerRoleOver(handOwnerRoleOver).subscribe({
       next: () => {
-        this.onClose();
+        this.modal.close();
       },
     });
   }
