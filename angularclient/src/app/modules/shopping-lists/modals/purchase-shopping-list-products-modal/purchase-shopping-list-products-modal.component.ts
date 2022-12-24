@@ -1,3 +1,4 @@
+import { ShoppingListProduct } from './../../models/shopping-list-product';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { Modalable } from './../../../../core/models/modalable';
 import {
@@ -20,7 +21,7 @@ import { PurchaseShoppingListProducts } from '../../models/purchase-shopping-lis
 export class PurchaseShoppingListProductsModalComponent
   implements Modalable, OnInit
 {
-  @Input() shoppingListProductNames: string[] = [];
+  @Input() shoppingListProducts: ShoppingListProduct[] = [];
   @Input() shoppingListId!: string;
 
   @ViewChild('purchaseShoppingListProductModal')

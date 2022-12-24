@@ -1,3 +1,4 @@
+import { ShoppingListProduct } from './../models/shopping-list-product';
 import { PurchaseShoppingListProductsModalComponent } from './../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
@@ -32,7 +33,7 @@ import { ApiResponse } from 'app/core/models/api-response';
 })
 export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   shoppingListId!: string;
-  shoppingListProductNamesSelected: string[] = [];
+  shoppingListProductsSelected: ShoppingListProduct[] = [];
 
   shoppingList$: Observable<ApiResponse<ShoppingList>> = new Observable(null!);
   shoppingList?: ShoppingList;
@@ -253,35 +254,85 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private onProductSelected(product: ShoppingListProductComponent): void {
-    const index = this.shoppingListProductNamesSelected.indexOf(
-      product.shoppingListProduct!.name
+    const selectedProductIndex = this.shoppingListProductsSelected.indexOf(
+      product.shoppingListProduct
     );
-    if (index > -1) {
-      this.shoppingListProductNamesSelected.splice(index, 1);
+    if (selectedProductIndex > -1) {
+      this.removeSelectedProduct(product, selectedProductIndex);
       return;
     }
 
-    this.shoppingListProductNamesSelected.push(
-      product.shoppingListProduct!.name
-    );
+    this.addSelectedProduct(product);
+  }
 
-    if (product.shoppingListProduct!.isBought) {
-      const purchaseSelectedIndex =
-        this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems?.findIndex(
-          (x) => x.text == 'Purchase selected'
-        )!;
-      if (purchaseSelectedIndex > -1) {
-        this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems!.splice(
-          purchaseSelectedIndex,
-          1
-        );
-        return;
+  private addSelectedProduct(product: ShoppingListProductComponent): void {
+    this.shoppingListProductsSelected.push(product.shoppingListProduct);
+
+    this.showOrHidePurchaseSelectedOption(product);
+  }
+
+  private removeSelectedProduct(
+    product: ShoppingListProductComponent,
+    indexToRemove: number
+  ): void {
+    this.shoppingListProductsSelected.splice(indexToRemove, 1);
+
+    this.showOrHidePurchaseSelectedOption(product);
+  }
+
+  private showOrHidePurchaseSelectedOption(
+    product: ShoppingListProductComponent
+  ): void {
+    const allProductsUnbought = this.shoppingList?.products
+      .filter((product) => this.shoppingListProductsSelected.includes(product))
+      .every((product) => !product.isBought);
+
+    console.log(allProductsUnbought);
+
+    if (allProductsUnbought) {
+      this.showPurchaseSelectedOptions();
+      return;
+    }
+
+    this.hidePurchaseSelectedOption();
+  }
+
+  private showPurchaseSelectedOptions(): void {
+    const purchaseSelectedIndex = this.getPurchaseSelectedOptionIndex();
+    if (purchaseSelectedIndex > -1) {
+      return;
+    }
+
+    this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems?.unshift(
+      {
+        text: 'Purchase selected',
+        onClick: () => {
+          this.purchaseProductsModal.openModal();
+        },
       }
+    );
+  }
+
+  private hidePurchaseSelectedOption(): void {
+    const purchaseSelectedOptionIndex = this.getPurchaseSelectedOptionIndex();
+    if (purchaseSelectedOptionIndex > -1) {
+      this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems!.splice(
+        purchaseSelectedOptionIndex,
+        1
+      );
+
+      return;
     }
   }
 
+  private getPurchaseSelectedOptionIndex(): number {
+    return this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems?.findIndex(
+      (x) => x.text == 'Purchase selected'
+    )!;
+  }
+
   private deselectProducts(): void {
-    this.shoppingListProductNamesSelected = [];
+    this.shoppingListProductsSelected = [];
     document
       .querySelectorAll('.product-name.selected')
       .forEach((productSelected) => {
@@ -293,11 +344,13 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.shoppingListService
       .deleteShoppingListProducts(
         this.shoppingListId,
-        this.shoppingListProductNamesSelected
+        this.shoppingListProductsSelected.map(
+          (shoppingListProduct) => shoppingListProduct.name
+        )
       )
       .subscribe({
         next: () => {
-          this.shoppingListProductNamesSelected = [];
+          this.shoppingListProductsSelected = [];
         },
         error: () => {},
       });

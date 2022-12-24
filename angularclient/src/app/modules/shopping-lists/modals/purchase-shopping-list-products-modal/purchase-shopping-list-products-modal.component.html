@@ -1,7 +1,7 @@
 <app-form-modal #purchaseShoppingListProductModal [modalConfig]="modalConfig">
-  <div *ngFor="let shoppingListProductName of shoppingListProductNames">
+  <div *ngFor="let shoppingListProduct of shoppingListProducts">
     <app-purchase-shopping-list-product-form
-      [productName]="shoppingListProductName"
+      [productName]="shoppingListProduct.name"
     >
     </app-purchase-shopping-list-product-form>
   </div>

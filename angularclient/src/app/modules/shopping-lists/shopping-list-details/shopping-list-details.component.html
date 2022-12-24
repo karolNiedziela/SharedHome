@@ -13,8 +13,8 @@
     <div *ngIf="!shoppingList.isDone">
       <div
         *ngIf="
-          !shoppingListProductNamesSelected ||
-            shoppingListProductNamesSelected.length == 0;
+          !shoppingListProductsSelected ||
+            shoppingListProductsSelected.length == 0;
           then headerPopup;
           else multipleSelectHeader
         "
@@ -96,5 +96,5 @@
 <app-purchase-shopping-list-products-modal
   #purchaseShoppingListProductsModal
   [shoppingListId]="shoppingListId"
-  [shoppingListProductNames]="shoppingListProductNamesSelected"
+  [shoppingListProducts]="shoppingListProductsSelected"
 ></app-purchase-shopping-list-products-modal>
