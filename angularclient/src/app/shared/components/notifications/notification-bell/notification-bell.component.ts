@@ -1,5 +1,5 @@
 import { AppNotification } from '../../../../modules/notifications/models/app-notification';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, map } from 'rxjs';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {
@@ -22,8 +22,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export class NotificationBellComponent implements OnInit, AfterViewInit {
   notifications$!: Observable<AppNotification[]>;
   notificationIcon = faBell;
-  notificationsCount$!: Observable<number>;
-  notificationsCount: number = 0;
+  notificationsCount$!: Observable<string>;
+  notificationsCount: string = '0';
 
   iconByTargetType: Record<string, IconProp> = {
     [TargetType[TargetType.Other]]: faQuestion,
@@ -38,10 +38,12 @@ export class NotificationBellComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.notificationsCount$ =
       this.notificationService.notificationsCount$.pipe(
-        tap((count: number) => {
-          this.notificationsCount = count;
+        map((count: number) => {
+          this.notificationsCount = count > 10 ? '10+' : count.toString();
+          return this.notificationsCount;
         })
       );
+
     this.notifications$ = this.notificationService.notifications$;
   }
 
@@ -55,7 +57,7 @@ export class NotificationBellComponent implements OnInit, AfterViewInit {
   }
 
   markAsRead(): void {
-    if (this.notificationsCount == 0) {
+    if (this.notificationsCount == '0') {
       return;
     }
     this.notificationService.markAsRead().subscribe();

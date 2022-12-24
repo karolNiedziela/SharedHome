@@ -10,7 +10,9 @@
     </fa-icon>
 
     <div *ngIf="notificationsCount$ | async as notificationsCount">
-      <span class="badge bg-primary">{{ notificationsCount }}</span>
+      <span class="badge bg-primary" *ngIf="notificationsCount != '0'">{{
+        notificationsCount
+      }}</span>
     </div>
 
     <ul
