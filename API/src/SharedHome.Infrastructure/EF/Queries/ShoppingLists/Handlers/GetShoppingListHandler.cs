@@ -32,7 +32,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
                 var shoppingListFromHouseGroup = await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)
-                    .Include(shoppingList => shoppingList.Products)
+                    .Include(shoppingList => shoppingList.Products.OrderBy(x => x.IsBought))
                     .SingleOrDefaultAsync(shoppingList => shoppingList.Id == request.Id && houseGroupPersonIds.Contains(shoppingList.PersonId!));
 
                 return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingListFromHouseGroup!));
@@ -40,7 +40,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
             var shoppingList = await _shoppingLists
                 .Include(shoppingList => shoppingList.Person)
-                .Include(shoppingList => shoppingList.Products)
+                .Include(shoppingList => shoppingList.Products.OrderBy(x => x.IsBought))
                 .SingleOrDefaultAsync(shoppingList => shoppingList.Id == request.Id && shoppingList.PersonId == request.PersonId);
 
             return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList!));

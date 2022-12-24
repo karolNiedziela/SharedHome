@@ -48,6 +48,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                     shoppingList.CreatedAt.Year == request.Year.Value &&
                     shoppingList.IsDone == request!.IsDone &&
                     houseGroupPersonIds.Contains(shoppingList.PersonId))
+                    .OrderByDescending(shoppingList => shoppingList.CreatedAt)
                     .Select(shoppingList => _mapper.Map<ShoppingListDto>(shoppingList))
                     .PaginateAsync(request.PageNumber, request.PageSize);
             }
@@ -59,6 +60,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 shoppingList.CreatedAt.Year == request.Year.Value &&
                 shoppingList.PersonId == request.PersonId &&
                 shoppingList.IsDone == request!.IsDone)
+                .OrderByDescending(shoppingList => shoppingList.CreatedAt)
                 .Select(shoppingList => _mapper.Map<ShoppingListDto>(shoppingList))
                 .PaginateAsync(request.PageNumber, request.PageSize);
         }
