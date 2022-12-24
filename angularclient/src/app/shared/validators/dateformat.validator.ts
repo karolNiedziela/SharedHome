@@ -9,7 +9,7 @@ export function yearAndMonthFormat(control: AbstractControl): any | null {
   const validSingleDigitMonths = Array.from({ length: 9 }, (_, i) => i + 1);
   const validTwoDigitMonths = [10, 11, 12];
   const validatorError: ValidatorError = {
-    invalidFormat: 'Invalid format must be year month, for example 2022 6.',
+    invalidFormat: 'Example proper format 2022 6.',
   };
 
   const yearAndMonthSplitted = control.value.split(' ');

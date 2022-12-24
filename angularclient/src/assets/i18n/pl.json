@@ -94,7 +94,7 @@
   "This field value must be lower or equal to": "Wartość pola musi byc mniejsza lub równa",
   "Password requires must contain at least 6 characters and one lowercase.": "Hasło musi zawierać przynajmniej 6 znaków i jedną małą literę.",
   "Passwords do not match.": "Hasła różnią się.",
-  "Invalid format must be year month, for example 2022 6.": "Nieprawidłowy format roku i miesiąca, na przykład 2022 6.",
+  "Example proper format 2022 6.": "Przykładowy poprawny format 2022 6.",
   "Loading...": "Ładowanie...",
   "No price": "Brak ceny",
   "Invite to house group": "Zaproś do grupy domowej",
@@ -137,7 +137,7 @@
   "Profile image": "Zdjęcie avatara",
   "Current password": "Obecne hasło",
   "Language": "Język",
-  "Choose year": "Wybierz rok"
+  "Choose year": "Wybierz rok",
   "Edit bill": "Edytuj rachunek",
   "Switch theme": "Zmień motyw",
   "Forgot password": "Zapomniałeś hasła",
