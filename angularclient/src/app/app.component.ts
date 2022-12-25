@@ -44,8 +44,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.translateService.setDefaultLang('en');
     this.languageService.setLanguageOnInit();
 
-    this.themeService.setTheme();
-
     if (this.authenticationResponse) {
       this.signalRService.initiateSignalRConnection(
         this.authenticationResponse.accessToken
@@ -61,6 +59,8 @@ export class AppComponent implements OnInit, OnDestroy {
         }
       )
     );
+
+    this.themeService.setTheme();
   }
 
   ngOnDestroy(): void {
