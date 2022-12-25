@@ -21,8 +21,6 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Change house group owner',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   errorMessages: string[] = [];
@@ -49,13 +47,8 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
       newOwnerPersonId: this.member.personId,
     };
 
-    this.houseGroupService.handOwnerRoleOver(handOwnerRoleOver).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(
+      this.houseGroupService.handOwnerRoleOver(handOwnerRoleOver)
+    );
   }
-
-  onClose(): void {}
-  onDismiss(): void {}
 }

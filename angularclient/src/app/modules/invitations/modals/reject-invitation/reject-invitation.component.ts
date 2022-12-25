@@ -22,12 +22,6 @@ export class RejectInvitationComponent implements Modalable, OnInit {
     onSave: () => {
       this.onSave();
     },
-    onClose: () => {
-      this.onClose();
-    },
-    onDismiss: () => {
-      this.onDismiss();
-    },
   };
 
   rejectInvitationForm!: FormGroup;
@@ -55,12 +49,6 @@ export class RejectInvitationComponent implements Modalable, OnInit {
       houseGroupId: this.houseGroupId,
     };
 
-    this.invitationService.reject(rejectInvitation).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.invitationService.reject(rejectInvitation));
   }
-  onClose(): void {}
-  onDismiss(): void {}
 }

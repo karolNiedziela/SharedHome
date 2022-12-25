@@ -21,8 +21,6 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Invite to house group',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   inviteToHouseGroupForm!: FormGroup;
@@ -50,12 +48,6 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
       requestedToPersonEmail: requestToPersonEmail,
     };
 
-    this.invitationService.send(sendInvitation).subscribe({
-      next: (response: ApiResponse<Invitation>) => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.invitationService.send(sendInvitation));
   }
-  onClose(): void {}
-  onDismiss(): void {}
 }

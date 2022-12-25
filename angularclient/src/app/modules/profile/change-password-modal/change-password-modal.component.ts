@@ -20,8 +20,6 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Change password',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   changePasswordForm!: FormGroup;
@@ -50,12 +48,8 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
       confirmNewPassword: newPassword,
     };
 
-    this.authenticationService.changePassword(changePassword).subscribe({
-      next: () => {
-        this.changePasswordModal.close();
-      },
-    });
+    this.changePasswordModal.save(
+      this.authenticationService.changePassword(changePassword)
+    );
   }
-  onClose(): void {}
-  onDismiss(): void {}
 }

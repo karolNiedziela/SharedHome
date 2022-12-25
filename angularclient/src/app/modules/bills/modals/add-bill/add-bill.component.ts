@@ -22,8 +22,6 @@ export class AddBillComponent implements Modalable, OnInit {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Add bill',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   constructor(private billService: BillService) {}
@@ -52,14 +50,6 @@ export class AddBillComponent implements Modalable, OnInit {
       dateOfPayment: dateOfPayment,
     };
 
-    this.billService.addBill(addBill).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.billService.addBill(addBill));
   }
-
-  onClose(): void {}
-
-  onDismiss(): void {}
 }

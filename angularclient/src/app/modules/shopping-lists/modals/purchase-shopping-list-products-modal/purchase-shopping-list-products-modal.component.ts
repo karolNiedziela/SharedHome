@@ -29,8 +29,6 @@ export class PurchaseShoppingListProductsModalComponent
   public modalConfig: FormModalConfig = {
     modalTitle: 'Purchase shopping list products',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
     onReset: () => this.onReset(),
   };
 
@@ -78,17 +76,10 @@ export class PurchaseShoppingListProductsModalComponent
       }
     );
 
-    this.shoppingListService
-      .purchaseProducts(purchaseShoppingListProducts)
-      .subscribe({
-        next: () => {
-          this.modal.close();
-        },
-      });
+    this.modal.save(
+      this.shoppingListService.purchaseProducts(purchaseShoppingListProducts)
+    );
   }
-
-  onClose(): void {}
-  onDismiss(): void {}
 
   private onReset(): void {
     this.purchaseProductsViewChildren.map(

@@ -30,8 +30,6 @@ export class EditShoppingListProductModalComponent
   public modalConfig: FormModalConfig = {
     modalTitle: 'Edit shopping list product',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   editShoppingListProductForm!: FormGroup;
@@ -83,17 +81,12 @@ export class EditShoppingListProductModalComponent
       isBought: this.shoppingListProduct!.isBought,
     };
 
-    this.shoppingListService
-      .updateShoppingListProduct(updateShoppingListProduct)
-      .subscribe({
-        next: () => {
-          this.modal.close();
-        },
-      });
+    this.modal.save(
+      this.shoppingListService.updateShoppingListProduct(
+        updateShoppingListProduct
+      )
+    );
   }
-
-  onClose(): void {}
-  onDismiss(): void {}
 
   private setFormValues(): void {
     if (this.shoppingListProduct == null) {

@@ -19,8 +19,6 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Purchase shopping list product',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   public purchaseShoppingListProductForm!: FormGroup;
@@ -54,16 +52,8 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
       },
     };
 
-    this.shoppingListService
-      .purchaseProduct(purchaseShoppingListProduct)
-      .subscribe({
-        next: () => {
-          this.modal.close();
-        },
-      });
+    this.modal.save(
+      this.shoppingListService.purchaseProduct(purchaseShoppingListProduct)
+    );
   }
-
-  onClose(): void {}
-
-  onDismiss(): void {}
 }

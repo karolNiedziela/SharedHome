@@ -28,10 +28,8 @@ export class CancelBillPaymentComponent implements Modalable, OnInit {
   openModal(): void {
     this.modal.open();
   }
+
   onSave(): void {
     this.billService.cancelBillPayment(this.billId).subscribe();
   }
-
-  onClose(): void {}
-  onDismiss(): void {}
 }
