@@ -1,9 +1,10 @@
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
 import { Component, OnInit } from '@angular/core';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';
-import { Observable } from 'rxjs';
+import { filter, Observable } from 'rxjs';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { AuthenticationResponse } from 'app/core/models/authentication-response';
 
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
   constructor(
     public screenSizeHelper: ScreenSizeHelper,
     private notificationService: NotificationService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +42,14 @@ export class NavbarComponent implements OnInit {
         (result: AuthenticationResponse) =>
           (this.authenticationResponse = result)
       );
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar?.classList.contains('is-active')) {
+          this.toggleMenu();
+        }
+      });
   }
 
   toggleMenu(): void {
