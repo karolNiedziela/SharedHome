@@ -23,6 +23,9 @@ export class ThemeService {
   constructor() {}
 
   public setTheme(theme?: string): void {
+    const link = this.getExistingLinkElementByKey();
+    link?.remove();
+
     this.stylesheet = document.createElement('link');
     this.stylesheet.rel = 'stylesheet';
     this.stylesheet.href = `/${this.theme}.css`;
@@ -44,5 +47,11 @@ export class ThemeService {
     } else {
       this.setTheme('light');
     }
+  }
+
+  private getExistingLinkElementByKey(): HTMLLinkElement {
+    return document.head.querySelector(
+      `[href='/${this.theme}.css']`
+    )! as HTMLLinkElement;
   }
 }
