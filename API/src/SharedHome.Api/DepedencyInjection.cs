@@ -84,7 +84,7 @@ namespace SharedHome.Api
                 options.AddPolicy(name: "Origin",
                                   policy =>
                                   {
-                                      policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200");
+                                      policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:4200", "\"https://sharedhomeangularclient.azurewebsites.net");
                                   });
             });
 
