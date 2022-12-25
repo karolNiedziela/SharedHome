@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ScreenSizeHelper {
+  public static XS: number = 380;
   public static SM: number = 576;
   public static MD: number = 768;
   public static LG: number = 992;
@@ -15,7 +16,7 @@ export class ScreenSizeHelper {
   public isXS(): boolean {
     const width: number = this.getWidth();
 
-    return width < ScreenSizeHelper.SM;
+    return width < ScreenSizeHelper.XS;
   }
 
   public isSM(): boolean {

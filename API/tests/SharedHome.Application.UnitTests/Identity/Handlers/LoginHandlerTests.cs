@@ -70,6 +70,9 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
             _userManagerStub.CheckPasswordAsync(Arg.Any<ApplicationUser>(), Arg.Any<string>())
                 .Returns(true);
 
+            _userManagerStub.Options.SignIn.RequireConfirmedAccount = true;
+            _userManagerStub.Options.SignIn.RequireConfirmedEmail = true;
+
             var command = new LoginQuery("test@email.com", "testPassword");
             var exception = await Record.ExceptionAsync(() => _queryHandler.Handle(command, default));
 

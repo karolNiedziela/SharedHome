@@ -1,3 +1,5 @@
+import { TextHelper } from './../../../helpers/text-helper';
+import { ScreenSizeHelper } from 'app/shared/helpers/screen-size-helper';
 import {
   Component,
   Input,
@@ -12,7 +14,7 @@ import {
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
-import { getEnumKeys } from 'app/core/helpers/enum.helper';
+import { getEnumKeys } from 'app/shared/helpers/enum.helper';
 
 @Component({
   selector: 'app-enum-select',
@@ -43,7 +45,11 @@ export class EnumSelectComponent implements OnInit, ControlValueAccessor {
     return false;
   }
 
-  constructor(@Self() @Optional() private controlDir: NgControl) {
+  constructor(
+    @Self() @Optional() private controlDir: NgControl,
+    private screenSizeHelper: ScreenSizeHelper,
+    private textHelper: TextHelper
+  ) {
     controlDir.valueAccessor = this;
   }
 
@@ -78,5 +84,13 @@ export class EnumSelectComponent implements OnInit, ControlValueAccessor {
     this.onTouched();
 
     this.selectedChanged.emit(this.selectedValue);
+  }
+
+  formatText(text: string): string {
+    const formattedText = this.screenSizeHelper.isXS()
+      ? this.textHelper.clipText(text)
+      : text;
+
+    return formattedText;
   }
 }
