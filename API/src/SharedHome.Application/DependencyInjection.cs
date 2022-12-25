@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application.Bills.Services;
 using SharedHome.Application.Common.Events;
@@ -38,7 +37,8 @@ namespace SharedHome.Application
             services.AddScoped<IAppNotificationFieldValidator, OperationTypeFieldValidator>();
             services.AddScoped<IAppNotificationFieldValidator, TargetTypeFieldValidator>();
 
-            services.AddSignalR();
+            services.AddSignalR()
+                    .AddAzureSignalR();
             services.ConfigureOptions<SignalROptionsSetup>();
 
             services.AddScoped<ICurrentUser, CurrentUser>();
