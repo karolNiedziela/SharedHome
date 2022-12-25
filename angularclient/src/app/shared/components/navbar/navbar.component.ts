@@ -1,6 +1,6 @@
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
+import { ScreenSizeHelper } from 'app/shared/helpers/screen-size-helper';
 import { Component, OnInit } from '@angular/core';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'app/modules/notifications/services/notification.service';

@@ -36,13 +36,15 @@ export class AddShoppingListProductFormComponent implements OnInit {
 
     const shoppingListProduct: ShoppingListProduct = {
       name: productName,
-      quantity: quantity ?? 1,
+      quantity: quantity == 0 ? 1 : quantity,
       netContent: {
         netContent: netContent,
         netContentType: netContentType,
       },
       isBought: false,
     };
+
+    console.log(shoppingListProduct);
 
     return shoppingListProduct;
   }

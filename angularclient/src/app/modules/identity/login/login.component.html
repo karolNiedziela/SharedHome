@@ -1,4 +1,4 @@
-<form class="row g-3 mb-2 mt-2" [formGroup]="loginForm" (submit)="onSubmit()">
+<form class="row gy-3" [formGroup]="loginForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
   <app-email-input formControlName="email"> </app-email-input>
   <app-password-input formControlName="password"></app-password-input>
@@ -9,10 +9,8 @@
     [disabled]="disabled"
   ></app-button>
 </form>
-<div class="col-12 text-center">
-  <a
-    class="text-decoration-none fw-bold"
-    [routerLink]="['/identity/forgotpassword']"
+<div class="col-12 text-center mt-2">
+  <a class="text-decoration-none" [routerLink]="['/identity/forgotpassword']"
     >{{ "Forgot password" | translate }}?</a
   >
 </div>

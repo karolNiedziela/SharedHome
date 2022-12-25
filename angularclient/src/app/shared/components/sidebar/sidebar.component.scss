@@ -1,10 +1,8 @@
 @import "/src/assets/_variables.scss";
 
 .sidenav {
-  top: 65px;
-  bottom: 0;
-  position: fixed;
   min-width: 240px;
+  position: sticky;
 
   .nav-link {
     display: flex;

@@ -11,7 +11,7 @@ import { ConfirmationModalComponent } from 'app/shared/components/modals/confirm
 import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { MarkAsDone } from '../../models/mark-as-done';
 import { EditShoppingListModalComponent } from '../../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
-import { ScreenSizeHelper } from 'app/core/helpers/screen-size-helper';
+import { ScreenSizeHelper } from 'app/shared/helpers/screen-size-helper';
 
 @Component({
   selector: 'app-single-shopping-list',

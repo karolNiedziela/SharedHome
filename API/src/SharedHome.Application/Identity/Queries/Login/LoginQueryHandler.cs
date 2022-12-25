@@ -32,7 +32,7 @@ namespace SharedHome.Application.Authentication.Queries.Login
                 throw new InvalidCredentialsException();
             }
 
-            if (!user.EmailConfirmed)
+            if (_userManager.Options.SignIn.RequireConfirmedEmail && !user.EmailConfirmed)
             {
                 throw new EmailNotConfirmedException();
             }

@@ -91,6 +91,7 @@ export class ShoppingListsComponent
       .pipe(
         tap((paged: Paged<ShoppingList>) => {
           this.currentPage = paged.currentPage;
+          console.log(paged);
         })
       );
   }
