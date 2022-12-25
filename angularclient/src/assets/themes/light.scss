@@ -99,6 +99,12 @@ $btn-color: $l_white_color !default;
 ----------- SIDEBAR -----------
 */
 
+.hamburger > span,
+.hamburger > span::before,
+.hamburger > span::after {
+  background-color: $l_black_color;
+}
+
 .nav-link {
   color: $l_black_color !important;
 
