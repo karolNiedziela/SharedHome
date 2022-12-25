@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SharedHome.Application.Bills.Services;
 using SharedHome.Application.Common.Events;
 using SharedHome.Application.Common.User;
@@ -14,6 +16,7 @@ using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Notifications.Services;
 using SharedHome.Notifications.Validators;
+using System;
 
 namespace SharedHome.Application
 {
@@ -37,8 +40,18 @@ namespace SharedHome.Application
             services.AddScoped<IAppNotificationFieldValidator, OperationTypeFieldValidator>();
             services.AddScoped<IAppNotificationFieldValidator, TargetTypeFieldValidator>();
 
-            services.AddSignalR()
-                    .AddAzureSignalR();
+            services.AddSignalR();
+
+            var scope = services.BuildServiceProvider().CreateScope();
+
+            var webApplication = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+
+            if (webApplication.IsProduction())
+            {
+                services.AddSignalR()
+                        .AddAzureSignalR();
+            }
+
             services.ConfigureOptions<SignalROptionsSetup>();
 
             services.AddScoped<ICurrentUser, CurrentUser>();
