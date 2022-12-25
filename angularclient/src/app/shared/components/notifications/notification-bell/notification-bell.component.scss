@@ -92,3 +92,12 @@
     min-width: 270px;
   }
 }
+
+@media (max-width: 576px) {
+  .menu-title {
+    font-size: 1rem;
+  }
+  .view-all {
+    font-size: 1rem;
+  }
+}
