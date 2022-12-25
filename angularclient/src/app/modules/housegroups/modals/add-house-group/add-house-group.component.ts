@@ -18,8 +18,6 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Add house group',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   constructor(private houseGroupService: HouseGroupService) {}
@@ -43,12 +41,6 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
       name: name,
     };
 
-    this.houseGroupService.add(addHouseGroup).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.houseGroupService.add(addHouseGroup));
   }
-  onClose(): void {}
-  onDismiss(): void {}
 }

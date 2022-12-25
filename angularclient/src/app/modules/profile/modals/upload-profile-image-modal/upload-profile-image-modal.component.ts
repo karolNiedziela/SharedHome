@@ -22,8 +22,6 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Upload profile image',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
     onReset: () => this.onReset(),
   };
 
@@ -47,10 +45,6 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
 
     this.uploadProfileImageModal.close();
   }
-
-  onClose(): void {}
-
-  onDismiss(): void {}
 
   onReset(): void {
     this.uploadImage.deleteFile();

@@ -34,8 +34,6 @@ export class AddShoppingListComponent implements OnInit, Modalable {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Add shopping list',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
     onReset: () => this.onReset(),
   };
 
@@ -76,16 +74,8 @@ export class AddShoppingListComponent implements OnInit, Modalable {
       products: products,
     };
 
-    this.shoppingListService.add(addShoppingList).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.shoppingListService.add(addShoppingList));
   }
-
-  onClose(): void {}
-
-  onDismiss(): void {}
 
   onReset(): void {
     this.addManyShoppingListProducts.ngOnDestroy();

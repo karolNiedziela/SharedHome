@@ -32,8 +32,6 @@ export class EditShoppingListModalComponent
   public modalConfig: FormModalConfig = {
     modalTitle: 'Edit shopping list',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   constructor(private shoppingListService: ShoppingListsService) {}
@@ -68,18 +66,10 @@ export class EditShoppingListModalComponent
       name: name,
     };
 
-    this.shoppingListService
-      .update(updateShoppingList, this.isSingleRefresh)
-      .subscribe({
-        next: () => {
-          this.editShoppingListModal.close();
-        },
-      });
+    this.editShoppingListModal.save(
+      this.shoppingListService.update(updateShoppingList, this.isSingleRefresh)
+    );
   }
-
-  onClose(): void {}
-
-  onDismiss(): void {}
 
   private setFormValues(): void {
     if (this.shoppingList == null) {

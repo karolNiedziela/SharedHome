@@ -22,12 +22,6 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
     onSave: () => {
       this.onSave();
     },
-    onClose: () => {
-      this.onClose();
-    },
-    onDismiss: () => {
-      this.onDismiss();
-    },
   };
   acceptInvitationForm!: FormGroup;
 
@@ -53,12 +47,6 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
       houseGroupId: this.houseGroupId,
     };
 
-    this.invitationService.accept(acceptInvitation).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.invitationService.accept(acceptInvitation));
   }
-  onClose(): void {}
-  onDismiss(): void {}
 }

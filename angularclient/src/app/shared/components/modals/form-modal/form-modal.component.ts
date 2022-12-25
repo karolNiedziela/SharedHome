@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormModalConfig } from './form-modal.config';
+import { finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form-modal',
@@ -85,7 +86,11 @@ export class FormModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  save(): void {
+  onSave(): void {
+    this.modalConfig.onSave();
+  }
+
+  save(saveOperation: Observable<any>): void {
     this.disabled = true;
 
     if (this.formGroup?.invalid) {
@@ -95,9 +100,17 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
     this.errorService.clearErrors();
 
-    this.modalConfig.onSave();
-
-    this.disabled = false;
+    saveOperation
+      ?.pipe(
+        finalize(() => {
+          this.disabled = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.close();
+        },
+      });
   }
 
   close(): void {

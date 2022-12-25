@@ -29,8 +29,6 @@ export class EditBillComponent implements OnInit, Modalable {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Edit bill',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   editBillForm!: FormGroup;
@@ -71,12 +69,6 @@ export class EditBillComponent implements OnInit, Modalable {
       dateOfPayment: this.editBillForm.controls['dateOfPayment']?.value,
     };
 
-    this.billService.updateBill(updateBill).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.billService.updateBill(updateBill));
   }
-  onClose(): void {}
-  onDismiss(): void {}
 }

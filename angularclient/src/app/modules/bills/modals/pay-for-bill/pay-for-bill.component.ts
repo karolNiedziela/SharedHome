@@ -25,8 +25,6 @@ export class PayForBillComponent implements Modalable, OnInit {
   public modalConfig: FormModalConfig = {
     modalTitle: 'Pay for bill',
     onSave: () => this.onSave(),
-    onClose: () => this.onClose(),
-    onDismiss: () => this.onDismiss(),
   };
 
   payForBillForm!: FormGroup;
@@ -55,14 +53,6 @@ export class PayForBillComponent implements Modalable, OnInit {
       },
     };
 
-    this.billService.payForBill(payForBill).subscribe({
-      next: () => {
-        this.modal.close();
-      },
-    });
+    this.modal.save(this.billService.payForBill(payForBill));
   }
-
-  onClose(): void {}
-
-  onDismiss(): void {}
 }
