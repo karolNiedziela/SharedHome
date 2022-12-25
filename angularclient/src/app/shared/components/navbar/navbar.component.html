@@ -7,7 +7,7 @@
     (click)="toggleMenu()"
     *ngIf="screenSizeHelper.isLowerThanMD()"
   >
-    <div class="hamburger">
+    <div class="hamburger" *ngIf="authenticationResponse">
       <span></span>
     </div>
   </div>
