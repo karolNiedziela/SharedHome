@@ -21,14 +21,14 @@ jobs:
       - name: Set up Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3.3.0
         with:
-          node-version: '16.x'
+          node-version: ${{ env.NODE_VERSION }}
           
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v2
         with:
-          path: ./angularclient/node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
+          path: angularclient/node_modules
+          key: node-modules-${{ hashFiles('angularclient/package-lock.json') }}
         
       - name: Install dependecies
         if: steps.cache-nodemodules-outputs.cache-hit != 'true'
