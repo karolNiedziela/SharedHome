@@ -4,7 +4,7 @@ namespace SharedHome.Shared.Email
 {
     public class EmailMessage
     {
-        public List<MailboxAddress> ReplyTos { get; set; } = new();
+        public List<MailboxAddress> Recipients { get; set; } = new();
 
         public string Subject { get; set; } = default!;
 

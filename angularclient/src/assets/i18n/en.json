@@ -152,5 +152,6 @@
   "Invalid format": "Invalid format",
   "Delete invitation": "Delete invitation",
   "Are you sure to delete the invitation?": "Are you sure to delete the invitation?",
-  "Sent": "Sent"
+  "Sent": "Sent",
+  "Email adress confirmed.": "Email adress confirmed."
 }
