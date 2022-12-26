@@ -26,23 +26,14 @@ jobs:
       - name: Cache node modules
         id: cache-nodemodules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
         with:
-          path: angularclient/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os}}-build-
-            ${{ runner.os }}-
+          path: ./angularclient/node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
         
       - name: Install dependecies
         if: steps.cache-nodemodules-outputs.cache-hit != 'true'
         run: |
-          npm ci
-        
-      - name: Build
-        run: ng build --configuration=production
+          npm ci        
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
