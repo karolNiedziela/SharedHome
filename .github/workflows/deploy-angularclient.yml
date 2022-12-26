@@ -1,6 +1,7 @@
 name: Deploy Angular client to Azure
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'release/**'
@@ -8,7 +9,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: sharedhomeangularclient
   AZURE_WEBAPP_PACKAGE_PATH: './dist/sharedhomewebclient'
-  NODE_VERSION: '16.x'
+  NODE_VERSION: '16.14.2'
 
 jobs:
   publish-angularclient-to-azure:
@@ -19,21 +20,19 @@ jobs:
         uses: actions/checkout@v3
     
       - name: Set up Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v3.3.0
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           
-      - name: Cache node modules
-        id: cache-nodemodules
+      - name: Cache dependencies
         uses: actions/cache@v2
         with:
-          path: angularclient/node_modules
-          key: node-modules-${{ hashFiles('angularclient/package-lock.json') }}
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
         
-      - name: Install dependecies
-        if: steps.cache-nodemodules-outputs.cache-hit != 'true'
-        run: |
-          npm ci        
+      - name: Install dependencies
+        run: cd angularclient && npm ci --ignore-scripts      
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
