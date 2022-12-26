@@ -32,8 +32,11 @@ jobs:
           restore-keys: npm-
         
       - name: Install dependencies
-        run: cd angularclient && npm ci --ignore-scripts      
-        
+        run: cd angularclient && npm ci --ignore-scripts   
+
+      - name: Build Application
+        run: ng build --configuration=production 
+      
       - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
