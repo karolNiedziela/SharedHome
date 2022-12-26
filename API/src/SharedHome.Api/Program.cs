@@ -33,20 +33,6 @@ try
     builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
         .ReadFrom.Configuration(configuration));
 
-    if (EnvironmentExtensions.IsProduction)
-    {
-        var applicationInsightsConnectionString = configuration.GetValue<string>("Logging:ApplicationInsightsConnectionString");
-
-        builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
-            .ReadFrom.Configuration(configuration)
-            .WriteTo.ApplicationInsights(new TelemetryConfiguration
-            {
-                ConnectionString = applicationInsightsConnectionString
-            },
-            TelemetryConverter.Traces));
-    }
-
-
     builder.Services.AddShared();
     builder.Services.AddSharedHomeIdentity();
     builder.Services.AddApplication();
