@@ -35,7 +35,7 @@ jobs:
         run: cd angularclient && npm ci --ignore-scripts   
 
       - name: Build Application
-        run: ng build --configuration=production 
+        run: npm run ci:build 
       
       - name: Deploy
         uses: azure/webapps-deploy@v2
