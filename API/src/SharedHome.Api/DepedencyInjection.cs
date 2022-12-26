@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.OpenApi.Models;
 using SharedHome.Api.HealthChecks;
+using SharedHome.Api.Logging;
 using SharedHome.Api.Swagger.Filters;
 using SharedHome.Shared.Constants;
 using Swashbuckle.AspNetCore.Filters;
@@ -62,6 +63,8 @@ namespace SharedHome.Api
                     return Task.FromResult(new ProviderCultureResult(defaultLanguage, defaultLanguage))!;
                 }));
             });
+
+            services.ConfigureOptions<LoggingOptionsSetup>();
 
             AddCors(services);
 

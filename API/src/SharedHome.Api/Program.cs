@@ -1,3 +1,4 @@
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Serilog;
@@ -11,6 +12,7 @@ using SharedHome.Identity;
 using SharedHome.Infrastructure;
 using SharedHome.Notifications;
 using SharedHome.Shared;
+using SharedHome.Shared.Extensions;
 using System.Text.Json;
 
 try
@@ -27,8 +29,23 @@ try
 
     var seqUri = configuration.GetValue<string>("Seq:Uri");
 
+
     builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
-          .ReadFrom.Configuration(configuration));
+        .ReadFrom.Configuration(configuration));
+
+    if (EnvironmentExtensions.IsProduction)
+    {
+        var applicationInsightsConnectionString = configuration.GetValue<string>("Logging:ApplicationInsightsConnectionString");
+
+        builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
+            .ReadFrom.Configuration(configuration)
+            .WriteTo.ApplicationInsights(new TelemetryConfiguration
+            {
+                ConnectionString = applicationInsightsConnectionString
+            },
+            TelemetryConverter.Traces));
+    }
+
 
     builder.Services.AddShared();
     builder.Services.AddSharedHomeIdentity();

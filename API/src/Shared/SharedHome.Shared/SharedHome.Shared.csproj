@@ -28,4 +28,19 @@
   <ItemGroup>
     <InternalsVisibleTo Include="SharedHome.IntegrationTests" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Email\Templates\confirmationemail.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Email\Templates\confirmationemail.pl-PL.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Email\Templates\forgotpassword.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Email\Templates\forgotpassword.pl-PL.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

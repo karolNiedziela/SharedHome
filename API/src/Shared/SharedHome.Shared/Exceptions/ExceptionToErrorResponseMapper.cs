@@ -26,7 +26,7 @@ namespace SharedHome.Shared.Exceptions.Common
 
                 IdentityException ex => new ErrorResponse(HttpStatusCode.BadRequest, ex.Errors),
 
-                _ => new ErrorResponse(HttpStatusCode.InternalServerError, "An unexpected error occurred.")
+                _ => HandleUnexpectedError(exception)
             };
 
         private string GetFormattedErrors(SharedHomeException exception)
@@ -53,6 +53,14 @@ namespace SharedHome.Shared.Exceptions.Common
             var formattedMessage = string.Format(resourceStringValue.Value, values);            
 
             return formattedMessage;
+        }
+
+        private ErrorResponse HandleUnexpectedError(Exception exception)
+        {
+            _logger.LogError(exception.Message);
+            _logger.LogError(exception.StackTrace);
+
+            return new ErrorResponse(HttpStatusCode.InternalServerError, "An unexpected error occurred.");
         }
     }
 }
