@@ -1,18 +1,13 @@
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 using SharedHome.Api;
 using SharedHome.Api.Constants;
 using SharedHome.Api.HealthChecks;
 using SharedHome.Application;
 using SharedHome.Identity;
 using SharedHome.Infrastructure;
-using SharedHome.Notifications;
 using SharedHome.Shared;
-using SharedHome.Shared.Extensions;
 using System.Text.Json;
 
 try

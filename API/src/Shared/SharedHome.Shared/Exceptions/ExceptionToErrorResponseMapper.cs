@@ -57,8 +57,8 @@ namespace SharedHome.Shared.Exceptions.Common
 
         private ErrorResponse HandleUnexpectedError(Exception exception)
         {
-            _logger.LogError(exception.Message);
-            _logger.LogError(exception.StackTrace);
+            _logger.LogError("{message}", exception.Message);
+            _logger.LogError("{stackTrace}", exception.StackTrace);
 
             return new ErrorResponse(HttpStatusCode.InternalServerError, "An unexpected error occurred.");
         }
