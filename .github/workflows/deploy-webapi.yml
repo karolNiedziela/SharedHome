@@ -1,4 +1,4 @@
-name: Build and deploy .NET API to Azure
+name: Deploy Web API to Azure
 
 on:
   workflow_dispatch:
@@ -8,56 +8,32 @@ on:
       
 env:
   AZURE_WEBAPP_NAME: sharedhome
-  AZURE_WEBAPP_PACKAGE_PATH: "."
-  
-permissions:
-  contents: read
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
       
 jobs:
-  build:
+  publish-webapi-to-azure:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
         
+      - name: Restore dependencies
+        run: dotnet restore API/src/SharedHome.Api
+        
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release API/src/SharedHome.Api
 
       - name: Publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-          
-  deploy:          
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: "Production"
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: .net-app
-
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+        run: dotnet publish API/SharedHome.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        
+      - name: Deploy
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          
