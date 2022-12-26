@@ -9,6 +9,7 @@ namespace SharedHome.Shared.Email
         public static IServiceCollection AddEmail(this IServiceCollection services)
         {
             services.ConfigureOptions<EmailOptionsSetup>();
+            services.ConfigureOptions<SendGridOptionsSetup>();
 
             services.AddScoped<IIdentityEmailSender<ConfirmationEmailSender>, ConfirmationEmailSender>();
             services.AddScoped<IIdentityEmailSender<ForgotPasswordEmailSender>, ForgotPasswordEmailSender>();

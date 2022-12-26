@@ -152,5 +152,6 @@
   "Invalid format": "Niepoprawny format",
   "Delete invitation": "Usuń zaproszenie",
   "Are you sure to delete the invitation?": "Czy na pewno chcesz usunąć zaproszenie?",
-  "Sent": "Wysłane"
+  "Sent": "Wysłane",
+  "Email adress confirmed.": "Adres email potwierdzony."
 }

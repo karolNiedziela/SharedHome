@@ -1,9 +1,12 @@
+import { TranslateService } from '@ngx-translate/core';
 import { PasswordsFormComponent } from './../../../shared/components/forms/passwords-form/passwords-form.component';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Register } from './../models/register';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,11 +17,15 @@ export class RegisterComponent implements OnInit {
   @ViewChild('passwordForm') passwordForm!: PasswordsFormComponent;
 
   errorMessages: string[] = [];
-  information?: string | null = null;
   disabled: boolean = false;
 
   registerForm!: FormGroup;
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private toastrService: ToastrService,
+    private router: Router,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -60,9 +67,12 @@ export class RegisterComponent implements OnInit {
       )
       .subscribe({
         next: (response: any) => {
-          this.information = response.data;
           this.registerForm.reset();
           this.errorMessages = [];
+          this.router.navigate(['/identity/login']);
+          this.toastrService.success(
+            this.translateService.instant(response.data)
+          );
         },
         error: (error: string[]) => {
           this.errorMessages = error;

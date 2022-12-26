@@ -11,8 +11,13 @@ namespace SharedHome.Shared.Email.Senders
     {
         private readonly Dictionary<string, string> Replacements = new();
 
-        public ConfirmationEmailSender(IOptions<EmailOptions> emailOptions, ILogger<ConfirmationEmailSender> logger, IStringLocalizerFactory localizerFactory, IOptions<GeneralOptions> generalOptions) 
-            : base(emailOptions, logger, localizerFactory, generalOptions)
+        public ConfirmationEmailSender(
+            IOptions<EmailOptions> emailOptions,
+            ILogger<ForgotPasswordEmailSender> logger,
+            IStringLocalizerFactory localizerFactory,
+            IOptions<GeneralOptions> generalOptions,
+            IOptions<SendGridOptions> sendGridOptions)
+            : base(emailOptions, logger, localizerFactory, generalOptions, sendGridOptions)
         {
         }
 

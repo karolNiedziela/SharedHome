@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../services/authentication.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -14,7 +15,8 @@ export class EmailConfirmationComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +36,9 @@ export class EmailConfirmationComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.toastrService.success('Email adress confirmed.');
+          this.toastrService.success(
+            this.translateService.instant('Email adress confirmed.')
+          );
         },
         error: (error: string[]) => {
           this.toastrService.error(error.join(' '));
