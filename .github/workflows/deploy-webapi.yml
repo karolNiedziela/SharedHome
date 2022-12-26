@@ -29,7 +29,7 @@ jobs:
         run: dotnet build --configuration Release API/src/SharedHome.Api
 
       - name: Publish
-        run: dotnet publish API/SharedHome.sln --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        run: dotnet publish API/src/SharedHome.Api --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
         
       - name: Deploy
         uses: azure/webapps-deploy@v2
