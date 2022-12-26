@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 using SharedHome.Api;
 using SharedHome.Api.Constants;
 using SharedHome.Api.HealthChecks;
 using SharedHome.Application;
 using SharedHome.Identity;
 using SharedHome.Infrastructure;
-using SharedHome.Notifications;
 using SharedHome.Shared;
 using System.Text.Json;
 
@@ -27,8 +24,9 @@ try
 
     var seqUri = configuration.GetValue<string>("Seq:Uri");
 
+
     builder.Host.UseSerilog((context, serviceProvider) => serviceProvider
-          .ReadFrom.Configuration(configuration));
+        .ReadFrom.Configuration(configuration));
 
     builder.Services.AddShared();
     builder.Services.AddSharedHomeIdentity();
