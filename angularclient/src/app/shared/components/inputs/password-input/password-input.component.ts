@@ -3,6 +3,7 @@ import {
   ControlValueAccessor,
   NgControl,
   ValidatorFn,
+  Validators,
 } from '@angular/forms';
 import {
   Component,
@@ -44,6 +45,7 @@ export class PasswordInputComponent implements OnInit, ControlValueAccessor {
       : [];
 
     validators.push(passwordStrengthValidator);
+    validators.push(Validators.required);
     this.control?.setValidators(validators);
     this.control?.updateValueAndValidity();
   }

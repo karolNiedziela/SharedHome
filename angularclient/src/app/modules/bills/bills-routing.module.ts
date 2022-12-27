@@ -5,7 +5,12 @@ import { BillsComponent } from './bills.component';
 import { AuthGuard } from 'app/core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'bills', component: BillsComponent, canActivate: [AuthGuard] },
+  {
+    path: 'bills',
+    component: BillsComponent,
+    canActivate: [AuthGuard],
+    title: 'Bills',
+  },
 ];
 
 @NgModule({

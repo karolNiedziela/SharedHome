@@ -26,9 +26,9 @@ namespace SharedHome.Shared.Email
             return emailMessage;
         }
 
-        public static EmailMessage WithRecipients(this EmailMessage emailMessage, IEnumerable<string> replyTos)
+        public static EmailMessage WithRecipients(this EmailMessage emailMessage, IEnumerable<string> recipients)
         {
-            emailMessage.Recipients.AddRange(replyTos.Select(replyTo => MailboxAddress.Parse(replyTo)));
+            emailMessage.Recipients.AddRange(recipients.Select(recipient => MailboxAddress.Parse(recipient)));
 
             return emailMessage;
         }

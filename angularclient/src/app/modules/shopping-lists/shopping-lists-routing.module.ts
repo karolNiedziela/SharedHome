@@ -11,10 +11,12 @@ const routes: Routes = [
     path: 'shoppinglists',
     component: ShoppingListsComponent,
     canActivate: [AuthGuard],
+    title: 'Shopping lists',
   },
   {
     path: 'shoppinglists/:shoppingListId',
     component: ShoppingListComponent,
+    title: 'Shopping list',
   },
 ];
 

@@ -153,5 +153,12 @@
   "Delete invitation": "Delete invitation",
   "Are you sure to delete the invitation?": "Are you sure to delete the invitation?",
   "Sent": "Sent",
-  "Email adress confirmed.": "Email adress confirmed."
+  "Email adress confirmed.": "Email adress confirmed.",
+  "Shopping lists": "Shopping lists",
+  "Shopping list": "Shopping list",
+  "Invitations": "Invitations",
+  "Profile": "Profile",
+  "House group": "House group",
+  "Expenses": "Expenses",
+  "Bills": "Bills"
 }

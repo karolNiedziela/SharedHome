@@ -153,5 +153,12 @@
   "Delete invitation": "Usuń zaproszenie",
   "Are you sure to delete the invitation?": "Czy na pewno chcesz usunąć zaproszenie?",
   "Sent": "Wysłane",
-  "Email adress confirmed.": "Adres email potwierdzony."
+  "Email adress confirmed.": "Adres email potwierdzony.",
+  "Shopping lists": "Listy zakupów",
+  "Shopping list": "Lista zakupów",
+  "Invitations": "Zaproszenia",
+  "Profile": "Profil",
+  "House group": "Grupa domowa",
+  "Expenses": "Wydatki",
+  "Bills": "Rachunki"
 }

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./profile-dropdown.component.scss'],
 })
 export class ProfileDropdownComponent implements OnInit {
-  profileImage$!: Observable<ProfileImage>;
+  profileImage$!: Observable<ProfileImage | null>;
   userFullName: string = '';
 
   constructor(private authenticationService: AuthenticationService) {}
