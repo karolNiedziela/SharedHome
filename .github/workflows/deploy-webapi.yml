@@ -2,7 +2,7 @@ name: Deploy Web API to Azure
 
 on:
   workflow_dispatch:
-  push:
+  create:
     branches: 
       - 'release/**'
       
