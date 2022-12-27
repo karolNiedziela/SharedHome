@@ -30,7 +30,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Notifications.Handlers
                 .Select(x => _mapper.Map<AppNotificationDto>(x))
                 .PaginateAsync(request.PageNumber, request.PageSize);
 
-            var unReadNotifications = await _notifications.Where(x => x.PersonId == request.PersonId).CountAsync();
+            var unReadNotifications = await _notifications.Where(x => x.PersonId == request.PersonId && !x.IsRead).CountAsync();
             notifications.CustomTotalItems = unReadNotifications;
 
             return notifications;

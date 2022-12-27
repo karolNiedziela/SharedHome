@@ -81,7 +81,7 @@ export class NotificationService {
   }
 
   add(notification: AppNotification) {
-    this._notifications.next([...this._notifications.value, notification]);
+    this._notifications.next([notification, ...this._notifications.value]);
     this._notificationsCount.next(this._notificationsCount.value + 1);
   }
 }

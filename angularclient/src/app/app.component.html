@@ -1,8 +1,8 @@
 <div class="d-flex h-100 w-100 flex-column overflow-hidden">
   <app-navbar></app-navbar>
   <div class="d-flex flex-row pt-2 overflow-auto w-100 h-100">
-    <div class="sidebar">
-      <app-sidebar *ngIf="authenticationResponse"></app-sidebar>
+    <div class="sidebar" *ngIf="authenticationResponse">
+      <app-sidebar></app-sidebar>
     </div>
     <div class="content d-flex flex-column w-100">
       <div class="content-main flex-grow-1">
