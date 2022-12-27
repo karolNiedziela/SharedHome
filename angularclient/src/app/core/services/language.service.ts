@@ -1,3 +1,4 @@
+import { TitleStrategy, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable } from '@angular/core';
 
@@ -14,7 +15,11 @@ export class LanguageService {
     );
   }
 
-  constructor(private translateService: TranslateService) {}
+  constructor(
+    private translateService: TranslateService,
+    private titleStrategy: TitleStrategy,
+    private router: Router
+  ) {}
 
   setLanguageOnInit(): void {
     if (localStorage.getItem(LanguageService.key)) {
@@ -46,5 +51,6 @@ export class LanguageService {
     this.translateService.use(language);
 
     localStorage.setItem(LanguageService.key, language);
+    this.titleStrategy.updateTitle(this.router.routerState.snapshot);
   }
 }

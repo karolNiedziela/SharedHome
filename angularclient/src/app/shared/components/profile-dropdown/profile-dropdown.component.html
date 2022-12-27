@@ -3,16 +3,19 @@
     <span
       class="account btn btn-primary ms-2"
       data-bs-toggle="dropdown"
-      *ngIf="profileImage$ | async as profileImage"
+      *ngIf="profileImage$ | async as profileImage; else noProfileImage"
     >
       <div *ngIf="profileImage.url != null; else noProfileImage">
-        <img [src]="profileImage.url" />
+        <img [src]="profileImage?.url" />
       </div>
       <ng-template #noProfileImage>
         {{ userFullName | firstLettersToTitleCase }}
       </ng-template>
       <div class="dropdown-menu" aria></div>
     </span>
+    <ng-template #noProfileImage>
+      {{ userFullName | firstLettersToTitleCase }}
+    </ng-template>
 
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <li>

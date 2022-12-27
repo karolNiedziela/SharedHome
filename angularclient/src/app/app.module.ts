@@ -22,6 +22,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { TitleStrategy } from '@angular/router';
+import { TemplatePageTitleStrategy } from './template-page-title-strategy';
 
 @NgModule({
   declarations: [AppComponent],
@@ -60,6 +62,10 @@ import { ToastrModule } from 'ngx-toastr';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
+    {
+      provide: TitleStrategy,
+      useClass: TemplatePageTitleStrategy,
+    },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
