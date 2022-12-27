@@ -35,6 +35,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
   errorMessages: string[] = [];
   errorSubscription!: Subscription;
   formGroupSubscription: undefined | Subscription;
+  loadingSaveButton: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -98,12 +99,15 @@ export class FormModalComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.loadingSaveButton = true;
+
     this.errorService.clearErrors();
 
     saveOperation
       ?.pipe(
         finalize(() => {
           this.disabled = false;
+          this.loadingSaveButton = false;
         })
       )
       .subscribe({

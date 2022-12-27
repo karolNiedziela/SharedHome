@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   errorMessages: string[] = [];
   disabled: boolean = false;
+  loadingSaveButton: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -35,6 +36,8 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.loadingSaveButton = true;
+
     const email = this.loginForm.controls['email'].value;
     const password = this.loginForm.controls['password'].value;
 
@@ -44,6 +47,7 @@ export class LoginComponent implements OnInit {
         first(),
         finalize(() => {
           this.disabled = false;
+          this.loadingSaveButton = false;
         })
       )
       .subscribe({

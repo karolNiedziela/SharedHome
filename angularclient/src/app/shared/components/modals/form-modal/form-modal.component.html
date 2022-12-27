@@ -31,6 +31,8 @@
       type="button"
       [disabled]="disabled"
       (onButtonClick)="onSave()"
-    ></app-button>
+      [loading]="loadingSaveButton"
+    >
+    </app-button>
   </div>
 </ng-template>

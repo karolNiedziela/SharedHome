@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,11 +15,13 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm!: FormGroup;
   errorMessages: string[] = [];
   disabled: boolean = false;
+  loadingSaveButton: boolean = false;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   onSubmit(): void {
     this.disabled = true;
+    this.loadingSaveButton = true;
     const email: string = this.forgotPasswordForm.controls['email'].value;
 
     this.authenticationService
@@ -36,11 +40,14 @@ export class ForgotPasswordComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.disabled = false;
+          this.loadingSaveButton = false;
         })
       )
       .subscribe({
         next: () => {
-          this.toastrService.success('Email sent, check your mailbox.');
+          this.toastrService.success(
+            this.translateService.instant('Email sent, check your mailbox.')
+          );
           this.router.navigate(['/identity/login']);
           this.errorMessages = [];
         },
