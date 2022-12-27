@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
 
   errorMessages: string[] = [];
   disabled: boolean = false;
+  loadingSaveButton: boolean = false;
 
   registerForm!: FormGroup;
   constructor(
@@ -44,6 +45,7 @@ export class RegisterComponent implements OnInit {
     }
 
     this.disabled = true;
+    this.loadingSaveButton = true;
 
     const email = this.registerForm.get('email')?.value;
     const firstName = this.registerForm.get('firstName')?.value;
@@ -63,6 +65,7 @@ export class RegisterComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.disabled = false;
+          this.loadingSaveButton = false;
         })
       )
       .subscribe({
