@@ -38,9 +38,9 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
             var shoppingListsCostsGroupedByMonth = new List<ShoppingListMonthlyCostDto>();
 
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
 
                 shoppingLists = await _shoppingLists
                     .Include(shoppingList => shoppingList.Products)

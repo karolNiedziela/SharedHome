@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SharedHome.Application.Common.Events;
+using SharedHome.Application.Notifications.Services;
 using SharedHome.Application.ReadServices;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
@@ -22,13 +23,15 @@ namespace SharedHome.Application.ShoppingLists.Events
         {
             var shoppingListCreated = notification.DomainEvent;
 
-            if (!await _houseGroupReadService.IsPersonInHouseGroup(shoppingListCreated.Creator.PersonId))
+            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(shoppingListCreated.Creator.PersonId))
             {
                 return;
             }
 
-            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreator(shoppingListCreated.Creator.PersonId);
+            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(shoppingListCreated.Creator.PersonId);
 
+            var addNotificationTasks = new List<Task>();
+            var broadcastNotificationTasks = new List<Task>();
             foreach (var personId in personIds)
             {
                 var notificationFields = new List<AppNotificationField>()
@@ -37,12 +40,15 @@ namespace SharedHome.Application.ShoppingLists.Events
                     new AppNotificationField(AppNotificationFieldType.Target, TargetType.ShoppingList.ToString()),
                     new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString())
                 };
-                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields);
+                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields);              
 
-                await _appNotificationService.AddAsync(appNotification);
-
-                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId);
+                addNotificationTasks.Add(_appNotificationService.AddAsync(appNotification));
+             
+                broadcastNotificationTasks.Add(_appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId));
             }
+
+            await Task.WhenAll(addNotificationTasks);
+            await Task.WhenAll(broadcastNotificationTasks);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 Name = "HouseGroupName"
             };
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(true);
+            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -62,7 +62,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 Name = "HouseGroupName"
             };
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(false);
+            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
 
             var response = await _commandHandler.Handle(command, default);
 

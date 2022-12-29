@@ -2,12 +2,12 @@
 {
     public interface IHouseGroupReadService
     {
-        Task<bool> IsPersonInHouseGroup(Guid personId);
+        Task<bool> IsPersonInHouseGroupAsync(Guid personId);
 
-        Task<bool> IsPersonInHouseGroup(Guid personId, Guid houseGroupId);
+        Task<bool> IsPersonInHouseGroupAsync(Guid personId, Guid houseGroupId);
 
-        Task<IEnumerable<Guid>> GetMemberPersonIds(Guid personId);
+        Task<IEnumerable<Guid>> GetMemberPersonIdsAsync(Guid personId);
 
-        Task<IEnumerable<Guid>> GetMemberPersonIdsExcludingCreator(Guid personId);
+        Task<IEnumerable<Guid>> GetMemberPersonIdsExcludingCreatorAsync(Guid personId);
     }
 }

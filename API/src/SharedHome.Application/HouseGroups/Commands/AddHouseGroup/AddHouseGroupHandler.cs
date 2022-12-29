@@ -26,7 +26,7 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 
         public async Task<Response<HouseGroupDto>> Handle(AddHouseGroupCommand request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId))
             {
                 throw new PersonIsAlreadyInHouseGroupException(request.PersonId);
             }

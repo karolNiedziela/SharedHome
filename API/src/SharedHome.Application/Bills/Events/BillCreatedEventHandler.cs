@@ -22,13 +22,15 @@ namespace SharedHome.Application.Bills.Events
         {
             var billCreated = notification.DomainEvent;
 
-            if (!await _houseGroupReadService.IsPersonInHouseGroup(billCreated.Creator.PersonId))
+            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(billCreated.Creator.PersonId))
             {
                 return;
             }
 
-            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreator(billCreated.Creator.PersonId);
+            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(billCreated.Creator.PersonId);
 
+            var addNotificationTasks = new List<Task>();
+            var broadcastNotificationTasks = new List<Task>();
             foreach (var personId in personIds)
             {
                 var notificationFields = new List<AppNotificationField>()
@@ -41,10 +43,13 @@ namespace SharedHome.Application.Bills.Events
 
                 var appNotification = new AppNotification(personId, nameof(BillCreated), notificationFields);
 
-                await _appNotificationService.AddAsync(appNotification);
+                addNotificationTasks.Add(_appNotificationService.AddAsync(appNotification));
 
-                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, billCreated.Creator.PersonId);
+                broadcastNotificationTasks.Add(_appNotificationService.BroadcastNotificationAsync(appNotification, personId, billCreated.Creator.PersonId));
             }
+
+            await Task.WhenAll(addNotificationTasks);
+            await Task.WhenAll(broadcastNotificationTasks);
         }
     }
 }

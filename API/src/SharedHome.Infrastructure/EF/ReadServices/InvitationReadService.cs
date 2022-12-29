@@ -22,8 +22,9 @@ namespace SharedHome.Infrastructure.EF.ReadServices
             .Include(x => x.HouseGroup)
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(Guid houseGroupId, Guid requestedToPersonId)
-           => await _invitations.AnyAsync(invitation => invitation.HouseGroupId == houseGroupId &&
+        public async Task<bool> IsAnyInvitationFromHouseGroupToPersonAsync(Guid houseGroupId, Guid requestedToPersonId)
+           => await _invitations.AnyAsync(invitation => 
+           invitation.HouseGroupId == houseGroupId &&
            invitation.RequestedToPersonId == requestedToPersonId);
     }
 }

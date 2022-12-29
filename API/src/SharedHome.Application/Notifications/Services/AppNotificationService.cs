@@ -60,7 +60,7 @@ namespace SharedHome.Application.Notifications.Services
         {
             var notificationDto = _mapper.Map<AppNotificationDto>(notification);
 
-            await _hubContext.Clients.User(personId.ToString()).BroadcastNotification(notificationDto);
+            await _hubContext.Clients.User(personId.ToString()).BroadcastNotificationAsync(notificationDto);
         }
 
         public async Task BroadcastNotificationAsync(AppNotification notification, Guid personId, Guid personIdToExclude)
@@ -72,7 +72,10 @@ namespace SharedHome.Application.Notifications.Services
                 return;
             }
 
-            await _hubContext.Clients.GroupExcept(groupName!, HouseGroupNotificationHub.GetConnectionId(personIdToExclude)).BroadcastNotification(notificationDto);
+            await _hubContext.Clients.GroupExcept(
+                groupName!, 
+                HouseGroupNotificationHub.GetConnectionId(personIdToExclude))
+                .BroadcastNotificationAsync(notificationDto);
         }
     }
 }

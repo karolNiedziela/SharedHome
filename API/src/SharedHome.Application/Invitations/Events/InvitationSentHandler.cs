@@ -30,13 +30,12 @@ namespace SharedHome.Application.Invitations.Events
             });
 
             var notificationFields = new List<AppNotificationField>()
-                {
-                    
-                    new AppNotificationField(AppNotificationFieldType.Name, invitation.HouseGroupName),
-                    new AppNotificationField(AppNotificationFieldType.Target, TargetType.Invitation.ToString()),
-                    new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Send.ToString()),
-                    new AppNotificationField(AppNotificationFieldType.SentBy, invitation.SentByFullName),
-                };
+            {
+                new AppNotificationField(AppNotificationFieldType.Name, invitation.HouseGroupName),
+                new AppNotificationField(AppNotificationFieldType.Target, TargetType.Invitation.ToString()),
+                new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Send.ToString()),
+                new AppNotificationField(AppNotificationFieldType.SentBy, invitation.SentByFullName),
+            };
             var appNotification = new AppNotification(invitationSent.RequestToPersonId, nameof(InvitationSent), notificationFields);
             await _appNotificationService.AddAsync(appNotification);
 

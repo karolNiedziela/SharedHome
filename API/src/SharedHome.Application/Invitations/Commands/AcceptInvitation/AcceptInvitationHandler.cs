@@ -26,7 +26,7 @@ namespace SharedHome.Application.Invitations.Commands.AcceptInvitation
 
         public async Task<Unit> Handle(AcceptInvitationCommand request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupReadService.IsPersonInHouseGroup(request.PersonId))
+            if (await _houseGroupReadService.IsPersonInHouseGroupAsync(request.PersonId))
             {
                 throw new PersonIsAlreadyInHouseGroupException(request.PersonId);
             }

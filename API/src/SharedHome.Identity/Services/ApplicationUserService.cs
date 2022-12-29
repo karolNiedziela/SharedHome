@@ -16,7 +16,7 @@ namespace SharedHome.Infrastructure.Identity.Services
             _cloudinary = cloudinary;
         }
        
-        public async Task AddUserImage(string userId, UserImage image)
+        public async Task AddUserImageAsync(string userId, UserImage image)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -37,7 +37,7 @@ namespace SharedHome.Infrastructure.Identity.Services
             await _userManager.UpdateAsync(user);
         }
 
-        public async Task<string> GetProfileImage(string userId)
+        public async Task<string> GetProfileImageAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 

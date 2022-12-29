@@ -5,8 +5,8 @@ namespace SharedHome.Infrastructure.Identity.Services
 {
     public interface IApplicationUserService
     {
-        Task AddUserImage(string userId, UserImage image);
+        Task AddUserImageAsync(string userId, UserImage image);
 
-        Task<string> GetProfileImage(string userId);
+        Task<string> GetProfileImageAsync(string userId);
     }
 }

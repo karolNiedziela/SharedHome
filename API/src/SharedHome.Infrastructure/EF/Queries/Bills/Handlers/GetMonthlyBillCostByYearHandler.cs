@@ -40,9 +40,9 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 
             var billCostsGroupedByMonth = new List<BillMonthlyCostDto>();
 
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
 
                 bills = await _bills.Where(bill => bill.IsPaid &&
                     bill.DateOfPayment.Year == request.Year &&
