@@ -5,6 +5,10 @@ import { Injectable } from '@angular/core';
 })
 export class TextHelper {
   public clipText(text: string): string {
+    if (!text) {
+      return text;
+    }
+
     if (text.length < 8) {
       return text;
     }
