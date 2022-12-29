@@ -52,10 +52,7 @@ export class ShoppingListsComponent
     this.month = new Date().getMonth() + 1;
     const currentYearAndMonth = `${this.year} ${this.month}`;
     this.shoppingListForm = new FormGroup({
-      yearAndMonth: new FormControl(currentYearAndMonth, [
-        Validators.required,
-        yearAndMonthFormat,
-      ]),
+      yearAndMonth: new FormControl(currentYearAndMonth, [yearAndMonthFormat]),
       status: new FormControl(ShoppingListStatus['To do']),
     });
 

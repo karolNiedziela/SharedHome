@@ -7,3 +7,9 @@
   overflow-y: hidden;
   min-width: 240px;
 }
+
+@media (max-width: 576px) {
+  .content-main {
+    padding: 0 0.5rem;
+  }
+}
