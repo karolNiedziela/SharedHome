@@ -42,7 +42,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 HouseGroupId = InvitationProvider.HouseGroupId,
             };
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(true);
+            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -58,7 +58,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 HouseGroupId = InvitationProvider.HouseGroupId,
             };
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>()).Returns(false);
+            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
 
             var invitation = InvitationProvider.Get();
 

@@ -44,12 +44,12 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
         {
             var person = await _personRepository.GetByEmailOrThrowAsync(request.RequestedToPersonEmail);
 
-            if (!await _houseGroupService.IsPersonInHouseGroup(request.PersonId, request.HouseGroupId)) 
+            if (!await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId, request.HouseGroupId)) 
             {
                 throw new PersonIsNotInHouseGroupException(request.PersonId, request.HouseGroupId);
             }
 
-            if (await _invitationService.IsAnyInvitationFromHouseGroupToPerson(request.HouseGroupId, person.Id))
+            if (await _invitationService.IsAnyInvitationFromHouseGroupToPersonAsync(request.HouseGroupId, person.Id))
             {
                 throw new InvitationAlreadySentException(request.HouseGroupId, person.Id);
             }
@@ -62,7 +62,7 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
 
             await _invitationRepository.AddAsync(sentInvitation);
 
-            await _eventDispatcher.Dispatch(new InvitationSent(pendingInvitation.Id, request.HouseGroupId, request.PersonId, person.Id));
+            await _eventDispatcher.DispatchAsync(new InvitationSent(pendingInvitation.Id, request.HouseGroupId, request.PersonId, person.Id));
 
             return new Response<InvitationDto>(_mapper.Map<InvitationDto>(pendingInvitation));
         }

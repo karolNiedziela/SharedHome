@@ -25,12 +25,13 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 
         public async Task<Response<BillDto>> Handle(GetBill request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
+                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
 
                 var billsFromHouseGroup = await _bills
-                    .SingleOrDefaultAsync(bill => bill.Id == request.Id && houseGroupPersonIds.Contains(bill.PersonId));
+                    .SingleOrDefaultAsync(bill => bill.Id == request.Id && 
+                    houseGroupPersonIds.Contains(bill.PersonId));
 
                 return new Response<BillDto>(_mapper.Map<BillDto>(billsFromHouseGroup!));
             }

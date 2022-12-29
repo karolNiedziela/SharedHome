@@ -26,9 +26,9 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
         public async Task<Response<ShoppingListDto>> Handle(GetShoppingList request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
+                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
 
                 var shoppingListFromHouseGroup = await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)

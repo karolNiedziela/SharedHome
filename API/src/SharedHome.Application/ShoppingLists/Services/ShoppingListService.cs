@@ -20,9 +20,9 @@ namespace SharedHome.Application.ShoppingLists.Services
 
         public async Task<ShoppingList> GetAsync(Guid shoppingListId, Guid personId)
         {
-            if (await _houseGroupReadService.IsPersonInHouseGroup(personId))
+            if (await _houseGroupReadService.IsPersonInHouseGroupAsync(personId))
             {
-                var houseGroupPersonIds = await _houseGroupReadService.GetMemberPersonIds(personId);
+                var houseGroupPersonIds = await _houseGroupReadService.GetMemberPersonIdsAsync(personId);
 
                 var convertedHouseGroupPersonIds = new List<PersonId>(houseGroupPersonIds.Select(x => new PersonId(x)));
 

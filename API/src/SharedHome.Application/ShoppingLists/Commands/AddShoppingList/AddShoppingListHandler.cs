@@ -54,7 +54,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
             var shoppingList = ShoppingList.Create(Guid.NewGuid(), request.Name, request.PersonId, products: products);
 
             await _shoppingListRepository.AddAsync(shoppingList);
-            await _eventDispatcher.Dispatch(new ShoppingListCreated(shoppingList.Id, shoppingList.Name, new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
+            await _eventDispatcher.DispatchAsync(new ShoppingListCreated(shoppingList.Id, shoppingList.Name, new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
 
             return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList));
         }

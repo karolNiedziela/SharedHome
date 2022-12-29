@@ -56,7 +56,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(false);
 
             var exception = await Record.ExceptionAsync(() => 
@@ -73,10 +73,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(true);
 
-            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _invitationService.IsAnyInvitationFromHouseGroupToPersonAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(true);
 
             var exception = await Record.ExceptionAsync(() =>
@@ -93,10 +93,10 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
-            _houseGroupService.IsPersonInHouseGroup(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
              .Returns(true);
 
-            _invitationService.IsAnyInvitationFromHouseGroupToPerson(Arg.Any<Guid>(), Arg.Any<Guid>())
+            _invitationService.IsAnyInvitationFromHouseGroupToPersonAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(false);
 
             var command = new SendInvitationCommand

@@ -2,6 +2,6 @@
 {
     public interface IDomainEventDispatcher
     {
-        Task Dispatch(IDomainEvent @event);
+        Task DispatchAsync(IDomainEvent @event);
     }
 }

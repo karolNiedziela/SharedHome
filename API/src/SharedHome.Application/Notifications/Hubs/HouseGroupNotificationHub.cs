@@ -63,7 +63,7 @@ namespace SharedHome.Application.Notifications.Hubs
 
         private async Task<string?> GetGroupNameAsync()
         {
-            if (!await _houseGroupReadService.IsPersonInHouseGroup(new Guid(Context.UserIdentifier!)))
+            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(new Guid(Context.UserIdentifier!)))
             {
                 return string.Empty;
             }

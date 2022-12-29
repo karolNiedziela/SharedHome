@@ -65,7 +65,7 @@ namespace SharedHome.Application.Authentication.Commands.UploadProfileImage
                 UserId = request.PersonId.ToString()
             };
 
-            await _identityService.AddUserImage(request.PersonId.ToString(), image);
+            await _identityService.AddUserImageAsync(request.PersonId.ToString(), image);
 
             return new ProfileImageDto
             {

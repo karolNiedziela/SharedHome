@@ -34,7 +34,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
 
             var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
+            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(false);
 
             await _notificationHandler.Handle(domainEvent, default);
@@ -50,10 +50,10 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
 
             var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
+            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreator(Arg.Any<Guid>())
+            _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
                 .Returns(Array.Empty<Guid>());
 
             await _notificationHandler.Handle(domainEvent, default);
@@ -69,10 +69,10 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
 
             var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
 
-            _houseGroupReadService.IsPersonInHouseGroup(Arg.Any<Guid>())
+            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreator(Arg.Any<Guid>())
+            _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
                .Returns(new List<Guid>
                {
                    Guid.NewGuid(),

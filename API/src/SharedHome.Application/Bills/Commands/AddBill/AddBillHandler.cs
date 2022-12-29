@@ -34,7 +34,7 @@ namespace SharedHome.Application.Bills.Commands.AddBill
 
             await _billRepository.AddAsync(bill);
 
-            await _eventDispatcher.Dispatch(new BillCreated(
+            await _eventDispatcher.DispatchAsync(new BillCreated(
                 bill.Id, 
                 bill.ServiceProvider, 
                 bill.DateOfPayment,

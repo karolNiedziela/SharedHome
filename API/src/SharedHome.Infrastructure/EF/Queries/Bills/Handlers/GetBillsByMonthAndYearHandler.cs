@@ -35,9 +35,9 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                 request.Month = currentDate.Month;
             }
 
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
 
                 var billsFromHouseGroup = await _bills
                     .Where(bill => houseGroupPersonsId.Contains(bill.PersonId) &&

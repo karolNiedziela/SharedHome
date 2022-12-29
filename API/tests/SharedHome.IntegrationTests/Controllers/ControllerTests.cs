@@ -16,17 +16,11 @@ namespace SharedHome.IntegrationTests.Controllers
     {
         private readonly IAuthManager _authManager;
 
-        //protected readonly WriteSharedHomeDbContext _context = default!;
-
         protected HttpClient Client { get; }
 
         public ControllerTests(CustomWebApplicationFactory factory)
         {
             Client = factory.HttpClient;
-
-            //_context = factory.Services.GetRequiredService<WriteSharedHomeDbContext>();
-
-            //Utilities.InitializeDbForTests(_context).GetAwaiter().GetResult();
 
             var settingsProvider = factory.Services.GetRequiredService<SettingsProvider>();
 
@@ -36,13 +30,10 @@ namespace SharedHome.IntegrationTests.Controllers
 
         protected AuthenticationResponse Authorize(Guid userId, string firstName = "firstName", string lastName = "lastName", string email = "test@email.com", IEnumerable<string>? roles = null)
         {
-            if (roles is null)
-            {
-                roles = new List<string>
+            roles ??= new List<string>
                 {
                     "User"
                 };
-            }
 
             var jwt = _authManager.Authenticate(userId.ToString(), firstName, lastName, email, roles);         
             Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt.AccessToken);            

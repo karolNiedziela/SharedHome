@@ -15,7 +15,7 @@ namespace SharedHome.Application.Common.Events
             _logger = logger;
         }
 
-        public async Task Dispatch(IDomainEvent @event)
+        public async Task DispatchAsync(IDomainEvent @event)
         {
             var domainEventNotification = CreateDomainEventNotification(@event);
 

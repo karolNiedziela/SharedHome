@@ -37,9 +37,9 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 request.Month = currentDate.Month;
             }
 
-            if (await _houseGroupService.IsPersonInHouseGroup(request.PersonId!))
+            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIds(request.PersonId!);
+                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
 
                 return await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)
