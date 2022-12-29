@@ -3,7 +3,6 @@ import {
   ValidatorFn,
   NgControl,
   AbstractControl,
-  Validators,
 } from '@angular/forms';
 import {
   Component,
@@ -36,9 +35,11 @@ export class TextInputComponent
   }
 
   get isRequired(): boolean {
-    const validator = this.control?.validator!({} as AbstractControl);
-    if (validator != null && validator['required']) {
-      return true;
+    if (this.control?.validator) {
+      const validator = this.control?.validator({} as AbstractControl)!;
+      if (validator && validator['required']) {
+        return true;
+      }
     }
 
     return false;

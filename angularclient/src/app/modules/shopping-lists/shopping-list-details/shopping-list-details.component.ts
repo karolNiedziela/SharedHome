@@ -287,8 +287,6 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
       .filter((product) => this.shoppingListProductsSelected.includes(product))
       .every((product) => !product.isBought);
 
-    console.log(allProductsUnbought);
-
     if (allProductsUnbought) {
       this.showPurchaseSelectedOptions();
       return;
