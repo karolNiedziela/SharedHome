@@ -30,8 +30,6 @@ namespace SharedHome.Application.ShoppingLists.Events
 
             var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(shoppingListCreated.Creator.PersonId);
 
-            var addNotificationTasks = new List<Task>();
-            var broadcastNotificationTasks = new List<Task>();
             foreach (var personId in personIds)
             {
                 var notificationFields = new List<AppNotificationField>()
@@ -42,13 +40,10 @@ namespace SharedHome.Application.ShoppingLists.Events
                 };
                 var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields);              
 
-                addNotificationTasks.Add(_appNotificationService.AddAsync(appNotification));
+                await _appNotificationService.AddAsync(appNotification);
              
-                broadcastNotificationTasks.Add(_appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId));
+                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId);
             }
-
-            await Task.WhenAll(addNotificationTasks);
-            await Task.WhenAll(broadcastNotificationTasks);
         }
     }
 }

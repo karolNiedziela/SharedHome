@@ -30,7 +30,7 @@ export class NotificationService {
   constructor(private http: HttpClient) {}
 
   get() {
-    if (this._notifications.value != null) {
+    if (this._notifications != null && this._notifications.value?.length > 0) {
       return;
     }
 
@@ -80,8 +80,13 @@ export class NotificationService {
       );
   }
 
-  add(notification: AppNotification) {
+  add(notification: AppNotification): void {
     this._notifications.next([notification, ...this._notifications.value]);
     this._notificationsCount.next(this._notificationsCount.value + 1);
+  }
+
+  clear(): void {
+    this._notifications.next([]);
+    this._notificationsCount.next(0);
   }
 }

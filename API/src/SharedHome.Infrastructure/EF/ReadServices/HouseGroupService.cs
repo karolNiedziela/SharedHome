@@ -27,15 +27,18 @@ namespace SharedHome.Infrastructure.EF.ReadServices
         
         public async Task<IEnumerable<Guid>> GetMemberPersonIdsAsync(Guid personId)
              => await _houseGroups
-               .Include(houseGroup => houseGroup.Members
-                 .Where(member => member.PersonId == personId))
-               .SelectMany(houseGroup => houseGroup.Members
-               .Select(member => member.PersonId))
+               .Include(houseGroup => houseGroup.Members)                
+               .Where(houseGroup => houseGroup.Members
+                .Any(member => member.PersonId == personId))
+               .SelectMany(houseGroup => houseGroup.Members)
+               .Select(member => member.PersonId)
                .ToListAsync();
 
         public async Task<IEnumerable<Guid>> GetMemberPersonIdsExcludingCreatorAsync(Guid personId) 
             => await _houseGroups
                .Include(houseGroup => houseGroup.Members)
+               .Where(houseGroup => houseGroup.Members
+                .Any(member => member.PersonId == personId))
                .SelectMany(houseGroup => houseGroup.Members
                  .Where(member => member.PersonId != personId)
                .Select(member => member.PersonId))

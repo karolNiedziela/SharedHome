@@ -72,7 +72,7 @@ export class AuthenticationService {
             this.router.navigate(['']);
           }
 
-          this.getProfileImage;
+          this.getProfileImage();
 
           return result;
         })

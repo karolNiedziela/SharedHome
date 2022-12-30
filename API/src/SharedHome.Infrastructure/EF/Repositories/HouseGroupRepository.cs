@@ -18,12 +18,12 @@ namespace SharedHome.Infrastructure.EF.Repositories
         public async Task<HouseGroup?> GetAsync(PersonId personId)
              => await _dbContext.HouseGroups
             .Include(houseGroup => houseGroup.Members.Where(m => m.PersonId == personId))
-            .SingleOrDefaultAsync();
+            .FirstOrDefaultAsync();
 
         public async Task<HouseGroup?> GetAsync(HouseGroupId houseGroupId, PersonId personId)
             => await _dbContext.HouseGroups
             .Include(houseGroup => houseGroup.Members)
-            .SingleOrDefaultAsync(houseGroup => houseGroup.Id == houseGroupId);
+            .FirstOrDefaultAsync(houseGroup => houseGroup.Id == houseGroupId);
 
         public async Task AddAsync(HouseGroup houseGroup)
         {

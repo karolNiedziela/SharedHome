@@ -92,7 +92,7 @@
   "Please provide a valid email address.": "Please provide a valid email address.",
   "This field value must be higher or equal to": "This field value must be higher or equal to",
   "This field value must be lower or equal to": "This field value must be lower or equal to",
-  "Password requires must contain at least 6 characters and one lowercase.": "Password requires must contain at least 6 characters and one lowercase.",
+  "Password requires must contain at least 6 characters and one lowercase.": "Password must contain at least 6 characters and one lowercase.",
   "Passwords do not match.": "Passwords do not match.",
   "Example proper format 2022 6.": "Example proper format 2022 6.",
   "Loading...": "Loading...",
@@ -161,5 +161,6 @@
   "House group": "House group",
   "Expenses": "Expenses",
   "Bills": "Bills",
-  "Email sent, check your mailbox.": "Email sent, check your mailbox."
+  "Email sent, check your mailbox.": "Email sent, check your mailbox.",
+  "Add house group": "Add house group"
 }

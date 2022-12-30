@@ -23,8 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
   authenticationResponse: AuthenticationResponse = null!;
   subscriptions: Subscription[] = [];
 
-  notification?: AppNotification;
-
   constructor(
     private authenticationService: AuthenticationService,
     public translateService: TranslateService,
@@ -52,14 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.signalRService.notification.subscribe(
-        (notification: AppNotification) => {
-          this.notification = notification;
-        }
-      )
-    );
-
     this.themeService.setTheme();
   }
 

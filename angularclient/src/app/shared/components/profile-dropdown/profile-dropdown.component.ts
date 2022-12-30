@@ -1,3 +1,4 @@
+import { SignalrService } from './../../../core/services/signalr.service';
 import { Component, OnInit } from '@angular/core';
 import { ProfileImage } from 'app/modules/identity/models/profile-image';
 import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
@@ -12,7 +13,10 @@ export class ProfileDropdownComponent implements OnInit {
   profileImage$!: Observable<ProfileImage | null>;
   userFullName: string = '';
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private signalRService: SignalrService
+  ) {}
 
   ngOnInit(): void {
     this.userFullName = this.buildUserFullName();
@@ -31,6 +35,7 @@ export class ProfileDropdownComponent implements OnInit {
   }
 
   logout() {
+    this.signalRService.closeConnection();
     this.authenticationService.logout();
   }
 }

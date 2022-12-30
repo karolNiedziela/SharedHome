@@ -44,8 +44,6 @@ export class AddShoppingListProductFormComponent implements OnInit {
       isBought: false,
     };
 
-    console.log(shoppingListProduct);
-
     return shoppingListProduct;
   }
 
