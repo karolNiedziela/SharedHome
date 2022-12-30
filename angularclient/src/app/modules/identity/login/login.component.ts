@@ -48,14 +48,13 @@ export class LoginComponent implements OnInit {
         finalize(() => {
           this.disabled = false;
           this.loadingSaveButton = false;
-        })
-      )
-      .subscribe({
-        next: () => {
           this.signalRService.initiateSignalRConnection(
             this.authenticationService.authenticationResponseValue.accessToken
           );
-        },
+        })
+      )
+      .subscribe({
+        next: () => {},
         error: (error: string[]) => {
           this.errorMessages = error;
         },
