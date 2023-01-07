@@ -9,6 +9,10 @@
   [formGroup]="inviteToHouseGroupForm"
 >
   <div class="row g-3" [formGroup]="inviteToHouseGroupForm">
-    <app-email-input formControlName="requestedToPersonEmail"></app-email-input>
+    <app-text-input
+      label="Email"
+      placeholder="Email"
+      formControlName="requestedToPersonEmail"
+    ></app-text-input>
   </div>
 </app-form-modal>

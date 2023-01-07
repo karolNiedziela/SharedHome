@@ -1,13 +1,10 @@
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginGuard } from 'app/core/guards/login.guard';
-import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { IdentityComponent } from './identity.component';
-import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginGuard } from 'src/app/core/guards/login.guard';
 
 const routes: Routes = [
   {
@@ -20,20 +17,22 @@ const routes: Routes = [
         component: RegisterComponent,
         canActivate: [LoginGuard],
       },
-      {
-        path: 'resetpassword',
-        component: ResetPasswordComponent,
-      },
-      {
-        path: 'forgotpassword',
-        component: ForgotPasswordComponent,
-      },
     ],
   },
-  {
-    path: 'emailconfirmation',
-    component: EmailConfirmationComponent,
-  },
+  //     {
+  //       path: 'resetpassword',
+  //       component: ResetPasswordComponent,
+  //     },
+  //     {
+  //       path: 'forgotpassword',
+  //       component: ForgotPasswordComponent,
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: 'emailconfirmation',
+  //   component: EmailConfirmationComponent,
+  // },
 ];
 
 @NgModule({

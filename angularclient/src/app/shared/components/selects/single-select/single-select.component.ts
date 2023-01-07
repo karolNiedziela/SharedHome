@@ -1,48 +1,45 @@
-import { SelectSetting } from './select-setting';
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
-  Optional,
   Output,
   Self,
-  EventEmitter,
 } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NgControl,
-} from '@angular/forms';
+import { AbstractControl, NgControl } from '@angular/forms';
+import { SingleSelectSetting } from '../single-select-setting';
 
 @Component({
   selector: 'app-single-select',
   templateUrl: './single-select.component.html',
   styleUrls: ['./single-select.component.scss'],
 })
-export class SingleSelectComponent implements OnInit, ControlValueAccessor {
-  @Input() labelText!: string;
-  @Input() selectOptions: SelectSetting[] = [];
+export class SingleSelectComponent implements OnInit {
+  @Input() label!: string;
+  @Input() selectOptions: SingleSelectSetting[] = [];
   @Output() selectedKey: EventEmitter<string | number> = new EventEmitter<
     string | number
   >();
   selectedValue!: string | number;
-
   onChanged: (value: string | number) => void = () => {};
   onTouched: () => void = () => {};
 
-  get control(): AbstractControl<any, any> | null {
+  get control(): AbstractControl | null {
     return this.controlDir.control;
   }
 
   get isRequired(): boolean {
     if (this.control?.validator) {
-      return this.control.validator!({} as AbstractControl)!['required'];
+      const validator = this.control?.validator({} as AbstractControl)!;
+      if (validator && validator['required']) {
+        return true;
+      }
     }
 
     return false;
   }
 
-  constructor(@Self() @Optional() private controlDir: NgControl) {
+  constructor(@Self() private controlDir: NgControl) {
     controlDir.valueAccessor = this;
   }
 

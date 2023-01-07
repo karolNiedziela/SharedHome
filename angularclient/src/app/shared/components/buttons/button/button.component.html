@@ -1,9 +1,12 @@
 <button
-  [type]="type"
+  mat-raised-button
+  color="primary"
+  type="type"
+  class="w-full"
+  [ngClass]="{ 'w-full': fullWidth }"
   [disabled]="disabled"
+  [hidden]="hidden"
   (click)="onClick()"
-  class="btn btn-primary .shared-home-btn"
 >
   {{ text | translate }}
-  <div class="spinner-border" role="status" *ngIf="loading"></div>
 </button>

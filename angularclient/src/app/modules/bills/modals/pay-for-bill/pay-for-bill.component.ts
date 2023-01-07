@@ -9,8 +9,9 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { PayForBill } from '../../models/pay-for-bill';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
+import { MoneyFormComponent } from 'src/app/shared/forms/money-form/money-form.component';
 
 @Component({
   selector: 'app-pay-for-bill',
@@ -29,6 +30,8 @@ export class PayForBillComponent implements Modalable, OnInit {
 
   payForBillForm!: FormGroup;
 
+  @ViewChild('moneyForm') private moneyForm!: MoneyFormComponent;
+
   constructor(private billService: BillService) {}
 
   ngOnInit(): void {
@@ -41,6 +44,12 @@ export class PayForBillComponent implements Modalable, OnInit {
     this.modal.open();
   }
   onSave(): void {
+    if (this.payForBillForm.invalid) {
+      this.moneyForm.priceControl.markAsTouched();
+      this.moneyForm.priceControl.updateValueAndValidity();
+      return;
+    }
+
     const cost = this.payForBillForm.get('money')?.get('price')?.value;
 
     const currency = this.payForBillForm.get('money')?.get('currency')?.value;

@@ -1,46 +1,56 @@
-import { ProfileModule } from './modules/profile/profile.module';
-import { NotificationsModule } from './modules/notifications/notifications.module';
-import { ExpensesModule } from './modules/expenses/expenses.module';
-import { LanguageInterceptor } from './core/interceptors/language.interceptor';
-import { InvitationModule } from './modules/invitations/invitation.module';
-import { HousegroupModule } from './modules/housegroups/housegroup.module';
 import { BillsModule } from './modules/bills/bills.module';
+import { InvitationModule } from './modules/invitations/invitation.module';
+import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
+import { RouterModule, TitleStrategy } from '@angular/router';
 import { IdentityModule } from './modules/identity/identity.module';
-import { SharedModule } from './shared/shared.module';
-import { AuthenticationResultInterceptor } from './core/interceptors/authentication-result.interceptor';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ErrorInterceptor } from './core/interceptors/error.interceptor';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
-import { TitleStrategy } from '@angular/router';
+import { AuthenticationResultInterceptor } from './core/interceptors/authentication-result.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
+import { LanguageInterceptor } from './core/interceptors/language.interceptor';
 import { TemplatePageTitleStrategy } from './template-page-title-strategy';
-
+import { MaterialModule } from './material.module';
+import { SharedModule } from './shared/shared.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HousegroupModule } from './modules/housegroups/housegroup.module';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { ProfileModule } from './modules/profile/profile.module';
+import { NotificationsModule } from './modules/notifications/notifcations.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    CommonModule,
+    AppRoutingModule,
+    RouterModule,
     BrowserAnimationsModule,
+    MaterialModule,
+    FormsModule,
     HttpClientModule,
-    FontAwesomeModule,
-    AppRoutingModule,
+    ReactiveFormsModule,
     SharedModule,
-    ShoppingListsModule,
-    BillsModule,
-    AppRoutingModule,
     IdentityModule,
-    NgbModule,
+    ShoppingListsModule,
     HousegroupModule,
+    FontAwesomeModule,
     InvitationModule,
+    BillsModule,
+    ProfileModule,
+    NotificationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -49,9 +59,10 @@ import { TemplatePageTitleStrategy } from './template-page-title-strategy';
       },
     }),
     ToastrModule.forRoot(),
-    ExpensesModule,
-    NotificationsModule,
-    ProfileModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [
     {

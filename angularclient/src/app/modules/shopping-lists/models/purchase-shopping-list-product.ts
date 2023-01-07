@@ -1,4 +1,4 @@
-import { Money } from 'app/core/models/money';
+import { Money } from 'src/app/core/models/money';
 
 export interface PurchaseShoppingListProduct {
   shoppingListId: string;

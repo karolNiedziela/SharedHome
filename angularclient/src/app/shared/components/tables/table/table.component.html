@@ -1,25 +1,34 @@
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th *ngFor="let map of columnMaps">
-          {{ map.header! | translate }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let record of records; let i = index">
-        <td *ngFor="let map of columnMaps" [id]="map.header">
-          {{
-            record[map.propertyName]
-              | formatCell: map.format!:map?.enumType
-              | translate
-          }}
-        </td>
-        <td *ngIf="actions">
-          <app-popup-menu [popupMenuConfig]="actions![i]"></app-popup-menu>
-        </td>
-      </tr>
-    </tbody>
+<!-- Table -->
+<ng-container>
+  <table mat-table [dataSource]="tableDataSource" class="w-full">
+    <ng-container
+      *ngFor="let tableColumn of tableColumns; let i = index"
+      [matColumnDef]="tableColumn.name"
+    >
+      <th mat-header-cell *matHeaderCellDef>
+        {{ tableColumn.name }}
+      </th>
+
+      <td mat-cell *matCellDef="let element">
+        <span></span>
+
+        {{
+          element
+            | dataPropertyGetter : tableColumn.dataKey
+            | formatCell : tableColumn.format! : tableColumn?.enumType
+            | translate
+        }}
+      </td></ng-container
+    >
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element; let i = index">
+        <app-popup-menu [popupMenuConfig]="actions![i]"></app-popup-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
-</div>
+</ng-container>

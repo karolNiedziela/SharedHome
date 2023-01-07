@@ -1,8 +1,8 @@
-@import "/src/assets/_variables.scss";
+@use "sass:map";
+@use "@angular/material" as mat;
 
 nav {
-  padding: 0 1rem;
-  height: 56px;
+  height: 52px;
 }
 
 .account {
@@ -50,6 +50,7 @@ nav {
   height: 2px;
   border-radius: 99px;
   transition-duration: 0.25s;
+  background-color: black !important;
 }
 
 .hamburger > span::before {
@@ -62,16 +63,29 @@ nav {
   top: 8px;
 }
 
-.navbar.is-active .hamburger > span {
+// Hambuger animation
+.hamburger.open > span {
   transform: rotate(45deg);
 }
-
-.navbar.is-active .hamburger > span::before {
+.hamburger.open > span::before {
   top: 0;
   transform: rotate(0deg);
 }
-
-.navbar.is-active .hamburger > span::after {
+.hamburger.open > span::after {
   top: 0;
   transform: rotate(90deg);
+}
+
+@mixin lightTheme($theme) {
+  .logo {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(89%) saturate(865%)
+      hue-rotate(205deg) brightness(87%) contrast(95%);
+  }
+}
+
+@mixin darkTheme($theme) {
+  .logo {
+    filter: invert(58%) sepia(9%) saturate(3044%) hue-rotate(73deg)
+      brightness(100%) contrast(82%);
+  }
 }

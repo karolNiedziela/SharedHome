@@ -1,9 +1,9 @@
 import { UploadImageComponent } from './../../../../shared/components/inputs/upload-image/upload-image.component';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Modalable } from './../../../../core/models/modalable';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
+import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
 @Component({
   selector: 'app-upload-profile-image-modal',
   templateUrl: './upload-profile-image-modal.component.html',

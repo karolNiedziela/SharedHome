@@ -1,42 +1,46 @@
 <div
-  class="house-group"
+  class="h-full"
   *ngIf="(houseGroup$ | async)?.data; let houseGroup; else: notExisting"
 >
-  <div class="house-group__members">
-    <h3>{{ houseGroup.name }}</h3>
-    <ul class="list-group" *ngFor="let member of houseGroup.members">
-      <app-house-group-member
-        [member]="member"
-        [isCurrentUserOwner]="isCurrentUserOwner"
+  <div class="flex flex-row justify-between">
+    <span class="pt-2"
+      ><span class="text-base">{{ "Name" | translate }}: </span>
+      <span class="font-medium text-lg">{{ houseGroup.name }}</span></span
+    >
+    <div class="flex flex-row gap-2">
+      <app-circle-button
+        *ngIf="isCurrentUserOwner"
+        icon="delete"
+        [tooltipText]="'Delete house group' | translate"
+        (onButtonClick)="deleteHouseGroupModal.open()"
+      ></app-circle-button>
+      <app-circle-button
+        icon="logout"
+        [tooltipText]="'Leave house group' | translate"
+        (onButtonClick)="leaveHouseGroupModal.open()"
+      ></app-circle-button>
+      <app-invite-to-house-group
         [houseGroupId]="houseGroupId"
-      ></app-house-group-member>
-    </ul>
+      ></app-invite-to-house-group>
+    </div>
   </div>
-  <div class="house-group__operations">
-    <app-circle-button
-      *ngIf="isCurrentUserOwner"
-      [icon]="deleteHouseGroupIcon"
-      [tooltipText]="'Delete house group' | translate"
-      (onButtonClick)="deleteHouseGroupModal.open()"
-    ></app-circle-button>
-    <app-circle-button
-      [icon]="leaveHouseGroupIcon"
-      [tooltipText]="'Leave house group' | translate"
-      (onButtonClick)="leaveHouseGroupModal.open()"
-    ></app-circle-button>
-    <app-invite-to-house-group
-      [houseGroupId]="houseGroupId"
-    ></app-invite-to-house-group>
+  <div *ngIf="houseGroup != null; else notExisting">
+    <mat-list>
+      <div *ngFor="let member of houseGroup.members">
+        <app-house-group-member
+          [member]="member"
+          [isCurrentUserOwner]="isCurrentUserOwner"
+          [houseGroupId]="houseGroupId"
+        ></app-house-group-member>
+      </div>
+    </mat-list>
   </div>
 </div>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <ng-template #notExisting>
-  <div class="add-housegroup">
+  <div *ngIf="!loading" class="flex flex-row justify-end">
     <app-add-house-group></app-add-house-group>
   </div>
-</ng-template>
-
-<ng-template #loading>
-  <app-loading-spinner></app-loading-spinner>
 </ng-template>
 
 <app-confirmation-modal

@@ -1,0 +1,96 @@
+<div
+  class="flex flex-col h-full w-full"
+  *ngIf="events$ | async as evs; else loading"
+>
+  <div class="flex flex-row items-center text-base pb-2">
+    <div class="flex-1">
+      {{ viewDate | calendarDate : view + "ViewTitle" : locale | titlecase }}
+    </div>
+
+    <div class="flex flex-row gap-x-8 items-center cursor-pointer">
+      <mat-icon
+        [title]="'Previous' | translate"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="onMonthChanged($event)"
+        >arrow_back_ios</mat-icon
+      >
+
+      <button
+        mat-stroked-button
+        color="primary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+        (viewDateChange)="onMonthChanged($event)"
+      >
+        {{ "Current" | translate }}
+      </button>
+      <mat-icon
+        [title]="'Next' | translate"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="onMonthChanged($event)"
+        >arrow_forward_ios</mat-icon
+      >
+    </div>
+    <app-add-bill class="flex-1 flex flex-row justify-end"></app-add-bill>
+  </div>
+
+  <mwl-calendar-month-view
+    [viewDate]="viewDate"
+    [events]="evs"
+    [locale]="locale"
+    [weekStartsOn]="weekStartsOn"
+    [activeDayIsOpen]="activeDayIsOpen"
+    [openDayEventsTemplate]="openDayEventsTemplate"
+    (dayClicked)="dayClicked($event.day.date, evs)"
+    [refresh]="refresh"
+    [cellTemplate]="customCellTemplate"
+    [activeDay]="dateSelected"
+  >
+  </mwl-calendar-month-view>
+
+  <app-table
+    *ngIf="currentDayEvents.length > 0"
+    [tableColumns]="billTableColumns"
+    [tableData]="currentDayEvents"
+    [actions]="popupMenuConfigs"
+  ></app-table>
+</div>
+
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+
+<ng-template
+  #openDayEventsTemplate
+  let-events="events"
+  let-eventClicked="eventClicked"
+>
+</ng-template>
+
+<ng-template #customCellTemplate let-day="day" let-locale="locale">
+  <div class="cal-cell-top">
+    <span class="cal-day-number">{{
+      day.date | calendarDate : "monthViewDayNumber" : locale
+    }}</span>
+  </div>
+
+  <app-bill-type-icons
+    [billTypes]="getBillTypes(day.events)"
+    [billEvents]="day.events"
+  ></app-bill-type-icons>
+</ng-template>
+
+<app-confirmation-modal
+  [confirmationModalConfig]="deleteBillModalConfig"
+  #deleteBillModal
+></app-confirmation-modal>
+
+<app-pay-for-bill #payForBillModal></app-pay-for-bill>
+
+<app-cancel-bill-payment #cancelBillPaymentModal></app-cancel-bill-payment>
+
+<app-edit-bill #editBillModal></app-edit-bill>

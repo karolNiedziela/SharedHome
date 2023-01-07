@@ -1,0 +1,12 @@
+<div class="flex flex-row g-2 w-full" [formGroup]="moneyFormGroup">
+  <div class="w-2/3">
+    <app-number-input
+      formControlName="price"
+      [label]="'Price' | translate"
+      [placeholder]="'Price' | translate"
+    ></app-number-input>
+  </div>
+  <div class="w-1/3 mt-1 ml-2">
+    <app-currency-select formControlName="currency"> </app-currency-select>
+  </div>
+</div>

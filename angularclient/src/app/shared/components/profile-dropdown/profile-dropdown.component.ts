@@ -1,8 +1,8 @@
-import { SignalrService } from './../../../core/services/signalr.service';
 import { Component, OnInit } from '@angular/core';
-import { ProfileImage } from 'app/modules/identity/models/profile-image';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Observable } from 'rxjs';
+import { SignalrService } from 'src/app/core/services/signalr.service';
+import { ProfileImage } from 'src/app/modules/identity/models/profile-image';
+import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -28,14 +28,14 @@ export class ProfileDropdownComponent implements OnInit {
 
   private buildUserFullName(): string {
     return (
-      this.authenticationService.authenticationResponseValue.firstName +
+      this.authenticationService.authenticationResponseValue?.firstName +
       ' ' +
-      this.authenticationService.authenticationResponseValue.lastName
+      this.authenticationService.authenticationResponseValue?.lastName
     );
   }
 
   logout() {
-    this.signalRService.closeConnection();
+    // this.signalRService.closeConnection();
     this.authenticationService.logout();
   }
 }

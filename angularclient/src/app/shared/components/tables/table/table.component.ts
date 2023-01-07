@@ -1,34 +1,47 @@
-import { PopupMenuConfig } from './../../menus/popup-menu/popup-menu.config';
-import { Component, OnInit, Input } from '@angular/core';
-import { ColumnSetting } from '../column-setting';
+import { Component, Input, OnInit } from '@angular/core';
+import { PopupMenuConfig } from '../../menus/popup-menu/popup-menu.config';
+import { TableColumn } from '../column-setting';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T> implements OnInit {
-  @Input() records!: any[];
-  @Input() settings?: ColumnSetting[];
+export class TableComponent implements OnInit {
+  public tableDataSource = new MatTableDataSource<any>([]);
+  public displayedColumns: string[] = [];
+  @Input() isPageable = false;
+  @Input() tableColumns: TableColumn[] = [];
   @Input() actions?: PopupMenuConfig[] | null;
 
-  columnMaps?: ColumnSetting[];
+  @Input() set tableData(data: any[]) {
+    this.setTableDataSource(data);
+  }
 
   constructor() {}
 
   ngOnInit(): void {
-    if (this.settings) {
-      this.columnMaps = this.settings;
-    } else {
-      this.columnMaps = Object.keys(this.records[0]).map((key) => {
-        return {
-          propertyName: key,
-          header:
-            key.slice(0, 1).toUpperCase() + key.replace(/_/g, ' ').slice(1),
-          hidden: false,
-          format: 0,
-        };
-      });
-    }
+    const columnNames = this.tableColumns.map(
+      (tableColumn: TableColumn) => tableColumn.name
+    );
+
+    this.displayedColumns = columnNames;
+
+    console.log(this.actions);
+    if (
+      this.actions != null &&
+      this.actions!.length > 0 &&
+      !this.isAllActionsHidden()
+    )
+      this.displayedColumns.push('actions');
+  }
+
+  setTableDataSource(data: any) {
+    this.tableDataSource = new MatTableDataSource<any>(data);
+  }
+
+  private isAllActionsHidden(): boolean {
+    return this.actions!.every((action: PopupMenuConfig) => action.isHidden);
   }
 }

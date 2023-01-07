@@ -1,5 +1,5 @@
-import { ValidatorError } from './../../core/models/validator-error';
 import { AbstractControl } from '@angular/forms';
+import { ValidatorError } from './validator-error';
 
 export function passwordStrengthValidator(
   control: AbstractControl
@@ -10,13 +10,12 @@ export function passwordStrengthValidator(
     ? null
     : {
         invalidFormat:
-          'Password requires must contain at least 6 characters and one lowercase.',
+          'Password must contain at least 6 characters and one lowercase.',
       };
 }
 
 export function matchPassword(control: AbstractControl) {
   const password = control.get('password')?.value;
-
   const confirmPassword = control.get('confirmPassword')?.value;
 
   if (password !== confirmPassword) {

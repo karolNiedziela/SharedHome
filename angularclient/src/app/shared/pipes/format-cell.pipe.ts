@@ -1,7 +1,7 @@
-import { EnumAsStringPipe } from './enum-as-string.pipe';
-import { CellPipeFormat } from '../components/tables/cell-pipe-format';
+import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
+import { CellPipeFormat } from '../components/tables/cell-pipe-format';
+import { EnumAsStringPipe } from './enum-as-string.pipe';
 
 @Pipe({
   name: 'formatCell',

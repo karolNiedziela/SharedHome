@@ -1,4 +1,4 @@
-import { Money } from 'app/core/models/money';
+import { Money } from 'src/app/core/models/money';
 import { BillType } from '../enums/bill-type';
 
 export interface Bill {

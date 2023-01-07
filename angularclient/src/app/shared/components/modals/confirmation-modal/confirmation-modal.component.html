@@ -1,17 +1,8 @@
 <ng-template #confirmationModal>
-  <div class="modal-header">
-    <h5 class="modal-title">
-      {{ confirmationModalConfig.modalTitle! | translate }}
-    </h5>
-    <h4>
-      <fa-icon
-        [icon]="dismissIcon"
-        (click)="dismiss()"
-        class="dismiss-icon"
-      ></fa-icon>
-    </h4>
-  </div>
-  <div class="modal-body">
+  <h2 class="modal-title" mat-dialog-title>
+    {{ confirmationModalConfig.modalTitle! | translate }}
+  </h2>
+  <mat-dialog-content class="mat-typography">
     {{ confirmationModalConfig.confirmationText! | translate }}
     <span
       *ngIf="
@@ -19,13 +10,13 @@
         confirmationModalConfig.confirmationProperties.length > 0
       "
     >
-      <span>{{ getJoinedConfirmationProperties() }}?</span>
+      <span class="font-medium">{{ getJoinedConfirmationProperties() }}?</span>
     </span>
-  </div>
-  <div class="modal-footer">
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
     <button
-      type="button"
-      class="btn btn-secondary"
+      mat-button
+      mat-dialog-close
       data-bs-dismiss="modal"
       (click)="close()"
     >
@@ -33,7 +24,7 @@
     </button>
     <app-button
       [text]="confirmationModalConfig.yesButtonText! | translate"
-      (onButtonClick)="save()"
+      (onButtonClick)="confirm()"
     ></app-button>
-  </div>
+  </mat-dialog-actions>
 </ng-template>

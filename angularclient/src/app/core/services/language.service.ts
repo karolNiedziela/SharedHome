@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LanguageService {
+  public static pl: string = 'pl';
+  public static en: string = 'en';
   private static key: string = 'sharedhome-language';
 
   public get language(): string {

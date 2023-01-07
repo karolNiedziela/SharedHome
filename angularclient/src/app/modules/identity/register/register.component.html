@@ -1,32 +1,39 @@
 <form class="row g-3" [formGroup]="registerForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
-  <app-email-input formControlName="email"></app-email-input>
   <app-text-input
-    [labelText]="'First name' | translate"
+    formControlName="email"
+    [label]="'Email' | translate"
+    [placeholder]="'Email' | translate"
+  ></app-text-input>
+  <app-text-input
+    [label]="'First name' | translate"
     [placeholder]="'First name' | translate"
     formControlName="firstName"
   ></app-text-input>
   <app-text-input
-    [labelText]="'Last name' | translate"
+    [label]="'Last name' | translate"
     [placeholder]="'Last name' | translate"
     formControlName="lastName"
   ></app-text-input>
-  <app-passwords-form
+  <app-password-form
+    class="flex"
     #passwordForm
     formControlName="password"
-  ></app-passwords-form>
+  ></app-password-form>
   <app-button
-    class="d-grid col-12"
+    class="flex"
     [text]="'Sign up' | translate"
     type="submit"
     [disabled]="disabled"
     [loading]="loadingSaveButton"
+    [fullWidth]="true"
   ></app-button>
 </form>
 <hr class="mt-4" />
 <app-button
+  class="flex"
   [routerLink]="['/identity/login']"
-  class="d-grid col-12 mb-4"
   [text]="'Login' | translate"
   type="submit"
+  [fullWidth]="true"
 ></app-button>

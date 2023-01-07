@@ -1,10 +1,7 @@
-.shared-home-btn:focus {
-  outline: none !important;
-  box-shadow: none !important;
+.mat-raised-button.mat-primary {
+  color: #ececec !important;
 }
 
-.spinner-border {
-  color: white !important;
-  width: 1rem;
-  height: 1rem;
+.mat-raised-button.mat-button-disabled.mat-button-disabled {
+  color: rgba(0, 0, 0, 0.7) !important;
 }

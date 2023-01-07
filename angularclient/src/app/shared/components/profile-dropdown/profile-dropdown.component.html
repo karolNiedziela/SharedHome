@@ -1,37 +1,36 @@
-<div class="icon-wrapper">
-  <div class="dropdown">
-    <span
-      class="account btn btn-primary ms-2"
-      data-bs-toggle="dropdown"
-      *ngIf="profileImage$ | async as profileImage; else noProfileImage"
-    >
-      <div *ngIf="profileImage.url != null; else noProfileImage">
-        <img [src]="profileImage?.url" />
-      </div>
-      <ng-template #noProfileImage>
-        {{ userFullName | firstLettersToTitleCase }}
-      </ng-template>
-      <div class="dropdown-menu" aria></div>
-    </span>
-    <ng-template #noProfileImage>
-      {{ userFullName | firstLettersToTitleCase }}
-    </ng-template>
+<button
+  mat-fab
+  color="primary"
+  mat-icon-button
+  class="sharedhome-circle-btn"
+  [matMenuTriggerFor]="profileMenu"
+  *ngIf="profileImage$ | async as profileImage; else noProfileImage"
+>
+  <img
+    class="rounded-full"
+    *ngIf="profileImage.url != null; else noProfileImage"
+    [src]="profileImage?.url"
+  />
+</button>
 
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <li>
-        <a
-          class="dropdown-item"
-          [routerLink]="['/profile']"
-          [routerLinkActive]="['active']"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >{{ "settings" | translate }}</a
-        >
-      </li>
-      <li>
-        <a class="dropdown-item" (click)="logout()">{{
-          "logOut" | translate
-        }}</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<ng-template #noProfileImage>
+  <span class="username">
+    {{ userFullName | firstLettersToTitleCase }}
+  </span>
+</ng-template>
+
+<mat-menu #profileMenu="matMenu">
+  <a
+    [routerLink]="['/profile']"
+    [routerLinkActive]="['active']"
+    [routerLinkActiveOptions]="{ exact: true }"
+    mat-menu-item
+  >
+    <mat-icon>settings</mat-icon>
+    <span>{{ "settings" | translate }}</span>
+  </a>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>{{ "logOut" | translate }}</span>
+  </button>
+</mat-menu>

@@ -1,35 +1,35 @@
-import { Paginatable } from './../../../../core/models/paginatable';
-import { EnumSelectComponent } from './../../../../shared/components/selects/enum-select/enum-select.component';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { Observable, tap } from 'rxjs';
-import { ShoppingListStatus } from './../../enums/shopping-list-status';
-import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { faList } from '@fortawesome/free-solid-svg-icons';
+import { PopupMenuConfig } from './../../../../shared/components/menus/popup-menu/popup-menu.config';
+import { ShoppingListProduct } from './../../models/shopping-list-product';
 import {
+  AfterViewInit,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
-  AfterViewInit,
-  OnDestroy,
 } from '@angular/core';
-import { yearAndMonthFormat } from 'app/shared/validators/dateformat.validator';
-import { Paged } from 'app/core/models/paged';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable, Subscription, tap } from 'rxjs';
+import { Paged } from 'src/app/core/models/paged';
+import { Paginatable } from 'src/app/core/models/paginatable';
+import { TableColumn } from 'src/app/shared/components/tables/column-setting';
+import { ShoppingListStatus } from '../../enums/shopping-list-status';
 import { ShoppingList } from '../../models/shopping-list';
 import { ShoppingListsService } from '../../services/shopping-lists.service';
+import { SingleEnumSelectComponent } from 'src/app/shared/components/selects/single-enum-select/single-enum-select.component';
+
 @Component({
   selector: 'app-shopping-lists-list',
   templateUrl: './shopping-lists-list.component.html',
   styleUrls: ['./shopping-lists-list.component.scss'],
 })
-export class ShoppingListsComponent
+export class ShoppingListsListComponent
   implements OnInit, AfterViewInit, OnDestroy, Paginatable
 {
-  detailsIcon = faList;
   public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
 
   @ViewChild('statusSelect')
-  private statusSelect!: EnumSelectComponent;
+  private statusSelect!: SingleEnumSelectComponent;
   year!: number;
   month!: number;
   isDone: boolean = false;
@@ -42,6 +42,25 @@ export class ShoppingListsComponent
 
   public currentPage: number = 1;
 
+  shoppings: ShoppingList[] = [];
+
+  shoppingsTableColumns: TableColumn[] = [];
+
+  popupMenuConfigs: PopupMenuConfig[] = [
+    {
+      isEditVisible: true,
+      onEdit: () => alert('Edit 1'),
+      isDeleteVisible: true,
+      onDelete: () => alert('Delete 1'),
+    },
+    {
+      isEditVisible: true,
+      onEdit: () => alert('Edit 2'),
+      isDeleteVisible: true,
+      onDelete: () => alert('Delete 2'),
+    },
+  ];
+
   constructor(
     private shoppingListService: ShoppingListsService,
     private router: Router
@@ -51,8 +70,8 @@ export class ShoppingListsComponent
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
     const currentYearAndMonth = `${this.year} ${this.month}`;
+
     this.shoppingListForm = new FormGroup({
-      yearAndMonth: new FormControl(currentYearAndMonth, [yearAndMonthFormat]),
       status: new FormControl(ShoppingListStatus['To do']),
     });
 

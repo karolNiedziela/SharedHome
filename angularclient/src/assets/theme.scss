@@ -1,0 +1,56 @@
+@use "../app/modules/shopping-lists/shopping-lists-list-view/single-shopping-list/single-shopping-list.component.scss"
+  as singleShoppingList;
+@use "../app/shared/components/sidebar/sidebar.component.scss" as sidebar;
+@use "../app/shared/components//navbar/navbar.component.scss" as navbar;
+@use "calendar" as calendar;
+@use "icon" as icon;
+@use "../app/modules/notifications/notification-bell/notification-bell.component.scss"
+  as notificationBell;
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$light-theme-primary: mat.define-palette(mat.$indigo-palette);
+$light-theme-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $light-theme-primary,
+      accent: $light-theme-accent,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$green-palette),
+      accent: $light-theme-accent,
+    ),
+  )
+);
+
+@include mat.core-theme($light-theme);
+
+@include mat.all-component-colors($light-theme);
+@include singleShoppingList.color($light-theme);
+@include singleShoppingList.lightTheme($light-theme);
+@include sidebar.color($light-theme);
+@include navbar.lightTheme($light-theme);
+@include calendar.lightTheme($light-theme);
+@include icon.color($light-theme);
+@include notificationBell.color($light-theme);
+
+.theme-dark {
+  @include mat.all-component-colors($dark-theme);
+  @include singleShoppingList.color($dark-theme);
+  @include singleShoppingList.darkTheme($dark-theme);
+  @include sidebar.color($dark-theme);
+  @include navbar.darkTheme($dark-theme);
+  @include calendar.darkTheme($dark-theme);
+  @include icon.color($dark-theme);
+  @include notificationBell.color($dark-theme);
+}

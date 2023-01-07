@@ -1,12 +1,11 @@
+import { SingleEnumSelectComponent } from 'src/app/shared/components/selects/single-enum-select/single-enum-select.component';
 import { ConfirmationModalConfig } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ConfirmationModalComponent } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { RejectInvitationComponent } from './../modals/reject-invitation/reject-invitation.component';
 import { AcceptInvitationComponent } from './../modals/accept-invitation/accept-invitation.component';
-import { AcceptInvitation } from './../models/accept-invitation';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { FormGroup, FormControl } from '@angular/forms';
-import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
-import { ColumnSetting } from './../../../shared/components/tables/column-setting';
+import { TableColumn } from './../../../shared/components/tables/column-setting';
 import { ApiResponse } from './../../../core/models/api-response';
 import { map, Observable } from 'rxjs';
 import {
@@ -18,10 +17,9 @@ import {
 } from '@angular/core';
 import { InvitationService } from '../services/invitation.service';
 import { Invitation } from '../models/invitation';
-import { CellPipeFormat } from 'app/shared/components/tables/cell-pipe-format';
 import { InvitationStatus } from '../enums/invitation-status';
-import { EnumSelectComponent } from 'app/shared/components/selects/enum-select/enum-select.component';
-
+import { PopupMenuConfig } from 'src/app/shared/components/menus/popup-menu/popup-menu.config';
+import { CellPipeFormat } from 'src/app/shared/components/tables/cell-pipe-format';
 @Component({
   selector: 'app-invitatons-list',
   templateUrl: './invitatons-list.component.html',
@@ -33,7 +31,7 @@ export class InvitatonsListComponent
   invitations$!: Observable<Invitation[]>;
 
   @ViewChild('statusSelected')
-  private statusSelect!: EnumSelectComponent;
+  private statusSelect!: SingleEnumSelectComponent;
 
   @ViewChild('acceptInvitationModal')
   acceptInvitationModal!: AcceptInvitationComponent;
@@ -43,10 +41,7 @@ export class InvitatonsListComponent
 
   @ViewChild('deleteInvitationConfirmationModal')
   deleteInvitationConfirmationModal!: ConfirmationModalComponent;
-  deleteInvitationConfirmationModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Delete invitation',
-    confirmationText: 'Are you sure to delete the invitation?',
-  };
+  deleteInvitationConfirmationModalConfig!: ConfirmationModalConfig;
 
   invitationForm!: FormGroup;
   public invitationStatus: typeof InvitationStatus = InvitationStatus;
@@ -56,7 +51,9 @@ export class InvitatonsListComponent
 
   invitationsSubscription!: Subscription;
 
-  columnSettings: ColumnSetting[] = [];
+  invitationsTableColumns: TableColumn[] = [];
+
+  popupMenuConfigs: PopupMenuConfig[] = [];
 
   constructor(private invitationService: InvitationService) {}
 
@@ -73,6 +70,12 @@ export class InvitatonsListComponent
       });
 
     this.setColumnsBasedOnStatus();
+
+    this.deleteInvitationConfirmationModalConfig = {
+      modalTitle: 'Delete invitation',
+      confirmationText: 'Are you sure to delete the invitation?',
+      onConfirm: () => {},
+    };
   }
 
   ngAfterViewInit(): void {
@@ -92,23 +95,22 @@ export class InvitatonsListComponent
   getInvitations(status?: number) {
     this.invitations$ = this.invitationService.getByStatus(status).pipe(
       map((response: ApiResponse<Invitation[]>) => {
+        this.getPopupMenuConfigs(response.data);
         return response.data;
       })
     );
   }
 
-  getPopupMenuConfigs(invitations: Invitation[]): PopupMenuConfig[] | null {
+  getPopupMenuConfigs(invitations: Invitation[]): void {
     const popupMenuConfigs: PopupMenuConfig[] = [];
 
     for (let invitation of invitations) {
       let popupMenuConfig: PopupMenuConfig = {
-        isHidden: false,
         isDeleteVisible: true,
         onDelete: () => {
-          this.deleteInvitationConfirmationModalConfig.onSave = () => {
-            this.invitationService.delete(invitation.houseGroupId).subscribe();
-          };
-          this.deleteInvitationConfirmationModal.open();
+          (this.deleteInvitationConfirmationModalConfig.onConfirm = () =>
+            this.invitationService.delete(invitation.houseGroupId).subscribe()),
+            this.deleteInvitationConfirmationModal.open();
         },
         isEditVisible: false,
       };
@@ -150,10 +152,18 @@ export class InvitatonsListComponent
         case InvitationStatus.Accepted:
           popupMenuConfigs.push(popupMenuConfig);
           break;
+
+        case InvitationStatus.Sent:
+          popupMenuConfigs.push({
+            isDeleteVisible: false,
+            isEditVisible: false,
+            isHidden: true,
+          });
       }
     }
 
-    return popupMenuConfigs.length == 0 ? null : popupMenuConfigs;
+    this.popupMenuConfigs =
+      popupMenuConfigs.length == 0 ? [] : popupMenuConfigs;
   }
 
   onStatusChange(selectedStatus: number): void {
@@ -165,29 +175,31 @@ export class InvitatonsListComponent
   }
 
   setColumnsBasedOnStatus(): void {
-    this.columnSettings = [
+    this.invitationsTableColumns = [
       {
-        propertyName: 'houseGroupName',
-        header: 'House Group Name',
-      },
-      {
-        propertyName: 'invitationStatus',
-        header: 'Status',
-        format: CellPipeFormat.ENUM,
-        enumType: InvitationStatus,
+        name: 'House Group Name',
+        dataKey: 'houseGroupName',
       },
     ];
 
     if (this.statusSelected == InvitationStatus.Sent) {
-      this.columnSettings.push({
-        propertyName: 'sentByFullName',
-        header: 'Sent To',
+      this.invitationsTableColumns.push({
+        name: 'Sent To',
+        dataKey: 'sentByFullName',
       });
     } else {
-      this.columnSettings.push({
-        propertyName: 'sentByFullName',
-        header: 'Sent By',
-      });
+      this.invitationsTableColumns.push(
+        {
+          name: 'Status',
+          dataKey: 'invitationStatus',
+          enumType: InvitationStatus,
+          format: CellPipeFormat.ENUM,
+        },
+        {
+          name: 'Sent By',
+          dataKey: 'sentByFullName',
+        }
+      );
     }
   }
 }

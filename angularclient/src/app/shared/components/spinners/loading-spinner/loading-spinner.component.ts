@@ -5,6 +5,8 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-loading-spinner',
@@ -13,6 +15,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingSpinnerComponent implements AfterViewChecked {
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'indeterminate';
   @ViewChild('loadingText') loadingText!: ElementRef<HTMLDivElement>;
 
   constructor() {}

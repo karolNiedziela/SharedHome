@@ -4,9 +4,9 @@ import { Observable, Subject, tap } from 'rxjs';
 import { environment } from './../../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { ApiResponse } from 'app/core/models/api-response';
 import { RemoveMember } from '../models/remove-member';
 import { HandOwnerRoleOver } from '../models/hand-owner-role-over';
+import { ApiResponse } from 'src/app/core/models/api-response';
 
 @Injectable({
   providedIn: 'root',

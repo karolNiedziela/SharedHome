@@ -1,21 +1,13 @@
 import { UpdateBill } from './../../models/update-bill';
 import { BillEvent } from './../../models/bill-event';
-import { Bill } from './../../models/bill';
 import { Modalable } from './../../../../core/models/modalable';
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  AfterContentChecked,
-} from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { BillService } from '../../services/bill.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { BillType } from '../../enums/bill-type';
 import { formatDate } from '@angular/common';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-edit-bill',

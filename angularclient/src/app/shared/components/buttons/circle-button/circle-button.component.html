@@ -1,10 +1,12 @@
 <button
-  type="button"
-  [disabled]="isDisabled"
+  mat-fab
+  color="primary"
+  mat-icon-button
+  class="sharedhome-circle-btn"
+  [disabled]="disabled"
   (click)="onClick()"
-  class="btn btn-lg btn-primary sharedhome-circle-btn"
-  data-toggle="tooltip"
   [title]="tooltipText"
 >
-  <fa-icon [icon]="icon"></fa-icon>
+  <!-- <fa-icon [icon]="icon"></fa-icon> -->
+  <mat-icon class="mat-icon-white">{{ icon }}</mat-icon>
 </button>

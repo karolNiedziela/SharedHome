@@ -4,9 +4,8 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
+import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
 
 @Injectable({
   providedIn: 'root',

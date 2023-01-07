@@ -7,14 +7,14 @@ import { ShoppingList } from './../models/shopping-list';
 import { Observable, map, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AddShoppingListProduct } from '../models/add-shopping-list-product';
 import { ChangePriceOfProduct } from '../models/change-price-of-product';
 import { UpdateShoppingList } from '../models/update-shopping-list';
-import { Paged } from 'app/core/models/paged';
-import { ApiResponse } from 'app/core/models/api-response';
 import { MarkAsDone } from '../models/mark-as-done';
 import { UpdateShoppingListProduct } from '../models/update-shopping-list-product';
+import { environment } from 'src/environments/environment';
+import { ApiResponse } from 'src/app/core/models/api-response';
+import { Paged } from 'src/app/core/models/paged';
 
 @Injectable({
   providedIn: 'root',
@@ -78,7 +78,7 @@ export class ShoppingListsService {
       .pipe(
         map((response: Paged<ShoppingList>) => {
           const paged: Paged<ShoppingList> = {
-            items: response.items.map((item) => new ShoppingList(item)),
+            items: response.items.map((item: any) => new ShoppingList(item)),
             totalItems: response.totalItems,
             totalPages: response.totalPages,
             currentPage: response.currentPage,

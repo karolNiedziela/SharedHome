@@ -1,8 +1,4 @@
-.flag {
-  width: 20px;
-  height: 20px;
-}
-
-.toggle {
-  cursor: pointer;
+.language-select .mat-select-arrow-wrapper {
+  transform: translateY(0%) !important;
+  display: none;
 }

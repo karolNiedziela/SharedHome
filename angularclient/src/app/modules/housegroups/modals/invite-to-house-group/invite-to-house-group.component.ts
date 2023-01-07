@@ -1,12 +1,10 @@
-import { ApiResponse } from './../../../../core/models/api-response';
-import { SendInvitation } from '../../../invitations/models/send-invitation';
 import { FormModalConfig } from '../../../../shared/components/modals/form-modal/form-modal.config';
 import { FormModalComponent } from '../../../../shared/components/modals/form-modal/form-modal.component';
 import { Modalable } from './../../../../core/models/modalable';
-import { InvitationService } from '../../../invitations/services/invitation.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Invitation } from 'app/modules/invitations/models/invitation';
+import { InvitationService } from 'src/app/modules/invitations/services/invitation.service';
+import { SendInvitation } from 'src/app/modules/invitations/models/send-invitation';
 
 @Component({
   selector: 'app-invite-to-house-group',
@@ -31,13 +29,17 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
 
   ngOnInit(): void {
     this.inviteToHouseGroupForm = new FormGroup({
-      requestedToPersonEmail: new FormControl('', [Validators.required]),
+      requestedToPersonEmail: new FormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
     });
   }
 
   openModal(): void {
     this.modal.open();
   }
+
   onSave(): void {
     const requestToPersonEmail = this.inviteToHouseGroupForm.get(
       'requestedToPersonEmail'

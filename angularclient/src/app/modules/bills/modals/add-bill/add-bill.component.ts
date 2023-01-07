@@ -1,12 +1,11 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BillType } from './../../enums/bill-type';
 import { AddBill } from './../../models/add-bill';
 import { BillService } from './../../services/bill.service';
 import { Modalable } from './../../../../core/models/modalable';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
-
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
 @Component({
   selector: 'app-add-bill',
   templateUrl: './add-bill.component.html',
@@ -18,7 +17,6 @@ export class AddBillComponent implements Modalable, OnInit {
   public billTypeType: typeof BillType = BillType;
 
   @ViewChild('modal') private modal!: FormModalComponent;
-
   public modalConfig: FormModalConfig = {
     modalTitle: 'Add bill',
     onSave: () => this.onSave(),
@@ -28,8 +26,8 @@ export class AddBillComponent implements Modalable, OnInit {
 
   ngOnInit(): void {
     this.addBillForm = new FormGroup({
-      billType: new FormControl(null, [Validators.required]),
       serviceProviderName: new FormControl('', [Validators.required]),
+      billType: new FormControl(null, [Validators.required]),
       dateOfPayment: new FormControl('', [Validators.required]),
     });
   }

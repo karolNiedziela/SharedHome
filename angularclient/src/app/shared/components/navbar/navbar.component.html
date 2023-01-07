@@ -1,9 +1,9 @@
 <nav
-  class="d-flex align-content-center justify-content-between justify-content-sm-between align-items-center flex-row border-bottom py-1"
+  class="flex flex-row items-center content-center justify-between border-b-2 py-0.5 md:py-2 pl-2 pr-4"
   (window:resize)="screenSizeHelper.isLowerThanMD()"
 >
   <div
-    class="d-flex menu-toggle"
+    class="menu-toggle"
     (click)="toggleMenu()"
     *ngIf="screenSizeHelper.isLowerThanMD()"
   >
@@ -19,13 +19,12 @@
     />
   </span>
 
-  <div class="d-flex justify-content-sm-end align-items-center flex-row">
-    <app-theme-switcher class="mx-2"></app-theme-switcher>
-    <app-language-select class="mx-2"></app-language-select>
+  <div class="flex flex-row items-center gap-x-2">
     <app-notification-bell
       *ngIf="authenticationResponse"
       class="me-2"
     ></app-notification-bell>
-    <app-profile-dropdown *ngIf="authenticationResponse"></app-profile-dropdown>
+    <app-language-select></app-language-select>
+    <app-profile-dropdown></app-profile-dropdown>
   </div>
 </nav>

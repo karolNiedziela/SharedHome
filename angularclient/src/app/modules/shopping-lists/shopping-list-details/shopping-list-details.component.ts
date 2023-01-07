@@ -1,37 +1,41 @@
-import { ShoppingListProduct } from './../models/shopping-list-product';
-import { PurchaseShoppingListProductsModalComponent } from './../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { ShoppingListProductComponent } from './../shopping-list-product/shopping-list-product.component';
-import { MarkAsDone } from './../models/mark-as-done';
-import { ConfirmationModalConfig } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.config';
-import { ConfirmationModalComponent } from './../../../shared/components/modals/confirmation-modal/confirmation-modal.component';
-import { ShoppingList } from '../models/shopping-list';
-import { ShoppingListsService } from '../services/shopping-lists.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  QueryList,
-  ViewChildren,
   AfterViewInit,
+  Component,
   OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
 } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable, Subscription, tap } from 'rxjs';
+import { ApiResponse } from 'src/app/core/models/api-response';
 import {
   AdditionalPopupMenuItem,
   PopupMenuConfig,
-} from 'app/shared/components/menus/popup-menu/popup-menu.config';
+} from 'src/app/shared/components/menus/popup-menu/popup-menu.config';
+import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalConfig } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { AddShoppingListProductComponent } from '../modals/add-shopping-list-product/add-shopping-list-product.component';
 import { EditShoppingListModalComponent } from '../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
-import { Observable, tap } from 'rxjs';
-import { ApiResponse } from 'app/core/models/api-response';
+import { PurchaseShoppingListProductsModalComponent } from '../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
+import { MarkAsDone } from '../models/mark-as-done';
+import { ShoppingList } from '../models/shopping-list';
+import { ShoppingListProduct } from '../models/shopping-list-product';
+import { ShoppingListsService } from '../services/shopping-lists.service';
+import { ShoppingListProductComponent } from '../shopping-list-product/shopping-list-product.component';
 
 @Component({
   selector: 'app-shopping-list-details',
   templateUrl: './shopping-list-details.component.html',
-  styleUrls: ['./shopping-list-details.component.scss'],
+  styleUrls: [
+    './shopping-list-details.component.scss',
+    '../shopping-lists-list-view/single-shopping-list/single-shopping-list.component.scss',
+  ],
 })
-export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ShoppingListDetailsComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   shoppingListId!: string;
   shoppingListProductsSelected: ShoppingListProduct[] = [];
 
@@ -41,7 +45,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   productsSubscription!: Subscription;
   shoppingListSubscription!: Subscription;
 
-  @ViewChildren('product') products!: QueryList<ShoppingListProductComponent>;
+  @ViewChildren('product') products!: QueryList<ShoppingListProduct>;
 
   @ViewChild('addShoppingListProductForm')
   addShoppingListProductForm!: AddShoppingListProductComponent;
@@ -53,7 +57,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   markAsDoneModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Mark shopping list as done',
     confirmationText: 'Are you sure to mark this shopping list as done?',
-    onSave: () => {
+    onConfirm: () => {
       this.markAsDone(true);
     },
   };
@@ -63,7 +67,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   markAsUndoneModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Mark shopping list as undone',
     confirmationText: 'Are you sure to mark this shopping list as undone?',
-    onSave: () => {
+    onConfirm: () => {
       this.markAsDone(false);
     },
   };
@@ -72,7 +76,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   private deleteShoppingListModal!: ConfirmationModalComponent;
   deleteShoppingListModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Delete shopping list',
-    onSave: () => {
+    onConfirm: () => {
       this.deleteShoppingList(this.shoppingListId);
     },
   };
@@ -85,7 +89,7 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
   deleteSelectedProductsModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Delete shopping list products',
     confirmationText: '',
-    onSave: () => {
+    onConfirm: () => {
       this.deleteSelectedProducts();
     },
   };
@@ -352,5 +356,18 @@ export class ShoppingListComponent implements OnInit, AfterViewInit, OnDestroy {
         },
         error: () => {},
       });
+  }
+
+  countBoughtProducts(shoppingList: ShoppingList) {
+    return shoppingList.products?.filter((p) => p.isBought).length as number;
+  }
+
+  countTotalPrice(shoppingList: ShoppingList) {
+    return shoppingList.products
+      ?.filter((p) => p.price != null)
+      .reduce(
+        (sum, product) => sum + product.price!.price * product.quantity ?? 0,
+        0
+      );
   }
 }

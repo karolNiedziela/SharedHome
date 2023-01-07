@@ -1,7 +1,112 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@import "variables.scss";
+
 .cal-day-cell {
   cursor: pointer;
 }
 
 .cal-day-number {
   opacity: 1 !important;
+}
+
+@mixin lightTheme($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary-palette: map.get($color-config, "primary");
+
+  .calendar {
+    color: $l_black_color !important;
+  }
+
+  .cal-cell-row {
+    background: $l_white_color !important;
+
+    &:hover {
+      background: $l_white_color !important;
+    }
+  }
+
+  .cal-cell:hover {
+    background: $l_white_color !important;
+  }
+
+  .cal-days {
+    .cal-today {
+      background: $l_grey_color !important;
+    }
+  }
+
+  .cal-day-number {
+    color: $l_black_color !important;
+  }
+
+  .cal-day-cell:hover {
+    background: mat.get-color-from-palette($primary-palette, 200) !important;
+  }
+
+  .cal-open {
+    background: mat.get-color-from-palette($primary-palette, 200) !important;
+    background-color: mat.get-color-from-palette(
+      $primary-palette,
+      200
+    ) !important;
+  }
+
+  .cal-day-open {
+    background: mat.get-color-from-palette($primary-palette, 200) !important;
+    background-color: mat.get-color-from-palette(
+      $primary-palette,
+      200
+    ) !important;
+  }
+}
+
+@mixin darkTheme($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary-palette: map.get($color-config, "primary");
+  $bg: map-get(map-get($theme, background), background);
+
+  .calendar {
+    color: $l_white_color !important;
+  }
+
+  .cal-cell-row {
+    background: $bg !important;
+
+    &:hover {
+      background: $bg !important;
+    }
+  }
+
+  .cal-day-number {
+    color: $l_white_color !important;
+    opacity: 1 !important;
+  }
+
+  .cal-cell-row {
+    background: $bg !important;
+  }
+
+  .cal-days {
+    background-color: $bg !important;
+
+    .cal-today {
+      background: $l_grey_color !important;
+
+      .cal-day-number {
+        color: $l_black_color !important;
+      }
+    }
+  }
+
+  .cal-day-cell {
+    &:hover {
+      background: mat.get-color-from-palette($primary-palette, 200) !important;
+    }
+  }
+
+  .cal-open {
+    background: mat.get-color-from-palette($primary-palette, 200) !important;
+  }
 }

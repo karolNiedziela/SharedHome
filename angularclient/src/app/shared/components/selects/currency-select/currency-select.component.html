@@ -1,37 +1,22 @@
-<div class="form-floating">
-  <div
-    class="dropdown shared__home form-control"
-    [ngClass]="{
-      'is-invalid': control?.touched && !control?.valid
-    }"
-  >
-    <span
-      class="dropdown-toggle"
-      id="dropdownMenuLink"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-    </span>
-    {{ selectedCurrency }}
-    <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
-      <li
-        class="dropdown-item"
+<form>
+  <mat-form-field class="w-full" appearance="fill">
+    <mat-label> {{ "Currency" | translate }}</mat-label>
+    <mat-select [required]="isRequired" [(value)]="selectedCurrency">
+      <mat-option
         *ngFor="let currency of currencies"
-        (click)="selectCurrency(currency)"
+        [value]="currency"
+        (selectionChange)="selectCurrency(currency)"
       >
         {{ currency }}
-      </li>
-    </ul>
-  </div>
-  <label class="sharedhome__label">
-    {{ "Currency" | translate }}
-    <span *ngIf="isRequired" class="required" aria-required="true">
-      *
-    </span></label
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-error
+    class="invalid-feedback"
+    *ngIf="control?.touched && !control?.valid"
   >
-  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">
+    <mat-error *ngIf="control?.errors?.['required']">
       {{ "This field is required." | translate }}
-    </div>
-  </div>
-</div>
+    </mat-error>
+  </mat-error>
+</form>

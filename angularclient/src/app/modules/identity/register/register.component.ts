@@ -1,12 +1,12 @@
 import { TranslateService } from '@ngx-translate/core';
-import { PasswordsFormComponent } from './../../../shared/components/forms/passwords-form/passwords-form.component';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
-import { Register } from './../models/register';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
+import { Register } from '../models/register';
+import { PasswordFormComponent } from 'src/app/shared/forms/password-form/password-form.component';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss', '../identity.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  @ViewChild('passwordForm') passwordForm!: PasswordsFormComponent;
+  @ViewChild('passwordForm') passwordForm!: PasswordFormComponent;
 
   errorMessages: string[] = [];
   disabled: boolean = false;

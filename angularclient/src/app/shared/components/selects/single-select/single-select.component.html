@@ -1,37 +1,14 @@
-<div class="form-floating">
-  <div
-    class="dropdown shared__home form-control"
-    [ngClass]="{
-      'is-invalid': control?.touched && !control?.valid
-    }"
-  >
-    <span
-      class="dropdown-toggle"
-      id="dropdownMenuLink"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-    </span>
-    {{ selectedValue.toString() | translate }}
-    <ul class="dropdown-menu form-control" aria-labelledby="dropdownMenuLink">
-      <li
-        class="dropdown-item"
+<form>
+  <mat-form-field appearance="fill">
+    <mat-label>{{ label | translate }}</mat-label>
+    <mat-select>
+      <mat-option
         *ngFor="let option of selectOptions"
-        (click)="setValue(option.key)"
+        [value]="option.key"
+        (selectionChange)="setValue(option.value)"
       >
-        {{ option.value.toString() | translate }}
-      </li>
-    </ul>
-  </div>
-  <label class="sharedhome__label"
-    >{{ labelText | translate }}
-    <span *ngIf="isRequired" class="required" aria-required="true">
-      *
-    </span></label
-  >
-  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">
-      {{ "This field is required." | translate }}
-    </div>
-  </div>
-</div>
+        {{ option.value }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

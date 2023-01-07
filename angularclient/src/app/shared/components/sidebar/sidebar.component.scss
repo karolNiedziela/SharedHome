@@ -1,60 +1,57 @@
-@import "/src/assets/_variables.scss";
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary-palette: map.get($color-config, "primary");
+
+  .sidenav {
+    .nav-link {
+      &:hover {
+        color: mat.get-color-from-palette($primary-palette, 500);
+        border-right: 5px mat.get-color-from-palette($primary-palette, 500)
+          solid;
+      }
+
+      &.active {
+        border-right: 5px mat.get-color-from-palette($primary-palette, 500)
+          solid;
+      }
+    }
+  }
+}
 
 .sidenav {
-  position: sticky;
+  position: fixed;
+  min-width: 240px;
+  font-size: 1rem;
 
   .nav-link {
     display: flex;
     transition: none;
-
-    &:hover {
-      border-right: 5px solid;
-    }
-
-    &.active {
-      border-right: 5px solid;
-    }
-
-    fa-icon {
-      text-align: center;
-      min-width: 30px;
-    }
-  }
-}
-
-@media (max-width: 1024px) {
-  .sidebar {
-    max-width: 240px;
   }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    position: absolute;
+  .sidenav {
+    position: fixed;
     top: 0;
     bottom: 0;
     left: -300px;
-    max-width: 240px;
     transition: 0.2s linear;
+    display: none;
     z-index: 3;
-    margin-bottom: 20px;
-  }
 
-  .sidebar.is-active {
-    top: 56px;
-    left: 0;
-  }
-
-  .nav-link {
-    transition: none;
-    margin-top: 10px;
-
-    &:hover {
-      border-right: 5px solid;
-    }
-
-    &.active {
-      border-right: 5px solid;
+    &.is-active {
+      position: fixed;
+      padding: 0;
+      margin: 0;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding-right: 0.5rem;
+      display: block;
     }
   }
 }

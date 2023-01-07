@@ -2,8 +2,8 @@ import { NotificationService } from './../../modules/notifications/services/noti
 import { AppNotification } from '../../modules/notifications/models/app-notification';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { environment } from 'environments/environment';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

@@ -5,24 +5,22 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmationModalConfig } from './confirmation-modal.config';
 
 @Component({
   selector: 'app-confirmation-modal',
   templateUrl: './confirmation-modal.component.html',
-  styleUrls: ['../modal.scss', './confirmation-modal.component.scss'],
+  styleUrls: ['./confirmation-modal.component.scss'],
 })
 export class ConfirmationModalComponent implements OnInit {
   @Input() confirmationModalConfig!: ConfirmationModalConfig;
   @ViewChild('confirmationModal')
   private modalContent!: TemplateRef<ConfirmationModalComponent>;
-  private modalRef!: NgbModalRef;
 
-  dismissIcon = faXmark;
+  private dialogRef!: MatDialogRef<any, any>;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     if (!this.confirmationModalConfig.modalTitle) {
@@ -43,40 +41,22 @@ export class ConfirmationModalComponent implements OnInit {
     }
   }
 
-  async open(): Promise<void> {
-    if (this.confirmationModalConfig?.onOpen != undefined) {
-      const result = await this.confirmationModalConfig.onOpen();
-
-      this.modalService.open(this.modalContent);
-      return;
-    }
-
-    this.modalRef = this.modalService.open(this.modalContent);
+  open(): void {
+    this.dialogRef = this.dialog.open(this.modalContent, {
+      panelClass: ['md:w-3/5', 'lg:w-2/6', 'w-full'],
+      maxHeight: '85vh',
+      hasBackdrop: true,
+      autoFocus: false,
+    });
   }
 
-  async save(): Promise<void> {
-    if (this.confirmationModalConfig?.onSave != undefined) {
-      const result = await this.confirmationModalConfig.onSave();
-
-      this.modalRef.close(result);
-      return;
-    }
-
-    this.modalRef.close();
+  confirm(): void {
+    this.confirmationModalConfig.onConfirm();
+    this.close();
   }
 
-  async close(): Promise<void> {
-    if (this.confirmationModalConfig?.onClose != undefined) {
-      const result = await this.confirmationModalConfig.onClose();
-
-      this.modalRef.close(result);
-      return;
-    }
-    this.modalRef.close();
-  }
-
-  dismiss(): void {
-    this.modalRef.dismiss();
+  close(): void {
+    this.dialogRef.close();
   }
 
   getJoinedConfirmationProperties(): string {

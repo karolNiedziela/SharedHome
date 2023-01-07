@@ -1,29 +1,33 @@
-<fa-icon
-  [icon]="moreOptionsIcon"
-  class="shared-home-icon"
-  data-bs-toggle="dropdown"
-  aria-haspopup="true"
-  aria-expanded="true"
-  [hidden]="popupMenuConfig.isHidden"
-></fa-icon>
-<ul class="dropdown-menu">
-  <li
+<button
+  class="flex"
+  [matMenuTriggerFor]="menu"
+  aria-label="PopupMenu"
+  *ngIf="!popupMenuConfig?.isHidden"
+>
+  <mat-icon class="self justify-items-end justify-self-end">more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <span
     *ngFor="
-      let additionalPopupMenuItem of popupMenuConfig.additionalPopupMenuItems
+      let additionalPopupMenuItem of popupMenuConfig?.additionalPopupMenuItems
     "
   >
-    <div class="dropdown-item" (click)="additionalPopupMenuItem.onClick()">
+    <button mat-menu-item (click)="additionalPopupMenuItem.onClick()">
       {{ additionalPopupMenuItem.text | translate }}
-    </div>
-  </li>
-  <li *ngIf="popupMenuConfig.isEditVisible">
-    <div class="dropdown-item" (click)="popupMenuConfig.onEdit()">
-      {{ "Edit" | translate }}
-    </div>
-  </li>
-  <li *ngIf="popupMenuConfig.isDeleteVisible">
-    <div class="dropdown-item" (click)="popupMenuConfig.onDelete()">
-      {{ "Delete" | translate }}
-    </div>
-  </li>
-</ul>
+    </button>
+  </span>
+  <button
+    mat-menu-item
+    *ngIf="popupMenuConfig?.isEditVisible"
+    (click)="popupMenuConfig?.onEdit()"
+  >
+    {{ "Edit" | translate }}
+  </button>
+  <button
+    mat-menu-item
+    *ngIf="popupMenuConfig?.isDeleteVisible"
+    (click)="popupMenuConfig?.onDelete()"
+  >
+    {{ "Delete" | translate }}
+  </button>
+</mat-menu>

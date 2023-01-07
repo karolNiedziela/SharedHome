@@ -1,17 +1,21 @@
-import { SignalrService } from './../../../core/services/signalr.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { first, finalize } from 'rxjs';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
+import { Component, OnInit } from '@angular/core';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
+import { finalize, first } from 'rxjs';
+import { SignalrService } from 'src/app/core/services/signalr.service';
+import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
+import { passwordStrengthValidator } from 'src/app/shared/validators/password.validator';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss', '../identity.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  loginForm!: FormGroup;
+  loginForm!: UntypedFormGroup;
   errorMessages: string[] = [];
   disabled: boolean = false;
   loadingSaveButton: boolean = false;
@@ -22,9 +26,15 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loginForm = new FormGroup({
-      email: new FormControl('', Validators.required),
-      password: new FormControl(''),
+    this.loginForm = new UntypedFormGroup({
+      email: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      password: new UntypedFormControl('', [
+        Validators.required,
+        passwordStrengthValidator,
+      ]),
     });
   }
 

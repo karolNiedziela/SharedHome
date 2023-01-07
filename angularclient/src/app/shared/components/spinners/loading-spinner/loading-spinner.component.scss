@@ -1,4 +1,4 @@
-@import "/src/assets/_variables.scss";
+@import "/src/assets/variables.scss";
 
 :host {
   height: 100%;
@@ -8,12 +8,6 @@
   flex-direction: column;
   margin: 0 auto;
   width: auto;
-}
-
-.spinner-border {
-  z-index: 3;
-  width: 3rem;
-  height: 3rem;
 }
 
 .typewriter {

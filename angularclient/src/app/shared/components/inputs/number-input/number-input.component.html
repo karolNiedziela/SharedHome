@@ -1,34 +1,28 @@
-<div class="form-floating">
+<mat-form-field class="w-full">
+  <mat-label>{{ label }}</mat-label>
   <input
+    matInput
+    [placeholder]="placeholder"
+    [formControl]="control! | formControl"
     type="number"
     step="0.01"
     min="0"
-    class="form-control sharedhome__input register__input"
-    [placeholder]="'placeholder' | translate"
-    (input)="onChanged($any($event.target).value)"
-    (blur)="onTouched()"
-    [disabled]="disabled"
-    [ngClass]="{
-      'is-invalid': control?.touched && !control?.valid
-    }"
-    [value]="control?.value"
+    [required]="isRequired"
   />
-  <label class="sharedhome__label"
-    >{{ labelText | translate }}
-    <span *ngIf="isRequired" class="required" aria-required="true"> * </span>
-  </label>
-
-  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">
+  <mat-error
+    class="invalid-feedback"
+    *ngIf="control?.touched && !control?.valid"
+  >
+    <mat-error *ngIf="control?.errors?.['required']">
       {{ "This field is required." | translate }}
-    </div>
-    <div *ngIf="control?.hasError('min')">
+    </mat-error>
+    <mat-error *ngIf="control?.hasError('min')">
       {{ "This field value must be higher or equal to" | translate }}
       {{ control?.errors?.['min'].min }}.
-    </div>
-    <div *ngIf="control?.hasError('max')">
+    </mat-error>
+    <mat-error *ngIf="control?.hasError('max')">
       {{ "This field value must be lower or equal to" | translate }}
       {{ control?.errors?.['max'].max}}.
-    </div>
-  </div>
-</div>
+    </mat-error>
+  </mat-error>
+</mat-form-field>

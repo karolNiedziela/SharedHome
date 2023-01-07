@@ -1,29 +1,18 @@
-import { formatDate } from '@angular/common';
+import { Component, Input, OnInit, Self } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  Optional,
-  Self,
-  OnDestroy,
-  Input,
-} from '@angular/core';
-import {
-  NgControl,
-  ControlValueAccessor,
   AbstractControl,
+  ControlValueAccessor,
+  NgControl,
   ValidatorFn,
-  Validators,
 } from '@angular/forms';
 
 @Component({
   selector: 'app-date-input',
   templateUrl: './date-input.component.html',
-  styleUrls: ['../input.scss'],
+  styleUrls: ['./date-input.component.scss'],
 })
-export class DateInputComponent
-  implements OnInit, ControlValueAccessor, OnDestroy
-{
-  @Input() labelText: string = 'label';
+export class DateInputComponent implements OnInit, ControlValueAccessor {
+  @Input() label: string = 'label';
   @Input() placeholder: string = 'placeholder';
 
   disabled!: boolean;
@@ -33,7 +22,10 @@ export class DateInputComponent
 
   get isRequired(): boolean {
     if (this.control?.validator) {
-      return this.control.validator!({} as AbstractControl)!['required'];
+      const validator = this.control?.validator({} as AbstractControl)!;
+      if (validator && validator['required']) {
+        return true;
+      }
     }
 
     return false;
@@ -54,11 +46,6 @@ export class DateInputComponent
 
     this.control?.setValidators(validators);
     this.control?.updateValueAndValidity();
-  }
-
-  ngOnDestroy(): void {
-    this.controlDir.control?.clearValidators();
-    this.controlDir.control?.markAsPristine();
   }
 
   writeValue(value: any): void {

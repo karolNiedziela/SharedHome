@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  Optional,
-  Self,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Self } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -17,14 +9,16 @@ import {
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['../input.scss', './number-input.component.scss'],
+  styleUrls: ['./number-input.component.scss'],
 })
 export class NumberInputComponent
   implements OnInit, ControlValueAccessor, OnDestroy
 {
-  @Input() labelText: string = 'label';
+  @Input() label: string = 'label';
   @Input() placeholder: string = 'placeholder';
-  disabled!: boolean;
+  @Input() showErrorMessage: boolean = true;
+
+  disabled: boolean = false;
 
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
@@ -35,7 +29,10 @@ export class NumberInputComponent
 
   get isRequired(): boolean {
     if (this.control?.validator) {
-      return this.control.validator!({} as AbstractControl)!['required'];
+      const validator = this.control?.validator({} as AbstractControl)!;
+      if (validator && validator['required']) {
+        return true;
+      }
     }
 
     return false;
@@ -55,14 +52,13 @@ export class NumberInputComponent
   }
 
   ngOnDestroy(): void {
-    this.control?.clearValidators();
-    this.control?.markAsPristine();
+    this.controlDir.control?.clearValidators();
+    this.controlDir.control?.markAsPristine();
   }
 
   writeValue(value: any): void {
-    if (this.control && this.control?.value != value) {
-      this.control?.setValue(value, { emitEvent: false });
-      return;
+    if (this.controlDir.control && this.controlDir.control?.value != value) {
+      this.controlDir.control?.setValue(value, { emitEvent: false });
     }
   }
 

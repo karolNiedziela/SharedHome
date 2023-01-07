@@ -1,6 +1,5 @@
-import { PopupMenuConfig } from './popup-menu.config';
 import { Component, Input, OnInit } from '@angular/core';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import { PopupMenuConfig } from './popup-menu.config';
 
 @Component({
   selector: 'app-popup-menu',
@@ -8,18 +7,16 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./popup-menu.component.scss'],
 })
 export class PopupMenuComponent implements OnInit {
-  @Input() public popupMenuConfig: PopupMenuConfig = {};
-
-  moreOptionsIcon = faEllipsisVertical;
+  @Input() public popupMenuConfig?: PopupMenuConfig;
 
   constructor() {}
 
   ngOnInit(): void {
     if (this.popupMenuConfig == null || this.popupMenuConfig == undefined) {
       this.popupMenuConfig = {
-        isHidden: false,
         isEditVisible: true,
         isDeleteVisible: true,
+        isHidden: false,
       };
     }
   }

@@ -1,16 +1,19 @@
-<li class="list-group-item">
-  <div>{{ member.fullName }}</div>
-  <div class="operations" *ngIf="member.isOwner">
-    <fa-icon
+<mat-list-item class="border-b-2">
+  <div class="flex flex-row justify-between w-full">
+    <div>{{ member.fullName }}</div>
+    <div
+      class="flex flex-row justify-around items-center gap-2"
       *ngIf="member.isOwner"
-      [icon]="ownerIcon"
-      [title]="'Owner' | translate"
-    ></fa-icon>
+    >
+      <mat-icon *ngIf="member.isOwner" [title]="'Owner' | translate"
+        >star_outline</mat-icon
+      >
+    </div>
+    <div *ngIf="isCurrentUserOwner && !member.isOwner">
+      <app-popup-menu [popupMenuConfig]="popupMenuConfig!"></app-popup-menu>
+    </div>
   </div>
-  <div *ngIf="isCurrentUserOwner && !member.isOwner">
-    <app-popup-menu [popupMenuConfig]="popupMenuConfig!"></app-popup-menu>
-  </div>
-</li>
+</mat-list-item>
 
 <app-confirmation-modal
   [confirmationModalConfig]="removeMemberModalConfig"

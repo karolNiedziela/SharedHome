@@ -1,11 +1,11 @@
 import { HouseGroupMember } from './../../models/housegroup-member';
 import { HouseGroupService } from './../../services/housegroup.service';
 import { HandOwnerRoleOver } from './../../models/hand-owner-role-over';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Modalable } from './../../../../core/models/modalable';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-hand-owner-role-over',
