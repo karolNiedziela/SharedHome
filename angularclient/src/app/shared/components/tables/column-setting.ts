@@ -1,8 +1,10 @@
 import { CellPipeFormat } from './cell-pipe-format';
 
-export interface ColumnSetting {
-  propertyName: string;
-  header?: string;
+export interface TableColumn {
+  name: string;
+  dataKey: string;
+  position?: 'right' | 'left';
+  isSortable?: boolean;
   format?: CellPipeFormat;
-  enumType?: object;
+  enumType?: any;
 }

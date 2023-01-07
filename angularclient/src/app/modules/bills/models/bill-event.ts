@@ -1,5 +1,5 @@
 import { CalendarEvent } from 'angular-calendar';
-import { Money } from 'app/core/models/money';
+import { Money } from 'src/app/core/models/money';
 import { BillType } from '../enums/bill-type';
 
 export interface BillEvent extends CalendarEvent {

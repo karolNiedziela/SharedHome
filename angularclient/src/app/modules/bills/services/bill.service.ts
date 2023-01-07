@@ -5,9 +5,9 @@ import { Bill } from './../models/bill';
 import { Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
-import { ApiResponse } from 'app/core/models/api-response';
 import { UpdateBill } from '../models/update-bill';
+import { environment } from 'src/environments/environment';
+import { ApiResponse } from 'src/app/core/models/api-response';
 
 @Injectable({
   providedIn: 'root',

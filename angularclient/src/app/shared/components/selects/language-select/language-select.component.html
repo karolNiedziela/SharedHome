@@ -1,24 +1,29 @@
-<div class="form-floating">
-  <div class="shared__home">
-    <span
-      class="toggle"
-      id="dropdownMenuLink"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      <img [src]="flags[languageService.language]" alt="poland" class="flag" />
-      {{ languageService.language | translate }}
-    </span>
-
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <li
-        class="dropdown-item"
-        *ngFor="let lang of translateService.getLangs()"
-        (click)="onLanguageChanged(lang)"
-      >
-        <img [src]="flags[lang]" alt="poland" class="flag" />
-        {{ lang }}
-      </li>
-    </ul>
-  </div>
+<div class="w-12 language-select mt-1.5">
+  <mat-select
+    [(value)]="selectedLanguage"
+    (selectionChange)="onLanguageChanged($event.value)"
+  >
+    <mat-select-trigger class="flex flex-row gap-x-2 items-center"
+      ><img
+        width="20"
+        height="20"
+        [src]="flags[languageService.language]"
+        alt="poland"
+        class="flag"
+      />
+      {{ selectedLanguage }}
+    </mat-select-trigger>
+    <mat-option *ngFor="let language of languages" [value]="language">
+      <span class="flex flex-row gap-x-2 items-center">
+        <img
+          height="20"
+          width="20"
+          [src]="flags[language]"
+          alt="poland"
+          class="flag"
+        />
+        {{ language }}
+      </span>
+    </mat-option>
+  </mat-select>
 </div>

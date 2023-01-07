@@ -1,44 +1,35 @@
 <div
-  class="d-flex flex-column mx-auto"
+  class="flex flex-col mx-auto"
   *ngIf="userInformation$ | async as userInformation; else loading"
 >
-  <div class="w-100 border-bottom mb-2">
-    <h4>{{ "General information" | translate }}</h4>
+  <div class="w-full border-b-2 mb-2 text-lg">
+    {{ "General information" | translate }}
   </div>
 
-  <div class="d-flex justify-content-between mb-3">
-    <div class="fw-bold">{{ "Personal data" | translate }}:</div>
+  <div class="flex justify-between mb-3">
+    <div>{{ "Personal data" | translate }}:</div>
     <div>{{ userInformation.firstName }} {{ userInformation.lastName }}</div>
   </div>
 
-  <div class="d-flex justify-content-between mb-3">
+  <div class="flex justify-between mb-3">
     <div class="fw-bold">Email:</div>
     <div>
       {{ userInformation.email }}
     </div>
   </div>
 
-  <div class="w-100 border-bottom mb-2">
-    <h4>{{ "Account" | translate }}</h4>
+  <div class="w-full border-b-2 mb-2 text-lg">
+    {{ "Account" | translate }}
   </div>
-  <div class="row align-items-center mb-3">
-    <div class="col-3 col-sm-4 col-md-3 col-lg-3 col-xl-2 col-xxl-2 fw-bold">
-      {{ "Password" | translate }}:
-    </div>
-    <div class="col col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2"></div>
-    <div class="col d-flex justify-content-end">
-      <app-change-password-modal></app-change-password-modal>
-    </div>
+  <div class="flex flex-row justify-between items-center mb-3">
+    <div>{{ "Password" | translate }}:</div>
+
+    <app-change-password-modal> </app-change-password-modal>
   </div>
 
-  <div class="row align-items-center mb-3">
-    <div class="col-3 col-sm-4 col-md-3 col-lg-3 col-xl-2 col-xxl-2 fw-bold">
-      {{ "Profile image" | translate }}:
-    </div>
-    <div class="col col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-2"></div>
-    <div class="col d-flex justify-content-end">
-      <app-upload-profile-image-modal></app-upload-profile-image-modal>
-    </div>
+  <div class="flex flex-row justify-between items-center mb-3">
+    <div>{{ "Profile image" | translate }}:</div>
+    <app-upload-profile-image-modal></app-upload-profile-image-modal>
   </div>
 </div>
 <ng-template #loading>

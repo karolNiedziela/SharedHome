@@ -1,37 +1,41 @@
 import {
-  ControlValueAccessor,
-  ValidatorFn,
-  NgControl,
-  AbstractControl,
-} from '@angular/forms';
-import {
   Component,
   Input,
+  OnChanges,
   OnInit,
-  Self,
-  OnDestroy,
   Optional,
+  Self,
+  SimpleChanges,
 } from '@angular/core';
+import {
+  AbstractControl,
+  NgControl,
+  ValidatorFn,
+  ControlValueAccessor,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['../input.scss'],
+  styleUrls: ['../input.scss', 'text-input.component.scss'],
 })
 export class TextInputComponent
-  implements OnInit, ControlValueAccessor, OnDestroy
+  implements OnInit, OnChanges, ControlValueAccessor
 {
-  @Input() labelText: string = 'label';
+  @Input() label: string = 'label';
   @Input() placeholder: string = 'placeholder';
-  @Input() showErrorMessage: boolean = true;
 
   disabled: boolean = false;
 
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};
 
-  get control(): AbstractControl<any, any> | null {
-    return this.controlDir.control;
+  get control(): AbstractControl | null {
+    return this.controlDir.control!;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
   }
 
   get isRequired(): boolean {
@@ -46,7 +50,9 @@ export class TextInputComponent
   }
 
   constructor(@Self() @Optional() private controlDir: NgControl) {
-    controlDir.valueAccessor = this;
+    if (this.controlDir != null) {
+      this.controlDir.valueAccessor = this;
+    }
   }
 
   ngOnInit(): void {
@@ -58,14 +64,9 @@ export class TextInputComponent
     this.control?.updateValueAndValidity();
   }
 
-  ngOnDestroy(): void {
-    this.controlDir.control?.clearValidators();
-    this.controlDir.control?.markAsPristine();
-  }
-
   writeValue(value: any): void {
     if (this.controlDir.control && this.controlDir.control?.value != value) {
-      this.controlDir.control?.setValue(value, { emitEvent: false });
+      this.controlDir.control?.setValue(value);
     }
   }
 

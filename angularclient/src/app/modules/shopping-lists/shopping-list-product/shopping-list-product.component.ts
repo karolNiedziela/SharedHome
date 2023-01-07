@@ -1,14 +1,16 @@
 import { EditShoppingListModalComponent } from './../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
-import { AdditionalPopupMenuItem } from './../../../shared/components/menus/popup-menu/popup-menu.config';
+import {
+  AdditionalPopupMenuItem,
+  PopupMenuConfig,
+} from './../../../shared/components/menus/popup-menu/popup-menu.config';
 import { NetContentType } from './../enums/net-content-type';
 import { ShoppingListsService } from './../services/shopping-lists.service';
 import { ShoppingListProduct } from './../models/shopping-list-product';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { PopupMenuConfig } from 'app/shared/components/menus/popup-menu/popup-menu.config';
-import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
-import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalConfig } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { PurchaseShoppingListProductComponent } from '../modals/purchase-shopping-list-product/purchase-shopping-list-product.component';
 
 @Component({
@@ -30,7 +32,7 @@ export class ShoppingListProductComponent implements OnInit {
   private deleteShoppingListProductModal!: ConfirmationModalComponent;
   deleteShoppingListProductModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Delete shopping list product',
-    onSave: () => {
+    onConfirm: () => {
       this.deleteShoppingListProduct();
     },
   };
@@ -40,7 +42,7 @@ export class ShoppingListProductComponent implements OnInit {
   cancelPurchaseShoppingListProductModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Cancel purchase of shopping list product',
     confirmationText: 'Are you sure to cancel purchase?',
-    onSave: () => {
+    onConfirm: () => {
       this.cancelPurchaseOfShoppingListProduct();
     },
   };
@@ -59,7 +61,7 @@ export class ShoppingListProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productPopupMenuConfig = {
-      isHidden: this.isDone,
+      // isHidden: this.isDone,
       onDelete: () => {
         this.deleteShoppingListProductModal.open();
       },

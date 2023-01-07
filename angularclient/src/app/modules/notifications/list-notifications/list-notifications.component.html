@@ -1,22 +1,20 @@
 <div class="d-flex flex-column h-100">
   <div [formGroup]="notificationsForm" class="row gy-2 gx-4 filters">
-    <app-enum-select
+    <app-single-enum-select
       class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
-      [labelText]="'Target' | translate"
+      [label]="'Target' | translate"
       [enumType]="targetType"
-      [isFormControl]="false"
       formControlName="targetType"
       [firstValueSelected]="true"
-    ></app-enum-select>
+    ></app-single-enum-select>
 
-    <app-enum-select
+    <app-single-enum-select
       class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
-      [labelText]="'Type' | translate"
+      [label]="'Type' | translate"
       [enumType]="notificationType"
-      [isFormControl]="false"
       formControlName="notificationType"
       [firstValueSelected]="true"
-    ></app-enum-select>
+    ></app-single-enum-select>
   </div>
 
   <div
@@ -33,7 +31,7 @@
           </div>
           <div class="text-end">
             <div class="ms-2 me-auto">
-              {{ notification.createdAt | date: "shortDate" }}
+              {{ notification.createdAt | date : "shortDate" }}
             </div>
             {{ notification.createdBy }}
           </div>

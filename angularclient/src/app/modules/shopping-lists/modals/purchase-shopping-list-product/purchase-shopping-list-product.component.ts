@@ -3,8 +3,8 @@ import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { PurchaseShoppingListProduct } from './../../models/purchase-shopping-list-product';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
 
 @Component({
   selector: 'app-purchase-shopping-list-product',

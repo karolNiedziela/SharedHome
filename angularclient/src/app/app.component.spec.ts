@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'sharedhomewebclient'`, () => {
+  it(`should have as title 'angularclient'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sharedhomewebclient');
+    expect(app.title).toEqual('angularclient');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('sharedhomewebclient app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('angularclient app is running!');
   });
 });

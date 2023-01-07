@@ -8,11 +8,11 @@
   [modalConfig]="modalConfig"
   [formGroup]="addShoppingListForm"
 >
-  <div class="row g-3" [formGroup]="addShoppingListForm">
+  <div [formGroup]="addShoppingListForm">
     <app-text-input
       formControlName="name"
-      [labelText]="'Name' | translate"
-      [placeholder]="'Name' | translate"
+      label="Name"
+      placeholder="Name"
     ></app-text-input>
   </div>
   <app-add-many-shopping-list-products-form

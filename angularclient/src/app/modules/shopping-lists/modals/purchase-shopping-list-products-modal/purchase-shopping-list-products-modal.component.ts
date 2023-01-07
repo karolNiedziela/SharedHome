@@ -9,10 +9,10 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { PurchaseShoppingListProductFormComponent } from '../../forms/purchase-shopping-list-product-form/purchase-shopping-list-product-form.component';
 import { PurchaseShoppingListProducts } from '../../models/purchase-shopping-list-products';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
 @Component({
   selector: 'app-purchase-shopping-list-products-modal',
   templateUrl: './purchase-shopping-list-products-modal.component.html',

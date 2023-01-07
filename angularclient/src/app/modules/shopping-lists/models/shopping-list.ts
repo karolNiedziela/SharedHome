@@ -9,17 +9,4 @@ export class ShoppingList {
   constructor(shoppingList?: ShoppingList) {
     Object.assign(this, shoppingList ?? {});
   }
-
-  countBoughtProducts() {
-    return this.products?.filter((p) => p.isBought).length as number;
-  }
-
-  countTotalPrice() {
-    return this.products
-      ?.filter((p) => p.price != null)
-      .reduce(
-        (sum, product) => sum + product.price!.price * product.quantity ?? 0,
-        0
-      );
-  }
 }

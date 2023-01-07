@@ -9,11 +9,11 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NetContentType } from '../../enums/net-content-type';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-edit-shopping-list-product-modal',

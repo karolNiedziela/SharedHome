@@ -1,0 +1,16 @@
+<div class="flex flex-row g-2" [formGroup]="netContentFormGroup">
+  <div class="w-full">
+    <app-number-input
+      formControlName="netContent"
+      [label]="'Net Content' | translate"
+      [placeholder]="'Net Content' | translate"
+    ></app-number-input>
+  </div>
+  <div class="w-full mt-1 ml-2">
+    <app-single-enum-select
+      formControlName="netContentType"
+      [label]="'Net Content Type' | translate"
+      [enumType]="netContentType"
+    ></app-single-enum-select>
+  </div>
+</div>

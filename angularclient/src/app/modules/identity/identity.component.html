@@ -1,16 +1,14 @@
-<div class="d-flex flex-column h-100">
-  <div
-    class="row flex-grow-1 align-items-center align-items-sm-center justify-content-center"
-  >
-    <div class="col-12 col-sm-8 col-md-6 mt-4 text-center">
-      <img
-        src="../../../../assets/images/sharedhomeLogo.png"
-        alt="logo"
-        class="logo"
-      />
-    </div>
-    <div class="identity col-12 col-sm-8 col-md-6 ps-4 pe-4 mt-4 mb-4">
-      <router-outlet></router-outlet>
-    </div>
+<div
+  class="identity-container flex flex-row flex-wrap content-center justify-center items-center space-y-8 space-x-8 h-full w-full"
+>
+  <div class="flex w-3/5 justify-center content-center items-center mx-auto">
+    <img
+      src="../../../../assets/images/sharedhomeLogo.png"
+      alt="logo"
+      class="logo"
+    />
+  </div>
+  <div class="flex-auto identity justify-center content-center px-2 py-4">
+    <router-outlet></router-outlet>
   </div>
 </div>

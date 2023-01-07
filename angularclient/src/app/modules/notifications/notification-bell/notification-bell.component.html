@@ -1,0 +1,44 @@
+<mat-icon
+  class=""
+  [matMenuTriggerFor]="notificationsMenu"
+  matBadge="4"
+  matBadgeOverlap="true"
+  matBadgeSize="small"
+  >notifications</mat-icon
+>
+<mat-menu #notificationsMenu="matMenu">
+  <span class="notifications" *ngIf="notifications$ | async as notifications">
+    <mat-list>
+      <div class="flex flex-row justify-between items-center px-2 pb-2">
+        <div class="text-xl">{{ "notifications" | translate }}</div>
+        <div class="text-lg">
+          <a [routerLink]="['notifications']">
+            {{ "view all" | translate }}
+          </a>
+        </div>
+      </div>
+
+      <mat-list-item role="list" *ngFor="let notification of notifications">
+        <div
+          class="notification-item flex flex-row justify-between w-full items-center"
+        >
+          <div class="flex flex-row gap-x-2 w-4/5 items-center">
+            {{ notification.title }}
+          </div>
+          <div
+            class="notification-item__status bg-green-500"
+            *ngIf="!notification.isRead"
+          ></div>
+          <div
+            class="notification-item__creator"
+            *ngIf="notification.createdBy"
+          >
+            <span [title]="notification.createdBy"
+              >{{ notification.createdBy | firstLettersToTitleCase }}
+            </span>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </span>
+</mat-menu>

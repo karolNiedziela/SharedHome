@@ -1,6 +1,4 @@
-import { AddShoppingListProductFormComponent } from './../../forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 import { Modalable } from './../../../../core/models/modalable';
-import { AddManyShoppingListProductsFormComponent } from './../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 import { AddShoppingList } from './../../models/add-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,19 +6,23 @@ import {
   Component,
   ComponentRef,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
+import { AddShoppingListProductFormComponent } from '../../forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
+import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 
 @Component({
   selector: 'app-add-shopping-list',
   templateUrl: './add-shopping-list.component.html',
   styleUrls: ['./add-shopping-list.component.scss'],
 })
-export class AddShoppingListComponent implements OnInit, Modalable {
+export class AddShoppingListComponent implements OnInit, Modalable, OnChanges {
   @Input() year!: number;
   @Input() month!: number;
   addShoppingListForm!: FormGroup;
@@ -38,6 +40,10 @@ export class AddShoppingListComponent implements OnInit, Modalable {
   };
 
   constructor(private shoppingListService: ShoppingListsService) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
 
   ngOnInit(): void {
     this.addShoppingListForm = new FormGroup({
@@ -71,7 +77,7 @@ export class AddShoppingListComponent implements OnInit, Modalable {
 
     const addShoppingList: AddShoppingList = {
       name: name,
-      products: products,
+      products: [],
     };
 
     this.modal.save(this.shoppingListService.add(addShoppingList));

@@ -1,14 +1,13 @@
-import { ResetPassword } from './../models/reset-password';
-import { ChangePassword } from './../../profile/models/change-password';
-import { UploadProfileImage } from './../models/upload-profile-image';
-import { ProfileImage } from './../models/profile-image';
-import { Register } from './../models/register';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationResponse } from 'app/core/models/authentication-response';
-import { environment } from 'environments/environment';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { AuthenticationResponse } from 'src/app/core/models/authentication-response';
+import { ProfileImage } from 'src/app/modules/identity/models/profile-image';
+import { Register } from 'src/app/modules/identity/models/register';
+import { ResetPassword } from 'src/app/modules/identity/models/reset-password';
+import { environment } from 'src/environments/environment';
+import { ChangePassword } from '../models/change-password';
 import { UserInformation } from '../models/user-information';
 
 @Injectable({

@@ -1,22 +1,18 @@
-import { AppNotification } from './modules/notifications/models/app-notification';
-import { Subscription } from 'rxjs/internal/Subscription';
-import { SignalrService } from './core/services/signalr.service';
-import { LanguageService } from './core/services/language.service';
-import { ThemeService } from 'app/core/services/theme/theme.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthenticationResponse } from './core/models/authentication-response';
-import { AuthenticationService } from './modules/identity/services/authentication.service';
-import { TranslateService } from '@ngx-translate/core';
 import { registerLocaleData } from '@angular/common';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ThemeService } from 'ng2-charts';
+import { Subscription } from 'rxjs';
+import { AuthenticationResponse } from './core/models/authentication-response';
+import { LanguageService } from './core/services/language.service';
+import { SignalrService } from './core/services/signalr.service';
+import { AuthenticationService } from './modules/identity/services/authentication.service';
 import localePl from '@angular/common/locales/pl';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [
-    './app.component.scss',
-    './shared/components/sidebar/sidebar.component.scss',
-  ],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'sharedhomewebclient';
@@ -50,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.themeService.setTheme();
+    // this.themeService.setTheme();
   }
 
   ngOnDestroy(): void {

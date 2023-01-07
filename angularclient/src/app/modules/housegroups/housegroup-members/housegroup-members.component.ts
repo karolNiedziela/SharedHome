@@ -1,15 +1,15 @@
-import { faSignOut, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut, faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AuthenticationService } from './../../identity/services/authentication.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ApiResponse } from 'app/core/models/api-response';
 import { Observable, map } from 'rxjs';
 import { HouseGroup } from '../models/housegroup';
 import { HouseGroupService } from '../services/housegroup.service';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { AuthenticationResponse } from 'app/core/models/authentication-response';
-import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
-import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ApiResponse } from 'src/app/core/models/api-response';
+import { ConfirmationModalConfig } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { AuthenticationResponse } from 'src/app/core/models/authentication-response';
+import { HouseGroupMember } from '../models/housegroup-member';
 
 @Component({
   selector: 'app-housegroup-members',
@@ -23,23 +23,18 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
   personId: string = '';
   isCurrentUserOwner: boolean = false;
   houseGroupId!: string;
+  loading: boolean = true;
 
   leaveHouseGroupIcon = faSignOut;
   deleteHouseGroupIcon = faTrash;
 
   @ViewChild('leaveHouseGroup')
   leaveHouseGroupModal!: ConfirmationModalComponent;
-  leaveHouseGroupModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Leave house group',
-    confirmationText: 'Are you sure to leave the house group?',
-  };
+  leaveHouseGroupModalConfig!: ConfirmationModalConfig;
 
   @ViewChild('deleteHouseGroup')
   deleteHouseGroupModal!: ConfirmationModalComponent;
-  deleteHouseGroupModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Delete house group',
-    confirmationText: 'Are you sure to delete the house group?',
-  };
+  deleteHouseGroupModalConfig!: ConfirmationModalConfig;
 
   constructor(
     private houseGroupService: HouseGroupService,
@@ -63,12 +58,20 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.leaveHouseGroupModalConfig.onSave = () => {
-      this.houseGroupService.leaveHouseGroup(this.houseGroupId).subscribe();
+    this.leaveHouseGroupModalConfig = {
+      modalTitle: 'Leave house group',
+      confirmationText: 'Are you sure to leave the house group?',
+      onConfirm: () => {
+        this.houseGroupService.leaveHouseGroup(this.houseGroupId).subscribe();
+      },
     };
 
-    this.deleteHouseGroupModalConfig.onSave = () => {
-      this.houseGroupService.delete(this.houseGroupId).subscribe();
+    this.deleteHouseGroupModalConfig = {
+      modalTitle: 'Delete house group',
+      confirmationText: 'Are you sure to delete the house group?',
+      onConfirm: () => {
+        this.houseGroupService.delete(this.houseGroupId).subscribe();
+      },
     };
   }
 
@@ -76,14 +79,17 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
     this.houseGroup$ = this.houseGroupService.get().pipe(
       map((response: ApiResponse<HouseGroup>) => {
         if (response == null) {
+          this.loading = false;
           return response;
         }
         this.isCurrentUserOwner = response.data?.members.some(
-          (x) => x.personId == this.personId && x.isOwner
+          (member: HouseGroupMember) =>
+            member.personId == this.personId && member.isOwner
         );
 
         this.houseGroupId = response.data?.id;
 
+        this.loading = false;
         return response;
       })
     );

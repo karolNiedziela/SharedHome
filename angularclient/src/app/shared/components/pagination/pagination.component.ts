@@ -1,10 +1,10 @@
+import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
-  Input,
-  OnInit,
-  Output,
   EventEmitter,
+  Input,
   OnChanges,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 

@@ -1,12 +1,11 @@
-@import "/src/assets/_variables.scss";
-
 .sharedhome-circle-btn {
   box-shadow: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-
-  &:hover {
-    color: none;
-  }
+  width: 45px !important;
+  height: 45px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }

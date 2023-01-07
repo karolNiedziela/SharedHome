@@ -1,12 +1,12 @@
 import { Paginatable } from './../../../core/models/paginatable';
-import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { NotificationType } from './../constants/notification-type';
 import { TargetType } from './../constants/target-type';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AppNotification } from '../models/app-notification';
-import { debounceTime, distinctUntilChanged, Observable } from 'rxjs';
-import { Paged } from 'app/core/models/paged';
+import { debounceTime, Observable } from 'rxjs';
+import { Paged } from 'src/app/core/models/paged';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-list-notifications',

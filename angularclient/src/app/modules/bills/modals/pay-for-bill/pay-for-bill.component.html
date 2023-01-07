@@ -1,6 +1,7 @@
 <app-form-modal #modal [modalConfig]="modalConfig" [formGroup]="payForBillForm">
   <div class="row g-3" [formGroup]="payForBillForm">
     <app-money-form
+      #moneyForm
       [moneyFormGroup]="payForBillForm.get('money') | formGroup"
     ></app-money-form>
   </div>

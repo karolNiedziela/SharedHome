@@ -1,81 +1,71 @@
-<div class="sidenav d-flex flex-column overflow-auto">
-  <ul class="nav d-flex flex-column h-100">
-    <li class="nav-item">
+<div class="sidenav overflow-auto">
+  <ul class="nav">
+    <li class="nav-item flex flex-row py-2.5">
       <a
-        class="nav-link"
+        class="nav-link py-2 flex-grow items-center"
         [title]="'shoppingLists' | translate"
         [routerLink]="['/shoppinglists']"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <fa-icon [icon]="shoppingListsIcon"></fa-icon>
-        <span class="text-center flex-grow-1"
+        <mat-icon class="pl-4">shopping_cart</mat-icon>
+        <span class="text-center flex-grow"
           >{{ "shoppingLists" | translate }}
         </span>
       </a>
     </li>
-    <hr />
-    <li class="nav-item">
+    <mat-divider></mat-divider>
+    <li class="nav-item flex flex-row py-2.5">
       <a
-        class="nav-link link-dark"
+        class="nav-link py-2 flex-grow items-center"
         [routerLink]="['/bills']"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <fa-icon [icon]="billsIcon"></fa-icon>
-        <span class="text-center flex-grow-1">{{ "bills" | translate }}</span>
+        <mat-icon class="pl-4">description</mat-icon>
+        <span class="text-center flex-grow">{{ "bills" | translate }}</span>
       </a>
     </li>
-    <hr />
-    <li class="nav-item">
+    <mat-divider></mat-divider>
+    <li class="nav-item flex flex-row py-2.5">
       <a
-        class="nav-link link-dark"
+        class="nav-link py-2 flex-grow items-center"
         [routerLink]="['/housegroups']"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <fa-icon [icon]="houseGroupIcon"></fa-icon>
-        <span class="text-center flex-grow-1">{{
+        <mat-icon class="pl-4">supervisor_account</mat-icon>
+        <span class="text-center flex-grow">{{
           "houseGroup" | translate
         }}</span>
       </a>
     </li>
-    <hr />
-    <li class="nav-item">
+    <mat-divider></mat-divider>
+    <li class="nav-item flex flex-row py-2.5">
       <a
-        class="nav-link link-dark"
+        class="nav-link py-2 flex-grow items-center"
         [routerLink]="['/expenses']"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <fa-icon [icon]="expensesIcon"></fa-icon>
-        <span class="text-center flex-grow-1">{{
-          "expenses" | translate
-        }}</span>
+        <mat-icon class="pl-4">bar_chart</mat-icon>
+        <span class="text-center flex-grow">{{ "expenses" | translate }}</span>
       </a>
     </li>
-    <hr />
-    <li class="nav-item">
+    <mat-divider></mat-divider>
+    <li class="nav-item flex flex-row py-2.5">
       <a
-        class="nav-link link-dark"
+        class="nav-link py-2 flex-grow items-center"
         [routerLink]="['/invitations']"
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{ exact: true }"
       >
-        <fa-icon [icon]="invitationsIcon"></fa-icon>
-        <span class="text-center flex-grow-1">{{
+        <mat-icon class="pl-4">email</mat-icon>
+        <span class="text-center flex-grow">{{
           "invitations" | translate
         }}</span>
       </a>
     </li>
   </ul>
-  <ul class="nav d-flex flex-column justify-content-end">
-    <!-- <hr /> -->
-    <!-- <li class="nav-item">
-      <a (click)="logout()" class="nav-link link-dark">
-        <fa-icon [icon]="logoutIcon"></fa-icon>
-        <span class="text-center flex-grow-1">{{ "logOut" | translate }}</span>
-      </a>
-    </li> -->
-  </ul>
+  <ul class="nav d-flex flex-column justify-content-end"></ul>
 </div>

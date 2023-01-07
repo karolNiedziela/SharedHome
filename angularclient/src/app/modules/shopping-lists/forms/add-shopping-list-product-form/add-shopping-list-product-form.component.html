@@ -1,13 +1,13 @@
 <hr />
-<div class="row g-3" [formGroup]="addShoppingListProductForm">
+<div class="w-full mt-2" [formGroup]="addShoppingListProductForm">
   <app-text-input
     formControlName="productName"
-    [labelText]="'Product Name' | translate"
+    [label]="'Product Name' | translate"
     [placeholder]="'Product Name' | translate"
   ></app-text-input>
   <app-number-input
     formControlName="quantity"
-    [labelText]="'Quantity' | translate"
+    [label]="'Quantity' | translate"
     [placeholder]="'Quantity' | translate"
   ></app-number-input>
   <app-net-content-form

@@ -1,46 +1,47 @@
-import { Subscription } from 'rxjs/internal/Subscription';
-import { ErrorService } from '../../../../core/services/error.service';
-import { FormGroup } from '@angular/forms';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import {
-  AfterViewInit,
   Component,
   Input,
-  OnDestroy,
+  OnChanges,
   OnInit,
   SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { finalize, Observable, Subscription } from 'rxjs';
+import { ErrorService } from 'src/app/core/services/error.service';
 import { FormModalConfig } from './form-modal.config';
-import { finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-form-modal',
   templateUrl: './form-modal.component.html',
-  styleUrls: ['../modal.scss', './form-modal.component.scss'],
+  styleUrls: ['./form-modal.component.scss'],
 })
-export class FormModalComponent implements OnInit, OnDestroy {
+export class FormModalComponent implements OnInit, OnChanges {
   @Input() public modalConfig!: FormModalConfig;
   @Input() public formGroup?: FormGroup | null;
   @Input() public resetForm: boolean = true;
 
-  @ViewChild('modal') private modalContent!: TemplateRef<FormModalComponent>;
+  @ViewChild('modal')
+  private modalContent!: TemplateRef<ConfirmationModalComponent>;
 
-  private modalRef!: NgbModalRef;
+  private dialogRef!: MatDialogRef<any, any>;
 
-  dismissIcon = faXmark;
-  disabled: boolean = false;
+  disabled!: boolean;
   errorMessages: string[] = [];
   errorSubscription!: Subscription;
   formGroupSubscription: undefined | Subscription;
   loadingSaveButton: boolean = false;
 
-  constructor(
-    private modalService: NgbModal,
-    private errorService: ErrorService
-  ) {}
+  constructor(private errorService: ErrorService, private dialog: MatDialog) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    // You can also use categoryId.previousValue and
+    // categoryId.firstChange for comparing old and new values
+  }
 
   ngOnInit(): void {
     if (!this.modalConfig.closeButtonLabel) {
@@ -65,25 +66,30 @@ export class FormModalComponent implements OnInit, OnDestroy {
       },
     });
 
-    this.formGroupSubscription = this.formGroup?.valueChanges.subscribe({
-      next: () => {
-        this.disabled = this.formGroup?.invalid ? true : false;
-      },
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.errorSubscription.unsubscribe();
-    this.formGroupSubscription?.unsubscribe();
+    this.disabled = false;
   }
 
   open(): void {
     this.errorService.clearErrors();
 
-    this.modalRef = this.modalService.open(this.modalContent, {
-      beforeDismiss: () => this.beforeDismiss(),
-      backdrop: 'static',
-      keyboard: false,
+    this.formGroupSubscription = this.formGroup?.valueChanges.subscribe({
+      next: () => {
+        this.disabled = this.formGroup?.invalid ? true : false;
+      },
+    });
+
+    this.dialogRef = this.dialog.open(this.modalContent, {
+      panelClass: ['md:w-3/5', 'lg:w-2/6', 'w-full'],
+      hasBackdrop: true,
+      autoFocus: false,
+    });
+
+    this.dialogRef.beforeClosed().subscribe((result) => {
+      this.beforeCloseModal();
+    });
+
+    this.dialogRef.afterClosed().subscribe((result) => {
+      this.afterModalClose();
     });
   }
 
@@ -96,6 +102,9 @@ export class FormModalComponent implements OnInit, OnDestroy {
 
     if (this.formGroup?.invalid) {
       this.formGroup.markAllAsTouched();
+      this.formGroup.updateValueAndValidity();
+      console.log(this.formGroup);
+      this.disabled = this.formGroup?.invalid ? true : false;
       return;
     }
 
@@ -124,26 +133,9 @@ export class FormModalComponent implements OnInit, OnDestroy {
       this.modalConfig.onClose();
     }
 
-    this.modalRef.close();
+    this.dialogRef.close();
 
     this.afterModalClose();
-  }
-
-  dismiss(): void {
-    this.beforeCloseModal();
-
-    if (this.modalConfig?.onDismiss != undefined) {
-      this.modalConfig.onDismiss();
-    }
-
-    this.modalRef.dismiss();
-
-    this.afterModalClose();
-  }
-
-  beforeDismiss(): boolean {
-    this.close();
-    return true;
   }
 
   private beforeCloseModal(): void {}
@@ -154,5 +146,7 @@ export class FormModalComponent implements OnInit, OnDestroy {
       this.modalConfig?.onReset?.();
     }
     this.errorService.clearErrors();
+
+    this.disabled = false;
   }
 }

@@ -4,8 +4,6 @@ export interface ConfirmationModalConfig {
   confirmationProperties?: string[];
   yesButtonText?: string;
   noButtonText?: string;
-  onOpen?(): boolean;
-  onSave?(): any;
-  onClose?(): boolean;
-  onDismiss?(): boolean;
+  onConfirm: () => void;
+  onClose?: () => void;
 }

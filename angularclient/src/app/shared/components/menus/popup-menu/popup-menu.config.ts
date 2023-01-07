@@ -1,9 +1,9 @@
 export interface PopupMenuConfig {
-  isHidden?: boolean;
   onEdit?: any;
   isEditVisible?: boolean;
   onDelete?: any;
   isDeleteVisible?: boolean;
+  isHidden?: boolean;
   additionalPopupMenuItems?: AdditionalPopupMenuItem[];
 }
 

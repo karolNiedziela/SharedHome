@@ -1,4 +1,7 @@
-<div class="overlay">
-  <div class="spinner-border" role="status"></div>
-</div>
+<mat-progress-spinner
+  [color]="color"
+  [mode]="mode"
+  [diameter]="60"
+></mat-progress-spinner>
+
 <div class="typewriter" #loadingText>{{ "Loading..." | translate }}</div>

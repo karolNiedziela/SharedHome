@@ -1,17 +1,16 @@
-import { ShoppingListsService } from './../../services/shopping-lists.service';
-import { ShoppingList } from './../../models/shopping-list';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { faCheck, faList, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import {
   AdditionalPopupMenuItem,
   PopupMenuConfig,
-} from 'app/shared/components/menus/popup-menu/popup-menu.config';
-import { ConfirmationModalComponent } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.component';
-import { ConfirmationModalConfig } from 'app/shared/components/modals/confirmation-modal/confirmation-modal.config';
-import { MarkAsDone } from '../../models/mark-as-done';
+} from 'src/app/shared/components/menus/popup-menu/popup-menu.config';
+import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalConfig } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ScreenSizeHelper } from 'src/app/shared/helpers/screen-size-helper';
 import { EditShoppingListModalComponent } from '../../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
-import { ScreenSizeHelper } from 'app/shared/helpers/screen-size-helper';
+import { MarkAsDone } from '../../models/mark-as-done';
+import { ShoppingList } from '../../models/shopping-list';
+import { ShoppingListsService } from '../../services/shopping-lists.service';
 
 @Component({
   selector: 'app-single-shopping-list',
@@ -20,19 +19,17 @@ import { ScreenSizeHelper } from 'app/shared/helpers/screen-size-helper';
 })
 export class SingleShoppingListComponent implements OnInit {
   @Input() shoppingList!: ShoppingList;
-  detailsIcon = faList;
-  boughtIcon = faCheck;
-  notBoughtIcon = faXmark;
   errorMessages: string[] = [];
 
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;
   deleteShoppingListModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Delete shopping list',
-    onSave: () => {
+    onConfirm: () => {
       this.deleteShoppingList(this.shoppingList.id);
     },
   };
+
   headerPopupMenuConfig!: PopupMenuConfig;
 
   @ViewChild('markAsDoneModal')
@@ -40,7 +37,7 @@ export class SingleShoppingListComponent implements OnInit {
   markAsDoneModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Mark shopping list as done',
     confirmationText: 'Are you sure to mark this shopping list as done?',
-    onSave: () => {
+    onConfirm: () => {
       this.markAsDone(true);
     },
   };
@@ -50,7 +47,7 @@ export class SingleShoppingListComponent implements OnInit {
   markAsUndoneModalConfig: ConfirmationModalConfig = {
     modalTitle: 'Mark shopping list as undone',
     confirmationText: 'Are you sure to mark this shopping list as undone?',
-    onSave: () => {
+    onConfirm: () => {
       this.markAsDone(false);
     },
   };
@@ -66,7 +63,6 @@ export class SingleShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.headerPopupMenuConfig = {};
-
     this.headerPopupMenuConfig = {
       isEditVisible: !this.shoppingList.isDone,
       onEdit: () => {
@@ -115,5 +111,19 @@ export class SingleShoppingListComponent implements OnInit {
     }
 
     return additionalPopupMenuItems;
+  }
+
+  countBoughtProducts() {
+    return this.shoppingList.products?.filter((p) => p.isBought)
+      .length as number;
+  }
+
+  countTotalPrice() {
+    return this.shoppingList.products
+      ?.filter((p) => p.price != null)
+      .reduce(
+        (sum, product) => sum + product.price!.price * product.quantity ?? 0,
+        0
+      );
   }
 }

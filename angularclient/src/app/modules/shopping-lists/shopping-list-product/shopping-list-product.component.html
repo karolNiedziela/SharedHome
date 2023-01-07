@@ -1,42 +1,42 @@
 <div class="card-body product">
   <div class="product__item product__name">
-    <h4 class="product-name">{{ shoppingListProduct.name }}</h4>
-    <h5
+    <h3 class="product-name">{{ shoppingListProduct.name }}</h3>
+    <h4
       class="bought-status"
       *ngIf="shoppingListProduct.isBought; else notBought"
     >
       <fa-icon [icon]="boughtIcon"></fa-icon>
-    </h5>
+    </h4>
     <ng-template #notBought>
-      <h5 class="not-bought-status">
+      <h4 class="not-bought-status">
         <fa-icon [icon]="notBoughtIcon"></fa-icon>
-      </h5>
+      </h4>
     </ng-template>
   </div>
-  <h5 class="product__item product__price">
+  <h4 class="product__item product__price">
     <div
       *ngIf="shoppingListProduct.price != null; then thenBlock; else elseBlock"
     ></div>
     <ng-template #thenBlock
-      ><h5>
+      ><h4>
         {{ shoppingListProduct.price?.price }}
         {{ shoppingListProduct.price?.currency }}
-      </h5></ng-template
+      </h4></ng-template
     >
 
-    <ng-template #elseBlock><h5>-</h5></ng-template>
-  </h5>
-  <h5 class="product__item product__net-content">
+    <ng-template #elseBlock><h4>-</h4></ng-template>
+  </h4>
+  <h4 class="product__item product__net-content">
     <div *ngIf="shoppingListProduct.netContent != null; else emptyNetContent">
       {{ shoppingListProduct.netContent.netContent }}
       {{
         shoppingListProduct.netContent.netContentType
-          | enumAsString: netContentType
+          | enumAsString : netContentType
       }}
       &nbsp;
     </div>
     <ng-template #emptyNetContent> &nbsp; </ng-template>
-  </h5>
+  </h4>
   <div class="product__item product__quantity">
     {{ shoppingListProduct.quantity }}
   </div>

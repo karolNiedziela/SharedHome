@@ -2,7 +2,6 @@ import { UpdateShoppingList } from './../../models/update-shopping-list';
 import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { ShoppingList } from './../../models/shopping-list';
 import { Modalable } from './../../../../core/models/modalable';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   Component,
@@ -12,7 +11,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
 
 @Component({
   selector: 'app-edit-shopping-list-modal',

@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { ViewEncapsulation } from '@angular/compiler';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -10,6 +11,8 @@ export class ButtonComponent implements OnInit {
   @Input() type: string = 'button';
   @Input() loading: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() fullWidth: boolean = false;
+  @Input() hidden: boolean = false;
 
   @Output() onButtonClick: EventEmitter<any> = new EventEmitter();
 

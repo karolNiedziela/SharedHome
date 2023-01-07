@@ -1,21 +1,15 @@
+import { LanguageService } from './../../../../core/services/language.service';
+import { Component, EventEmitter, OnInit, Output, Self } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
   NgControl,
 } from '@angular/forms';
-import {
-  Component,
-  OnInit,
-  Optional,
-  Self,
-  Output,
-  EventEmitter,
-} from '@angular/core';
 
 @Component({
   selector: 'app-currency-select',
   templateUrl: './currency-select.component.html',
-  styleUrls: ['../select.scss'],
+  styleUrls: ['./currency-select.component.scss'],
 })
 export class CurrencySelectComponent implements OnInit, ControlValueAccessor {
   @Output() currencyChanged: EventEmitter<string> = new EventEmitter<string>();
@@ -38,14 +32,24 @@ export class CurrencySelectComponent implements OnInit, ControlValueAccessor {
     return false;
   }
 
-  constructor(@Self() @Optional() private controlDir: NgControl) {
+  constructor(
+    @Self() private controlDir: NgControl,
+    private languageService: LanguageService
+  ) {
     controlDir.valueAccessor = this;
   }
 
   ngOnInit(): void {}
 
   writeValue(value: any): void {
-    this.selectedCurrency = value;
+    if (value == null) {
+      this.selectedCurrency =
+        this.languageService.language == LanguageService.pl
+          ? this.currencies[0]
+          : this.currencies[1];
+    } else {
+      this.selectedCurrency = value;
+    }
   }
 
   registerOnChange(onChanged: (value: any) => void): void {

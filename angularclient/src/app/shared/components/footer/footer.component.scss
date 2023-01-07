@@ -1,16 +1,7 @@
-@import "/src/assets/_variables.scss";
+@import "/src/assets/variables.scss";
 
 .footer {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: space-around;
   padding: 1rem 1rem 1rem 1rem;
-  border-top: 1px solid lightgrey;
-
-  &__company {
-    width: 95%;
-  }
 
   &__icons {
     width: 10%;

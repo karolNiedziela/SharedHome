@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
-import { UserInformation } from 'app/modules/identity/models/user-information';
+import { UserInformation } from '../../identity/models/user-information';
+import { AuthenticationService } from '../../identity/services/authentication.service';
 
 @Component({
   selector: 'app-profile-settings',

@@ -4,10 +4,10 @@ import { ShoppingListsService } from './../../services/shopping-lists.service';
 import { AddShoppingListProduct } from './../../models/add-shopping-list-product';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormModalComponent } from 'app/shared/components/modals/form-modal/form-modal.component';
-import { FormModalConfig } from 'app/shared/components/modals/form-modal/form-modal.config';
 import { ShoppingListProduct } from '../../models/shopping-list-product';
 import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
+import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
+import { FormModalConfig } from 'src/app/shared/components/modals/form-modal/form-modal.config';
 
 @Component({
   selector: 'app-add-shopping-list-product',

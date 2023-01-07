@@ -1,46 +1,29 @@
-<div class="form-floating">
+<mat-form-field>
+  <mat-label>{{ label | translate }}</mat-label>
   <input
-    type="text"
-    class="form-control sharedhome__input"
-    [placeholder]="placeholder"
-    (input)="onChanged($any($event.target).value)"
-    (blur)="onTouched()"
-    [disabled]="disabled"
-    [ngClass]="{
-      'is-invalid': control?.touched && !control?.valid
-    }"
-    [value]="control?.value"
+    matInput
+    [placeholder]="'placeholder' | translate"
+    [formControl]="control! | formControl"
+    [required]="isRequired"
   />
-  <label
-    class="sharedhome__label"
-    [ngClass]="{
-      'text-decoration-line-through': disabled
-    }"
-    >{{ labelText }}
-    <span *ngIf="isRequired" class="required" aria-required="true">
-      *
-    </span></label
-  >
+  <mat-error *ngIf="control?.touched && !control?.valid">
+    <mat-error *ngIf="control?.errors?.['required']">
+      {{ "This field is required." }}
+    </mat-error>
+    <mat-error *ngIf="control?.hasError('minlength')">
+      {{ "This field must contain at least" }}
+      {{ control?.errors?.['minlength'].requiredLength }}
+    </mat-error>
+    <mat-error *ngIf="control?.hasError('maxlength')">
+      {{ "This field can contain maximum" }}
+      {{ control?.errors?.['maxlength'].requiredLength }}
+    </mat-error>
 
-  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="showErrorMessage">
-      <div *ngIf="control?.errors?.['required']">
-        {{ "This field is required." | translate }}
-      </div>
-      <div *ngIf="control?.hasError('minlength')">
-        {{ "This field must contain at least" | translate }}
-        {{ control?.errors?.['minlength'].requiredLength }}
-        {{ "characters." | translate }}
-      </div>
-      <div *ngIf="control?.hasError('maxlength')">
-        {{ "This field can contain maximum" | translate }}
-        {{ control?.errors?.['maxlength'].requiredLength }}
-        {{ "characters." | translate }}
-      </div>
-
-      <div *ngIf="control?.hasError('invalidFormat')">
-        {{ control?.errors?.['invalidFormat']  | translate }}
-      </div>
-    </div>
-  </div>
-</div>
+    <mat-error *ngIf="control?.hasError('email')">
+      {{ "Please provide a valid email address." | translate }}
+    </mat-error>
+    <mat-error *ngIf="control?.hasError('invalidFormat')">
+      {{ control?.errors?.['invalidFormat'] }}
+    </mat-error>
+  </mat-error>
+</mat-form-field>

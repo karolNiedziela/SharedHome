@@ -1,15 +1,13 @@
-.content-main {
-  padding: 0 1rem;
-}
-
 .sidebar {
-  overflow-x: hidden;
-  overflow-y: hidden;
   min-width: 240px;
 }
 
-@media (max-width: 576px) {
-  .content-main {
-    padding: 0 0.5rem;
+@media (max-width: 768px) {
+  .sidebar {
+    min-width: 0;
+  }
+
+  .sidenav.is-active {
+    background-color: red;
   }
 }

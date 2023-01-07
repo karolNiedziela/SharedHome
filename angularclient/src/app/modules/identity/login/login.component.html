@@ -1,13 +1,24 @@
-<form class="row gy-3" [formGroup]="loginForm" (submit)="onSubmit()">
+<form [formGroup]="loginForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
-  <app-email-input formControlName="email"> </app-email-input>
-  <app-password-input formControlName="password"></app-password-input>
+  <app-text-input
+    formControlName="email"
+    label="Email"
+    placeholder="Email"
+  ></app-text-input>
+  <app-password-input
+    class="flex flex-grow flex-1"
+    formControlName="password"
+    label="Password"
+    placeholder="Password"
+  >
+  </app-password-input>
   <app-button
-    class="d-grid col-12"
+    class="flex"
     [text]="'Login' | translate"
     type="submit"
     [disabled]="disabled"
     [loading]="loadingSaveButton"
+    [fullWidth]="true"
   ></app-button>
 </form>
 <div class="col-12 text-center mt-2">
@@ -17,8 +28,9 @@
 </div>
 <hr class="mt-4" />
 <app-button
+  class="flex"
   [routerLink]="['/identity/register']"
-  class="d-grid col-12 mb-4"
-  [text]="'Sign up' | translate"
   type="submit"
+  [text]="'Sign up' | translate"
+  [fullWidth]="true"
 ></app-button>

@@ -1,27 +1,24 @@
-<div class="form-floating">
+<mat-form-field class="w-full">
+  <mat-label>Choose a date</mat-label>
   <input
-    type="date"
-    class="form-control sharedhome__input"
-    [placeholder]="placeholder"
     (input)="onChanged($any($event.target).value)"
+    matInput
+    [matDatepicker]="picker"
     (blur)="onTouched()"
-    [disabled]="disabled"
-    [ngClass]="{
-      'is-invalid': control.touched && !control.valid
-    }"
-    [value]="control.value"
+    [formControl]="control! | formControl"
+    [required]="isRequired"
+    placeholder="MM/DD/YYYY"
   />
-  <label class="sharedhome__label"
-    >{{ labelText | translate }}
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
 
-    <span *ngIf="isRequired" class="required" aria-required="true">
-      *
-    </span></label
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-error
+    class="invalid-feedback"
+    *ngIf="control?.touched && !control?.valid"
   >
-
-  <div class="invalid-feedback" *ngIf="control?.touched && !control?.valid">
-    <div *ngIf="control?.errors?.['required']">
+    <mat-error *ngIf="control?.errors?.['required']">
       {{ "This field is required." | translate }}
-    </div>
-  </div>
-</div>
+    </mat-error>
+  </mat-error>
+</mat-form-field>

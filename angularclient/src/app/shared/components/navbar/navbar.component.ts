@@ -1,12 +1,11 @@
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { ScreenSizeHelper } from 'app/shared/helpers/screen-size-helper';
 import { Component, OnInit } from '@angular/core';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { NotificationService } from 'app/modules/notifications/services/notification.service';
 import { filter, Observable } from 'rxjs';
-import { AuthenticationService } from 'app/modules/identity/services/authentication.service';
-import { AuthenticationResponse } from 'app/core/models/authentication-response';
+import { ScreenSizeHelper } from '../../helpers/screen-size-helper';
+import { NotificationService } from 'src/app/modules/notifications/services/notification.service';
+import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
+import { AuthenticationResponse } from 'src/app/core/models/authentication-response';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +13,6 @@ import { AuthenticationResponse } from 'app/core/models/authentication-response'
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  notificationIcon = faBell;
   notificationsCount$!: Observable<number>;
   menuToggled: boolean = false;
   authenticationSubscription!: Subscription;
@@ -45,35 +43,44 @@ export class NavbarComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        const sidebar = document.querySelector('.sidebar');
-        if (sidebar?.classList.contains('is-active')) {
+        const sidenav = document.querySelector('.sidenav');
+        if (sidenav?.classList.contains('is-active')) {
           this.toggleMenu();
         }
       });
   }
 
   toggleMenu(): void {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar?.classList.toggle('is-active');
+    const sidenav = document.querySelector('.sidenav');
+    sidenav?.classList.toggle('is-active');
 
-    const navbar = document.querySelector('.navbar');
-    navbar?.classList.toggle('is-active');
+    // const navbar = document.querySelector('.navbar');
+    // navbar?.classList.toggle('is-active');
 
     this.menuToggled = !this.menuToggled;
 
     const media = window.matchMedia('(max-width: 768px)');
     if (media.matches) {
       this.blurContent();
+      this.addHamburgerOpenClass();
+      this.hideScrollbar();
     }
   }
 
   private blurContent(): void {
     const content = document.querySelector('.content') as HTMLDivElement;
 
-    if (this.menuToggled) {
-      content.style.opacity = '0.1';
-    } else {
-      content.style.opacity = '1';
-    }
+    content.style.opacity = this.menuToggled ? '0' : '1';
+  }
+
+  private addHamburgerOpenClass(): void {
+    const hambuger = document.querySelector('.hamburger');
+    hambuger?.classList.toggle('open');
+  }
+
+  private hideScrollbar(): void {
+    const main = document.querySelector('.main') as HTMLDivElement;
+
+    main.style.overflowY = this.menuToggled ? 'hidden' : 'auto';
   }
 }

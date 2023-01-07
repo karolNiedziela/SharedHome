@@ -2,11 +2,11 @@ import { Observable, Subject, tap } from 'rxjs';
 import { SendInvitation } from '../models/send-invitation';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
 import { Invitation } from '../models/invitation';
-import { ApiResponse } from 'app/core/models/api-response';
 import { AcceptInvitation } from '../models/accept-invitation';
 import { RejectInvitation } from '../models/reject-invitation';
+import { ApiResponse } from 'src/app/core/models/api-response';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',

@@ -7,18 +7,18 @@
   <div class="row g-3" [formGroup]="addBillForm">
     <app-text-input
       formControlName="serviceProviderName"
-      [labelText]="'Service Provider' | translate"
+      [label]="'Service Provider' | translate"
       [placeholder]="'Service Provider' | translate"
     ></app-text-input>
-    <app-enum-select
+    <app-single-enum-select
       formControlName="billType"
-      [labelText]="'Type' | translate"
+      [label]="'Type' | translate"
       [enumType]="billTypeType"
       [firstValueSelected]="true"
-    ></app-enum-select>
+    ></app-single-enum-select>
     <app-date-input
       formControlName="dateOfPayment"
-      [labelText]="'Date of Payment' | translate"
+      [label]="'Date of Payment' | translate"
     ></app-date-input>
   </div>
 </app-form-modal>

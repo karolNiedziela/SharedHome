@@ -3,13 +3,13 @@
   *ngIf="(shoppingList$ | async)?.data as shoppingList; else loading"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
 >
-  <div class="card-header">
-    <h3
+  <div class="card-header flex flex-row justify-between mb-2 text-xl px-4 pt-1">
+    <div
       class="card-title"
       [ngClass]="{ 'text-decoration-line-through': shoppingList.isDone }"
     >
       {{ shoppingList.name }}
-    </h3>
+    </div>
     <div *ngIf="!shoppingList.isDone">
       <div
         *ngIf="
@@ -42,16 +42,18 @@
       ></app-shopping-list-product>
     </li>
   </ul>
-  <div class="card-footer border-top">
-    <h5>
+  <div
+    class="card-footer grid grid-cols-2 gap-3 pt-0.5 pb-2 px-4 border-top text-base"
+  >
+    <div>
       {{ shoppingList.createdBy }}
-    </h5>
-    <h5>{{ "Total price" | translate }}:</h5>
-    <h5>
-      {{ shoppingList.countBoughtProducts() }} /
+    </div>
+    <div class="justify-self-end">{{ "Total price" | translate }}:</div>
+    <div>
+      {{ countBoughtProducts(shoppingList) }} /
       {{ shoppingList.products.length }} {{ "products bought" | translate }}
-    </h5>
-    <h5>{{ shoppingList.countTotalPrice() }} zł</h5>
+    </div>
+    <div class="justify-self-end">{{ countTotalPrice(shoppingList) }} zł</div>
   </div>
 </div>
 

@@ -1,42 +1,37 @@
-<div class="d-flex flex-column h-100">
-  <div [formGroup]="shoppingListForm" class="row align-items-center g-md-2 g-1">
-    <app-text-input
-      class="col-5 col-sm-4 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
-      formControlName="yearAndMonth"
-      [labelText]="'yearAndMonth' | translate"
-      [placeholder]="'yearAndMonth' | translate"
-      (change)="onCurrentYearAndMonthChange()"
-      [showErrorMessage]="false"
-    ></app-text-input>
-    <app-enum-select
-      class="col-5 col-sm-3 col-md-4 col-lg-3 col-xl-2 col-xxl-2"
+<div class="flex flex-col h-full">
+  <div
+    [formGroup]="shoppingListForm"
+    class="flex flex-row content-center items-center justify-between gap-5"
+  >
+    <app-single-enum-select
       #statusSelect
-      [labelText]="'status' | translate"
+      [label]="'status' | translate"
       [enumType]="shoppingListStatus"
-      [isFormControl]="false"
       formControlName="status"
-    ></app-enum-select>
+    ></app-single-enum-select>
     <app-add-shopping-list
-      class="col-2 col-sm-auto col-md-auto col-lg-auto col-xl-auto col-xxl-auto ms-auto text-end"
+      class="pb-5 md:pb-7"
       [year]="year"
       [month]="month"
     ></app-add-shopping-list>
   </div>
 
   <div
-    class="flex-grow-1 d-flex flex-column justify-content-between mb-1"
+    class="flex-grow flex flex-col"
     *ngIf="paged$ | async as paged; else loading"
   >
-    <div class="row mt-2">
+    <div class="flex-grow">
       <div
-        class="col-sm-12 col-md-6 col-lg-6 col-xl-6"
-        *ngFor="let shoppingList of paged.items"
+        class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-y-2 gap-x-4"
       >
-        <app-single-shopping-list
-          [shoppingList]="shoppingList"
-        ></app-single-shopping-list>
+        <div *ngFor="let shoppingList of paged.items">
+          <app-single-shopping-list
+            [shoppingList]="shoppingList"
+          ></app-single-shopping-list>
+        </div>
       </div>
     </div>
+
     <app-pagination
       [currentPage]="paged.currentPage"
       [totalPages]="paged.totalPages"
@@ -45,7 +40,7 @@
       (goToPage)="goTo($event)"
     ></app-pagination>
   </div>
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
 </div>
-<ng-template #loading>
-  <app-loading-spinner></app-loading-spinner>
-</ng-template>
