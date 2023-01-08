@@ -37,7 +37,11 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/assets/theme.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "moment",
+              "@fortawesome/free-brands-svg-icons/faGithub"
+            ]
           },
           "configurations": {
             "production": {

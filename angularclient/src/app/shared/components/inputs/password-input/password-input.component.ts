@@ -1,18 +1,15 @@
 import { Component, Input, OnInit, Self } from '@angular/core';
 import {
   AbstractControl,
-  UntypedFormControl,
   NgControl,
-  ValidatorFn,
-  Validators,
   FormControl,
+  ValidatorFn,
 } from '@angular/forms';
-import { passwordStrengthValidator } from 'src/app/shared/validators/password.validator';
 
 @Component({
   selector: 'app-password-input',
   templateUrl: './password-input.component.html',
-  styleUrls: ['../input.scss', './password-input.component.scss'],
+  styleUrls: ['../input.scss'],
 })
 export class PasswordInputComponent implements OnInit {
   @Input() label: string = 'label';
@@ -42,7 +39,14 @@ export class PasswordInputComponent implements OnInit {
     controlDir.valueAccessor = this;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let validators: ValidatorFn[] = this.control?.validator
+      ? [this.control.validator]
+      : [];
+
+    this.control?.setValidators(validators);
+    this.control?.updateValueAndValidity();
+  }
 
   ngOnDestroy(): void {}
 

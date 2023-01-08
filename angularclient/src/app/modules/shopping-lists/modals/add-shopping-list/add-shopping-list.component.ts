@@ -22,7 +22,7 @@ import { AddManyShoppingListProductsFormComponent } from '../../forms/add-many-s
   templateUrl: './add-shopping-list.component.html',
   styleUrls: ['./add-shopping-list.component.scss'],
 })
-export class AddShoppingListComponent implements OnInit, Modalable, OnChanges {
+export class AddShoppingListComponent implements OnInit, Modalable {
   @Input() year!: number;
   @Input() month!: number;
   addShoppingListForm!: FormGroup;
@@ -40,10 +40,6 @@ export class AddShoppingListComponent implements OnInit, Modalable, OnChanges {
   };
 
   constructor(private shoppingListService: ShoppingListsService) {}
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
 
   ngOnInit(): void {
     this.addShoppingListForm = new FormGroup({

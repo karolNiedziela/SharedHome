@@ -19,7 +19,7 @@ import { FormModalConfig } from './form-modal.config';
   templateUrl: './form-modal.component.html',
   styleUrls: ['./form-modal.component.scss'],
 })
-export class FormModalComponent implements OnInit, OnChanges {
+export class FormModalComponent implements OnInit {
   @Input() public modalConfig!: FormModalConfig;
   @Input() public formGroup?: FormGroup | null;
   @Input() public resetForm: boolean = true;
@@ -36,12 +36,6 @@ export class FormModalComponent implements OnInit, OnChanges {
   loadingSaveButton: boolean = false;
 
   constructor(private errorService: ErrorService, private dialog: MatDialog) {}
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    // You can also use categoryId.previousValue and
-    // categoryId.firstChange for comparing old and new values
-  }
 
   ngOnInit(): void {
     if (!this.modalConfig.closeButtonLabel) {
