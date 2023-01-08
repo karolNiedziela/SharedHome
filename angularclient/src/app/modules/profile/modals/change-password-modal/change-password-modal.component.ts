@@ -1,4 +1,4 @@
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormModalComponent } from 'src/app/shared/components/modals/form-modal/form-modal.component';
 import { Modalable } from 'src/app/core/models/modalable';
@@ -28,7 +28,7 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
 
   ngOnInit(): void {
     this.changePasswordForm = new FormGroup({
-      currentPassword: new FormControl(''),
+      currentPassword: new FormControl('', [Validators.required]),
       newPassword: new FormControl(''),
     });
   }

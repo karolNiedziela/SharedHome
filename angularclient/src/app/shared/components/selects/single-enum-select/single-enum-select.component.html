@@ -1,19 +1,13 @@
-<form>
-  <mat-form-field class="w-full" appearance="fill">
-    <mat-label>{{ label | translate }}</mat-label>
-    <mat-select
-      [value]="enumType[selectedValue]"
-      [(ngModel)]="enumType[selectedValue]"
-      [required]="isRequired"
-      name="food"
-    >
-      <mat-option
-        *ngFor="let key of keys"
-        [value]="key"
-        (click)="setValue(key)"
-      >
-        {{ key | translate }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</form>
+<mat-form-field class="select-input w-full" appearance="fill">
+  <mat-label>{{ label | translate }}</mat-label>
+  <mat-select
+    [value]="enumType[selectedValue]"
+    [(ngModel)]="enumType[selectedValue]"
+    [required]="isRequired"
+    name="food"
+  >
+    <mat-option *ngFor="let key of keys" [value]="key" (click)="setValue(key)">
+      {{ key | translate }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

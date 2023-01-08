@@ -1,0 +1,29 @@
+.year-month-input {
+  max-width: 150px !important;
+}
+
+.example-month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
+
+.example-month-picker .mat-calendar-arrow {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .year-month-input {
+    max-width: 130px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .year-month-input {
+    max-width: 130px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .year-month-input {
+    max-width: 115px !important;
+  }
+}

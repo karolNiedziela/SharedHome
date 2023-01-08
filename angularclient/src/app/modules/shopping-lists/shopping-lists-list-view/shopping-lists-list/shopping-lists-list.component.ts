@@ -1,5 +1,4 @@
 import { PopupMenuConfig } from './../../../../shared/components/menus/popup-menu/popup-menu.config';
-import { ShoppingListProduct } from './../../models/shopping-list-product';
 import {
   AfterViewInit,
   Component,
@@ -17,6 +16,7 @@ import { ShoppingListStatus } from '../../enums/shopping-list-status';
 import { ShoppingList } from '../../models/shopping-list';
 import { ShoppingListsService } from '../../services/shopping-lists.service';
 import { SingleEnumSelectComponent } from 'src/app/shared/components/selects/single-enum-select/single-enum-select.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-shopping-lists-list',
@@ -36,6 +36,7 @@ export class ShoppingListsListComponent
   shoppingListForm!: FormGroup;
   paged$!: Observable<Paged<ShoppingList>>;
   singleRefreshSubscription!: Subscription;
+  yearAndMonthSubscription!: Subscription;
   statusSelectSubscription!: Subscription;
 
   loading$!: Observable<boolean>;
@@ -69,12 +70,10 @@ export class ShoppingListsListComponent
   ngOnInit(): void {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth() + 1;
-    const currentYearAndMonth = `${this.year} ${this.month}`;
-
     this.shoppingListForm = new FormGroup({
+      yearAndMonth: new FormControl(moment()),
       status: new FormControl(ShoppingListStatus['To do']),
     });
-
     this.getAllShoppingLists();
 
     this.singleRefreshSubscription =
@@ -84,59 +83,27 @@ export class ShoppingListsListComponent
   }
 
   ngAfterViewInit(): void {
-    this.statusSelectSubscription = this.statusSelect.selectedChanged.subscribe(
-      (selectedValue: number | undefined) => {
-        this.onStatusChange(selectedValue!);
-      }
-    );
+    this.yearAndMonthSubscription = this.shoppingListForm.controls[
+      'yearAndMonth'
+    ].valueChanges.subscribe((selectedDate: any) => {
+      const date: Date = selectedDate.toDate();
+      this.year = date.getFullYear();
+      this.month = date.getMonth() + 1;
+      this.getAllShoppingLists();
+    });
+
+    this.statusSelectSubscription = this.shoppingListForm.controls[
+      'status'
+    ].valueChanges.subscribe((selectedStatus: number) => {
+      this.isDone = selectedStatus == 0;
+      this.getAllShoppingLists();
+    });
   }
 
   ngOnDestroy(): void {
     this.singleRefreshSubscription.unsubscribe();
+    this.yearAndMonthSubscription.unsubscribe();
     this.statusSelectSubscription.unsubscribe();
-  }
-
-  private getAllShoppingLists() {
-    this.paged$ = this.shoppingListService
-      .getAllByYearAndMonthAndIsDone(
-        this.year,
-        this.month,
-        this.isDone,
-        this.currentPage
-      )
-      .pipe(
-        tap((paged: Paged<ShoppingList>) => {
-          this.currentPage = paged.currentPage;
-        })
-      );
-  }
-
-  onCurrentYearAndMonthChange(): void {
-    if (this.shoppingListForm.invalid) {
-      return;
-    }
-
-    const yearAndMonth: string =
-      this.shoppingListForm.get('yearAndMonth')?.value;
-
-    const yearAndMonthSplitted = yearAndMonth.split(' ');
-    this.year = +yearAndMonthSplitted[0];
-    this.month = +yearAndMonthSplitted[1];
-
-    this.getAllShoppingLists();
-  }
-
-  onStatusChange(selectedStatus: number): void {
-    if (this.shoppingListForm.invalid) {
-      return;
-    }
-    this.isDone = selectedStatus == 0;
-
-    this.getAllShoppingLists();
-  }
-
-  openShoppingList(shoppingListId: number): void {
-    this.router.navigate(['shoppinglists', shoppingListId]);
   }
 
   public onPrevious(): void {
@@ -155,5 +122,24 @@ export class ShoppingListsListComponent
     this.currentPage = page;
 
     this.getAllShoppingLists();
+  }
+
+  public openShoppingList(shoppingListId: number): void {
+    this.router.navigate(['shoppinglists', shoppingListId]);
+  }
+
+  private getAllShoppingLists() {
+    this.paged$ = this.shoppingListService
+      .getAllByYearAndMonthAndIsDone(
+        this.year,
+        this.month,
+        this.isDone,
+        this.currentPage
+      )
+      .pipe(
+        tap((paged: Paged<ShoppingList>) => {
+          this.currentPage = paged.currentPage;
+        })
+      );
   }
 }

@@ -37,6 +37,7 @@ import { ProfileDropdownComponent } from './components/profile-dropdown/profile-
 import { DragAndDropDirective } from './directives/drag-and-drop.directive';
 import { DateInputComponent } from './components/inputs/date-input/date-input.component';
 import { NotificationBellComponent } from '../modules/notifications/notification-bell/notification-bell.component';
+import { YearMonthInputComponent } from './components/inputs/year-month-input/year-month-input.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { NotificationBellComponent } from '../modules/notifications/notification
     DragAndDropDirective,
     DateInputComponent,
     NotificationBellComponent,
+    YearMonthInputComponent,
   ],
   imports: [
     CommonModule,
@@ -119,6 +121,7 @@ import { NotificationBellComponent } from '../modules/notifications/notification
     UploadImageComponent,
     DragAndDropDirective,
     DateInputComponent,
+    YearMonthInputComponent,
   ],
   providers: [
     DatePipe,

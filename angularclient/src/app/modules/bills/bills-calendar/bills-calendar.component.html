@@ -53,6 +53,7 @@
   </mwl-calendar-month-view>
 
   <app-table
+    class="mt-2"
     *ngIf="currentDayEvents.length > 0"
     [tableColumns]="billTableColumns"
     [tableData]="currentDayEvents"

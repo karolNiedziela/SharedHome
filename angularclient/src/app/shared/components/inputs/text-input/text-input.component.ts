@@ -1,12 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  Optional,
-  Self,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit, Optional, Self } from '@angular/core';
 import {
   AbstractControl,
   NgControl,
@@ -17,11 +9,9 @@ import {
 @Component({
   selector: 'app-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['../input.scss', 'text-input.component.scss'],
+  styleUrls: ['../input.scss'],
 })
-export class TextInputComponent
-  implements OnInit, OnChanges, ControlValueAccessor
-{
+export class TextInputComponent implements OnInit, ControlValueAccessor {
   @Input() label: string = 'label';
   @Input() placeholder: string = 'placeholder';
 
@@ -32,10 +22,6 @@ export class TextInputComponent
 
   get control(): AbstractControl | null {
     return this.controlDir.control!;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
   }
 
   get isRequired(): boolean {
