@@ -124,10 +124,6 @@ export class ShoppingListsListComponent
     this.getAllShoppingLists();
   }
 
-  public openShoppingList(shoppingListId: number): void {
-    this.router.navigate(['shoppinglists', shoppingListId]);
-  }
-
   private getAllShoppingLists() {
     this.paged$ = this.shoppingListService
       .getAllByYearAndMonthAndIsDone(

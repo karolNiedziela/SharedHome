@@ -76,20 +76,38 @@ export class SingleShoppingListComponent implements OnInit {
     };
   }
 
-  openShoppingList(shoppingListId: string): void {
-    this.router.navigate(['shoppinglists', shoppingListId]);
+  public openShoppingList(event: any, iconName?: string): void {
+    if (event.target.tagName == 'MAT-ICON' && iconName != 'info') {
+      event.preventDefault();
+      return;
+    }
+    this.router.navigate(['shoppinglists', this.shoppingList.id]);
   }
 
-  deleteShoppingList(shoppingListId: string): void {
+  public deleteShoppingList(shoppingListId: string): void {
     this.shoppingListService.delete(shoppingListId).subscribe();
   }
 
-  markAsDone(isDone: boolean): void {
+  public markAsDone(isDone: boolean): void {
     const markAsDone: MarkAsDone = {
       shoppingListId: this.shoppingList.id,
       isDone: isDone,
     };
     this.shoppingListService.markAsDone(markAsDone, false).subscribe();
+  }
+
+  public countBoughtProducts(): number {
+    return this.shoppingList.products?.filter((p) => p.isBought)
+      .length as number;
+  }
+
+  public countTotalPrice(): number {
+    return this.shoppingList.products
+      ?.filter((p) => p.price != null)
+      .reduce(
+        (sum, product) => sum + product.price!.price * product.quantity ?? 0,
+        0
+      );
   }
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
@@ -111,19 +129,5 @@ export class SingleShoppingListComponent implements OnInit {
     }
 
     return additionalPopupMenuItems;
-  }
-
-  countBoughtProducts() {
-    return this.shoppingList.products?.filter((p) => p.isBought)
-      .length as number;
-  }
-
-  countTotalPrice() {
-    return this.shoppingList.products
-      ?.filter((p) => p.price != null)
-      .reduce(
-        (sum, product) => sum + product.price!.price * product.quantity ?? 0,
-        0
-      );
   }
 }

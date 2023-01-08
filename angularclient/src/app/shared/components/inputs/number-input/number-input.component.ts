@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-number-input',
   templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.scss'],
+  styleUrls: ['./number-input.component.scss', '../input.scss'],
 })
 export class NumberInputComponent
   implements OnInit, ControlValueAccessor, OnDestroy

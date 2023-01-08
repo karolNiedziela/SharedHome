@@ -71,6 +71,10 @@
     color: $l_white_color !important;
   }
 
+  .cal-cell-row.cal-header .cal-cell:hover {
+    background-color: $bg !important;
+  }
+
   .cal-cell-row {
     background: $bg !important;
 
@@ -81,11 +85,6 @@
 
   .cal-day-number {
     color: $l_white_color !important;
-    opacity: 1 !important;
-  }
-
-  .cal-cell-row {
-    background: $bg !important;
   }
 
   .cal-days {

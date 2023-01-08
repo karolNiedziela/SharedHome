@@ -28,7 +28,6 @@ export class TableComponent implements OnInit {
 
     this.displayedColumns = columnNames;
 
-    console.log(this.actions);
     if (
       this.actions != null &&
       this.actions!.length > 0 &&

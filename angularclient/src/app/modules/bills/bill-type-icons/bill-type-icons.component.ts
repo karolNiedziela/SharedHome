@@ -15,6 +15,7 @@ import {
   Component,
   Input,
   OnInit,
+  ViewEncapsulation,
 } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Subject } from 'rxjs';
@@ -24,6 +25,7 @@ import { Subject } from 'rxjs';
   templateUrl: './bill-type-icons.component.html',
   styleUrls: ['./bill-type-icons.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
 export class BillTypeIconsComponent implements OnInit {
   @Input() billTypes: BillType[] = [];

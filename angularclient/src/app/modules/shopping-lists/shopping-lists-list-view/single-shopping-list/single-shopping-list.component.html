@@ -2,13 +2,14 @@
   (window:resize)="screenSizeHelper.isMobile()"
   class="shopping-list-card pt-1"
   [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+  (click)="openShoppingList($event)"
 >
   <div class="card-header flex flex-row justify-between mb-2 pl-2 pr-1 text-xl">
     <div class="text-lg">{{ shoppingList.name }}</div>
-    <div class="flex flex-row justify-self-end justify-items-end">
+    <div class="flex flex-row justify-self-end justify-items-end z-10">
       <mat-icon
         [title]="'Details' | translate"
-        (click)="openShoppingList(shoppingList.id)"
+        (click)="openShoppingList($event, 'info')"
       >
         info</mat-icon
       >
