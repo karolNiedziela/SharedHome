@@ -1,4 +1,4 @@
-<app-button [text]="'Upload' | translate" (click)="openModal()"></app-button>
+<app-button text="Upload" (click)="openModal()"></app-button>
 <app-form-modal #modal [modalConfig]="modalConfig">
   <app-upload-image
     [error]="error"

@@ -2,17 +2,17 @@
   <app-error [errorMessages]="errorMessages"></app-error>
   <app-text-input
     formControlName="email"
-    [label]="'Email' | translate"
-    [placeholder]="'Email' | translate"
+    label="Email"
+    placeholder="Email"
   ></app-text-input>
   <app-text-input
-    [label]="'First name' | translate"
-    [placeholder]="'First name' | translate"
+    label="First name"
+    placeholder="First name"
     formControlName="firstName"
   ></app-text-input>
   <app-text-input
-    [label]="'Last name' | translate"
-    [placeholder]="'Last name' | translate"
+    label="Last name"
+    placeholder="Last name"
     formControlName="lastName"
   ></app-text-input>
   <app-password-form
@@ -22,7 +22,7 @@
   ></app-password-form>
   <app-button
     class="flex"
-    [text]="'Sign up' | translate"
+    text="Sign up"
     type="submit"
     [disabled]="disabled"
     [loading]="loadingSaveButton"
@@ -33,7 +33,7 @@
 <app-button
   class="flex"
   [routerLink]="['/identity/login']"
-  [text]="'Login' | translate"
+  text="Login"
   type="submit"
   [fullWidth]="true"
 ></app-button>

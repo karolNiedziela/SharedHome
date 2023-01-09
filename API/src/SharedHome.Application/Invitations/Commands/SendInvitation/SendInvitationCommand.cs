@@ -6,7 +6,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Invitations.Commands.SendInvitation
 {
-    public class SendInvitationCommand : AuthorizeRequest, IRequest<Response<InvitationDto>>
+    public class SendInvitationCommand : AuthorizeRequest, IRequest<Guid>
     {
         public string RequestedToPersonEmail { get; set; } = default!;
 

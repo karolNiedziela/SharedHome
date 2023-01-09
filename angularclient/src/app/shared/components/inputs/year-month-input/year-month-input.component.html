@@ -1,5 +1,5 @@
 <mat-form-field class="year-month-input" appearance="fill">
-  <mat-label>Month and Year</mat-label>
+  <mat-label>{{ "Month and Year" | translate }}</mat-label>
   <input matInput [matDatepicker]="dp" [formControl]="control! | formControl" />
 
   <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>

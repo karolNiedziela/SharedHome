@@ -4,6 +4,8 @@ namespace SharedHome.Application.Invitations.Dto
 {
     public class InvitationDto
     {
+        public Guid Id { get; set; }
+
         public Guid HouseGroupId { get; set; }
 
         public string HouseGroupName { get; set; } = default!;
@@ -14,13 +16,16 @@ namespace SharedHome.Application.Invitations.Dto
 
         public string InvitationStatus { get; set; } = default!;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SentByFirstName { get; set; } = default!;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SentByLastName { get; set; } = default!;
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SentByFullName { get; set; } = default!;
+
+        public string SentToFirstName { get; set; } = default!;
+
+        public string SentToLastName { get; set; } = default!;
+
+        public string SentToFullName { get; set; } = default!;
     }
 }

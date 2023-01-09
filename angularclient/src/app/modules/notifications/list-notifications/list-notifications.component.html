@@ -1,16 +1,14 @@
-<div class="d-flex flex-column h-100">
-  <div [formGroup]="notificationsForm" class="row gy-2 gx-4 filters">
+<div class="flex flex-col h-full">
+  <div [formGroup]="notificationsForm" class="flex flex-row gap-x-2 filters">
     <app-single-enum-select
-      class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
-      [label]="'Target' | translate"
+      label="Target"
       [enumType]="targetType"
       formControlName="targetType"
       [firstValueSelected]="true"
     ></app-single-enum-select>
 
     <app-single-enum-select
-      class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-2"
-      [label]="'Type' | translate"
+      label="Type"
       [enumType]="notificationType"
       formControlName="notificationType"
       [firstValueSelected]="true"
@@ -18,27 +16,24 @@
   </div>
 
   <div
-    class="flex-grow-1 d-flex flex-column justify-content-between mb-1"
+    class="flex flex-col justify-between mb-2 h-full"
     *ngIf="notifications$ | async as paged; else loading"
   >
-    <div class="mt-2">
-      <ul class="list-group" *ngFor="let notification of paged.items">
-        <li
-          class="list-group-item d-flex justify-content-between align-items-center"
-        >
-          <div class="px-2">
-            <div>{{ notification.title }}</div>
-          </div>
-          <div class="text-end">
-            <div class="ms-2 me-auto">
-              {{ notification.createdAt | date : "shortDate" }}
-            </div>
-            {{ notification.createdBy }}
-          </div>
-        </li>
-      </ul>
+    <div
+      class="flex flex-row justify-between items-center w-full"
+      *ngFor="let notification of paged.items"
+    >
+      <div class="px-2">{{ notification.title }}</div>
+      <div class="flex flex-col text-end">
+        <div>
+          {{ notification.createdAt | date : "shortDate" }}
+        </div>
+        <div>{{ notification.createdBy }}</div>
+      </div>
     </div>
+
     <app-pagination
+      class="flex-auto flex flex-col justify-end"
       [currentPage]="paged.currentPage"
       [totalPages]="paged.totalPages"
       (nextPage)="onNext()"

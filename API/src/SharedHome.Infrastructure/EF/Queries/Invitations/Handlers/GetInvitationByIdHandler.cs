@@ -9,7 +9,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    internal class GetInvitationByIdHandler : IRequestHandler<GetInvitationById, InvitationDto>
+    internal class GetInvitationByIdHandler : IRequestHandler<GetInvitationById, Response<InvitationDto>>
     {
         private readonly DbSet<InvitationReadModel> _invitations;
         private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
             _mapper = mapper;
         }
 
-        public async Task<InvitationDto> Handle(GetInvitationById request, CancellationToken cancellationToken)
+        public async Task<Response<InvitationDto>> Handle(GetInvitationById request, CancellationToken cancellationToken)
         {
             var invitation = await _invitations
                 .Include(x => x.RequestedByPerson)
@@ -28,7 +28,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
                 .Include(x => x.HouseGroup)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-            return _mapper.Map<InvitationDto>(invitation!);
+            return new Response<InvitationDto>(_mapper.Map<InvitationDto>(invitation!));
         }
     }
 }

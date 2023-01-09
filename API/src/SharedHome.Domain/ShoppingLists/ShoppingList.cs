@@ -157,7 +157,7 @@ namespace SharedHome.Domain.ShoppingLists
 
         // When list is done most of the operations are blocked
         private void IsAlreadyDone()
-        {
+        {            
             if (IsDone)
             {
                 throw new ShoppingListAlreadyDoneException();

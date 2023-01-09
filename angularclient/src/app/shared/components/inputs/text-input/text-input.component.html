@@ -8,14 +8,14 @@
   />
   <mat-error *ngIf="control?.touched && !control?.valid">
     <mat-error *ngIf="control?.errors?.['required']">
-      {{ "This field is required." }}
+      {{ "This field is required." | translate }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('minlength')">
-      {{ "This field must contain at least" }}
+      {{ "This field must contain at least" | translate }}
       {{ control?.errors?.['minlength'].requiredLength }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('maxlength')">
-      {{ "This field can contain maximum" }}
+      {{ "This field can contain maximum" | translate }}
       {{ control?.errors?.['maxlength'].requiredLength }}
     </mat-error>
 
@@ -23,7 +23,7 @@
       {{ "Please provide a valid email address." | translate }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('invalidFormat')">
-      {{ control?.errors?.['invalidFormat'] }}
+      {{ control?.errors?.['invalidFormat'] | translate }}
     </mat-error>
   </mat-error>
 </mat-form-field>

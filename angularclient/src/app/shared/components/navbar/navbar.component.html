@@ -25,6 +25,6 @@
       class="me-2"
     ></app-notification-bell>
     <app-language-select></app-language-select>
-    <app-profile-dropdown></app-profile-dropdown>
+    <app-profile-dropdown *ngIf="authenticationResponse"></app-profile-dropdown>
   </div>
 </nav>
