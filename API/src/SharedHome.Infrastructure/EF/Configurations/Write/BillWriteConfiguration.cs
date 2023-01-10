@@ -19,7 +19,7 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                 .HasConversion(billdId => billdId.Value, id => new BillId(id));
 
             builder.Property(bill => bill.PersonId)
-                .IsRequired();
+                 .HasConversion(personId => personId.Value, id => new PersonId(id));
 
             builder.Property(bill => bill.IsPaid)
                    .HasDefaultValue(false);
@@ -28,36 +28,27 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                    .HasColumnName("BillType")
                    .HasConversion<int>();
 
-            builder.Property(bill => bill.PersonId)
-                   .HasConversion(personId => personId.Value, id => new PersonId(id));
-
             builder.OwnsOne(bill => bill.ServiceProvider, navigation =>
             {
                 navigation.Property(serviceProvider => serviceProvider.Name)
-                          .HasColumnName("ServiceProviderName")
-                          .IsRequired();
+                          .HasColumnName("ServiceProviderName");
             });
 
             builder.OwnsOne(bill => bill.Cost, navigation =>
             {
                 navigation.Property(cost => cost.Amount)
                           .HasColumnName("Cost")
-                          .HasPrecision(14, 2)
-                          .IsRequired();
+                          .HasPrecision(14, 2);
 
                 navigation.OwnsOne(money => money.Currency, navigation =>
                 {
                     navigation.Property(currency => currency.Value)
-                              .HasColumnName("Currency")
-                              .IsRequired();
+                              .HasColumnName("Currency");
                 });
 
             });
 
-            builder.Property(bill => bill.DateOfPayment)
-                   .IsRequired();
-
-            builder.HasOne<Person>().WithMany().HasForeignKey(bill => bill.PersonId);
+            builder.Property(bill => bill.DateOfPayment);
         }
     }
 }

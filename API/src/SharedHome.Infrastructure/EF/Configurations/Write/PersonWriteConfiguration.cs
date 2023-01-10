@@ -12,27 +12,22 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
         {
             builder.ToTable("Persons");
 
-            builder.Property(person => person.Id).ValueGeneratedNever();
+            builder.HasKey(person => person.Id);
+
+            builder.Property(person => person.Id);
 
             builder.Property(person => person.Id)
+                .ValueGeneratedNever()
                 .HasConversion(personId => personId.Value, id => new PersonId(id));
 
             builder.Property(person => person.Email)
                 .HasConversion(email => email.Value, value => new Email(value));
 
-            builder.OwnsOne(person => person.FirstName, navigation =>
-            {
-                navigation.Property(firstName => firstName.Value)
-                          .HasColumnName("FirstName")
-                          .IsRequired();
-            });
+            builder.Property(person => person.FirstName)
+                .HasConversion(firstName => firstName.Value, value => new FirstName(value));
 
-            builder.OwnsOne(person => person.LastName, navigation =>
-            {
-                navigation.Property(lastName => lastName.Value)
-                          .HasColumnName("LastName")
-                          .IsRequired();
-            });
+            builder.Property(person => person.LastName)
+                .HasConversion(lastName => lastName.Value, value => new LastName(value));
         }
     }
 }

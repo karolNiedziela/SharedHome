@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.Migrations
+namespace SharedHome.Infrastructure.EF.MySQLMigrations
 {
-    public partial class Add_ShoppingListProductId : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,11 +14,38 @@ namespace SharedHome.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Bills",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    IsPaid = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    BillType = table.Column<int>(type: "int", nullable: false),
+                    ServiceProviderName = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Currency = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Cost = table.Column<decimal>(type: "decimal(14,2)", precision: 14, scale: 2, nullable: true),
+                    DateOfPayment = table.Column<DateOnly>(type: "date", nullable: false),
+                    PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bills", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "HouseGroups",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: false)
@@ -30,6 +57,28 @@ namespace SharedHome.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HouseGroups", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Invitations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    InvitationStatus = table.Column<int>(type: "int", nullable: false),
+                    HouseGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RequestedByPersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    RequestedToPersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invitations", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -85,6 +134,8 @@ namespace SharedHome.Infrastructure.Migrations
                 name: "HouseGroupMembers",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     HouseGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     IsOwner = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
@@ -97,7 +148,7 @@ namespace SharedHome.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HouseGroupMembers", x => new { x.HouseGroupId, x.PersonId });
+                    table.PrimaryKey("PK_HouseGroupMembers", x => x.Id);
                     table.ForeignKey(
                         name: "FK_HouseGroupMembers_HouseGroups_HouseGroupId",
                         column: x => x.HouseGroupId,
@@ -131,84 +182,11 @@ namespace SharedHome.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Bills",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    IsPaid = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    BillType = table.Column<int>(type: "int", nullable: false),
-                    ServiceProviderName = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Currency = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Cost = table.Column<decimal>(type: "decimal(14,2)", precision: 14, scale: 2, nullable: true),
-                    DateOfPayment = table.Column<DateOnly>(type: "date", nullable: false),
-                    PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bills", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bills_Persons_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Invitations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    InvitationStatus = table.Column<int>(type: "int", nullable: false),
-                    HouseGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    RequestedByPersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    RequestedToPersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invitations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invitations_HouseGroups_HouseGroupId",
-                        column: x => x.HouseGroupId,
-                        principalTable: "HouseGroups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Invitations_Persons_RequestedByPersonId",
-                        column: x => x.RequestedByPersonId,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Invitations_Persons_RequestedToPersonId",
-                        column: x => x.RequestedToPersonId,
-                        principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "ShoppingLists",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    Name = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsDone = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -235,7 +213,8 @@ namespace SharedHome.Infrastructure.Migrations
                 name: "ShoppingListProducts",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ShoppingListProductId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ShoppingListId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -246,7 +225,6 @@ namespace SharedHome.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NetContentType = table.Column<int>(type: "int", nullable: true),
                     IsBought = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
-                    ShoppingListId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -256,7 +234,7 @@ namespace SharedHome.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingListProducts", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingListProducts", x => new { x.ShoppingListProductId, x.ShoppingListId });
                     table.ForeignKey(
                         name: "FK_ShoppingListProducts_ShoppingLists_ShoppingListId",
                         column: x => x.ShoppingListId,
@@ -267,24 +245,9 @@ namespace SharedHome.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bills_PersonId",
-                table: "Bills",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invitations_HouseGroupId",
-                table: "Invitations",
+                name: "IX_HouseGroupMembers_HouseGroupId",
+                table: "HouseGroupMembers",
                 column: "HouseGroupId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invitations_RequestedByPersonId",
-                table: "Invitations",
-                column: "RequestedByPersonId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invitations_RequestedToPersonId",
-                table: "Invitations",
-                column: "RequestedToPersonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NotificationFields_AppNotificationId",
