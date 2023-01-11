@@ -1,12 +1,22 @@
-<mat-icon
-  class=""
-  [matMenuTriggerFor]="notificationsMenu"
-  matBadge="4"
-  matBadgeOverlap="true"
-  matBadgeSize="small"
-  >notifications</mat-icon
->
-<mat-menu #notificationsMenu="matMenu">
+<div *ngIf="notificationsCount$ | async as notificationsCount">
+  <mat-icon
+    *ngIf="notificationsCount != '0'; else noNotifications"
+    [matMenuTriggerFor]="notificationsMenu"
+    [matBadge]="notificationsCount"
+    matBadgeOverlap="true"
+    matBadgeSize="small"
+    (menuClosed)="onMenuClose($event)"
+    >notifications</mat-icon
+  >
+  <ng-template #noNotifications>
+    <mat-icon
+      [matMenuTriggerFor]="notificationsMenu"
+      (menuClosed)="onMenuClose($event)"
+      >notifications</mat-icon
+    ></ng-template
+  >
+</div>
+<mat-menu #notificationsMenu="matMenu" class="notifications-menu">
   <span class="notifications" *ngIf="notifications$ | async as notifications">
     <mat-list>
       <div class="flex flex-row justify-between items-center px-2 pb-2">

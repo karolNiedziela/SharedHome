@@ -1,6 +1,4 @@
-﻿using Mapster;
-using MapsterMapper;
-using MediatR;
+﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Commands.SendInvitation;
@@ -14,13 +12,10 @@ using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.Persons.ValueObjects;
-using SharedHome.Infrastructure;
-
 using SharedHome.Shared.Application.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,10 +26,9 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IInvitationRepository _invitationRepository;
         private readonly IInvitationReadService _invitationService;
         private readonly IHouseGroupReadService _houseGroupService;
-        private readonly IMapper _mapper;
         private readonly IPersonRepository _personRepository;
         private readonly IDomainEventDispatcher _domainEventDispatcher;
-        private readonly IRequestHandler<SendInvitationCommand, Response<InvitationDto>> _commandHandler;
+        private readonly IRequestHandler<SendInvitationCommand, Guid> _commandHandler;
 
         public SendInvitationHandlerTests()
         {
@@ -43,10 +37,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _invitationService = Substitute.For<IInvitationReadService>();
             _personRepository = Substitute.For<IPersonRepository>();
             _domainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
-            var config = new TypeAdapterConfig();
-            config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
-            _mapper = new Mapper(config);
-            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _mapper, _personRepository, _domainEventDispatcher);
+            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _personRepository, _domainEventDispatcher);
         }
 
         [Fact]
@@ -106,15 +97,13 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 RequestedToPersonEmail = "email@email.com",
             };
 
-            var response = await _commandHandler.Handle(command, default);
+            var invitationId = await _commandHandler.Handle(command, default);
 
             await _invitationRepository.Received(1).AddAsync(Arg.Is<Invitation>(invitation =>
                 invitation.Status == InvitationStatus.Pending));
 
             await _invitationRepository.Received(1).AddAsync(Arg.Is<Invitation>(invitation =>
                 invitation.Status == InvitationStatus.Sent));
-
-            response.Data.ShouldNotBeNull();
         }
     }
 }

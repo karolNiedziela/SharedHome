@@ -11,12 +11,12 @@
       <app-circle-button
         *ngIf="isCurrentUserOwner"
         icon="delete"
-        [tooltipText]="'Delete house group' | translate"
+        tooltipText="Delete house group"
         (onButtonClick)="deleteHouseGroupModal.open()"
       ></app-circle-button>
       <app-circle-button
         icon="logout"
-        [tooltipText]="'Leave house group' | translate"
+        tooltip="Leave house group"
         (onButtonClick)="leaveHouseGroupModal.open()"
       ></app-circle-button>
       <app-invite-to-house-group

@@ -1,30 +1,28 @@
 <nav
-  class="flex flex-row items-center content-center justify-between border-b-2 py-0.5 md:py-2 pl-2 pr-4"
+  class="flex flex-row items-center content-center justify-between border-b-2 md:py-2 pl-2 pr-2 md:pr-4"
   (window:resize)="screenSizeHelper.isLowerThanMD()"
 >
-  <div
-    class="menu-toggle"
-    (click)="toggleMenu()"
-    *ngIf="screenSizeHelper.isLowerThanMD()"
-  >
-    <div class="hamburger" *ngIf="authenticationResponse">
-      <span></span>
+  <div class="flex flex-row items-center gap-x-5">
+    <div
+      class="menu-toggle"
+      (click)="toggleMenu()"
+      *ngIf="screenSizeHelper.isLowerThanMD()"
+    >
+      <div class="hamburger" *ngIf="authenticationResponse">
+        <span></span>
+      </div>
+    </div>
+
+    <div class="navbar-brand" *ngIf="!screenSizeHelper.isLowerThanSM()">
+      <img src="../../../../assets/images/sharedhomeLogo.png" alt="logo" />
     </div>
   </div>
-  <span class="navbar-brand" *ngIf="!screenSizeHelper.isLowerThanMD()">
-    <img
-      src="../../../../assets/images/sharedhomeLogo.png"
-      alt="logo"
-      class="logo"
-    />
-  </span>
-
-  <div class="flex flex-row items-center gap-x-2">
+  <div class="flex flex-row justify-end items-center gap-x-1 md:gap-x-2">
     <app-notification-bell
       *ngIf="authenticationResponse"
       class="me-2"
     ></app-notification-bell>
     <app-language-select></app-language-select>
-    <app-profile-dropdown></app-profile-dropdown>
+    <app-profile-dropdown *ngIf="authenticationResponse"></app-profile-dropdown>
   </div>
 </nav>

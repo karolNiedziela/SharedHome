@@ -5,7 +5,7 @@
   class="sharedhome-circle-btn"
   [disabled]="disabled"
   (click)="onClick()"
-  [title]="tooltipText"
+  [title]="tooltip | translate"
 >
   <!-- <fa-icon [icon]="icon"></fa-icon> -->
   <mat-icon class="mat-icon-white">{{ icon }}</mat-icon>

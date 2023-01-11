@@ -2,13 +2,13 @@
 <div class="w-full mt-2" [formGroup]="addShoppingListProductForm">
   <app-text-input
     formControlName="productName"
-    [label]="'Product Name' | translate"
-    [placeholder]="'Product Name' | translate"
+    label="Product Name"
+    placeholder="Product Name"
   ></app-text-input>
   <app-number-input
     formControlName="quantity"
-    [label]="'Quantity' | translate"
-    [placeholder]="'Quantity' | translate"
+    label="Quantity"
+    placeholder="Quantity"
   ></app-number-input>
   <app-net-content-form
     [netContentFormGroup]="
@@ -17,7 +17,7 @@
   ></app-net-content-form>
   <app-button
     class="product__button"
-    [text]="'Remove product' | translate"
+    text="Remove product"
     (onButtonClick)="removeProduct()"
   ></app-button>
 </div>

@@ -10,7 +10,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 export class CircleButtonComponent implements OnInit {
   @Input() disabled: boolean = false;
   @Input() icon: string = 'add';
-  @Input() tooltipText: string = 'Tooltip text';
+  @Input() tooltip: string = 'Tooltip text';
   @Output() onButtonClick: EventEmitter<any> = new EventEmitter();
 
   constructor() {}

@@ -19,11 +19,11 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.Invitations.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<InvitationDto>>> GetAsync(Guid houseGroupId)
+        public async Task<ActionResult<Response<InvitationDto>>> GetAsync(Guid invitationId)
         {
-            var invitation = await Mediator.Send(new GetInvitationByHouseGroupId
+            var invitation = await Mediator.Send(new GetInvitationById
             {
-                HouseGroupId = houseGroupId,
+                Id = invitationId,
             });
 
             if (invitation.Data is null)
@@ -56,9 +56,14 @@ namespace SharedHome.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SendInvitationAsync([FromBody] SendInvitationCommand command)
         {
-            var response = await Mediator.Send(command);
+            var invitationId = await Mediator.Send(command);
 
-            return CreatedAtAction(nameof(GetAsync), new { houseGroupId = response.Data.HouseGroupId }, response);
+            var response = await Mediator.Send(new GetInvitationById
+            {
+                Id = invitationId
+            });
+
+            return CreatedAtAction(nameof(GetAsync), new { invitationId = response.Data.Id }, response);
         }
 
 

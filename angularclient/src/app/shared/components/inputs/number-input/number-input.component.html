@@ -1,8 +1,8 @@
 <mat-form-field class="full-width-field">
-  <mat-label>{{ label }}</mat-label>
+  <mat-label>{{ label | translate }}</mat-label>
   <input
     matInput
-    [placeholder]="placeholder"
+    [placeholder]="placeholder | translate"
     [formControl]="control! | formControl"
     type="number"
     step="0.01"
@@ -22,7 +22,7 @@
     </mat-error>
     <mat-error *ngIf="control?.hasError('max')">
       {{ "This field value must be lower or equal to" | translate }}
-      {{ control?.errors?.['max'].max}}.
+      {{ control?.errors?.['max'].max }}.
     </mat-error>
   </mat-error>
 </mat-form-field>

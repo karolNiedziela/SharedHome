@@ -87,7 +87,7 @@
 
         public static class Invitations
         {
-            public const string Get = "{houseGroupId}";
+            public const string Get = "{invitationId}";
 
             public const string Accept = "accept";
 

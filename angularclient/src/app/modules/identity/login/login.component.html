@@ -14,7 +14,7 @@
   </app-password-input>
   <app-button
     class="flex"
-    [text]="'Login' | translate"
+    text="Login"
     type="submit"
     [disabled]="disabled"
     [loading]="loadingSaveButton"
@@ -26,11 +26,11 @@
     >{{ "Forgot password" | translate }}?</a
   >
 </div>
-<hr class="mt-4" />
+<hr class="mt-4 mb-4" />
 <app-button
   class="flex"
   [routerLink]="['/identity/register']"
   type="submit"
-  [text]="'Sign up' | translate"
+  text="Sign up"
   [fullWidth]="true"
 ></app-button>

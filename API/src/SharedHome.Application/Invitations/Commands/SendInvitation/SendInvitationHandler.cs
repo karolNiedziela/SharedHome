@@ -15,12 +15,11 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Invitations.Commands.SendInvitation
 {
-    public class SendInvitationHandler : IRequestHandler<SendInvitationCommand, Response<InvitationDto>>
+    public class SendInvitationHandler : IRequestHandler<SendInvitationCommand, Guid>
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IInvitationReadService _invitationService;
-        private readonly IMapper _mapper;
         private readonly IPersonRepository _personRepository;
         private readonly IDomainEventDispatcher _eventDispatcher;
 
@@ -28,19 +27,17 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
             IInvitationRepository invitationRepository,
             IHouseGroupReadService houseGroupService,
             IInvitationReadService invitationService,
-            IMapper mapper,
             IPersonRepository personRepository,
             IDomainEventDispatcher eventDispatcher)
         {
             _invitationRepository = invitationRepository;
             _houseGroupService = houseGroupService;
             _invitationService = invitationService;
-            _mapper = mapper;
             _personRepository = personRepository;
             _eventDispatcher = eventDispatcher;
         }
 
-        public async Task<Response<InvitationDto>> Handle(SendInvitationCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(SendInvitationCommand request, CancellationToken cancellationToken)
         {
             var person = await _personRepository.GetByEmailOrThrowAsync(request.RequestedToPersonEmail);
 
@@ -54,7 +51,7 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
                 throw new InvitationAlreadySentException(request.HouseGroupId, person.Id);
             }
 
-            var pendingInvitation = Invitation.Create(Guid.NewGuid(), request.HouseGroupId, request.PersonId!, person.Id); ;
+            var pendingInvitation = Invitation.Create(Guid.NewGuid(), request.HouseGroupId, request.PersonId!, person.Id);
 
             await _invitationRepository.AddAsync(pendingInvitation);
 
@@ -62,9 +59,9 @@ namespace SharedHome.Application.Invitations.Commands.SendInvitation
 
             await _invitationRepository.AddAsync(sentInvitation);
 
-            await _eventDispatcher.DispatchAsync(new InvitationSent(pendingInvitation.Id, request.HouseGroupId, request.PersonId, person.Id));
+            await _eventDispatcher.DispatchAsync(new InvitationSent(pendingInvitation.Id, request.HouseGroupId, request.PersonId, person.Id, $"{request.FirstName} {request.LastName}"));
 
-            return new Response<InvitationDto>(_mapper.Map<InvitationDto>(pendingInvitation));
+            return sentInvitation.Id;
         }
     }
 }

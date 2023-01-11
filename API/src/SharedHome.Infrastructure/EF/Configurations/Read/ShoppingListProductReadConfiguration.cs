@@ -9,6 +9,11 @@ namespace SharedHome.Infrastructure.EF.Configurations.Read
         public void Configure(EntityTypeBuilder<ShoppingListProductReadModel> builder)
         {
             builder.ToTable("ShoppingListProducts");
+
+            builder.HasKey(product => product.Id);
+
+            builder.Property(product => product.Id)
+                .HasColumnName("ShoppingListProductId");
         }
     }
 }

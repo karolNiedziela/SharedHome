@@ -31,12 +31,6 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
 
             builder.Property(invitation => invitation.HouseGroupId)
                    .HasConversion(houseGroupId => houseGroupId.Value, id => new HouseGroupId(id));
-
-            builder.HasOne<Person>().WithMany().HasForeignKey(invitation => invitation.RequestedByPersonId);
-
-            builder.HasOne<Person>().WithMany().HasForeignKey(invitation => invitation.RequestedToPersonId);
-
-            builder.HasOne<HouseGroup>().WithMany().HasForeignKey(invitation => invitation.HouseGroupId);
         }
     }
 }

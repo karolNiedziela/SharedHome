@@ -2,23 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedHome.Infrastructure.EF.Contexts;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.Migrations
+namespace SharedHome.Infrastructure.EF.MySQLMigrations
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    [Migration("20221101221108_Add_ShoppingListProductId")]
-    partial class Add_ShoppingListProductId
+    partial class WriteSharedHomeDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("SharedHome.Domain.Bills.Bill", b =>
@@ -56,8 +54,6 @@ namespace SharedHome.Infrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
 
                     b.ToTable("Bills", (string)null);
                 });
@@ -120,12 +116,6 @@ namespace SharedHome.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HouseGroupId");
-
-                    b.HasIndex("RequestedByPersonId");
-
-                    b.HasIndex("RequestedToPersonId");
-
                     b.ToTable("Invitations", (string)null);
                 });
 
@@ -142,6 +132,14 @@ namespace SharedHome.Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -257,12 +255,6 @@ namespace SharedHome.Infrastructure.Migrations
 
             modelBuilder.Entity("SharedHome.Domain.Bills.Bill", b =>
                 {
-                    b.HasOne("SharedHome.Domain.Persons.Person", null)
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Money", "Cost", b1 =>
                         {
                             b1.Property<Guid>("BillId")
@@ -330,11 +322,9 @@ namespace SharedHome.Infrastructure.Migrations
                 {
                     b.OwnsMany("SharedHome.Domain.HouseGroups.Entities.HouseGroupMember", "Members", b1 =>
                         {
-                            b1.Property<Guid>("HouseGroupId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("char(36)");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
 
                             b1.Property<DateTime>("CreatedAt")
                                 .HasColumnType("datetime(6)");
@@ -342,6 +332,9 @@ namespace SharedHome.Infrastructure.Migrations
                             b1.Property<string>("CreatedBy")
                                 .IsRequired()
                                 .HasColumnType("longtext");
+
+                            b1.Property<Guid>("HouseGroupId")
+                                .HasColumnType("char(36)");
 
                             b1.Property<bool>("IsOwner")
                                 .ValueGeneratedOnAdd()
@@ -355,7 +348,12 @@ namespace SharedHome.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasColumnType("longtext");
 
-                            b1.HasKey("HouseGroupId", "PersonId");
+                            b1.Property<Guid>("PersonId")
+                                .HasColumnType("char(36)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("HouseGroupId");
 
                             b1.ToTable("HouseGroupMembers", (string)null);
 
@@ -370,7 +368,8 @@ namespace SharedHome.Infrastructure.Migrations
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("longtext")
+                                .HasMaxLength(30)
+                                .HasColumnType("varchar(30)")
                                 .HasColumnName("Name");
 
                             b1.HasKey("HouseGroupId");
@@ -387,72 +386,6 @@ namespace SharedHome.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SharedHome.Domain.Invitations.Invitation", b =>
-                {
-                    b.HasOne("SharedHome.Domain.HouseGroups.HouseGroup", null)
-                        .WithMany()
-                        .HasForeignKey("HouseGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SharedHome.Domain.Persons.Person", null)
-                        .WithMany()
-                        .HasForeignKey("RequestedByPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SharedHome.Domain.Persons.Person", null)
-                        .WithMany()
-                        .HasForeignKey("RequestedToPersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SharedHome.Domain.Persons.Person", b =>
-                {
-                    b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.FirstName", "FirstName", b1 =>
-                        {
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("longtext")
-                                .HasColumnName("FirstName");
-
-                            b1.HasKey("PersonId");
-
-                            b1.ToTable("Persons");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PersonId");
-                        });
-
-                    b.OwnsOne("SharedHome.Domain.Persons.ValueObjects.LastName", "LastName", b1 =>
-                        {
-                            b1.Property<Guid>("PersonId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("longtext")
-                                .HasColumnName("LastName");
-
-                            b1.HasKey("PersonId");
-
-                            b1.ToTable("Persons");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PersonId");
-                        });
-
-                    b.Navigation("FirstName")
-                        .IsRequired();
-
-                    b.Navigation("LastName")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SharedHome.Domain.ShoppingLists.ShoppingList", b =>
                 {
                     b.HasOne("SharedHome.Domain.Persons.Person", null)
@@ -464,6 +397,10 @@ namespace SharedHome.Infrastructure.Migrations
                     b.OwnsMany("SharedHome.Domain.ShoppingLists.Entities.ShoppingListProduct", "Products", b1 =>
                         {
                             b1.Property<Guid>("Id")
+                                .HasColumnType("char(36)")
+                                .HasColumnName("ShoppingListProductId");
+
+                            b1.Property<Guid>("ShoppingListId")
                                 .HasColumnType("char(36)");
 
                             b1.Property<DateTime>("CreatedAt")
@@ -485,10 +422,7 @@ namespace SharedHome.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasColumnType("longtext");
 
-                            b1.Property<Guid>("ShoppingListId")
-                                .HasColumnType("char(36)");
-
-                            b1.HasKey("Id");
+                            b1.HasKey("Id", "ShoppingListId");
 
                             b1.HasIndex("ShoppingListId");
 
@@ -502,21 +436,27 @@ namespace SharedHome.Infrastructure.Migrations
                                     b2.Property<Guid>("ShoppingListProductId")
                                         .HasColumnType("char(36)");
 
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
+
                                     b2.Property<decimal>("Amount")
                                         .HasPrecision(12, 4)
                                         .HasColumnType("decimal(12,4)")
                                         .HasColumnName("Price");
 
-                                    b2.HasKey("ShoppingListProductId");
+                                    b2.HasKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
 
                                     b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ShoppingListProductId");
+                                        .HasForeignKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
 
                                     b2.OwnsOne("SharedHome.Domain.Shared.ValueObjects.Currency", "Currency", b3 =>
                                         {
                                             b3.Property<Guid>("MoneyShoppingListProductId")
+                                                .HasColumnType("char(36)");
+
+                                            b3.Property<Guid>("MoneyShoppingListProductShoppingListId")
                                                 .HasColumnType("char(36)");
 
                                             b3.Property<string>("Value")
@@ -524,12 +464,12 @@ namespace SharedHome.Infrastructure.Migrations
                                                 .HasColumnType("longtext")
                                                 .HasColumnName("Currency");
 
-                                            b3.HasKey("MoneyShoppingListProductId");
+                                            b3.HasKey("MoneyShoppingListProductId", "MoneyShoppingListProductShoppingListId");
 
                                             b3.ToTable("ShoppingListProducts");
 
                                             b3.WithOwner()
-                                                .HasForeignKey("MoneyShoppingListProductId");
+                                                .HasForeignKey("MoneyShoppingListProductId", "MoneyShoppingListProductShoppingListId");
                                         });
 
                                     b2.Navigation("Currency")
@@ -541,21 +481,23 @@ namespace SharedHome.Infrastructure.Migrations
                                     b2.Property<Guid>("ShoppingListProductId")
                                         .HasColumnType("char(36)");
 
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
+
                                     b2.Property<int?>("Type")
                                         .HasColumnType("int")
                                         .HasColumnName("NetContentType");
 
                                     b2.Property<string>("Value")
-                                        .IsRequired()
                                         .HasColumnType("longtext")
                                         .HasColumnName("NetContent");
 
-                                    b2.HasKey("ShoppingListProductId");
+                                    b2.HasKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
 
                                     b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ShoppingListProductId");
+                                        .HasForeignKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
                                 });
 
                             b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.Quantity", "Quantity", b2 =>
@@ -563,16 +505,19 @@ namespace SharedHome.Infrastructure.Migrations
                                     b2.Property<Guid>("ShoppingListProductId")
                                         .HasColumnType("char(36)");
 
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
+
                                     b2.Property<int>("Value")
                                         .HasColumnType("int")
                                         .HasColumnName("Quantity");
 
-                                    b2.HasKey("ShoppingListProductId");
+                                    b2.HasKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
 
                                     b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ShoppingListProductId");
+                                        .HasForeignKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
                                 });
 
                             b1.OwnsOne("SharedHome.Domain.ShoppingLists.ValueObjects.ShoppingListProductName", "Name", b2 =>
@@ -580,17 +525,20 @@ namespace SharedHome.Infrastructure.Migrations
                                     b2.Property<Guid>("ShoppingListProductId")
                                         .HasColumnType("char(36)");
 
+                                    b2.Property<Guid>("ShoppingListProductShoppingListId")
+                                        .HasColumnType("char(36)");
+
                                     b2.Property<string>("Value")
                                         .IsRequired()
                                         .HasColumnType("longtext")
                                         .HasColumnName("Name");
 
-                                    b2.HasKey("ShoppingListProductId");
+                                    b2.HasKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
 
                                     b2.ToTable("ShoppingListProducts");
 
                                     b2.WithOwner()
-                                        .HasForeignKey("ShoppingListProductId");
+                                        .HasForeignKey("ShoppingListProductId", "ShoppingListProductShoppingListId");
                                 });
 
                             b1.Navigation("Name")
@@ -611,7 +559,8 @@ namespace SharedHome.Infrastructure.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasColumnType("longtext")
+                                .HasMaxLength(20)
+                                .HasColumnType("varchar(20)")
                                 .HasColumnName("Name");
 
                             b1.HasKey("ShoppingListId");
