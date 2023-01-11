@@ -6,6 +6,7 @@
 @use "icon" as icon;
 @use "../app/modules/notifications/notification-bell/notification-bell.component.scss"
   as notificationBell;
+@use "../app/modules/identity/identity.component.scss" as identity;
 @use "@angular/material" as mat;
 @use "sass:map";
 
@@ -46,6 +47,7 @@ $dark-theme: mat.define-dark-theme(
 @include calendar.lightTheme($light-theme);
 @include icon.color($light-theme);
 @include notificationBell.color($light-theme);
+@include identity.lightTheme($light-theme);
 
 .theme-dark {
   @include mat.core-theme($dark-theme);
@@ -58,4 +60,5 @@ $dark-theme: mat.define-dark-theme(
   @include calendar.darkTheme($dark-theme);
   @include icon.color($dark-theme);
   @include notificationBell.color($dark-theme);
+  @include identity.darkTheme($dark-theme);
 }

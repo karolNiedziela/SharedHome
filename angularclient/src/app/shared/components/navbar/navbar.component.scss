@@ -18,7 +18,7 @@ nav {
   }
 }
 
-.logo {
+.navbar-brand {
   width: 200px;
   height: 30px;
 }
@@ -36,7 +36,7 @@ nav {
 .hamburger {
   position: absolute;
   top: 10px;
-  padding-left: 1rem;
+  padding-left: 1.2rem;
   transform: translate(-50%, -50%);
   width: 32px;
 }
@@ -50,7 +50,6 @@ nav {
   height: 2px;
   border-radius: 99px;
   transition-duration: 0.25s;
-  background-color: black !important;
 }
 
 .hamburger > span::before {
@@ -77,15 +76,27 @@ nav {
 }
 
 @mixin lightTheme($theme) {
-  .logo {
+  .navbar-brand {
     filter: brightness(0) saturate(100%) invert(29%) sepia(89%) saturate(865%)
       hue-rotate(205deg) brightness(87%) contrast(95%);
+  }
+
+  .hamburger > span,
+  .hamburger > span::before,
+  .hamburger > span::after {
+    background-color: black;
   }
 }
 
 @mixin darkTheme($theme) {
-  .logo {
+  .navbar-brand {
     filter: invert(58%) sepia(9%) saturate(3044%) hue-rotate(73deg)
       brightness(100%) contrast(82%);
+  }
+
+  .hamburger > span,
+  .hamburger > span::before,
+  .hamburger > span::after {
+    background-color: white;
   }
 }

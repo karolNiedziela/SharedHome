@@ -24,6 +24,12 @@ export class ScreenSizeHelper {
     return width >= ScreenSizeHelper.SM && width <= ScreenSizeHelper.MD;
   }
 
+  public isLowerThanSM(): boolean {
+    const width: number = this.getWidth();
+
+    return width <= ScreenSizeHelper.SM;
+  }
+
   public isMD(): boolean {
     const width: number = this.getWidth();
 

@@ -1,8 +1,16 @@
-:host {
-  height: 100vh;
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin lightTheme($theme) {
+  .logo {
+    filter: brightness(0) saturate(100%) invert(29%) sepia(89%) saturate(865%)
+      hue-rotate(205deg) brightness(87%) contrast(95%);
+  }
 }
 
-.identity {
-  box-shadow: 0 6px 20px rgba(18, 18, 18, 0.4);
-  border-radius: 14px;
+@mixin darkTheme($theme) {
+  .logo {
+    filter: invert(58%) sepia(9%) saturate(3044%) hue-rotate(73deg)
+      brightness(100%) contrast(82%);
+  }
 }

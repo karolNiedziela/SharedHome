@@ -1,4 +1,4 @@
-<form class="row g-3" [formGroup]="registerForm" (submit)="onSubmit()">
+<form [formGroup]="registerForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
   <app-text-input
     formControlName="email"
@@ -29,7 +29,7 @@
     [fullWidth]="true"
   ></app-button>
 </form>
-<hr class="mt-4" />
+<hr class="mt-4 mb-4" />
 <app-button
   class="flex"
   [routerLink]="['/identity/login']"

@@ -1,14 +1,16 @@
 <div
-  class="identity-container flex flex-row flex-wrap content-center justify-center items-center space-y-8 space-x-8 h-full w-full"
+  class="flex flex-col md:flex-row flex-wrap items-center md:space-y-0 md:space-x-8 h-full"
 >
-  <div class="flex w-3/5 justify-center content-center items-center mx-auto">
+  <div class="md:flex-1 flex h-1/4 md:w-1/2 items-center">
     <img
       src="../../../../assets/images/sharedhomeLogo.png"
       alt="logo"
       class="logo"
     />
   </div>
-  <div class="flex-auto identity justify-center content-center px-2 py-4">
+  <div
+    class="flex-1 flex flex-col w-full md:w-1/2 h-3/4 justify-start md:justify-center full px-4"
+  >
     <router-outlet></router-outlet>
   </div>
 </div>
