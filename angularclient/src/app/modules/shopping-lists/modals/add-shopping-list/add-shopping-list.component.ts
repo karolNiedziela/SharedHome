@@ -34,7 +34,7 @@ export class AddShoppingListComponent implements OnInit, Modalable {
   @ViewChild('modal') private modal!: FormModalComponent;
 
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Add shopping list',
+    modalTitle: 'shopping_lists.add_shopping_list',
     onSave: () => this.onSave(),
     onReset: () => this.onReset(),
   };
@@ -73,7 +73,7 @@ export class AddShoppingListComponent implements OnInit, Modalable {
 
     const addShoppingList: AddShoppingList = {
       name: name,
-      products: [],
+      products: products,
     };
 
     this.modal.save(this.shoppingListService.add(addShoppingList));

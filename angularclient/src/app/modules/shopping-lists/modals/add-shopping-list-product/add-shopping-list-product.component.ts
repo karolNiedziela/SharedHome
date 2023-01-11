@@ -18,7 +18,7 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
   @Input() shoppingListId!: string;
   @ViewChild('addShoppingListProductModal') private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Add shopping list product',
+    modalTitle: 'shopping_lists.add_shopping_list_product',
     onSave: () => this.onSave(),
     onReset: () => this.onReset(),
   };
@@ -35,7 +35,6 @@ export class AddShoppingListProductComponent implements OnInit, Modalable {
     this.addShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
-      netContent: new FormGroup({}),
     });
   }
 

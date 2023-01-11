@@ -6,18 +6,16 @@
   <div class="w-full" [formGroup]="addShoppingListProductForm">
     <app-text-input
       formControlName="productName"
-      label="Product Name"
-      placeholder="Product Name"
+      label="shopping_lists.product_name"
+      placeholder="shopping_lists.product_name"
     ></app-text-input>
     <app-number-input
       formControlName="quantity"
-      label="Quantity"
-      placeholder="Quantity"
+      label="shopping_lists.quantity"
+      placeholder="shopping_lists.quantity"
     ></app-number-input>
     <app-net-content-form
-      [netContentFormGroup]="
-        addShoppingListProductForm.get('netContent') | formGroup
-      "
+      [parentFormGroup]="addShoppingListProductForm"
     ></app-net-content-form>
   </div>
   <app-add-many-shopping-list-products-form

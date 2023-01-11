@@ -1,15 +1,15 @@
-<div class="flex flex-row item-center" [formGroup]="netContentFormGroup">
+<div class="flex flex-row item-center" [formGroup]="parentFormGroup">
   <div class="w-full">
     <app-number-input
       formControlName="netContent"
-      label="Net Content"
-      placeholder="Net Content"
+      label="shopping_lists.net_content"
+      placeholder="shopping_lists.net_content"
     ></app-number-input>
   </div>
-  <div class="w-full ml-2 mt-0.5">
+  <div class="ml-2 mt-0.5">
     <app-single-enum-select
       formControlName="netContentType"
-      label="Net Content Type"
+      label="shopping_lists.net_content_type"
       [enumType]="netContentType"
     ></app-single-enum-select>
   </div>

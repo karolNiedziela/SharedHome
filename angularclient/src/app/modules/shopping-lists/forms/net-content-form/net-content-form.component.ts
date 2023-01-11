@@ -1,5 +1,12 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { NetContentType } from '../../enums/net-content-type';
 
 @Component({
@@ -8,22 +15,19 @@ import { NetContentType } from '../../enums/net-content-type';
   styleUrls: ['./net-content-form.component.scss'],
 })
 export class NetContentFormComponent implements OnInit, OnDestroy {
-  @Input() netContentFormGroup!: FormGroup;
+  @Input() parentFormGroup!: FormGroup;
 
   public netContentType: typeof NetContentType = NetContentType;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.netContentFormGroup.addControl('netContent', new FormControl(null));
+    this.parentFormGroup.addControl('netContent', new FormControl(''));
 
-    this.netContentFormGroup.addControl(
-      'netContentType',
-      new FormControl(null)
-    );
+    this.parentFormGroup.addControl('netContentType', new FormControl(''));
   }
 
   ngOnDestroy(): void {
-    this.netContentFormGroup.reset();
+    this.parentFormGroup.reset();
   }
 }

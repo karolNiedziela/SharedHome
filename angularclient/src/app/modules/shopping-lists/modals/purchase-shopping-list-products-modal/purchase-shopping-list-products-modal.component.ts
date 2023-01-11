@@ -27,7 +27,7 @@ export class PurchaseShoppingListProductsModalComponent
   @ViewChild('purchaseShoppingListProductModal')
   private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Purchase shopping list products',
+    modalTitle: 'shopping_lists.purchase_shopping_list_products',
     onSave: () => this.onSave(),
     onReset: () => this.onReset(),
   };

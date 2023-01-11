@@ -28,7 +28,7 @@ export class EditShoppingListProductModalComponent
 
   @ViewChild('editShoppingListProductModal') private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Edit shopping list product',
+    modalTitle: 'shopping_lists.edit_shopping_list_product',
     onSave: () => this.onSave(),
   };
 
@@ -42,8 +42,6 @@ export class EditShoppingListProductModalComponent
     this.editShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
-      netContent: new FormControl(''),
-      netContentType: new FormControl(null),
     });
 
     this.setFormValues();

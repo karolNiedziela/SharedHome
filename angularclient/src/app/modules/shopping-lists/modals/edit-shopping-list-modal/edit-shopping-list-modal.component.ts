@@ -30,7 +30,7 @@ export class EditShoppingListModalComponent
   private editShoppingListModal!: FormModalComponent;
 
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Edit shopping list',
+    modalTitle: 'shopping_lists.edit_shopping_list',
     onSave: () => this.onSave(),
   };
 

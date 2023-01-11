@@ -31,7 +31,7 @@ export class ShoppingListProductComponent implements OnInit {
   @ViewChild('deleteShoppingListProduct')
   private deleteShoppingListProductModal!: ConfirmationModalComponent;
   deleteShoppingListProductModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Delete shopping list product',
+    modalTitle: 'shopping_lists.delete_shopping_list_product',
     onConfirm: () => {
       this.deleteShoppingListProduct();
     },
@@ -40,8 +40,9 @@ export class ShoppingListProductComponent implements OnInit {
   @ViewChild('cancelPurchaseShoppingListProduct')
   private cancelPurchaseShoppingListProductModal!: ConfirmationModalComponent;
   cancelPurchaseShoppingListProductModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Cancel purchase of shopping list product',
-    confirmationText: 'Are you sure to cancel purchase?',
+    modalTitle: 'shopping_lists.cancel_purchase_of_shopping_list_product',
+    confirmationText:
+      'shopping_lists.cancel_purchase_of_shopping_list_product_text',
     onConfirm: () => {
       this.cancelPurchaseOfShoppingListProduct();
     },
@@ -61,13 +62,14 @@ export class ShoppingListProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productPopupMenuConfig = {
-      // isHidden: this.isDone,
       onDelete: () => {
         this.deleteShoppingListProductModal.open();
       },
+      isDeleteVisible: true,
       onEdit: () => {
         this.editShoppingListProductModal.openModal();
       },
+      isEditVisible: true,
       additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
     };
   }
@@ -99,14 +101,14 @@ export class ShoppingListProductComponent implements OnInit {
 
     if (this.shoppingListProduct?.isBought) {
       additionalPopupMenuItems.push({
-        text: 'Cancel purchase',
+        text: 'shopping_lists.cancel_purchase',
         onClick: () => {
           this.cancelPurchaseShoppingListProductModal.open();
         },
       });
     } else {
       additionalPopupMenuItems.push({
-        text: 'Purchase',
+        text: 'shopping_lists.purchase',
         onClick: () => {
           this.purchaseShoppingListProductForm.openModal();
         },

@@ -1,5 +1,5 @@
 <app-circle-button
-  tooltip="Add shopping list"
+  tooltip="shopping_lists.add_shopping_list"
   (click)="openModal()"
 ></app-circle-button>
 
@@ -11,8 +11,8 @@
   <div [formGroup]="addShoppingListForm">
     <app-text-input
       formControlName="name"
-      label="Name"
-      placeholder="Name"
+      label="shopping_lists.name"
+      placeholder="shopping_lists.name"
     ></app-text-input>
   </div>
   <app-add-many-shopping-list-products-form

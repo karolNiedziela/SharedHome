@@ -21,11 +21,11 @@
   <div
     class="card-footer grid grid-cols-2 gap-3 pt-0.5 pb-1 px-2 border-top text-base"
   >
-    <div>{{ "Total price" | translate }}:</div>
+    <div>{{ "shopping_lists.total_price" | translate }}:</div>
     <div class="justify-self-end">{{ countTotalPrice() }} zł</div>
     <div>
       {{ countBoughtProducts() }} / {{ shoppingList.products.length }}
-      {{ "products bought" | translate }}
+      {{ "shopping_lists.bought" | translate }}
     </div>
     <ng-template #boughtProducts>
       <div>{{ "no products" | translate }}</div>
