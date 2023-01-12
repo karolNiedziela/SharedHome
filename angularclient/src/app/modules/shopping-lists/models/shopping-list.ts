@@ -3,7 +3,7 @@ export class ShoppingList {
   id!: string;
   name!: string;
   isDone!: boolean;
-  createdBy!: string;
+  createdByFullName!: string;
   products: ShoppingListProduct[] = [];
 
   constructor(shoppingList?: ShoppingList) {

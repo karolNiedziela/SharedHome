@@ -16,10 +16,6 @@ namespace SharedHome.Infrastructure.EF.Contexts
 {
     public class WriteSharedHomeDbContext : DbContext
     {
-        private readonly ITimeProvider _time;
-
-        private readonly ICurrentUser _currentUser;
-
         public DbSet<Invitation> Invitations { get; set; } = default!;
 
         public DbSet<ShoppingList> ShoppingLists { get; set; } = default!;
@@ -34,11 +30,8 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         public DbSet<AppNotificationField> NotificationsFields { get; set; } = default!;
 
-
-        public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options, ITimeProvider time, ICurrentUser currentUser) : base(options)
+        public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options) : base(options)
         {
-            _time = time;
-            _currentUser = currentUser;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,61 +39,6 @@ namespace SharedHome.Infrastructure.EF.Contexts
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly(), x => x.Namespace == typeof(ShoppingListWriteConfiguration).Namespace);
-        }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            foreach (EntityEntry<IAuditable> entry in ChangeTracker.Entries<IAuditable>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.Entity.CreatedAt = _time.CurrentDate();
-                        entry.Entity.CreatedBy = GetCreatedBy(entry);
-                        entry.Entity.ModifiedAt = _time.CurrentDate();
-                        entry.Entity.ModifiedBy = GetModifiedBy(entry);
-                        break;
-
-                    case EntityState.Modified:
-                        entry.Entity.ModifiedAt = _time.CurrentDate();
-                        entry.Entity.ModifiedBy = GetModifiedBy(entry);
-                        break;
-                }
-            }
-
-            var result = await base.SaveChangesAsync(cancellationToken);
-
-            return result;
-        }  
-
-        private string GetCreatedBy(EntityEntry<IAuditable> entry)
-        {
-            if (!string.IsNullOrEmpty(_currentUser?.FirstName))
-            {
-                return $"{_currentUser.FirstName} {_currentUser.LastName}";
-            }
-
-            if (string.IsNullOrEmpty(entry.Entity.CreatedBy))
-            {
-                return "System";
-            }
-
-            return entry.Entity.CreatedBy;
-        }
-
-        private string GetModifiedBy(EntityEntry<IAuditable> entry)
-        {
-            if (!string.IsNullOrEmpty(_currentUser?.FirstName))
-            {
-                return $"{_currentUser.FirstName} {_currentUser.LastName}";
-            }
-
-            if (string.IsNullOrEmpty(entry.Entity.ModifiedBy))
-            {
-                return "System";
-            }
-
-            return entry.Entity.ModifiedBy;
-        }
+        }      
     }
 }

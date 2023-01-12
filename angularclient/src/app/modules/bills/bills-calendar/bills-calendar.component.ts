@@ -149,7 +149,7 @@ export class BillsCalendarComponent implements OnInit, OnDestroy {
       serviceProvider: bill.serviceProvider,
       dateOfPayment: bill.dateOfPayment,
       billType: bill.billType,
-      createdBy: bill.createdBy,
+      createdByFullName: bill.createdByFullName,
       cost:
         bill.cost == null
           ? null

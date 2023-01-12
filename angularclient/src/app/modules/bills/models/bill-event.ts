@@ -8,5 +8,5 @@ export interface BillEvent extends CalendarEvent {
   serviceProvider: string;
   cost: Money | null;
   dateOfPayment: Date;
-  createdBy: string;
+  createdByFullName: string;
 }

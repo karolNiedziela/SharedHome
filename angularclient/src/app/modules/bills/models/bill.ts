@@ -6,7 +6,7 @@ export interface Bill {
   isPaid: boolean;
   billType: BillType;
   serviceProvider: string;
-  createdBy: string;
+  createdByFullName: string;
   cost?: Money;
   dateOfPayment: Date;
 }

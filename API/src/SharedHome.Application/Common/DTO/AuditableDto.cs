@@ -2,6 +2,6 @@
 {
     public abstract class AuditableDto
     {
-        public string CreatedBy { get; set; } = default!;
+        public string CreatedByFullName { get; set; } = default!;
     }
 }

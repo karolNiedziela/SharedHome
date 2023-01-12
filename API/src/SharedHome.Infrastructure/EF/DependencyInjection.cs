@@ -10,6 +10,7 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Identity.EF.Contexts;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Initializers;
+using SharedHome.Infrastructure.EF.Interceptors;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Infrastructure.EF.Repositories;
@@ -29,20 +30,26 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
 
-            //Services
+            // Services
             services.AddScoped<IInvitationReadService, InvitationReadService>();
             services.AddScoped<IHouseGroupReadService, HouseGroupService>();
 
+            // Interceptors
+            services.AddScoped<AuditableInterceptor>();
+
             services.ConfigureOptions<MySQLOptionsSetup>();
 
-            services.AddDbContext<WriteSharedHomeDbContext>((servicePrvoider, options) =>
+            services.AddDbContext<WriteSharedHomeDbContext>((serviceProvider, options) =>
             {
-                var mySQLOptions = servicePrvoider.GetService<IOptions<MySQLOptions>>()!.Value;
+                var mySQLOptions = serviceProvider.GetService<IOptions<MySQLOptions>>()!.Value;
+
+                var auditableInterceptor = serviceProvider.GetRequiredService<AuditableInterceptor>();
 
                 options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString), mySqlOptionsAction =>
                 {
                     mySqlOptionsAction.EnableRetryOnFailure(mySQLOptions.MaxRetryCount);
-                });
+                })
+                .AddInterceptors(auditableInterceptor);
 
                 options.EnableDetailedErrors(mySQLOptions.EnableDetailedErrors);
 

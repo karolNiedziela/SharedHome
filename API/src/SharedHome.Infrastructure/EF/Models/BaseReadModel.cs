@@ -4,10 +4,14 @@
     {
         public DateTime CreatedAt { get; set; }
 
-        public string CreatedBy { get; set; } = default!;
+        public string CreatedByFullName { get; set; } = default!;
 
-        public DateTime ModifiedAt { get; set; }
+        public Guid? CreatedBy { get; set; }
 
-        public string ModifiedBy { get; set; } = default!;
+        public DateTime? ModifiedAt { get; set; }
+
+        public string? ModifiedByFullName { get; set; } = default!;
+
+        public Guid? ModifiedBy { get; set; } = default!;
     }
 }
