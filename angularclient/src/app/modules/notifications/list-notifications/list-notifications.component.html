@@ -1,14 +1,14 @@
 <div class="flex flex-col h-full">
   <div [formGroup]="notificationsForm" class="flex flex-row gap-x-2 filters">
     <app-single-enum-select
-      label="Target"
+      label="notifications.target"
       [enumType]="targetType"
       formControlName="targetType"
       [firstValueSelected]="true"
     ></app-single-enum-select>
 
     <app-single-enum-select
-      label="Type"
+      label="notifications.type"
       [enumType]="notificationType"
       formControlName="notificationType"
       [firstValueSelected]="true"

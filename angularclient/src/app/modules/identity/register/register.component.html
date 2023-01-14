@@ -1,18 +1,19 @@
 <form [formGroup]="registerForm" (submit)="onSubmit()">
   <app-error [errorMessages]="errorMessages"></app-error>
+  <div>{{ successRegistrationInformation }}</div>
   <app-text-input
     formControlName="email"
     label="Email"
     placeholder="Email"
   ></app-text-input>
   <app-text-input
-    label="First name"
-    placeholder="First name"
+    label="identity.first_name"
+    placeholder="identity.first_name"
     formControlName="firstName"
   ></app-text-input>
   <app-text-input
-    label="Last name"
-    placeholder="Last name"
+    label="identity.last_name"
+    placeholder="identity.last_name"
     formControlName="lastName"
   ></app-text-input>
   <app-password-form
@@ -22,18 +23,21 @@
   ></app-password-form>
   <app-button
     class="flex"
-    text="Sign up"
+    text="identity.sign_up"
     type="submit"
     [disabled]="disabled"
     [loading]="loadingSaveButton"
     [fullWidth]="true"
   ></app-button>
 </form>
-<hr class="mt-4 mb-4" />
+<hr class="mt-4 mb-2" />
+<div class="text-center mb-2">
+  {{ "identity.have_an_account" | translate }}?
+</div>
 <app-button
   class="flex"
   [routerLink]="['/identity/login']"
-  text="Login"
+  text="identity.login"
   type="submit"
   [fullWidth]="true"
 ></app-button>

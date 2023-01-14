@@ -21,13 +21,13 @@
     *ngIf="popupMenuConfig?.isEditVisible"
     (click)="popupMenuConfig?.onEdit()"
   >
-    {{ "Edit" | translate }}
+    {{ "shared.operations.edit" | translate }}
   </button>
   <button
     mat-menu-item
     *ngIf="popupMenuConfig?.isDeleteVisible"
     (click)="popupMenuConfig?.onDelete()"
   >
-    {{ "Delete" | translate }}
+    {{ "shared.operations.delete" | translate }}
   </button>
 </mat-menu>

@@ -14,8 +14,8 @@ export class CancelBillPaymentComponent implements Modalable, OnInit {
 
   @ViewChild('modal') private modal!: ConfirmationModalComponent;
   public modalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Cancel payment',
-    confirmationText: 'Are you sure to cancel payment of the bill?',
+    modalTitle: 'bills.cancel_payment',
+    confirmationText: 'bills.cancel_payment_text',
     onConfirm: () => {
       this.onSave();
     },

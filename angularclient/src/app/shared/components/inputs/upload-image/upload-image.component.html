@@ -3,8 +3,8 @@
   appDragAndDrop
   (fileDropped)="onFileDropped($event)"
 >
-  <h4>{{ "Drag and drop file here" | translate }}</h4>
-  <h4>{{ "or" | translate }}</h4>
+  <h4>{{ "shared.inputs.drag_and_drop_file" | translate }}</h4>
+  <h4>{{ "shared.inputs.or" | translate }}</h4>
   <input
     type="file"
     #fileDropRef
@@ -12,14 +12,21 @@
     accept="image/*"
     (change)="selectFile($event)"
   />
-  <app-button text="Browse for file" for="fileDropRef"></app-button>
-  <div *ngIf="error" class="text-danger">{{ error | translate }}</div>
+  <app-button
+    text="shared.inputs.browse_for_file"
+    for="fileDropRef"
+  ></app-button>
+  <mat-error *ngIf="error" class="text-danger">{{
+    error | translate
+  }}</mat-error>
 </div>
 <div class="flex flex-col items-end mt-2" *ngIf="file">
   <div class="flex flex-row mb-1">
     <img [src]="preview" class="preview px-2" />
     <span class="flex justify-center items-center">
-      <mat-icon (click)="deleteFile()" [title]="'Delete' | translate"
+      <mat-icon
+        (click)="deleteFile()"
+        [title]="'shared.operations.delete' | translate"
         >delete</mat-icon
       >
     </span>

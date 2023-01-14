@@ -3,7 +3,7 @@ using SharedHome.Notifications.Constants;
 
 namespace SharedHome.Notifications.Entities
 {
-    public class AppNotification : IAuditable
+    public class AppNotification
     {
         public int Id { get; set; }
 
@@ -17,13 +17,7 @@ namespace SharedHome.Notifications.Entities
 
         public DateTime CreatedAt { get; set; }
 
-        public string CreatedBy { get; set; } = default!;
-
         public IEnumerable<AppNotificationField> Fields { get; set; } = new List<AppNotificationField>();
-
-        public DateTime ModifiedAt { get; set; }
-
-        public string ModifiedBy { get; set; } = default!;
 
         public AppNotification()
         {
@@ -37,6 +31,7 @@ namespace SharedHome.Notifications.Entities
             Fields = fields;
             Type = type is null ? NotificationType.Other : type;
             IsRead = false;
+            CreatedAt = DateTime.UtcNow;
         }
     }
 }

@@ -1,5 +1,5 @@
 <app-circle-button
-  tooltip="Create house group"
+  tooltip="house_groups.create_house_group"
   (onButtonClick)="openModal()"
 ></app-circle-button>
 
@@ -11,8 +11,8 @@
   <div class="row g-3" [formGroup]="addHouseGroupForm">
     <app-text-input
       formControlName="name"
-      label="Name"
-      placeholder="Name"
+      label="house_groups.name"
+      placeholder="house_groups.name"
     ></app-text-input>
   </div>
 </app-form-modal>

@@ -55,8 +55,8 @@ export class ShoppingListDetailsComponent
   @ViewChild('markAsDoneModal')
   markAsDoneModal!: ConfirmationModalComponent;
   markAsDoneModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Mark shopping list as done',
-    confirmationText: 'Are you sure to mark this shopping list as done?',
+    modalTitle: 'shopping_lists.mark_shopping_list_as_done',
+    confirmationText: 'shopping_lists.mark_shopping_list_as_done_text',
     onConfirm: () => {
       this.markAsDone(true);
     },
@@ -65,8 +65,8 @@ export class ShoppingListDetailsComponent
   @ViewChild('markAsUndoneModal')
   markAsUndoneModal!: ConfirmationModalComponent;
   markAsUndoneModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Mark shopping list as undone',
-    confirmationText: 'Are you sure to mark this shopping list as undone?',
+    modalTitle: 'shopping_lists.mark_shopping_list_as_undone',
+    confirmationText: 'shopping_lists.mark_shopping_list_as_undone_text',
     onConfirm: () => {
       this.markAsDone(false);
     },
@@ -75,7 +75,8 @@ export class ShoppingListDetailsComponent
   @ViewChild('deleteShoppingList')
   private deleteShoppingListModal!: ConfirmationModalComponent;
   deleteShoppingListModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Delete shopping list',
+    modalTitle: 'shopping_lists.delete_shopping_list',
+    confirmationText: 'shopping_lists.delete_shopping_list_text',
     onConfirm: () => {
       this.deleteShoppingList(this.shoppingListId);
     },
@@ -87,7 +88,7 @@ export class ShoppingListDetailsComponent
   @ViewChild('deleteSelectedProductsModal')
   deleteSelectedProductsModal!: ConfirmationModalComponent;
   deleteSelectedProductsModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Delete shopping list products',
+    modalTitle: 'shopping_lists.delete_shopping_list_products',
     confirmationText: '',
     onConfirm: () => {
       this.deleteSelectedProducts();
@@ -151,8 +152,6 @@ export class ShoppingListDetailsComponent
   }
 
   private openDeleteSelectedProductsModal(): void {
-    this.deleteSelectedProductsModalConfig.confirmationText = `Are you sure you want to delete?`;
-
     this.deleteSelectedProductsModal.open();
   }
 
@@ -200,19 +199,19 @@ export class ShoppingListDetailsComponent
       isDeleteVisible: false,
       additionalPopupMenuItems: [
         {
-          text: 'Purchase selected',
+          text: 'shopping_lists.purchase_selected',
           onClick: () => {
             this.purchaseProductsModal.openModal();
           },
         },
         {
-          text: 'Deselect all',
+          text: 'shopping_lists.deselect_all',
           onClick: () => {
             this.deselectProducts();
           },
         },
         {
-          text: 'Delete selected',
+          text: 'shopping_lists.delete_selected',
           onClick: () => {
             this.openDeleteSelectedProductsModal();
           },
@@ -225,21 +224,21 @@ export class ShoppingListDetailsComponent
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
     if (this.shoppingList?.isDone) {
       additionalPopupMenuItems.push({
-        text: 'Mark as undone',
+        text: 'shopping_lists.mark_as_done',
         onClick: () => {
           this.markAsUndoneModal.open();
         },
       });
     } else {
       additionalPopupMenuItems.push({
-        text: 'Add products',
+        text: 'shopping_lists.add_products',
         onClick: () => {
           this.addShoppingListProductForm.openModal();
         },
       });
 
       additionalPopupMenuItems.push({
-        text: 'Mark as done',
+        text: 'shopping_lists.mark_as_undone',
         onClick: () => {
           this.markAsDoneModal.open();
         },
@@ -307,7 +306,7 @@ export class ShoppingListDetailsComponent
 
     this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems?.unshift(
       {
-        text: 'Purchase selected',
+        text: 'shopping_lists.purchase_selected',
         onClick: () => {
           this.purchaseProductsModal.openModal();
         },
@@ -329,7 +328,7 @@ export class ShoppingListDetailsComponent
 
   private getPurchaseSelectedOptionIndex(): number {
     return this.multipleItemsSelectedPopupMenuConfig.additionalPopupMenuItems?.findIndex(
-      (x) => x.text == 'Purchase selected'
+      (x) => x.text == 'shopping_lists.purchase_selected'
     )!;
   }
 

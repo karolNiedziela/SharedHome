@@ -72,8 +72,8 @@ export class InvitatonsListComponent
     this.setColumnsBasedOnStatus();
 
     this.deleteInvitationConfirmationModalConfig = {
-      modalTitle: 'Delete invitation',
-      confirmationText: 'Are you sure to delete the invitation?',
+      modalTitle: 'invitations.delete_invitation',
+      confirmationText: 'invitations.delete_invitation_text',
       onConfirm: () => {},
     };
   }
@@ -119,7 +119,7 @@ export class InvitatonsListComponent
         case InvitationStatus.Pending:
           popupMenuConfig.additionalPopupMenuItems = [
             {
-              text: 'Accept',
+              text: 'invitations.accept',
               onClick: () => {
                 this.acceptInvitationModal.houseGroupId =
                   invitation.houseGroupId;
@@ -130,7 +130,7 @@ export class InvitatonsListComponent
               },
             },
             {
-              text: 'Reject',
+              text: 'invitations.reject',
               onClick: () => {
                 this.rejectInvitationModal.houseGroupId =
                   invitation.houseGroupId;
@@ -177,26 +177,26 @@ export class InvitatonsListComponent
   setColumnsBasedOnStatus(): void {
     this.invitationsTableColumns = [
       {
-        name: 'House Group Name',
+        name: 'invitations.house_group_name',
         dataKey: 'houseGroupName',
       },
     ];
 
     if (this.statusSelected == InvitationStatus.Sent) {
       this.invitationsTableColumns.push({
-        name: 'Sent To',
+        name: 'invitations.sent_to',
         dataKey: 'sentByFullName',
       });
     } else {
       this.invitationsTableColumns.push(
         {
-          name: 'Status',
+          name: 'invitations.status',
           dataKey: 'invitationStatus',
           enumType: InvitationStatus,
           format: CellPipeFormat.ENUM,
         },
         {
-          name: 'Sent By',
+          name: 'invitations.sent_by',
           dataKey: 'sentByFullName',
         }
       );

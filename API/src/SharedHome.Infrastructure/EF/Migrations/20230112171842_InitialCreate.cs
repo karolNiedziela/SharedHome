@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.EF.MySQLMigrations
+namespace SharedHome.Infrastructure.EF.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -28,10 +28,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     DateOfPayment = table.Column<DateOnly>(type: "date", nullable: false),
                     PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -48,10 +50,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     Name = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -70,10 +74,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     RequestedByPersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     RequestedToPersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -93,12 +99,7 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NotificationType = table.Column<int>(type: "int", nullable: true),
                     IsRead = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,10 +119,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -140,10 +143,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     HouseGroupId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     IsOwner = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -191,10 +196,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     IsDone = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     PersonId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -226,10 +233,12 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     NetContentType = table.Column<int>(type: "int", nullable: true),
                     IsBought = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "longtext", nullable: false)
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedByFullName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedBy = table.Column<string>(type: "longtext", nullable: false)
+                    ModifiedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ModifiedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    ModifiedByFullName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>

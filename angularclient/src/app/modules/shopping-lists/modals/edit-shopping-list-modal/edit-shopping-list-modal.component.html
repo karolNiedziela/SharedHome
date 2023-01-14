@@ -3,11 +3,11 @@
   [modalConfig]="modalConfig"
   [formGroup]="editShoppingListForm"
 >
-  <div class="row g-3" [formGroup]="editShoppingListForm">
+  <div [formGroup]="editShoppingListForm">
     <app-text-input
       formControlName="name"
-      label="Name"
-      placeholder="Name"
+      label="shopping_lists.name"
+      placeholder="shopping_lists.name"
     ></app-text-input>
   </div>
 </app-form-modal>

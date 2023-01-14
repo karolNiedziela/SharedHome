@@ -14,14 +14,14 @@
     *ngIf="control?.touched && !control?.valid"
   >
     <mat-error *ngIf="control?.errors?.['required']">
-      {{ "This field is required." | translate }}
+      {{ "shared.inputs.field_required" | translate }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('min')">
-      {{ "This field value must be higher or equal to" | translate }}
+      {{ "shared.inputs.min_value" | translate }}
       {{ control?.errors?.['min'].min }}.
     </mat-error>
     <mat-error *ngIf="control?.hasError('max')">
-      {{ "This field value must be lower or equal to" | translate }}
+      {{ "shared.inputs.max_value" | translate }}
       {{ control?.errors?.['max'].max }}.
     </mat-error>
   </mat-error>

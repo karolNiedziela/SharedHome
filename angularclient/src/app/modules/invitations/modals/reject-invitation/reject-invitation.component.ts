@@ -18,7 +18,7 @@ export class RejectInvitationComponent implements Modalable, OnInit {
   @ViewChild('modal')
   private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Reject invitation',
+    modalTitle: 'invitations.reject_invitation',
     onSave: () => {
       this.onSave();
     },

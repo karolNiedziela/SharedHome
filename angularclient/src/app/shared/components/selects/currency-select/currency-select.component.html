@@ -1,6 +1,6 @@
 <form>
   <mat-form-field class="w-full" appearance="fill">
-    <mat-label> {{ "Currency" | translate }}</mat-label>
+    <mat-label> {{ "shared.selects.currency" | translate }}</mat-label>
     <mat-select [required]="isRequired" [(value)]="selectedCurrency">
       <mat-option
         *ngFor="let currency of currencies"
@@ -16,7 +16,7 @@
     *ngIf="control?.touched && !control?.valid"
   >
     <mat-error *ngIf="control?.errors?.['required']">
-      {{ "This field is required." | translate }}
+      {{ "shared.inputs.field_required" | translate }}
     </mat-error>
   </mat-error>
 </form>

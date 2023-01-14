@@ -18,7 +18,7 @@ export class AcceptInvitationComponent implements Modalable, OnInit {
   @ViewChild('modal')
   private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Accept invitation',
+    modalTitle: 'invitations.accept_invitation',
     onSave: () => {
       this.onSave();
     },

@@ -12,6 +12,7 @@ using MySqlConnector;
 using Respawn;
 using Respawn.Graph;
 using SharedHome.Infrastructure.EF.Contexts;
+using SharedHome.Infrastructure.EF.Interceptors;
 using SharedHome.Infrastructure.EF.Options;
 using SharedHome.IntegrationTests.DataSeeds;
 using System.Data.Common;
@@ -82,9 +83,12 @@ namespace SharedHome.IntegrationTests
 
                 var mySQLSettings = settings.Get<MySQLOptions>(MySQLOptionsSetup.SectionName);
 
-                services.AddDbContext<WriteSharedHomeDbContext>(options =>
+                services.AddDbContext<WriteSharedHomeDbContext>((serviceProvider, options) =>
                 {
-                    options.UseMySql(mySQLSettings.ConnectionString, ServerVersion.AutoDetect(mySQLSettings.ConnectionString));
+                    var auditableInterceptor = serviceProvider.GetService<AuditableInterceptor>()!;
+
+                    options.UseMySql(mySQLSettings.ConnectionString, ServerVersion.AutoDetect(mySQLSettings.ConnectionString))
+                        .AddInterceptors(auditableInterceptor);
                 });
 
                 services.AddDbContext<ReadSharedHomeDbContext>(options =>
@@ -98,11 +102,6 @@ namespace SharedHome.IntegrationTests
 
         }
 
-        public async Task ResetDatabaseAsync()
-        {
-            await _respawner.ResetAsync(_dbConnection);
-        }
-
         public async Task InitializeAsync()
         {
             await _container.StartAsync();
@@ -112,9 +111,17 @@ namespace SharedHome.IntegrationTests
 
             await SeedDatabaseAsync();
 
-            await InitializeRespawnerAsync();  
+            await InitializeRespawnerAsync();
         }
 
+        public new async Task DisposeAsync() => await _container.StopAsync();
+
+
+        public async Task ResetDatabaseAsync()
+        {
+            await _respawner.ResetAsync(_dbConnection);
+        }
+    
         private async Task SeedDatabaseAsync()
         {
             var writeContext = Services.GetRequiredService<WriteSharedHomeDbContext>();
@@ -130,7 +137,5 @@ namespace SharedHome.IntegrationTests
                 TablesToIgnore = new[] { new Table("Persons") },
             });
         }
-
-        public new async Task DisposeAsync() => await _container.StopAsync();
     }
 }

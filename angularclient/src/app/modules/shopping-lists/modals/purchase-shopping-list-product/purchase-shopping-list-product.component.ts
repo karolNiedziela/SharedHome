@@ -17,7 +17,7 @@ export class PurchaseShoppingListProductComponent implements OnInit, Modalable {
   @ViewChild('purchaseShoppingListProductModal')
   private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Purchase shopping list product',
+    modalTitle: 'shopping_lists.purchase_shopping_list_product',
     onSave: () => this.onSave(),
   };
 

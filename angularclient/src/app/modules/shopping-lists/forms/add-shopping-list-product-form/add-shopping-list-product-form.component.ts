@@ -19,7 +19,6 @@ export class AddShoppingListProductFormComponent implements OnInit {
     this.addShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
-      netContent: new FormGroup({}),
     });
   }
 

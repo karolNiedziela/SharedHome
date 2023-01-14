@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SharedHome.Api.Constants;
 using SharedHome.Shared.Constants;
 using SharedHome.Shared.Exceptions;
+using SharedHome.Shared.Time;
 
 namespace SharedHome.Api.Controllers
 {
@@ -11,11 +12,13 @@ namespace SharedHome.Api.Controllers
     {
         private readonly IExceptionToErrorResponseMapper _exceptionMapper;
         private readonly ILogger<ErrorsController> _logger;
+        private readonly ITimeProvider _timeProvider;
 
-        public ErrorsController(IExceptionToErrorResponseMapper exceptionMapper, ILogger<ErrorsController> logger)
+        public ErrorsController(IExceptionToErrorResponseMapper exceptionMapper, ILogger<ErrorsController> logger, ITimeProvider timeProvider)
         {
             _exceptionMapper = exceptionMapper;
             _logger = logger;
+            _timeProvider = timeProvider;
         }
 
         [Route(ApiRoutes.Errors.Error)]
@@ -23,7 +26,10 @@ namespace SharedHome.Api.Controllers
         {
             var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
 
-            _logger.LogWarning("{exceptionSource} : {exceptionMessage}", exception!.Source, exception!.Message);
+            _logger.LogWarning("{@DateTimeUtc}: {exceptionSource} : {exceptionMessage}",
+                _timeProvider.CurrentDate(), 
+                exception!.Source, 
+                exception!.Message);
 
             var errorResponse = _exceptionMapper.Map(exception!);
 
@@ -42,7 +48,10 @@ namespace SharedHome.Api.Controllers
 
             var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
 
-            _logger.LogWarning("{exceptionSource} : {exceptionMessage}", exception!.Source, exception!.Message);
+            _logger.LogWarning("{@DateTimeUtc}: {exceptionSource} : {exceptionMessage}",
+                _timeProvider.CurrentDate(),
+                exception!.Source, 
+                exception!.Message);
 
             var errorResponse = _exceptionMapper.Map(exception!);
 

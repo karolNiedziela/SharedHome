@@ -3,30 +3,19 @@
   [modalConfig]="modalConfig"
   [formGroup]="editShoppingListProductForm"
 >
-  <div class="row g-3" [formGroup]="editShoppingListProductForm">
+  <div [formGroup]="editShoppingListProductForm">
     <app-text-input
       formControlName="productName"
-      label="Product Name"
-      placeholder="Product Name"
+      label="shopping_lists.product_name"
+      placeholder="shopping_lists.product_name"
     ></app-text-input>
     <app-number-input
       formControlName="quantity"
-      label="Quantity"
-      placeholder="Quantity"
+      label="shopping_lists.quantity"
+      placeholder="shopping_lists.quantity"
     ></app-number-input>
-    <div class="col-md-6">
-      <app-text-input
-        formControlName="netContent"
-        label="Net Content"
-        placeholder="Net Content"
-      ></app-text-input>
-    </div>
-    <div class="col md-6">
-      <app-single-enum-select
-        formControlName="netContentType"
-        label="Net Content Type"
-        [enumType]="netContentType"
-      ></app-single-enum-select>
-    </div>
+    <app-net-content-form
+      [parentFormGroup]="editShoppingListProductForm"
+    ></app-net-content-form>
   </div>
 </app-form-modal>

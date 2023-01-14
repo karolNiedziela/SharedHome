@@ -1,5 +1,4 @@
 import { PurchaseShoppingListProductFormComponent } from './forms/purchase-shopping-list-product-form/purchase-shopping-list-product-form.component';
-import { NetContentFormComponent } from './forms/net-content-form/net-content-form.component';
 import { AddManyShoppingListProductsFormComponent } from './forms/add-many-shopping-list-products-form/add-many-shopping-list-products-form.component';
 import { AddShoppingListProductFormComponent } from './forms/add-shopping-list-product-form/add-shopping-list-product-form.component';
 import { AddShoppingListComponent } from './modals/add-shopping-list/add-shopping-list.component';
@@ -17,6 +16,7 @@ import { EditShoppingListProductModalComponent } from './modals/edit-shopping-li
 import { PurchaseShoppingListProductComponent } from './modals/purchase-shopping-list-product/purchase-shopping-list-product.component';
 import { PurchaseShoppingListProductsModalComponent } from './modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
 import { ShoppingListProductComponent } from './shopping-list-product/shopping-list-product.component';
+import { NetContentFormComponent } from './forms/net-content-form/net-content-form.component';
 
 @NgModule({
   declarations: [

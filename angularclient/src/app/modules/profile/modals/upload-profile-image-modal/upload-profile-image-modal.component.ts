@@ -20,7 +20,7 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
   error?: string;
 
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Upload profile image',
+    modalTitle: 'profile.profile_image',
     onSave: () => this.onSave(),
     onReset: () => this.onReset(),
   };
@@ -34,7 +34,7 @@ export class UploadProfileImageModalComponent implements OnInit, Modalable {
   }
   onSave(): void {
     if (!this.profileImage) {
-      this.error = 'This field is required.';
+      this.error = 'shared.inputs.field_required';
       return;
     }
 

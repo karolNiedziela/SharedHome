@@ -16,7 +16,7 @@ export class AddHouseGroupComponent implements Modalable, OnInit {
 
   @ViewChild('modal') private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Add house group',
+    modalTitle: 'house_groups.create_house_group',
     onSave: () => this.onSave(),
   };
 

@@ -23,6 +23,7 @@ import { Money } from 'src/app/core/models/money';
 })
 export class MoneyFormComponent implements OnInit, OnDestroy {
   @Input() moneyFormGroup!: FormGroup;
+  @Input() priceLabel: string = 'Price';
 
   subscriptions: Subscription[] = [];
 

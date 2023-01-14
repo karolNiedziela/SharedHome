@@ -25,3 +25,8 @@ app-root {
   font-size: 10.5px;
   margin-top: 0.25rem;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  background-color: red !important;
+}

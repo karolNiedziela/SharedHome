@@ -5,7 +5,9 @@
       class="flex flex-row justify-around items-center gap-2"
       *ngIf="member.isOwner"
     >
-      <mat-icon *ngIf="member.isOwner" [title]="'Owner' | translate"
+      <mat-icon
+        *ngIf="member.isOwner"
+        [title]="'house_groups.owner' | translate"
         >star_outline</mat-icon
       >
     </div>

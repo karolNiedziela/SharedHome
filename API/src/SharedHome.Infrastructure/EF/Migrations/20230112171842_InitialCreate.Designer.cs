@@ -2,17 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedHome.Infrastructure.EF.Contexts;
 
 #nullable disable
 
-namespace SharedHome.Infrastructure.EF.MySQLMigrations
+namespace SharedHome.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    partial class WriteSharedHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230112171842_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,10 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CreatedByFullName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -43,11 +48,13 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ModifiedByFullName")
                         .HasColumnType("longtext");
 
                     b.Property<Guid>("PersonId")
@@ -66,15 +73,20 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CreatedByFullName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ModifiedByFullName")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -90,18 +102,23 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CreatedByFullName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<Guid>("HouseGroupId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ModifiedByFullName")
                         .HasColumnType("longtext");
 
                     b.Property<Guid>("RequestedByPersonId")
@@ -127,7 +144,10 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CreatedByFullName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -143,11 +163,13 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ModifiedByFullName")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -163,7 +185,10 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("CreatedByFullName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -172,11 +197,13 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
 
-                    b.Property<DateTime>("ModifiedAt")
+                    b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ModifiedByFullName")
                         .HasColumnType("longtext");
 
                     b.Property<Guid>("PersonId")
@@ -198,19 +225,8 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<bool>("IsRead")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ModifiedBy")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<Guid>("PersonId")
                         .HasColumnType("char(36)");
@@ -329,7 +345,10 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                             b1.Property<DateTime>("CreatedAt")
                                 .HasColumnType("datetime(6)");
 
-                            b1.Property<string>("CreatedBy")
+                            b1.Property<Guid?>("CreatedBy")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("CreatedByFullName")
                                 .IsRequired()
                                 .HasColumnType("longtext");
 
@@ -341,11 +360,13 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                                 .HasColumnType("tinyint(1)")
                                 .HasDefaultValue(false);
 
-                            b1.Property<DateTime>("ModifiedAt")
+                            b1.Property<DateTime?>("ModifiedAt")
                                 .HasColumnType("datetime(6)");
 
-                            b1.Property<string>("ModifiedBy")
-                                .IsRequired()
+                            b1.Property<Guid?>("ModifiedBy")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("ModifiedByFullName")
                                 .HasColumnType("longtext");
 
                             b1.Property<Guid>("PersonId")
@@ -406,7 +427,10 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                             b1.Property<DateTime>("CreatedAt")
                                 .HasColumnType("datetime(6)");
 
-                            b1.Property<string>("CreatedBy")
+                            b1.Property<Guid?>("CreatedBy")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("CreatedByFullName")
                                 .IsRequired()
                                 .HasColumnType("longtext");
 
@@ -415,11 +439,13 @@ namespace SharedHome.Infrastructure.EF.MySQLMigrations
                                 .HasColumnType("tinyint(1)")
                                 .HasDefaultValue(false);
 
-                            b1.Property<DateTime>("ModifiedAt")
+                            b1.Property<DateTime?>("ModifiedAt")
                                 .HasColumnType("datetime(6)");
 
-                            b1.Property<string>("ModifiedBy")
-                                .IsRequired()
+                            b1.Property<Guid?>("ModifiedBy")
+                                .HasColumnType("char(36)");
+
+                            b1.Property<string>("ModifiedByFullName")
                                 .HasColumnType("longtext");
 
                             b1.HasKey("Id", "ShoppingListId");

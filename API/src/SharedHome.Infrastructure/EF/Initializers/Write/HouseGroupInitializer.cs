@@ -19,18 +19,18 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             if (await _context.HouseGroups.AnyAsync()) return;
 
             var houseGroup = HouseGroup.Create(Guid.NewGuid(), "Default");
-            houseGroup.CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
-            houseGroup.ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+            houseGroup.CreatedByFullName = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
+            houseGroup.CreatedBy = InitializerConstants.CharlesUserId;
 
             var firstMember = new HouseGroupMember(houseGroup.Id, InitializerConstants.CharlesUserId, true)
             {
-                CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}",
-                ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}"
+                CreatedByFullName = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}",
+                CreatedBy = InitializerConstants.CharlesUserId
             };
             var secondMember = new HouseGroupMember(houseGroup.Id, InitializerConstants.FrancUserId, false)
             {
-                CreatedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}",
-                ModifiedBy = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}"
+                CreatedByFullName = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}",
+                CreatedBy = InitializerConstants.CharlesUserId
             };
 
             houseGroup.AddMember(firstMember);

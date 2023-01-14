@@ -54,23 +54,23 @@ export class BillsCalendarComponent implements OnInit, OnDestroy {
 
   billTableColumns: TableColumn[] = [
     {
-      name: 'Service Provider',
+      name: 'bills.service_provider_name',
       dataKey: 'serviceProvider',
     },
     {
-      name: 'Date of Payment',
+      name: 'bills.date_of_payment',
       dataKey: 'dateOfPayment',
       format: CellPipeFormat.DATE,
     },
     {
       dataKey: 'billType',
-      name: 'Type',
+      name: 'bills.type',
       format: CellPipeFormat.ENUM,
       enumType: BillType,
     },
     {
       dataKey: 'cost',
-      name: 'Cost',
+      name: 'bills.cost',
       format: CellPipeFormat.MONEY,
     },
   ];
@@ -107,7 +107,7 @@ export class BillsCalendarComponent implements OnInit, OnDestroy {
     );
 
     this.deleteBillModalConfig = {
-      modalTitle: 'Delete bill',
+      modalTitle: 'bills.delete_bill',
       onConfirm: () => {},
     };
   }
@@ -149,7 +149,7 @@ export class BillsCalendarComponent implements OnInit, OnDestroy {
       serviceProvider: bill.serviceProvider,
       dateOfPayment: bill.dateOfPayment,
       billType: bill.billType,
-      createdBy: bill.createdBy,
+      createdByFullName: bill.createdByFullName,
       cost:
         bill.cost == null
           ? null
@@ -197,7 +197,7 @@ export class BillsCalendarComponent implements OnInit, OnDestroy {
       if (billEvent.isPaid) {
         popupMenuConfig.additionalPopupMenuItems = [
           {
-            text: 'Cancel payment',
+            text: 'bills.cancel_payment',
             onClick: () => {
               this.cancelBillPaymentModal.billId = billEvent.id!.toString();
               this.cancelBillPaymentModal.openModal();
@@ -207,7 +207,7 @@ export class BillsCalendarComponent implements OnInit, OnDestroy {
       } else {
         popupMenuConfig.additionalPopupMenuItems = [
           {
-            text: 'Pay',
+            text: 'bills.pay',
             onClick: () => {
               this.payForBillModal.billId = billEvent.id?.toString()!;
               this.payForBillModal.openModal();

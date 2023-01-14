@@ -39,7 +39,7 @@ export class FormModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.modalConfig.closeButtonLabel) {
-      this.modalConfig.closeButtonLabel = 'Close';
+      this.modalConfig.closeButtonLabel = 'shared.operations.close';
     }
 
     if (!this.modalConfig.isCloseButtonVisible) {
@@ -47,7 +47,7 @@ export class FormModalComponent implements OnInit {
     }
 
     if (!this.modalConfig.saveButtonLabel) {
-      this.modalConfig.saveButtonLabel = 'Save';
+      this.modalConfig.saveButtonLabel = 'shared.operations.save';
     }
 
     if (!this.modalConfig.isSaveButtonVisible) {
@@ -73,7 +73,7 @@ export class FormModalComponent implements OnInit {
     });
 
     this.dialogRef = this.dialog.open(this.modalContent, {
-      panelClass: ['md:w-3/5', 'lg:w-2/6', 'w-full'],
+      panelClass: ['md:w-3/5', 'lg:w-1/2', 'w-full'],
       hasBackdrop: true,
       autoFocus: false,
     });

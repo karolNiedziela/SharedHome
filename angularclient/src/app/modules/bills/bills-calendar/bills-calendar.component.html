@@ -9,7 +9,7 @@
 
     <div class="flex flex-row gap-x-8 items-center cursor-pointer">
       <mat-icon
-        [title]="'Previous' | translate"
+        [title]="'bills.previous' | translate"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -24,10 +24,10 @@
         [(viewDate)]="viewDate"
         (viewDateChange)="onMonthChanged($event)"
       >
-        {{ "Current" | translate }}
+        {{ "bills.current" | translate }}
       </button>
       <mat-icon
-        [title]="'Next' | translate"
+        [title]="'bills.next' | translate"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"

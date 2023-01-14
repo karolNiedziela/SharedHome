@@ -36,13 +36,13 @@ export class HouseGroupMemberComponent implements OnInit {
       isEditVisible: false,
       additionalPopupMenuItems: [
         {
-          text: 'Remove member',
+          text: 'house_groups.remove_member',
           onClick: () => {
             this.removeMemberModal.open();
           },
         },
         {
-          text: 'Hand over the owner',
+          text: 'house_groups.hand_over_the_owner',
           onClick: () => {
             this.handOwnerRoleOverModal.openModal();
           },
@@ -51,8 +51,8 @@ export class HouseGroupMemberComponent implements OnInit {
     };
 
     this.removeMemberModalConfig = {
-      modalTitle: 'Remove member',
-      confirmationText: 'Are you sure to remove member: ',
+      modalTitle: 'house_groups.remove_member',
+      confirmationText: 'house_groups.remove_member_text',
       confirmationProperties: [this.member.fullName],
       onConfirm: () => {
         this.houseGroupService.removeMember(removeMember).subscribe(() => {});
