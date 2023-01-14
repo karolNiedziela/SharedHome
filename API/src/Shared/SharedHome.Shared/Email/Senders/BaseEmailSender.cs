@@ -8,6 +8,7 @@ using SendGrid.Helpers.Mail;
 using SharedHome.Shared.Constants;
 using SharedHome.Shared.Email.Options;
 using SharedHome.Shared.Extensions;
+using SharedHome.Shared.Time;
 using System.Reflection;
 
 namespace SharedHome.Shared.Email.Senders
@@ -17,6 +18,7 @@ namespace SharedHome.Shared.Email.Senders
         private readonly EmailOptions _emailSettings;
         private readonly GeneralOptions _generalOptions;
         private readonly SendGridOptions _sendGridOptions;
+        private readonly ITimeProvider _timeProvider;
         protected readonly ILogger _logger;
         protected readonly IStringLocalizer _localizer;
 
@@ -25,13 +27,15 @@ namespace SharedHome.Shared.Email.Senders
             ILogger logger,
             IStringLocalizerFactory localizerFactory,
             IOptions<GeneralOptions> generalOptions,
-            IOptions<SendGridOptions> sendGridOptions)
+            IOptions<SendGridOptions> sendGridOptions,
+            ITimeProvider timeProvider)
         {
             _emailSettings = emailOptions.Value;
             _logger = logger;
             _localizer = localizerFactory.Create(Resources.EmailTemplates, Assembly.GetEntryAssembly()!.GetName().Name!);
             _generalOptions = generalOptions.Value;
             _sendGridOptions = sendGridOptions.Value;
+            _timeProvider = timeProvider;
         }
 
         public async Task SendAsync(EmailMessage emailMessage)
@@ -59,11 +63,17 @@ namespace SharedHome.Shared.Email.Senders
                 var response = await client.SendEmailAsync(singleEmail);
                 if (response.IsSuccessStatusCode)
                 {
-                    _logger.LogInformation("Email with {subject} sent to {emailAddress}", emailMessage.Subject, string.Join(", ", recipient.Address));
+                    _logger.LogInformation("{DateTimeUtc}: Email with {subject} sent to {emailAddress}",
+                        _timeProvider.CurrentDate(),
+                        emailMessage.Subject, 
+                        string.Join(", ", recipient.Address));
                 }
                 else
                 {
-                    _logger.LogWarning("Failed Email with {subject} sent to {emailAddress}", emailMessage.Subject, string.Join(", ", recipient.Address));
+                    _logger.LogWarning("{DateTimeUtc}: Failed Email with {subject} sent to {emailAddress}",
+                        _timeProvider.CurrentDate(),
+                        emailMessage.Subject, 
+                        string.Join(", ", recipient.Address));
                 }
             }
 
@@ -79,12 +89,17 @@ namespace SharedHome.Shared.Email.Senders
                 await smtp.ConnectAsync(_emailSettings.Host, _emailSettings.Port, true);
                 await smtp.AuthenticateAsync(_emailSettings.Address, _emailSettings.Password);
                 await smtp.SendAsync(mimeMessage);
-                _logger.LogInformation("Email with {subject} sent to {emailAddress}", emailMessage.Subject, string.Join(", ", emailMessage.Recipients));
+                _logger.LogInformation("{DateTimeUtc}: Email with {subject} sent to {emailAddress}",
+                    _timeProvider.CurrentDate(),
+                    emailMessage.Subject, 
+                    string.Join(", ", emailMessage.Recipients));
             }
             catch (Exception ex)
             {
                 // TODO: Throw proper exception
-                _logger.LogWarning("Email not sent to {emailAddress}.", string.Join(", ", emailMessage.Recipients));
+                _logger.LogWarning("{DateTimeUtc}: Email not sent to {emailAddress}.", 
+                    _timeProvider.CurrentDate(),
+                    string.Join(", ", emailMessage.Recipients));
                 throw new Exception(ex.Message);
             }
             finally

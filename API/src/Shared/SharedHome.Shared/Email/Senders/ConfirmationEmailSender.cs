@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SharedHome.Shared.Email.Constants;
 using SharedHome.Shared.Email.Options;
+using SharedHome.Shared.Time;
 using static SharedHome.Shared.Email.Constants.EmailConstants;
 
 namespace SharedHome.Shared.Email.Senders
@@ -16,8 +17,9 @@ namespace SharedHome.Shared.Email.Senders
             ILogger<ForgotPasswordEmailSender> logger,
             IStringLocalizerFactory localizerFactory,
             IOptions<GeneralOptions> generalOptions,
-            IOptions<SendGridOptions> sendGridOptions)
-            : base(emailOptions, logger, localizerFactory, generalOptions, sendGridOptions)
+            IOptions<SendGridOptions> sendGridOptions,
+            ITimeProvider timeProvider)
+            : base(emailOptions, logger, localizerFactory, generalOptions, sendGridOptions, timeProvider)
         {
         }
 
