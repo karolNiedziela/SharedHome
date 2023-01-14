@@ -39,7 +39,7 @@ export class FormModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.modalConfig.closeButtonLabel) {
-      this.modalConfig.closeButtonLabel = 'Close';
+      this.modalConfig.closeButtonLabel = 'shared.operations.close';
     }
 
     if (!this.modalConfig.isCloseButtonVisible) {
@@ -47,7 +47,7 @@ export class FormModalComponent implements OnInit {
     }
 
     if (!this.modalConfig.saveButtonLabel) {
-      this.modalConfig.saveButtonLabel = 'Save';
+      this.modalConfig.saveButtonLabel = 'shared.operations.save';
     }
 
     if (!this.modalConfig.isSaveButtonVisible) {

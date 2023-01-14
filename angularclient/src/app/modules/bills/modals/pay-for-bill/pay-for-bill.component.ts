@@ -24,7 +24,7 @@ export class PayForBillComponent implements Modalable, OnInit {
 
   @ViewChild('modal') private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Pay for bill',
+    modalTitle: 'bills.pay_for_bill',
     onSave: () => this.onSave(),
   };
 

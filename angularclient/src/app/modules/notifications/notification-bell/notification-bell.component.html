@@ -6,6 +6,7 @@
     matBadgeOverlap="true"
     matBadgeSize="small"
     (menuClosed)="onMenuClose($event)"
+    matTooltip="notifications.module | translate"
     >notifications</mat-icon
   >
   <ng-template #noNotifications>
@@ -20,10 +21,10 @@
   <span class="notifications" *ngIf="notifications$ | async as notifications">
     <mat-list>
       <div class="flex flex-row justify-between items-center px-2 pb-2">
-        <div class="text-xl">{{ "notifications" | translate }}</div>
+        <div class="text-xl">{{ "notifications.module" | translate }}</div>
         <div class="text-lg">
           <a [routerLink]="['notifications']">
-            {{ "view all" | translate }}
+            {{ "notifications.view_all" | translate }}
           </a>
         </div>
       </div>

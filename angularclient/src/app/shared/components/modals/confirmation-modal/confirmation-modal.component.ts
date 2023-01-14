@@ -24,20 +24,21 @@ export class ConfirmationModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.confirmationModalConfig.modalTitle) {
-      this.confirmationModalConfig.modalTitle = 'Delete confirmation';
+      this.confirmationModalConfig.modalTitle =
+        'shared.operations.delete_confirmation';
     }
 
     if (!this.confirmationModalConfig.confirmationText) {
       this.confirmationModalConfig.confirmationText =
-        'Are you sure to delete this item?';
+        'shared.operations.delete_confirmation_text';
     }
 
     if (!this.confirmationModalConfig.yesButtonText) {
-      this.confirmationModalConfig.yesButtonText = 'Confirm';
+      this.confirmationModalConfig.yesButtonText = 'shared.operations.confirm';
     }
 
     if (!this.confirmationModalConfig.noButtonText) {
-      this.confirmationModalConfig.noButtonText = 'No';
+      this.confirmationModalConfig.noButtonText = 'shared.operations.cancel';
     }
   }
 

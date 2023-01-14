@@ -2,21 +2,22 @@
   <div class="row g-3" [formGroup]="editBillForm">
     <app-text-input
       formControlName="serviceProviderName"
-      label="Service Provider"
-      placeholder="Service Provider"
+      label="bills.service_provider_name"
+      placeholder="bills.service_provider_name"
     ></app-text-input>
     <app-single-enum-select
       formControlName="billType"
-      label="Type"
+      label="bills.type"
       [enumType]="billTypeType"
       [firstValueSelected]="true"
     ></app-single-enum-select>
     <app-money-form
       *ngIf="bill?.cost"
+      priceLabel="bills.cost"
       [moneyFormGroup]="editBillForm.get('money') | formGroup"
     ></app-money-form>
     <app-date-input
-      label="Date of Payment"
+      label="bills.date_of_payment"
       formControlName="dateOfPayment"
     ></app-date-input>
   </div>

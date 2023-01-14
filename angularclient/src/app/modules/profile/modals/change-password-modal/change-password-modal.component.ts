@@ -18,7 +18,7 @@ export class ChangePasswordModalComponent implements OnInit, Modalable {
   @ViewChild('passwordForm') passwordForm!: PasswordFormComponent;
 
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Change password',
+    modalTitle: 'profile.change_password',
     onSave: () => this.onSave(),
   };
 

@@ -2,6 +2,7 @@
   <div class="row g-3" [formGroup]="payForBillForm">
     <app-money-form
       #moneyForm
+      priceLabel="bills.cost"
       [moneyFormGroup]="payForBillForm.get('money') | formGroup"
     ></app-money-form>
   </div>

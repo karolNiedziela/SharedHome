@@ -9,8 +9,7 @@ export function passwordStrengthValidator(
   return passwordRegexp.test(control.value)
     ? null
     : {
-        invalidFormat:
-          'Password must contain at least 6 characters and one lowercase.',
+        invalidFormat: 'shared.inputs.password_invalid_format',
       };
 }
 

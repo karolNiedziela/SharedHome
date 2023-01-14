@@ -59,16 +59,16 @@ export class HousegroupMembersComponent implements OnInit, OnDestroy {
     );
 
     this.leaveHouseGroupModalConfig = {
-      modalTitle: 'Leave house group',
-      confirmationText: 'Are you sure to leave the house group?',
+      modalTitle: 'house_groups.leave_house_group',
+      confirmationText: 'house_groups.leave_house_group_text',
       onConfirm: () => {
         this.houseGroupService.leaveHouseGroup(this.houseGroupId).subscribe();
       },
     };
 
     this.deleteHouseGroupModalConfig = {
-      modalTitle: 'Delete house group',
-      confirmationText: 'Are you sure to delete the house group?',
+      modalTitle: 'house_groups.delete_house_group',
+      confirmationText: 'house_groups.delete_house_group_text',
       onConfirm: () => {
         this.houseGroupService.delete(this.houseGroupId).subscribe();
       },

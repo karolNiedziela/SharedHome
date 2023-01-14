@@ -19,7 +19,7 @@ export class HandOwnerRoleOverComponent implements Modalable, OnInit {
   @ViewChild('modal')
   private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Change house group owner',
+    modalTitle: 'house_groups.change_house_group_owner',
     onSave: () => this.onSave(),
   };
 

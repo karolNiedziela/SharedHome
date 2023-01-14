@@ -17,7 +17,7 @@ export class InviteToHouseGroupComponent implements Modalable, OnInit {
   @ViewChild('modal')
   private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Invite to house group',
+    modalTitle: 'house_groups.invite_to_house_group',
     onSave: () => this.onSave(),
   };
 

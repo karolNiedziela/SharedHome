@@ -1,9 +1,7 @@
-import { TranslateService } from '@ngx-translate/core';
+import { ApiResponse } from './../../../core/models/api-response';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
 import { Register } from '../models/register';
 import { PasswordFormComponent } from 'src/app/shared/forms/password-form/password-form.component';
@@ -19,14 +17,10 @@ export class RegisterComponent implements OnInit {
   errorMessages: string[] = [];
   disabled: boolean = false;
   loadingSaveButton: boolean = false;
+  successRegistrationInformation: string = '';
 
   registerForm!: FormGroup;
-  constructor(
-    private authenticationService: AuthenticationService,
-    private toastrService: ToastrService,
-    private router: Router,
-    private translateService: TranslateService
-  ) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -50,14 +44,14 @@ export class RegisterComponent implements OnInit {
     const email = this.registerForm.get('email')?.value;
     const firstName = this.registerForm.get('firstName')?.value;
     const lastName = this.registerForm.get('lastName')?.value;
-    const password = this.registerForm.get('password')?.value;
+    const passwordForm = this.registerForm.get('password')?.value;
 
     const register: Register = {
       email: email,
       firstName: firstName,
       lastName: lastName,
-      password: password,
-      confirmPassword: password,
+      password: passwordForm.password,
+      confirmPassword: passwordForm.password,
     };
 
     this.authenticationService
@@ -69,13 +63,13 @@ export class RegisterComponent implements OnInit {
         })
       )
       .subscribe({
-        next: (response: any) => {
-          this.registerForm.reset();
+        next: (response: ApiResponse<string>) => {
+          this.registerForm.reset(this.registerForm.getRawValue(), {
+            emitEvent: false,
+          });
+
           this.errorMessages = [];
-          this.router.navigate(['/identity/login']);
-          this.toastrService.success(
-            this.translateService.instant(response.data)
-          );
+          this.successRegistrationInformation = response.data;
         },
         error: (error: string[]) => {
           this.errorMessages = error;

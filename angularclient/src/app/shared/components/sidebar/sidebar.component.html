@@ -23,7 +23,9 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <mat-icon class="pl-4">description</mat-icon>
-        <span class="text-center flex-grow">{{ "bills" | translate }}</span>
+        <span class="text-center flex-grow">{{
+          "bills.module" | translate
+        }}</span>
       </a>
     </li>
     <mat-divider></mat-divider>
@@ -36,7 +38,7 @@
       >
         <mat-icon class="pl-4">supervisor_account</mat-icon>
         <span class="text-center flex-grow">{{
-          "houseGroup" | translate
+          "house_groups.module" | translate
         }}</span>
       </a>
     </li>
@@ -49,7 +51,9 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <mat-icon class="pl-4">bar_chart</mat-icon>
-        <span class="text-center flex-grow">{{ "expenses" | translate }}</span>
+        <span class="text-center flex-grow">{{
+          "expenses.module" | translate
+        }}</span>
       </a>
     </li>
     <mat-divider></mat-divider>
@@ -62,7 +66,7 @@
       >
         <mat-icon class="pl-4">email</mat-icon>
         <span class="text-center flex-grow">{{
-          "invitations" | translate
+          "invitations.module" | translate
         }}</span>
       </a>
     </li>

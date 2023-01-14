@@ -18,7 +18,7 @@ export class AddBillComponent implements Modalable, OnInit {
 
   @ViewChild('modal') private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Add bill',
+    modalTitle: 'bills.add_bill',
     onSave: () => this.onSave(),
   };
 

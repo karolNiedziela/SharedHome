@@ -2,25 +2,27 @@
   <mat-label>{{ label | translate }}</mat-label>
   <input
     matInput
-    [placeholder]="'placeholder' | translate"
+    [placeholder]="placeholder | translate"
     [formControl]="control! | formControl"
     [required]="isRequired"
   />
   <mat-error *ngIf="control?.touched && !control?.valid">
     <mat-error *ngIf="control?.errors?.['required']">
-      {{ "This field is required." | translate }}
+      {{ "shared.inputs.field_required" | translate }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('minlength')">
-      {{ "This field must contain at least" | translate }}
-      {{ control?.errors?.['minlength'].requiredLength }}
+      {{ "shared.inputs.min_length" | translate }}
+      {{ control?.errors?.['minlength'].requiredLength }} &nbsp;
+      {{ "shared.inputs.characters" }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('maxlength')">
-      {{ "This field can contain maximum" | translate }}
-      {{ control?.errors?.['maxlength'].requiredLength }}
+      {{ "shared.inputs.max_length" | translate }}
+      {{ control?.errors?.['maxlength'].requiredLength }} &nbsp;
+      {{ "shared.inputs.characters" }}
     </mat-error>
 
     <mat-error *ngIf="control?.hasError('email')">
-      {{ "Please provide a valid email address." | translate }}
+      {{ "shared.inputs.invalid_email" | translate }}
     </mat-error>
     <mat-error *ngIf="control?.hasError('invalidFormat')">
       {{ control?.errors?.['invalidFormat'] | translate }}

@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatDatepickerModule,
     MatNativeDateModule,
     MatBadgeModule,
+    MatTooltipModule,
   ],
   exports: [
     MatButtonModule,
@@ -59,6 +61,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatDatepickerModule,
     MatNativeDateModule,
     MatBadgeModule,
+    MatTooltipModule,
   ],
   providers: [
     {

@@ -1,3 +1,20 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
 .full-width-field {
   width: 100%;
+}
+
+@mixin lightTheme($theme) {
+  input:-webkit-autofill {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: black !important;
+  }
+}
+
+@mixin darkTheme($theme) {
+  input:-webkit-autofill {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: white !important;
+  }
 }

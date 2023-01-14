@@ -19,7 +19,7 @@ export class EditBillComponent implements OnInit, Modalable {
 
   @ViewChild('modal') private modal!: FormModalComponent;
   public modalConfig: FormModalConfig = {
-    modalTitle: 'Edit bill',
+    modalTitle: 'bills.edit_bill',
     onSave: () => this.onSave(),
   };
 
@@ -34,7 +34,7 @@ export class EditBillComponent implements OnInit, Modalable {
       billType: new FormControl(null, [Validators.required]),
       serviceProviderName: new FormControl('', [Validators.required]),
       money: new FormGroup({}),
-      dateOfPayment: new FormControl(),
+      dateOfPayment: new FormControl('', Validators.required),
     });
   }
 

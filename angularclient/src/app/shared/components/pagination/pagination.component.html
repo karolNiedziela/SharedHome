@@ -4,7 +4,7 @@
 >
   <app-button
     aria-label="Go To Previos Page"
-    text="previous_page"
+    text="shared.operations.previous_page"
     [hidden]="totalPages === 1"
     [disabled]="currentPage === 1"
     (click)="onPrevious()"
@@ -24,7 +24,7 @@
   </span>
   <app-button
     aria-label="Go To Next Page"
-    text="next_page"
+    text="shared.operations.next_page"
     [hidden]="totalPages === 1"
     [disabled]="currentPage === totalPages"
     (click)="onNext()"

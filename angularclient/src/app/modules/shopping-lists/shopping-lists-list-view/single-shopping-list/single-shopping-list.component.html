@@ -31,13 +31,16 @@
       <div>{{ "no products" | translate }}</div>
     </ng-template>
     <div
+      class="flex flex-row justify-end"
       [title]="shoppingList.createdByFullName"
-      *ngIf="screenSizeHelper.isMobile(); else createdByLetters"
+      *ngIf="screenSizeHelper.isMobile(); else createdByFullName"
     >
       {{ shoppingList.createdByFullName | firstLettersToTitleCase }}
     </div>
-    <ng-template #createdByLetters>
-      <div class="justify-self-end">{{ shoppingList.createdByFullName }}</div>
+    <ng-template #createdByFullName>
+      <div class="flex flex-row justify-end flex-wrap text-end">
+        {{ shoppingList.createdByFullName }}
+      </div>
     </ng-template>
   </div>
 </div>

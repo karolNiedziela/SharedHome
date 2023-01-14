@@ -3,11 +3,11 @@
   *ngIf="userInformation$ | async as userInformation; else loading"
 >
   <div class="w-full border-b-2 mb-2 text-lg">
-    {{ "General information" | translate }}
+    {{ "profile.general_information" | translate }}
   </div>
 
   <div class="flex justify-between mb-3">
-    <div>{{ "Personal data" | translate }}:</div>
+    <div>{{ "profile.personal_data" | translate }}:</div>
     <div>{{ userInformation.firstName }} {{ userInformation.lastName }}</div>
   </div>
 
@@ -19,16 +19,16 @@
   </div>
 
   <div class="w-full border-b-2 mb-2 text-lg">
-    {{ "Account" | translate }}
+    {{ "profile.account" | translate }}
   </div>
   <div class="flex flex-row justify-between items-center mb-3">
-    <div>{{ "Password" | translate }}:</div>
+    <div>{{ "profile.password" | translate }}:</div>
 
     <app-change-password-modal> </app-change-password-modal>
   </div>
 
   <div class="flex flex-row justify-between items-center mb-3">
-    <div>{{ "Profile image" | translate }}:</div>
+    <div>{{ "profile.profile_image" | translate }}:</div>
     <app-upload-profile-image-modal></app-upload-profile-image-modal>
   </div>
 </div>
