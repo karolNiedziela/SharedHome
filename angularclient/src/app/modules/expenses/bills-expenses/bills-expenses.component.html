@@ -1,0 +1,29 @@
+<div class="flex flex-col">
+  <app-year-select
+    class="w-1/5"
+    (changeYearEvent)="setDataOnYearChange($event)"
+  ></app-year-select>
+  <div
+    class="flex-grow mt-3"
+    *ngIf="billMonthlyCost$ | async as billResponse; else loadingBills"
+  >
+    <div class="chart-container" *ngIf="anyCosts; else noBills">
+      <canvas
+        baseChart
+        [data]="barChartData"
+        [options]="getBarChartOptions(billResponse.data)"
+        [plugins]="barChartPlugins"
+        [type]="barChartService.barChartType"
+      >
+      </canvas>
+    </div>
+    <ng-template #noBills
+      ><div class="text-center">
+        {{ "No bills paid" | translate }} [{{ chosenYear }}]
+      </div></ng-template
+    >
+  </div>
+  <ng-template #loadingBills>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+</div>

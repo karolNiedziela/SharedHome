@@ -1,12 +1,12 @@
 <form>
   <mat-form-field class="w-full" appearance="fill">
     <mat-label> {{ "shared.selects.currency" | translate }}</mat-label>
-    <mat-select [required]="isRequired" [(value)]="selectedCurrency">
-      <mat-option
-        *ngFor="let currency of currencies"
-        [value]="currency"
-        (selectionChange)="selectCurrency(currency)"
-      >
+    <mat-select
+      [required]="isRequired"
+      [(value)]="selectedCurrency"
+      (selectionChange)="selectCurrency($event.value)"
+    >
+      <mat-option *ngFor="let currency of currencies" [value]="currency">
         {{ currency }}
       </mat-option>
     </mat-select>

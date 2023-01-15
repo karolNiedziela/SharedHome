@@ -85,7 +85,8 @@
     "have_an_account": "Masz konto"
   },
   "expenses": {
-    "module": "Wydatki"
+    "module": "Wydatki",
+    "amount": "Amount"
   },
   "invitations": {
     "module": "Zaproszenia",
@@ -148,7 +149,8 @@
     },
     "selects": {
       "currency": "Waluta",
-      "language": "Język"
+      "language": "Język",
+      "year": "Rok"
     },
     "spinners": {
       "loading": "Ładowanie..."
@@ -170,7 +172,6 @@
   "Accepted": "Zaakceptowane",
   "Rejected": "Odrzucone",
   "Sent": "Wysłane",
-  "amount": "Amount",
   "All": "Wszystkie",
   "Bill": "Rachunki",
   "HouseGroup": "Grupa domowa",

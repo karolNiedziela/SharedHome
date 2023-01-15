@@ -85,7 +85,8 @@
     "have_an_account": "Have an account"
   },
   "expenses": {
-    "module": "Expenses"
+    "module": "Expenses",
+    "amount": "Amount"
   },
   "invitations": {
     "module": "Invitations",
@@ -95,7 +96,7 @@
     "reject": "Reject",
     "house_group_name": "House Group Name",
     "sent_to": "Sent To",
-    "status": "status",
+    "status": "Status",
     "sent_by": "Sent By",
     "accept_invitation": "Accept invitation",
     "reject_invitation": "Reject invitation"
@@ -148,7 +149,8 @@
     },
     "selects": {
       "currency": "Currency",
-      "language": "Language"
+      "language": "Language",
+      "year": "Year"
     },
     "spinners": {
       "loading": "Loading..."
@@ -170,7 +172,6 @@
   "Accepted": "Accepted",
   "Rejected": "Rejected",
   "Sent": "Sent",
-  "amount": "Amount",
   "All": "All",
   "Bill": "Bills",
   "HouseGroup": "House group",

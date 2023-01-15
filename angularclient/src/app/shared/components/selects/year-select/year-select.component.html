@@ -1,0 +1,14 @@
+<mat-form-field class="w-full" appearance="fill">
+  <mat-label> {{ "shared.selects.year" | translate }}</mat-label>
+  <mat-select
+    [(value)]="chosenYear"
+    (selectionChange)="onYearChange($event.value)"
+  >
+    <mat-select-trigger class="flex flex-row gap-x-2 items-center">
+      {{ chosenYear }}
+    </mat-select-trigger>
+    <mat-option *ngFor="let year of years" [value]="year">
+      {{ year }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
