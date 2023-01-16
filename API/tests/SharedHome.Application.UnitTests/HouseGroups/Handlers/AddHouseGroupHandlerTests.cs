@@ -24,7 +24,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
-        private readonly IRequestHandler<AddHouseGroupCommand, Response<HouseGroupDto>> _commandHandler;
+        private readonly IRequestHandler<AddHouseGroupCommand, ApiResponse<HouseGroupDto>> _commandHandler;
         
         public AddHouseGroupHandlerTests()
         {

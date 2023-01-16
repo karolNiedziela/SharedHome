@@ -2,32 +2,36 @@
   class="flex flex-row items-center justify-center content-end w-full"
   aria-label="pagination"
 >
-  <app-button
-    aria-label="Go To Previos Page"
-    text="shared.operations.previous_page"
-    [hidden]="totalPages === 1"
-    [disabled]="currentPage === 1"
-    (click)="onPrevious()"
-  >
-  </app-button>
-  <span class="mx-2" *ngFor="let page of pages">
-    <a
-      class="text-decoration-none fw-bold"
-      [attr.aria-current]="page === currentPage ? 'page' : null"
-      [class.current]="page === currentPage"
-      tabindex="0"
-      (click)="onGoTo(page)"
-      (keyup.enter)="onGoTo(page)"
+  <span *ngIf="totalPages !== 1">
+    <app-button
+      aria-label="Go To Previos Page"
+      text="shared.operations.previous_page"
+      [disabled]="currentPage === 1"
+      (click)="onPrevious()"
     >
-      {{ page }}</a
-    >
+    </app-button>
   </span>
-  <app-button
-    aria-label="Go To Next Page"
-    text="shared.operations.next_page"
-    [hidden]="totalPages === 1"
-    [disabled]="currentPage === totalPages"
-    (click)="onNext()"
-  >
-  </app-button>
+  <span *ngIf="totalPages !== 1">
+    <span class="mx-2" *ngFor="let page of pages">
+      <a
+        class="text-decoration-none fw-bold"
+        [attr.aria-current]="page === currentPage ? 'page' : null"
+        [class.current]="page === currentPage"
+        tabindex="0"
+        (click)="onGoTo(page)"
+        (keyup.enter)="onGoTo(page)"
+      >
+        {{ page }}</a
+      >
+    </span>
+  </span>
+  <span *ngIf="totalPages !== 1">
+    <app-button
+      aria-label="Go To Next Page"
+      text="shared.operations.next_page"
+      [disabled]="currentPage === totalPages"
+      (click)="onNext()"
+    >
+    </app-button>
+  </span>
 </nav>

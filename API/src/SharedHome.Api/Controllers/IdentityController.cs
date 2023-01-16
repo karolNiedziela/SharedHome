@@ -8,6 +8,7 @@ using SharedHome.Application.Authentication.Queries.Login;
 using SharedHome.Application.Identity.Commands.ChangePassword;
 using SharedHome.Application.Identity.Commands.ForgotPassword;
 using SharedHome.Application.Identity.Commands.Register;
+using SharedHome.Application.Identity.Commands.ResendConfirmationEmail;
 using SharedHome.Application.Identity.Commands.ResetPassword;
 using SharedHome.Application.Identity.Dto;
 using SharedHome.Application.Identity.Queries.GetProfileImage;
@@ -65,6 +66,15 @@ namespace SharedHome.Api.Controllers
             await Mediator.Send(command);
 
             return Ok();
+        }
+
+        [HttpPost(ApiRoutes.Identity.ResendConfirmationEmail)]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResendConfirmationEmail([FromBody] ResendConfirmationEmailCommand command)
+        {
+            var response = await Mediator.Send(command);
+
+            return Ok(response);
         }
 
         /// <summary>

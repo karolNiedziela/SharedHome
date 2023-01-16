@@ -29,7 +29,7 @@ namespace SharedHome.IntegrationTests.Controllers.ShoppingListController
             var response = await Client.GetAsync(endpointAddress);
             response.StatusCode.ShouldBe(HttpStatusCode.OK);
 
-            var shoppingListDto = await response.Content.ReadFromJsonAsync<Response<ShoppingListDto>>();
+            var shoppingListDto = await response.Content.ReadFromJsonAsync<ApiResponse<ShoppingListDto>>();
             shoppingListDto?.Data.Name.ShouldBe("ShoppingList");
         }
     }

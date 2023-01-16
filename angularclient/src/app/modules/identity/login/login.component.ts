@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize, first } from 'rxjs';
 import { SignalrService } from 'src/app/core/services/signalr.service';
 import { AuthenticationService } from 'src/app/modules/identity/services/authentication.service';
@@ -15,7 +11,7 @@ import { passwordStrengthValidator } from 'src/app/shared/validators/password.va
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  loginForm!: UntypedFormGroup;
+  loginForm!: FormGroup;
   errorMessages: string[] = [];
   disabled: boolean = false;
   loadingSaveButton: boolean = false;
@@ -26,12 +22,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loginForm = new UntypedFormGroup({
-      email: new UntypedFormControl('', [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: new UntypedFormControl('', [
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [
         Validators.required,
         passwordStrengthValidator,
       ]),

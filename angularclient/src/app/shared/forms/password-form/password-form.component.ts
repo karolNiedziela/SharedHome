@@ -30,13 +30,16 @@ import {
   ],
 })
 export class PasswordFormComponent implements OnInit {
-  @Input() passwordLabel: string = 'Password';
-  @Input() confirmPasswordLabel: string = 'Confirm password';
+  @Input() passwordLabel: string = 'identity.password';
+  @Input() confirmPasswordLabel: string = 'identity.confirm_password';
 
   passwordForm!: FormGroup;
   subscriptions: Subscription[] = [];
   passwordTextField: boolean = false;
   confirmPasswordTextField: boolean = false;
+
+  hidePassword: boolean = true;
+  hideConfirmPassword: boolean = true;
 
   ngOnInit(): void {
     this.passwordForm = new FormGroup(

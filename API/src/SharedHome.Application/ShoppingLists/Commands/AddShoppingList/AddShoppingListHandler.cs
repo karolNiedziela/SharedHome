@@ -14,7 +14,7 @@ using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 {
-    public class AddShoppingListHandler : IRequestHandler<AddShoppingListCommand, Response<ShoppingListDto>>
+    public class AddShoppingListHandler : IRequestHandler<AddShoppingListCommand, ApiResponse<ShoppingListDto>>
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
@@ -27,7 +27,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
             _eventDispatcher = eventDispatcher;
         }
 
-        public async Task<Response<ShoppingListDto>> Handle(AddShoppingListCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<ShoppingListDto>> Handle(AddShoppingListCommand request, CancellationToken cancellationToken)
         {
             var products = new List<ShoppingListProduct>();
 
@@ -56,7 +56,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
             await _shoppingListRepository.AddAsync(shoppingList);
             await _eventDispatcher.DispatchAsync(new ShoppingListCreated(shoppingList.Id, shoppingList.Name, new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
 
-            return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList));
+            return new ApiResponse<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList));
         }
     }
 }

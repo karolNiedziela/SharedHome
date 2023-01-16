@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Invitations.Queries
 {
-    public class GetInvitationByHouseGroupId : AuthorizeRequest, IRequest<Response<InvitationDto>>
+    public class GetInvitationByHouseGroupId : AuthorizeRequest, IRequest<ApiResponse<InvitationDto>>
     {
         public Guid HouseGroupId { get; set; }
     }

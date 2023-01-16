@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Bills.Commands.AddBill
 {
-    public class AddBillCommand : AuthorizeRequest, IRequest<Response<BillDto>>
+    public class AddBillCommand : AuthorizeRequest, IRequest<ApiResponse<BillDto>>
     {
         public int BillType { get; set; }
 

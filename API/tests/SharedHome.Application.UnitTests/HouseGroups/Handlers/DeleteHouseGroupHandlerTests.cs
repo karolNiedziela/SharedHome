@@ -18,7 +18,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class DeleteHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IRequestHandler<DeleteHouseGroupCommand, Response<Unit>> _commandHandler;
+        private readonly IRequestHandler<DeleteHouseGroupCommand, ApiResponse<Unit>> _commandHandler;
 
         public DeleteHouseGroupHandlerTests()
         {

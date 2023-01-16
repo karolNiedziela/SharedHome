@@ -10,7 +10,7 @@ using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
 {
-    internal class GetInvitationByStatusHandler : IRequestHandler<GetInvitationsByStatus, Response<List<InvitationDto>>>
+    internal class GetInvitationByStatusHandler : IRequestHandler<GetInvitationsByStatus, ApiResponse<List<InvitationDto>>>
     {
         private readonly ReadSharedHomeDbContext _context;
         private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
             _mapper = mapper;
         }
 
-        public async Task<Response<List<InvitationDto>>> Handle(GetInvitationsByStatus request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<List<InvitationDto>>> Handle(GetInvitationsByStatus request, CancellationToken cancellationToken)
         {
             var invitationStatus = request.Status.HasValue ?
                 EnumHelper.ToEnumByIntOrThrow<InvitationStatus>(request.Status.Value) :
@@ -35,7 +35,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Invitations.Handlers
                 invitation.RequestedToPersonId == request.PersonId)
                 .ToListAsync();
 
-            return new Response<List<InvitationDto>>(_mapper.Map<List<InvitationDto>>(invitations));
+            return new ApiResponse<List<InvitationDto>>(_mapper.Map<List<InvitationDto>>(invitations));
         }
     }
 }

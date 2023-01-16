@@ -1,0 +1,22 @@
+<div
+  class="flex flex-col justify-center items-center h-full gap-2"
+  *ngIf="!loading"
+>
+  <app-error [errorMessages]="error"></app-error>
+  {{ "identity.email_confirmation_time_expired" | translate }}
+  <div>
+    {{ "identity.again_email_confirmation_message" | translate }}
+    <app-button
+      text="identity.send"
+      (onButtonClick)="resendEmail()"
+    ></app-button>
+  </div>
+  <div>
+    {{ "identity.have_an_account" | translate }}? &nbsp;
+    <app-button
+      text="identity.login"
+      [routerLink]="['/identity/login']"
+    ></app-button>
+  </div>
+</div>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>

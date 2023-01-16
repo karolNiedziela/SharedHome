@@ -13,7 +13,7 @@ using System.Globalization;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 {
-    internal class GetMonthlyBillCostByYearHandler : IRequestHandler<GetMonthlyBillCostByYear, Response<List<BillMonthlyCostDto>>>
+    internal class GetMonthlyBillCostByYearHandler : IRequestHandler<GetMonthlyBillCostByYear, ApiResponse<List<BillMonthlyCostDto>>>
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly ITimeProvider _time;
@@ -26,7 +26,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
             _houseGroupService = houseGroupService;
         }
 
-        public async Task<Response<List<BillMonthlyCostDto>>> Handle(GetMonthlyBillCostByYear request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<List<BillMonthlyCostDto>>> Handle(GetMonthlyBillCostByYear request, CancellationToken cancellationToken)
         {
             if (!request.Year.HasValue)
             {
@@ -63,7 +63,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                     )
                     .ToList();
 
-                return new Response<List<BillMonthlyCostDto>>(billCostsGroupedByMonth);
+                return new ApiResponse<List<BillMonthlyCostDto>>(billCostsGroupedByMonth);
             }
 
             bills = await _bills.Where(bill => bill.IsPaid && 
@@ -85,7 +85,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                 )
                 .ToList();
 
-            return new Response<List<BillMonthlyCostDto>>(billCostsGroupedByMonth);
+            return new ApiResponse<List<BillMonthlyCostDto>>(billCostsGroupedByMonth);
         }
 
         private static decimal? SumCost(IEnumerable<BillReadModel> bills)

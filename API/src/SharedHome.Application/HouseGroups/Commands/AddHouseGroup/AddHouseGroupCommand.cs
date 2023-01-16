@@ -5,7 +5,7 @@ using MediatR;
 
 namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 {
-    public class AddHouseGroupCommand : AuthorizeRequest, IRequest<Response<HouseGroupDto>>
+    public class AddHouseGroupCommand : AuthorizeRequest, IRequest<ApiResponse<HouseGroupDto>>
     {
         public string Name { get; set; } = default!;
     }

@@ -10,7 +10,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 {
-    internal class GetBillHandler : IRequestHandler<GetBill, Response<BillDto>>
+    internal class GetBillHandler : IRequestHandler<GetBill, ApiResponse<BillDto>>
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
             _houseGroupService = houseGroupService;
         }
 
-        public async Task<Response<BillDto>> Handle(GetBill request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<BillDto>> Handle(GetBill request, CancellationToken cancellationToken)
         {
             if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
@@ -33,13 +33,13 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                     .SingleOrDefaultAsync(bill => bill.Id == request.Id && 
                     houseGroupPersonIds.Contains(bill.PersonId));
 
-                return new Response<BillDto>(_mapper.Map<BillDto>(billsFromHouseGroup!));
+                return new ApiResponse<BillDto>(_mapper.Map<BillDto>(billsFromHouseGroup!));
             }
 
             var bill = await _bills
                 .SingleOrDefaultAsync(bill => bill.PersonId == request.PersonId && bill.Id == request.Id);
 
-            return new Response<BillDto>(_mapper.Map<BillDto>(bill!));
+            return new ApiResponse<BillDto>(_mapper.Map<BillDto>(bill!));
         }
     }
 }

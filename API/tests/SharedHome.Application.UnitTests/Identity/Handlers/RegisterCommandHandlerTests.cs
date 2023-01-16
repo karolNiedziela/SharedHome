@@ -23,7 +23,7 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
         private readonly IIdentityEmailSender<ConfirmationEmailSender> _emailSender;
         private readonly IPersonRepository _personRepository;
         private readonly ILogger<RegisterCommandHandler> _logger;
-        private readonly IRequestHandler<RegisterCommand, Response<string>> _commandHandler;
+        private readonly IRequestHandler<RegisterCommand, ApiResponse<string>> _commandHandler;
 
         public RegisterCommandHandlerTests()
         {

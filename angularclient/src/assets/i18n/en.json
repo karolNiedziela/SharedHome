@@ -82,7 +82,10 @@
     "last_name": "Last name",
     "password": "Password",
     "confirm_password": "Confirm password",
-    "have_an_account": "Have an account"
+    "have_an_account": "Have an account",
+    "send": "Send",
+    "email_confirmation_time_expired": "Email confirmation time expired.",
+    "again_email_confirmation_message": "If you want to get confirmation again, click button."
   },
   "expenses": {
     "module": "Expenses",
@@ -185,5 +188,6 @@
   "Remind": "Remind",
   "Password successfully changed.": "Password successfully changed.",
   "Email adress confirmed.": "Email adress confirmed.",
-  "Email sent, check your mailbox.": "Email sent, check your mailbox."
+  "Email sent, check your mailbox.": "Email sent, check your mailbox.",
+  "Check your mailbox and confirm email to get fully access.": "Check your mailbox and confirm email to get fully access."
 }

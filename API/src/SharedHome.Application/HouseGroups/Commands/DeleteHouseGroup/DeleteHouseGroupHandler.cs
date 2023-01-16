@@ -8,7 +8,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
 {
-    public class DeleteHouseGroupHandler : IRequestHandler<DeleteHouseGroupCommand, Response<Unit>>
+    public class DeleteHouseGroupHandler : IRequestHandler<DeleteHouseGroupCommand, ApiResponse<Unit>>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
 
@@ -17,7 +17,7 @@ namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
             _houseGroupRepository = houseGroupRepository;
         }
 
-        public async Task<Response<Unit>> Handle(DeleteHouseGroupCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<Unit>> Handle(DeleteHouseGroupCommand request, CancellationToken cancellationToken)
         {
             var houseGroup = await _houseGroupRepository.GetOrThrowAsync(request.HouseGroupId, request.PersonId);
 
@@ -28,7 +28,7 @@ namespace SharedHome.Application.HouseGroups.Commands.DeleteHouseGroup
 
             await _houseGroupRepository.DeleteAsync(houseGroup);
 
-            return new Response<Unit>(Unit.Value);
+            return new ApiResponse<Unit>(Unit.Value);
         }
     }
 }

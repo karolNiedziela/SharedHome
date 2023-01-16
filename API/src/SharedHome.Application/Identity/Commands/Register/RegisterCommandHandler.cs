@@ -13,7 +13,7 @@ using System.Text;
 
 namespace SharedHome.Application.Identity.Commands.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, Response<string>>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, ApiResponse<string>>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IIdentityEmailSender<ConfirmationEmailSender> _emailSender;
@@ -32,7 +32,7 @@ namespace SharedHome.Application.Identity.Commands.Register
             _logger = logger;
         }
 
-        public async Task<Response<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             var applicationUser = new ApplicationUser
             {
@@ -62,10 +62,10 @@ namespace SharedHome.Application.Identity.Commands.Register
 
                 await _emailSender.SendAsync(applicationUser.Email, code);
 
-                return new Response<string>("Thanks for signing up. Check your mailbox and confirm email to get fully access.");
+                return new ApiResponse<string>("Thanks for signing up. Check your mailbox and confirm email to get fully access.");
             }
 
-            return new Response<string>("Thanks for signing up.");
+            return new ApiResponse<string>("Thanks for signing up.");
         }
     }
 }

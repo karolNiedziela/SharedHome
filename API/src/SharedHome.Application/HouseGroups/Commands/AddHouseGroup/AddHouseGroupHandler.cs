@@ -11,7 +11,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 {
-    public class AddHouseGroupHandler : IRequestHandler<AddHouseGroupCommand, Response<HouseGroupDto>>
+    public class AddHouseGroupHandler : IRequestHandler<AddHouseGroupCommand, ApiResponse<HouseGroupDto>>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IHouseGroupReadService _houseGroupService;
@@ -24,7 +24,7 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
             _mapper = mapper;
         }
 
-        public async Task<Response<HouseGroupDto>> Handle(AddHouseGroupCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<HouseGroupDto>> Handle(AddHouseGroupCommand request, CancellationToken cancellationToken)
         {
             if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId))
             {
@@ -38,7 +38,7 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
 
             await _houseGroupRepository.UpdateAsync(houseGroup);
 
-            return new Response<HouseGroupDto>(_mapper.Map<HouseGroupDto>(houseGroup));
+            return new ApiResponse<HouseGroupDto>(_mapper.Map<HouseGroupDto>(houseGroup));
         }
     }
 }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 {
-    public class AddShoppingListCommand : AuthorizeRequest, IRequest<Response<ShoppingListDto>>
+    public class AddShoppingListCommand : AuthorizeRequest, IRequest<ApiResponse<ShoppingListDto>>
     {
         public string Name { get; set; } = default!;
 

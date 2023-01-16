@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.ShoppingLists.Queries
 {
-    public class GetShoppingList : AuthorizeRequest, IRequest<Response<ShoppingListDto>>
+    public class GetShoppingList : AuthorizeRequest, IRequest<ApiResponse<ShoppingListDto>>
     {
         public Guid Id { get; set; }
     }

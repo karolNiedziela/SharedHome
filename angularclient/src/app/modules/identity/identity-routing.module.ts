@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { IdentityComponent } from './identity.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginGuard } from 'src/app/core/guards/login.guard';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
   {
@@ -29,10 +30,10 @@ const routes: Routes = [
   //     },
   //   ],
   // },
-  // {
-  //   path: 'emailconfirmation',
-  //   component: EmailConfirmationComponent,
-  // },
+  {
+    path: 'emailconfirmation',
+    component: EmailConfirmationComponent,
+  },
 ];
 
 @NgModule({

@@ -72,6 +72,8 @@
 
             public const string ConfirmEmail = "confirmemail";
 
+            public const string ResendConfirmationEmail = "resendconfirmationemail";
+
             public const string ForgotPassword = "forgotpassword";
 
             public const string ResetPassword = "resetpassword";

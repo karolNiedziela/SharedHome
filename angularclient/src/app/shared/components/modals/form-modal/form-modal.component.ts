@@ -97,7 +97,6 @@ export class FormModalComponent implements OnInit {
     if (this.formGroup?.invalid) {
       this.formGroup.markAllAsTouched();
       this.formGroup.updateValueAndValidity();
-      console.log(this.formGroup);
       this.disabled = this.formGroup?.invalid ? true : false;
       return;
     }
