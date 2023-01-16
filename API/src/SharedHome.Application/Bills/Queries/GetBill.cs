@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Bills.Queries
 {
-    public class GetBill : AuthorizeRequest, IRequest<Response<BillDto>>
+    public class GetBill : AuthorizeRequest, IRequest<ApiResponse<BillDto>>
     {
         public Guid Id { get; set; }
     }

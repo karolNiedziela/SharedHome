@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.HouseGroups.Queries
 {
-    public class GetHouseGroup : AuthorizeRequest, IRequest<Response<HouseGroupDto>>
+    public class GetHouseGroup : AuthorizeRequest, IRequest<ApiResponse<HouseGroupDto>>
     {
     }
 }

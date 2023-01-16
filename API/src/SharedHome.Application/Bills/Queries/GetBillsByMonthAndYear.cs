@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Bills.Queries
 {
-    public class GetBillsByMonthAndYear : AuthorizeRequest, IRequest<Response<List<BillDto>>>
+    public class GetBillsByMonthAndYear : AuthorizeRequest, IRequest<ApiResponse<List<BillDto>>>
     {
         public int? Month { get; set; }
 

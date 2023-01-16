@@ -1,3 +1,4 @@
+import { ApiResponse } from 'src/app/core/models/api-response';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -87,6 +88,15 @@ export class AuthenticationService {
       email: email,
       code: code,
     });
+  }
+
+  resendEmailConfirmation(email: string): Observable<ApiResponse<string>> {
+    return this.http.post<ApiResponse<string>>(
+      `${this.identityUrl}/resendconfirmationemail`,
+      {
+        email: email,
+      }
+    );
   }
 
   forgotPassword(email: string): Observable<any> {

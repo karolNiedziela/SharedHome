@@ -4,7 +4,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Invitations.Queries
 {
-    public class GetInvitationById : IRequest<Response<InvitationDto>>
+    public class GetInvitationById : IRequest<ApiResponse<InvitationDto>>
     {
         public Guid Id { get; set; }
     }

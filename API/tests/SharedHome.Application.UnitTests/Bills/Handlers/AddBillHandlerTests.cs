@@ -21,7 +21,7 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;
         private readonly IDomainEventDispatcher _eventDispatcher;
-        private readonly IRequestHandler<AddBillCommand, Response<BillDto>> _commandHandler;
+        private readonly IRequestHandler<AddBillCommand, ApiResponse<BillDto>> _commandHandler;
 
         public AddBillHandlerTests()
         {

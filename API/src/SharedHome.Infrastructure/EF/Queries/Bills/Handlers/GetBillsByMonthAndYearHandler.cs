@@ -11,7 +11,7 @@ using SharedHome.Shared.Time;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 {
-    internal class GetBillsByMonthAndYearHandler : IRequestHandler<GetBillsByMonthAndYear, Response<List<BillDto>>>
+    internal class GetBillsByMonthAndYearHandler : IRequestHandler<GetBillsByMonthAndYear, ApiResponse<List<BillDto>>>
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;
@@ -26,7 +26,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
             _houseGroupService = houseGroupService;
         }
 
-        public async Task<Response<List<BillDto>>> Handle(GetBillsByMonthAndYear request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<List<BillDto>>> Handle(GetBillsByMonthAndYear request, CancellationToken cancellationToken)
         {
             if (!request.Year.HasValue || !request.Month.HasValue)
             {
@@ -46,7 +46,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                     .Select(bill => _mapper.Map<BillDto>(bill))
                     .ToListAsync();
 
-                return new Response<List<BillDto>>(billsFromHouseGroup);
+                return new ApiResponse<List<BillDto>>(billsFromHouseGroup);
 
             }
 
@@ -57,7 +57,7 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                 .Select(bill => _mapper.Map<BillDto>(bill))
                 .ToListAsync();
 
-            return new Response<List<BillDto>>(bills);
+            return new ApiResponse<List<BillDto>>(bills);
         }
     }
 }

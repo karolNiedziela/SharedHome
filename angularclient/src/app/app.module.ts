@@ -1,3 +1,4 @@
+import { ExpensesModule } from './modules/expenses/expenses.module';
 import { BillsModule } from './modules/bills/bills.module';
 import { InvitationModule } from './modules/invitations/invitation.module';
 import { ShoppingListsModule } from './modules/shopping-lists/shopping-lists.module';
@@ -51,6 +52,7 @@ import { NotificationsModule } from './modules/notifications/notifcations.module
     BillsModule,
     ProfileModule,
     NotificationsModule,
+    ExpensesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

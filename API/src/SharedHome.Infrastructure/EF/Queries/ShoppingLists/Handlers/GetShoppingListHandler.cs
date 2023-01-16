@@ -10,7 +10,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
-    internal class GetShoppingListHandler : IRequestHandler<GetShoppingList, Response<ShoppingListDto>>
+    internal class GetShoppingListHandler : IRequestHandler<GetShoppingList, ApiResponse<ShoppingListDto>>
     {
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
             _shoppingLists = context.ShoppingLists;
         }
 
-        public async Task<Response<ShoppingListDto>> Handle(GetShoppingList request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<ShoppingListDto>> Handle(GetShoppingList request, CancellationToken cancellationToken)
         {
             if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
@@ -35,7 +35,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                     .Include(shoppingList => shoppingList.Products.OrderBy(x => x.IsBought))
                     .SingleOrDefaultAsync(shoppingList => shoppingList.Id == request.Id && houseGroupPersonIds.Contains(shoppingList.PersonId!));
 
-                return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingListFromHouseGroup!));
+                return new ApiResponse<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingListFromHouseGroup!));
             }
 
             var shoppingList = await _shoppingLists
@@ -43,7 +43,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 .Include(shoppingList => shoppingList.Products.OrderBy(x => x.IsBought))
                 .SingleOrDefaultAsync(shoppingList => shoppingList.Id == request.Id && shoppingList.PersonId == request.PersonId);
 
-            return new Response<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList!));
+            return new ApiResponse<ShoppingListDto>(_mapper.Map<ShoppingListDto>(shoppingList!));
         }
     }
 }

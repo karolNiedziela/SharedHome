@@ -19,7 +19,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.Invitations.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<InvitationDto>>> GetAsync(Guid invitationId)
+        public async Task<ActionResult<ApiResponse<InvitationDto>>> GetAsync(Guid invitationId)
         {
             var invitation = await Mediator.Send(new GetInvitationById
             {
@@ -40,7 +40,7 @@ namespace SharedHome.Api.Controllers
         /// <returns>Invitations with given status</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Response<List<InvitationDto>>>> GetByStatusAsync([FromQuery] GetInvitationsByStatus query)
+        public async Task<ActionResult<ApiResponse<List<InvitationDto>>>> GetByStatusAsync([FromQuery] GetInvitationsByStatus query)
         {
             var invitations = await Mediator.Send(query);
 

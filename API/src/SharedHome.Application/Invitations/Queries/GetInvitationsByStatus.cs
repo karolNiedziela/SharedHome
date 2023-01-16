@@ -5,7 +5,7 @@ using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Application.Invitations.Queries
 {
-    public class GetInvitationsByStatus : AuthorizeRequest, IRequest<Response<List<InvitationDto>>>
+    public class GetInvitationsByStatus : AuthorizeRequest, IRequest<ApiResponse<List<InvitationDto>>>
     {
         public int? Status { get; set; }
     }

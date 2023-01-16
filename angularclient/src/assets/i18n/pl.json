@@ -75,17 +75,23 @@
     "invite_to_house_group": "Zaproś do grupy domowej"
   },
   "identity": {
-    "login": "Login",
+    "login": "Zaloguj się",
     "forgot_password": "Zapomniałeś hasła",
     "sign_up": "Zarejestruj się",
     "first_name": "Imię",
     "last_name": "Nazwisko",
     "password": "Hasło",
     "confirm_password": "Potwierdź hasło",
-    "have_an_account": "Masz konto"
+    "have_an_account": "Masz konto",
+    "reset_password": "Zresetuj hasło",
+    "send": "Wyślij",
+    "remind": "Przypomnij",
+    "email_confirmation_time_expired": "Czas potwierdzenia adresu email wygasł.",
+    "again_email_confirmation_message": "Jeśli chcesz ponownie otrzymać potwierdzenie adresu email, naciśnij przycisk."
   },
   "expenses": {
-    "module": "Wydatki"
+    "module": "Wydatki",
+    "amount": "Amount"
   },
   "invitations": {
     "module": "Zaproszenia",
@@ -141,14 +147,16 @@
       "edit": "Edytuj",
       "confirm": "Potwierdź",
       "cancel": "Anuluj",
+      "reset": "Reset",
       "delete_confirmation": "Potwierdzienie usunięcia",
       "delete_confirmation_text": "Czy na pewno chcesz usunąć ten element?",
-      "previous_page": "Poprzednia strona",
-      "next_page": "Następna strona"
+      "previous_page": "Poprzednia",
+      "next_page": "Następna"
     },
     "selects": {
       "currency": "Waluta",
-      "language": "Język"
+      "language": "Język",
+      "year": "Rok"
     },
     "spinners": {
       "loading": "Ładowanie..."
@@ -170,7 +178,6 @@
   "Accepted": "Zaakceptowane",
   "Rejected": "Odrzucone",
   "Sent": "Wysłane",
-  "amount": "Amount",
   "All": "Wszystkie",
   "Bill": "Rachunki",
   "HouseGroup": "Grupa domowa",
@@ -180,8 +187,8 @@
   "Thanks for signing up. Check your mailbox and confirm email to get fully access.": "Dziękujemy za rejestrację. Sprawdź swoją skrzynkę mailową aby potwierdzić adres email i uzyskać pełny dostęp.",
   "Thanks for signing up.": "Dziękujemy za rejestrację.",
   "If the account with the specified email address exists, we will send an email to complete the operation.": "Jeśli konto z podanym adresem email istnieje, zostanie wysłany do zakończenia operacji.",
-  "Remind": "Remind",
   "Password successfully changed.": "Hasło zmienione pomyślnie.",
   "Email adress confirmed.": "Adres email potwierdzony.",
-  "Email sent, check your mailbox.": "Email wysłany, sprawdź skrzynkę pocztową."
+  "Email sent, check your mailbox.": "Email wysłany, sprawdź skrzynkę pocztową.",
+  "Check your mailbox and confirm email to get fully access.": "Sprawdź swoją skrzynkę mailową aby potwierdzić adres email i uzyskać pełny dostęp."
 }

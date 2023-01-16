@@ -20,7 +20,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<HouseGroupDto>>> GetAsync()
+        public async Task<ActionResult<ApiResponse<HouseGroupDto>>> GetAsync()
         {
             var houseGroup = await Mediator.Send(new GetHouseGroup());
 

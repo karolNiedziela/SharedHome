@@ -16,6 +16,7 @@ export class PasswordInputComponent implements OnInit {
   @Input() placeholder: string = 'placeholder';
 
   disabled: boolean = false;
+  hide: boolean = true;
 
   onChanged: (value: any) => void = () => {};
   onTouched: () => void = () => {};

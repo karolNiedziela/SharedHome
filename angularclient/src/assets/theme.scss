@@ -8,6 +8,8 @@
   as notificationBell;
 @use "../app/modules/identity/identity.component.scss" as identity;
 @use "../app/shared/components/inputs/input.scss" as input;
+@use "../app/shared/components/pagination/pagination.component.scss" as
+  pagination;
 @use "@angular/material" as mat;
 @use "sass:map";
 
@@ -50,6 +52,7 @@ $dark-theme: mat.define-dark-theme(
 @include notificationBell.color($light-theme);
 @include identity.lightTheme($light-theme);
 @include input.lightTheme($light-theme);
+@include pagination.color($light-theme);
 
 .theme-dark {
   @include mat.core-theme($dark-theme);
@@ -64,4 +67,5 @@ $dark-theme: mat.define-dark-theme(
   @include notificationBell.color($dark-theme);
   @include identity.darkTheme($dark-theme);
   @include input.darkTheme($dark-theme);
+  @include pagination.color($dark-theme);
 }

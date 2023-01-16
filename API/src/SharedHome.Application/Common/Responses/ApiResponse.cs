@@ -2,19 +2,19 @@
 
 namespace SharedHome.Shared.Application.Responses
 {
-    public class Response<T>
+    public class ApiResponse<T>
     {
         public T Data { get; set; } = default!;
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? Message { get; set; } = string.Empty;
 
-        public Response()
+        public ApiResponse()
         {
 
         }
 
-        public Response(T data, string? message = null)
+        public ApiResponse(T data, string? message = null)
         {
             Data = data;
             Message = message;

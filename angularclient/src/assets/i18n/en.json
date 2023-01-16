@@ -82,10 +82,16 @@
     "last_name": "Last name",
     "password": "Password",
     "confirm_password": "Confirm password",
-    "have_an_account": "Have an account"
+    "have_an_account": "Have an account",
+    "reset_password": "Reset password",
+    "send": "Send",
+    "remind": "Remind",
+    "email_confirmation_time_expired": "Email confirmation time expired.",
+    "again_email_confirmation_message": "If you want to get confirmation again, click button."
   },
   "expenses": {
-    "module": "Expenses"
+    "module": "Expenses",
+    "amount": "Amount"
   },
   "invitations": {
     "module": "Invitations",
@@ -95,7 +101,7 @@
     "reject": "Reject",
     "house_group_name": "House Group Name",
     "sent_to": "Sent To",
-    "status": "status",
+    "status": "Status",
     "sent_by": "Sent By",
     "accept_invitation": "Accept invitation",
     "reject_invitation": "Reject invitation"
@@ -141,14 +147,16 @@
       "edit": "Edit",
       "confirm": "Confirm",
       "cancel": "Cancel",
+      "reset": "Reset",
       "delete_confirmation": "Delete confirmation",
       "delete_confirmation_text": "Are you sure to delete this item?",
-      "previous_page": "Previous page",
-      "next_page": "Next page"
+      "previous_page": "Previous",
+      "next_page": "Next"
     },
     "selects": {
       "currency": "Currency",
-      "language": "Language"
+      "language": "Language",
+      "year": "Year"
     },
     "spinners": {
       "loading": "Loading..."
@@ -170,7 +178,6 @@
   "Accepted": "Accepted",
   "Rejected": "Rejected",
   "Sent": "Sent",
-  "amount": "Amount",
   "All": "All",
   "Bill": "Bills",
   "HouseGroup": "House group",
@@ -181,8 +188,8 @@
   "Thanks for signing up.": "Thanks for signing up.",
   "If the account with the specified email address exists, we will send an email to complete the operation.": "If the account with the specified email address exists, we will send an email to complete the operation.",
   "Have an account": "Have an account",
-  "Remind": "Remind",
   "Password successfully changed.": "Password successfully changed.",
   "Email adress confirmed.": "Email adress confirmed.",
-  "Email sent, check your mailbox.": "Email sent, check your mailbox."
+  "Email sent, check your mailbox.": "Email sent, check your mailbox.",
+  "Check your mailbox and confirm email to get fully access.": "Check your mailbox and confirm email to get fully access."
 }

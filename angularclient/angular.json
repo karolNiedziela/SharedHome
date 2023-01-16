@@ -35,7 +35,8 @@
               "node_modules/angular-calendar/css/angular-calendar.css",
               "src/assets/calendar.scss",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/assets/theme.scss"
+              "src/assets/theme.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -48,13 +49,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 }
               ],
               "fileReplacements": [

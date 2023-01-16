@@ -27,7 +27,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.ShoppingLists.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<ShoppingListDto>>> GetShoppingList(Guid shoppingListId)
+        public async Task<ActionResult<ApiResponse<ShoppingListDto>>> GetShoppingList(Guid shoppingListId)
         {
             var shoppingList = await Mediator.Send(new GetShoppingList
             {
@@ -48,7 +48,7 @@ namespace SharedHome.Api.Controllers
         /// <returns>Shopping lists</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Response<IEnumerable<ShoppingListDto>>>> GetAllByYearAndMonthAndIsDone([FromQuery] GetAllShoppingListsByYearAndMonthAndIsDone query)
+        public async Task<ActionResult<ApiResponse<IEnumerable<ShoppingListDto>>>> GetAllByYearAndMonthAndIsDone([FromQuery] GetAllShoppingListsByYearAndMonthAndIsDone query)
         {
             var shoppingLists = await Mediator.Send(query);
 
@@ -61,7 +61,7 @@ namespace SharedHome.Api.Controllers
         /// <returns>Months with expenses</returns>
         [HttpGet(ApiRoutes.ShoppingLists.GetMonthlyCost)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Response<List<ShoppingListMonthlyCostDto>>>> GetMonthlyCostByYearAsync([FromQuery] GetMonthlyShoppingListCostsByYear query)
+        public async Task<ActionResult<ApiResponse<List<ShoppingListMonthlyCostDto>>>> GetMonthlyCostByYearAsync([FromQuery] GetMonthlyShoppingListCostsByYear query)
         {
             var shoppingLists = await Mediator.Send(query);
 

@@ -5,9 +5,19 @@ import { IdentityRoutingModule } from './identity-routing.module';
 import { IdentityComponent } from './identity.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [IdentityComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    IdentityComponent,
+    LoginComponent,
+    RegisterComponent,
+    EmailConfirmationComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+  ],
   imports: [SharedModule, IdentityRoutingModule, TranslateModule],
 })
 export class IdentityModule {}

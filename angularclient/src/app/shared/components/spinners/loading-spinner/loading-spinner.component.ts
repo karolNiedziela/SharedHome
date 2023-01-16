@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Input,
   ViewChild,
 } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
@@ -15,9 +16,12 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoadingSpinnerComponent implements AfterViewChecked {
+  @Input() diameter: number = 60;
+
+  @ViewChild('loadingText') loadingText!: ElementRef<HTMLDivElement>;
+
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'indeterminate';
-  @ViewChild('loadingText') loadingText!: ElementRef<HTMLDivElement>;
 
   constructor() {}
 

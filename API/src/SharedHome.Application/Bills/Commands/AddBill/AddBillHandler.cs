@@ -12,7 +12,7 @@ using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.Bills.Commands.AddBill
 {
-    public class AddBillHandler : IRequestHandler<AddBillCommand, Response<BillDto>>
+    public class AddBillHandler : IRequestHandler<AddBillCommand, ApiResponse<BillDto>>
     {
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace SharedHome.Application.Bills.Commands.AddBill
             _eventDispatcher = eventDispatcher;
         }
 
-        public async Task<Response<BillDto>> Handle(AddBillCommand request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<BillDto>> Handle(AddBillCommand request, CancellationToken cancellationToken)
         {
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
@@ -40,7 +40,7 @@ namespace SharedHome.Application.Bills.Commands.AddBill
                 bill.DateOfPayment,
                 new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
 
-            return new Response<BillDto>(_mapper.Map<BillDto>(bill));
+            return new ApiResponse<BillDto>(_mapper.Map<BillDto>(bill));
         }
     }
 }

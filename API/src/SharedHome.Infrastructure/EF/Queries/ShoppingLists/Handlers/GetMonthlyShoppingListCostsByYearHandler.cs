@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
-    internal class GetMonthlyShoppingListCostsByYearHandler : IRequestHandler<GetMonthlyShoppingListCostsByYear, Response<List<ShoppingListMonthlyCostDto>>>
+    internal class GetMonthlyShoppingListCostsByYearHandler : IRequestHandler<GetMonthlyShoppingListCostsByYear, ApiResponse<List<ShoppingListMonthlyCostDto>>>
     {
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
         private readonly ITimeProvider _time;
@@ -24,7 +24,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
             _time = time;
             _houseGroupService = houseGroupService;
         }
-        public async Task<Response<List<ShoppingListMonthlyCostDto>>> Handle(GetMonthlyShoppingListCostsByYear request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<List<ShoppingListMonthlyCostDto>>> Handle(GetMonthlyShoppingListCostsByYear request, CancellationToken cancellationToken)
         {
             if (!request.Year.HasValue)
             {
@@ -64,7 +64,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                     )
                     .ToList();
 
-                return new Response<List<ShoppingListMonthlyCostDto>>(shoppingListsCostsGroupedByMonth);
+                return new ApiResponse<List<ShoppingListMonthlyCostDto>>(shoppingListsCostsGroupedByMonth);
             }
 
             shoppingLists = await _shoppingLists
@@ -89,7 +89,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                    )
                    .ToList();
 
-            return new Response<List<ShoppingListMonthlyCostDto>>(shoppingListsCostsGroupedByMonth);
+            return new ApiResponse<List<ShoppingListMonthlyCostDto>>(shoppingListsCostsGroupedByMonth);
         }
 
         private static decimal SumProductPrices(IEnumerable<ShoppingListReadModel> shoppingLists)

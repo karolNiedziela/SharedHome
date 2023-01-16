@@ -1,12 +1,20 @@
 <button
+  *ngIf="!loading"
   mat-raised-button
   color="primary"
   type="type"
-  class="w-full"
   [ngClass]="{ 'w-full': fullWidth }"
+  class="flex-button"
   [disabled]="disabled"
   [hidden]="hidden"
   (click)="onClick()"
 >
   {{ text | translate }}
 </button>
+
+<mat-progress-spinner
+  *ngIf="loading"
+  [color]="color"
+  [mode]="mode"
+  [diameter]="20"
+></mat-progress-spinner>

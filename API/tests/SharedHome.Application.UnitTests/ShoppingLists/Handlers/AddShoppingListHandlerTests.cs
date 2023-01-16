@@ -21,7 +21,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
         private readonly IDomainEventDispatcher _eventDispatcher;
-        private readonly IRequestHandler<AddShoppingListCommand, Response<ShoppingListDto>> _commandHandler;
+        private readonly IRequestHandler<AddShoppingListCommand, ApiResponse<ShoppingListDto>> _commandHandler;
 
         public AddShoppingListHandlerTests()
         {

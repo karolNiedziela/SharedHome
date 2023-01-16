@@ -97,10 +97,11 @@ export class FormModalComponent implements OnInit {
     if (this.formGroup?.invalid) {
       this.formGroup.markAllAsTouched();
       this.formGroup.updateValueAndValidity();
-      console.log(this.formGroup);
       this.disabled = this.formGroup?.invalid ? true : false;
       return;
     }
+
+    this.dialogRef.disableClose = true;
 
     this.loadingSaveButton = true;
 
@@ -111,6 +112,7 @@ export class FormModalComponent implements OnInit {
         finalize(() => {
           this.disabled = false;
           this.loadingSaveButton = false;
+          this.dialogRef.disableClose = false;
         })
       )
       .subscribe({
@@ -121,6 +123,10 @@ export class FormModalComponent implements OnInit {
   }
 
   close(): void {
+    if (this.dialogRef.disableClose) {
+      return;
+    }
+
     this.beforeCloseModal();
 
     if (this.modalConfig?.onClose != undefined) {

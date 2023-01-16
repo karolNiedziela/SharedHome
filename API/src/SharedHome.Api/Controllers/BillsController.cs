@@ -22,7 +22,7 @@ namespace SharedHome.Api.Controllers
         [HttpGet(ApiRoutes.Bills.Get)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response<BillDto>>> GetBillAsync(Guid billId)
+        public async Task<ActionResult<ApiResponse<BillDto>>> GetBillAsync(Guid billId)
         {
             var bill = await Mediator.Send(new GetBill
             {
@@ -43,7 +43,7 @@ namespace SharedHome.Api.Controllers
         /// <returns>Bills from month and year</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<Response<List<BillDto>>>> GetBillsByMonthAndYearAsync([FromQuery] GetBillsByMonthAndYear query) 
+        public async Task<ActionResult<ApiResponse<List<BillDto>>>> GetBillsByMonthAndYearAsync([FromQuery] GetBillsByMonthAndYear query) 
         {
             var bills = await Mediator.Send(query);
 
