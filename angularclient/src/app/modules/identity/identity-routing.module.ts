@@ -6,6 +6,8 @@ import { IdentityComponent } from './identity.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginGuard } from 'src/app/core/guards/login.guard';
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -18,18 +20,16 @@ const routes: Routes = [
         component: RegisterComponent,
         canActivate: [LoginGuard],
       },
+      {
+        path: 'resetpassword',
+        component: ResetPasswordComponent,
+      },
+      {
+        path: 'forgotpassword',
+        component: ForgotPasswordComponent,
+      },
     ],
   },
-  //     {
-  //       path: 'resetpassword',
-  //       component: ResetPasswordComponent,
-  //     },
-  //     {
-  //       path: 'forgotpassword',
-  //       component: ForgotPasswordComponent,
-  //     },
-  //   ],
-  // },
   {
     path: 'emailconfirmation',
     component: EmailConfirmationComponent,

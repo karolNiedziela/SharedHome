@@ -1,5 +1,6 @@
-import { ViewEncapsulation } from '@angular/compiler';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-button',
@@ -15,6 +16,9 @@ export class ButtonComponent implements OnInit {
   @Input() hidden: boolean = false;
 
   @Output() onButtonClick: EventEmitter<any> = new EventEmitter();
+
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'indeterminate';
 
   constructor() {}
 

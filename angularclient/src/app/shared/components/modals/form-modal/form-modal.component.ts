@@ -101,6 +101,8 @@ export class FormModalComponent implements OnInit {
       return;
     }
 
+    this.dialogRef.disableClose = true;
+
     this.loadingSaveButton = true;
 
     this.errorService.clearErrors();
@@ -110,6 +112,7 @@ export class FormModalComponent implements OnInit {
         finalize(() => {
           this.disabled = false;
           this.loadingSaveButton = false;
+          this.dialogRef.disableClose = false;
         })
       )
       .subscribe({
@@ -120,6 +123,10 @@ export class FormModalComponent implements OnInit {
   }
 
   close(): void {
+    if (this.dialogRef.disableClose) {
+      return;
+    }
+
     this.beforeCloseModal();
 
     if (this.modalConfig?.onClose != undefined) {

@@ -6,7 +6,6 @@
   $primary-palette: map.get($color-config, "primary");
 
   .current {
-    background-color: mat.get-color-from-palette($primary-palette, 500);
-    padding: 0 4px;
+    color: mat.get-color-from-palette($primary-palette, 500);
   }
 }
