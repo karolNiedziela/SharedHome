@@ -9,10 +9,10 @@ namespace SharedHome.Infrastructure.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-
             config.NewConfig<AppNotification, AppNotificationDto>()
                 .Map(dest => dest.Title, src => MapContext.Current.GetService<IAppNotificationInformationResolver>().GetTitle(src))
-                .Map(dest => dest.Type, src => src.Type.ToString());
+                .Map(dest => dest.Type, src => src.Type.ToString())
+                .Map(dest => dest.CreatedByFullName, src => src.CreatedByFullName);
         }
     }
 }

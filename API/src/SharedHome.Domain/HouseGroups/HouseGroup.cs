@@ -1,7 +1,7 @@
-﻿using SharedHome.Domain.Common.Models;
-using SharedHome.Domain.HouseGroups.Entities;
+﻿using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.ValueObjects;
+using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.HouseGroups

@@ -1,7 +1,8 @@
 ﻿using SharedHome.Domain.Bills.Enums;
+using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Exceptions;
 using SharedHome.Domain.Bills.ValueObjects;
-using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.Bills
@@ -34,6 +35,8 @@ namespace SharedHome.Domain.Bills
             DateOfPayment = dateOfPayment;
             Cost = cost;
             IsPaid = isPaid;
+
+            AddEvent(new BillCreated(id, serviceProvider, dateOfPayment, personId));
         }
 
         public static Bill Create(BillId id, PersonId personId, BillType billType, ServiceProviderName serviceProvider, DateOnly dateOfPayment, Money? cost = null, bool isPaid = false) =>

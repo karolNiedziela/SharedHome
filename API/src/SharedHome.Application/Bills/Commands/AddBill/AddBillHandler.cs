@@ -1,12 +1,12 @@
 ﻿using MapsterMapper;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using SharedHome.Application.Bills.DTO;
-using SharedHome.Application.Bills.Events;
-using SharedHome.Application.Common.DTO;
 using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Enums;
+using SharedHome.Domain.Bills.Events;
 using SharedHome.Domain.Bills.Repositories;
-using SharedHome.Domain.Common.Events;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Helpers;
 
@@ -16,13 +16,11 @@ namespace SharedHome.Application.Bills.Commands.AddBill
     {
         private readonly IBillRepository _billRepository;
         private readonly IMapper _mapper;
-        private readonly IDomainEventDispatcher _eventDispatcher;
 
-        public AddBillHandler(IBillRepository billRepository, IMapper mapper, IDomainEventDispatcher eventDispatcher)
+        public AddBillHandler(IBillRepository billRepository, IMapper mapper)
         {
             _billRepository = billRepository;
             _mapper = mapper;
-            _eventDispatcher = eventDispatcher;
         }
 
         public async Task<ApiResponse<BillDto>> Handle(AddBillCommand request, CancellationToken cancellationToken)
@@ -30,15 +28,8 @@ namespace SharedHome.Application.Bills.Commands.AddBill
             var billType = EnumHelper.ToEnumByIntOrThrow<BillType>(request.BillType);
 
             var bill = Bill.Create(Guid.NewGuid(), request.PersonId, billType, request.ServiceProviderName,
-                DateOnly.FromDateTime(request.DateOfPayment));
-
+            DateOnly.FromDateTime(request.DateOfPayment));
             await _billRepository.AddAsync(bill);
-
-            await _eventDispatcher.DispatchAsync(new BillCreated(
-                bill.Id, 
-                bill.ServiceProvider, 
-                bill.DateOfPayment,
-                new CreatorDto(request.PersonId!, request.FirstName!, request.LastName!)));
 
             return new ApiResponse<BillDto>(_mapper.Map<BillDto>(bill));
         }

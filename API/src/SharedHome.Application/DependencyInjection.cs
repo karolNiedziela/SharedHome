@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SharedHome.Application.Bills.Services;
-using SharedHome.Application.Common.Events;
 using SharedHome.Application.Common.User;
 using SharedHome.Application.Notifications.Hubs;
 using SharedHome.Application.Notifications.Options;
@@ -12,11 +11,9 @@ using SharedHome.Application.Notifications.Services;
 using SharedHome.Application.PipelineBehaviours;
 using SharedHome.Application.ShoppingLists.Services;
 using SharedHome.Domain.Bills.Services;
-using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.ShoppingLists.Services;
 using SharedHome.Notifications.Services;
 using SharedHome.Notifications.Validators;
-using System;
 
 namespace SharedHome.Application
 {
@@ -28,7 +25,6 @@ namespace SharedHome.Application
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UserInformationBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PagedQueryBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-            services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
 
             services.AddScoped<IShoppingListService, ShoppingListService>();
             services.AddScoped<IBillService, BillService>();

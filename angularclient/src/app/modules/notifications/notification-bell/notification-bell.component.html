@@ -29,7 +29,11 @@
         </div>
       </div>
 
-      <mat-list-item role="list" *ngFor="let notification of notifications">
+      <mat-list-item
+        class="mb-3"
+        role="list"
+        *ngFor="let notification of notifications"
+      >
         <div
           class="notification-item flex flex-row justify-between w-full items-center"
         >
@@ -42,10 +46,10 @@
           ></div>
           <div
             class="notification-item__creator"
-            *ngIf="notification.createdBy"
+            *ngIf="notification.createdByFullName"
           >
-            <span [title]="notification.createdBy"
-              >{{ notification.createdBy | firstLettersToTitleCase }}
+            <span [title]="notification.createdByFullName"
+              >{{ notification.createdByFullName | firstLettersToTitleCase }}
             </span>
           </div>
         </div>

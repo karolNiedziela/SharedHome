@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SharedHome.Infrastructure.EF.Contexts;
 
@@ -10,9 +11,10 @@ using SharedHome.Infrastructure.EF.Contexts;
 namespace SharedHome.Infrastructure.EF.Migrations
 {
     [DbContext(typeof(WriteSharedHomeDbContext))]
-    partial class WriteSharedHomeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230120151404_MarkNotificationAsEntity")]
+    partial class MarkNotificationAsEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -212,34 +214,6 @@ namespace SharedHome.Infrastructure.EF.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("ShoppingLists", (string)null);
-                });
-
-            modelBuilder.Entity("SharedHome.Infrastructure.EF.Outbox.OutboxMessage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Error")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("OccuredOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("ProcessedOnUtc")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OutboxMessages");
                 });
 
             modelBuilder.Entity("SharedHome.Notifications.Entities.AppNotification", b =>

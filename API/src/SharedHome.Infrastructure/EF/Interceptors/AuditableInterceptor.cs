@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using SharedHome.Domain.Common.Models;
 using SharedHome.Application.Common.User;
 using SharedHome.Shared.Time;
+using SharedHome.Domain.Primivites;
 
 namespace SharedHome.Infrastructure.EF.Interceptors
 {

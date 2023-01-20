@@ -1,4 +1,4 @@
-﻿using SharedHome.Domain.Common.Models;
+﻿using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 
