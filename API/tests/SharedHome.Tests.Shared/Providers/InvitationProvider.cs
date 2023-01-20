@@ -10,6 +10,6 @@ namespace SharedHome.Tests.Shared.Providers
         public static readonly Guid RequestedToPersonId = new("9cbcaf55-47b2-49b9-a682-14489c1912cf");
 
         public static Invitation Get()
-            => Invitation.Create(InvitationId, HouseGroupId, RequestedByPersonId, RequestedToPersonId);        
+            => Invitation.CreatePending(InvitationId, HouseGroupId, RequestedByPersonId, RequestedToPersonId);        
     }
 }

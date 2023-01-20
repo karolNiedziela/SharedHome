@@ -1,6 +1,6 @@
 ﻿using Mapster;
 using SharedHome.Application.Common.DTO;
-using SharedHome.Domain.Common.Models;
+using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.ValueObjects;

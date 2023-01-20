@@ -1,9 +1,9 @@
-﻿using SharedHome.Domain.Common.Models;
+﻿using SharedHome.Domain.Primivites;
 using SharedHome.Notifications.Constants;
 
 namespace SharedHome.Notifications.Entities
 {
-    public class AppNotification
+    public class AppNotification : Entity
     {
         public int Id { get; set; }
 
@@ -14,8 +14,6 @@ namespace SharedHome.Notifications.Entities
         public NotificationType? Type { get; set; }
 
         public bool IsRead { get; set; } = false;
-
-        public DateTime CreatedAt { get; set; }
 
         public IEnumerable<AppNotificationField> Fields { get; set; } = new List<AppNotificationField>();
 
@@ -31,7 +29,6 @@ namespace SharedHome.Notifications.Entities
             Fields = fields;
             Type = type is null ? NotificationType.Other : type;
             IsRead = false;
-            CreatedAt = DateTime.UtcNow;
         }
     }
 }

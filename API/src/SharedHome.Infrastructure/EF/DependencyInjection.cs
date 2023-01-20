@@ -36,6 +36,7 @@ namespace SharedHome.Infrastructure.EF
 
             // Interceptors
             services.AddScoped<AuditableInterceptor>();
+            services.AddSingleton<DomainEventToOutboxMessageInterceptor>();
 
             services.ConfigureOptions<MySQLOptionsSetup>();
 
@@ -44,12 +45,15 @@ namespace SharedHome.Infrastructure.EF
                 var mySQLOptions = serviceProvider.GetService<IOptions<MySQLOptions>>()!.Value;
 
                 var auditableInterceptor = serviceProvider.GetRequiredService<AuditableInterceptor>();
+                var domainEventToOutboxMessageInterceptor = serviceProvider.GetRequiredService<DomainEventToOutboxMessageInterceptor>();
 
                 options.UseMySql(mySQLOptions.ConnectionString, ServerVersion.AutoDetect(mySQLOptions.ConnectionString), mySqlOptionsAction =>
                 {
                     mySqlOptionsAction.EnableRetryOnFailure(mySQLOptions.MaxRetryCount);
                 })
-                .AddInterceptors(auditableInterceptor);
+                .AddInterceptors(
+                    auditableInterceptor, 
+                    domainEventToOutboxMessageInterceptor);
 
                 options.EnableDetailedErrors(mySQLOptions.EnableDetailedErrors);
 

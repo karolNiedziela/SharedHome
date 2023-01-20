@@ -1,7 +1,8 @@
-﻿using SharedHome.Domain.Common.Models;
-using SharedHome.Domain.Invitations.Enums;
+﻿using SharedHome.Domain.Invitations.Enums;
+using SharedHome.Domain.Invitations.Events;
 using SharedHome.Domain.Invitations.Exceptions;
 using SharedHome.Domain.Invitations.ValueObjects;
+using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.Invitations
@@ -21,18 +22,25 @@ namespace SharedHome.Domain.Invitations
 
         }
 
-        private Invitation(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId, bool sentStatus = false)
+        private Invitation(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId, InvitationStatus invitationStatus)
         {
             Id = id;
             HouseGroupId = houseGroupId;
             RequestedByPersonId = requestedByPersonId;
             RequestedToPersonId = requestedToPersonId;
-            Status = sentStatus ? InvitationStatus.Sent : InvitationStatus.Pending;
+            Status = invitationStatus;
         }
+        public static Invitation CreateSent(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId)
+            => new(id, houseGroupId, requestedByPersonId, requestedToPersonId, InvitationStatus.Sent);
 
-        public static Invitation Create(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId, bool sentStatus = false)
-            => new(id, houseGroupId, requestedByPersonId, requestedToPersonId, sentStatus);
+        public static Invitation CreatePending(InvitationId id, HouseGroupId houseGroupId, PersonId requestedByPersonId, PersonId requestedToPersonId)
+        {
+            var invitation = new Invitation(id, houseGroupId, requestedByPersonId, requestedToPersonId, InvitationStatus.Pending);
 
+            invitation.AddEvent(new InvitationSent(id, houseGroupId, requestedByPersonId, requestedToPersonId));
+
+            return invitation;
+        }
 
         public void Accept()
         {
@@ -49,7 +57,7 @@ namespace SharedHome.Domain.Invitations
         }
 
         // For changing status of invitation, it is invalid when invitation has different status than PENDING
-        public static void ThrowIfInvalidInvitationStatus(InvitationStatus status)
+        private static void ThrowIfInvalidInvitationStatus(InvitationStatus status)
         {
             switch (status)
             {

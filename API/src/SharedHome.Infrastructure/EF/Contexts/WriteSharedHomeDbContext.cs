@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using SharedHome.Application.Common.User;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SharedHome.Domain.Bills;
-using SharedHome.Domain.Common.Models;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Persons;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Infrastructure.EF.Configurations.Write;
+using SharedHome.Infrastructure.EF.Outbox;
 using SharedHome.Notifications.Entities;
-using SharedHome.Shared.Time;
 using System.Reflection;
 
 namespace SharedHome.Infrastructure.EF.Contexts
@@ -30,6 +28,8 @@ namespace SharedHome.Infrastructure.EF.Contexts
 
         public DbSet<AppNotificationField> NotificationsFields { get; set; } = default!;
 
+        public DbSet<OutboxMessage> OutboxMessages { get; set; } = default!;
+
         public WriteSharedHomeDbContext(DbContextOptions<WriteSharedHomeDbContext> options) : base(options)
         {
         }
@@ -39,6 +39,6 @@ namespace SharedHome.Infrastructure.EF.Contexts
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly(), x => x.Namespace == typeof(ShoppingListWriteConfiguration).Namespace);
-        }      
+        }
     }
 }

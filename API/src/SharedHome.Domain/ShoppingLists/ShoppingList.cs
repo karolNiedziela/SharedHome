@@ -1,6 +1,7 @@
-﻿using SharedHome.Domain.Common.Models;
+﻿using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Entities;
+using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 
@@ -32,6 +33,8 @@ namespace SharedHome.Domain.ShoppingLists
             IsDone = isDone;
 
             AddProducts(products);
+
+            AddEvent(new ShoppingListCreated(id, name, personId));
         }
 
         public static ShoppingList Create(ShoppingListId id, ShoppingListName name, PersonId personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)

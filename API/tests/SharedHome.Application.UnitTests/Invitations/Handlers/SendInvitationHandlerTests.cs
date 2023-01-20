@@ -2,17 +2,14 @@
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Exceptions;
 using SharedHome.Application.Invitations.Commands.SendInvitation;
-using SharedHome.Application.Invitations.Dto;
 using SharedHome.Application.Invitations.Exceptions;
 using SharedHome.Application.Persons.Extensions;
 using SharedHome.Application.ReadServices;
-using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.Invitations;
 using SharedHome.Domain.Invitations.Enums;
 using SharedHome.Domain.Invitations.Repositories;
 using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Domain.Persons.ValueObjects;
-using SharedHome.Shared.Application.Responses;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
 using System;
@@ -27,7 +24,6 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         private readonly IInvitationReadService _invitationService;
         private readonly IHouseGroupReadService _houseGroupService;
         private readonly IPersonRepository _personRepository;
-        private readonly IDomainEventDispatcher _domainEventDispatcher;
         private readonly IRequestHandler<SendInvitationCommand, Guid> _commandHandler;
 
         public SendInvitationHandlerTests()
@@ -36,8 +32,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
             _houseGroupService = Substitute.For<IHouseGroupReadService>();
             _invitationService = Substitute.For<IInvitationReadService>();
             _personRepository = Substitute.For<IPersonRepository>();
-            _domainEventDispatcher = Substitute.For<IDomainEventDispatcher>();
-            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _personRepository, _domainEventDispatcher);
+            _commandHandler = new SendInvitationHandler(_invitationRepository, _houseGroupService, _invitationService, _personRepository);
         }
 
         [Fact]

@@ -1,14 +1,13 @@
 ﻿using MediatR;
-using SharedHome.Application.Common.Events;
-using SharedHome.Application.Notifications.Services;
 using SharedHome.Application.ReadServices;
+using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
 
 namespace SharedHome.Application.ShoppingLists.Events
 {
-    public class ShoppingListCreatedEventHandler : INotificationHandler<DomainEventNotification<ShoppingListCreated>>
+    public class ShoppingListCreatedEventHandler : INotificationHandler<ShoppingListCreated>
     {
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
@@ -19,30 +18,28 @@ namespace SharedHome.Application.ShoppingLists.Events
             _appNotificationService = appNotificationService;
         }
 
-        public async Task Handle(DomainEventNotification<ShoppingListCreated> notification, CancellationToken cancellationToken)
+        public async Task Handle(ShoppingListCreated notification, CancellationToken cancellationToken)
         {
-            var shoppingListCreated = notification.DomainEvent;
-
-            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(shoppingListCreated.Creator.PersonId))
+            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(notification.PersonId))
             {
                 return;
             }
 
-            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(shoppingListCreated.Creator.PersonId);
+            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(notification.PersonId);
 
             foreach (var personId in personIds)
             {
                 var notificationFields = new List<AppNotificationField>()
                 {
-                    new AppNotificationField(AppNotificationFieldType.Name, shoppingListCreated.ShoppingListName),
+                    new AppNotificationField(AppNotificationFieldType.Name, notification.ShoppingListName),
                     new AppNotificationField(AppNotificationFieldType.Target, TargetType.ShoppingList.ToString()),
                     new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString())
                 };
-                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields);              
+                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields);
 
                 await _appNotificationService.AddAsync(appNotification);
-             
-                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, shoppingListCreated.Creator.PersonId);
+
+                await _appNotificationService.BroadcastNotificationAsync(appNotification, personId, notification.PersonId);
             }
         }
     }

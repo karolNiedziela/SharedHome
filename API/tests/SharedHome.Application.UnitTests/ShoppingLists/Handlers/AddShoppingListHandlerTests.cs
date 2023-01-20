@@ -4,7 +4,6 @@ using MediatR;
 using NSubstitute;
 using SharedHome.Application.ShoppingLists.Commands.AddShoppingList;
 using SharedHome.Application.ShoppingLists.DTO;
-using SharedHome.Domain.Common.Events;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure;
@@ -20,17 +19,15 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
-        private readonly IDomainEventDispatcher _eventDispatcher;
         private readonly IRequestHandler<AddShoppingListCommand, ApiResponse<ShoppingListDto>> _commandHandler;
 
         public AddShoppingListHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
-            _eventDispatcher = Substitute.For<IDomainEventDispatcher>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new AddShoppingListHandler(_shoppingListRepository, _mapper, _eventDispatcher);
+            _commandHandler = new AddShoppingListHandler(_shoppingListRepository, _mapper);
         }
 
         [Fact]

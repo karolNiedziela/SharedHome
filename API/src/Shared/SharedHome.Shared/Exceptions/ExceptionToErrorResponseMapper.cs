@@ -42,7 +42,6 @@ namespace SharedHome.Shared.Exceptions.Common
             if (resourceStringValue.ResourceNotFound)
             {
                 _logger.LogWarning("Resource {exceptionCode} not found.", 
-                    _timeProvider.CurrentDate(),
                     exception.ErrorCode);
                 return exception.Message;
             }

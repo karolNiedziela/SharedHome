@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using SharedHome.Application;
+using SharedHome.Infrastructure.BackgroundJobs;
 using SharedHome.Infrastructure.EF;
 using SharedHome.Infrastructure.ImagesCloudinary;
 using SharedHome.Infrastructure.Mapping;
-using SharedHome.Notifications;
 
 namespace SharedHome.Infrastructure
 {
@@ -20,6 +20,23 @@ namespace SharedHome.Infrastructure
             services.AddMySharedHomeSQL();
 
             services.AddCloudinary();
+
+            services.AddQuartz(configure =>
+            {
+                var jobKey = new JobKey(nameof(ProcessOutboxMessagesJob));
+
+                configure.AddJob<ProcessOutboxMessagesJob>(jobKey)
+                    .AddTrigger(trigger =>
+                        trigger.ForJob(jobKey)
+                            .WithSimpleSchedule(schedule =>
+                                schedule.WithIntervalInSeconds(10)
+                                    .RepeatForever()));
+
+                configure.UseMicrosoftDependencyInjectionJobFactory();
+            });
+
+            services.AddQuartzHostedService();
+
 
             return services;
         }

@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.Common.DTO;
-using SharedHome.Application.Common.Events;
 using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Events;
+using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
 using SharedHome.Tests.Shared.Providers;
@@ -18,7 +17,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
     {
         private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IAppNotificationService _appNotificationService;
-        private readonly INotificationHandler<DomainEventNotification<ShoppingListCreated>> _notificationHandler;
+        private readonly INotificationHandler<ShoppingListCreated> _notificationHandler;
 
         public ShoppingListCreatedEventHandlerTests()
         {            
@@ -30,14 +29,12 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
-
-            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(false);
 
-            await _notificationHandler.Handle(domainEvent, default);
+            await _notificationHandler.Handle(shoppingListCreated, default);
 
             await _appNotificationService.ReceivedWithAnyArgs(0).AddAsync(Arg.Any<AppNotification>());
             await _appNotificationService.ReceivedWithAnyArgs(0).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>());
@@ -46,9 +43,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
-
-            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);
@@ -56,7 +51,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
             _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
                 .Returns(Array.Empty<Guid>());
 
-            await _notificationHandler.Handle(domainEvent, default);
+            await _notificationHandler.Handle(shoppingListCreated, default);
 
             await _appNotificationService.ReceivedWithAnyArgs(0).AddAsync(Arg.Any<AppNotification>());
             await _appNotificationService.ReceivedWithAnyArgs(0).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>());
@@ -65,9 +60,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", new CreatorDto(Guid.NewGuid(), "", ""));
-
-            var domainEvent = new DomainEventNotification<ShoppingListCreated>(shoppingListCreated);
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);
@@ -79,7 +72,8 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
                    Guid.NewGuid(),                   
                });
 
-            await _notificationHandler.Handle(domainEvent, default);
+            await _notificationHandler.Handle(shoppingListCreated, default);
+
             await _appNotificationService.Received(2).AddAsync(Arg.Any<AppNotification>());
             await _appNotificationService.Received(2).BroadcastNotificationAsync(Arg.Any<AppNotification>(), Arg.Any<Guid>(), Arg.Any<Guid>());
         }

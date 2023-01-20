@@ -112,11 +112,11 @@ export class FormModalComponent implements OnInit {
         finalize(() => {
           this.disabled = false;
           this.loadingSaveButton = false;
-          this.dialogRef.disableClose = false;
         })
       )
       .subscribe({
         next: () => {
+          this.dialogRef.disableClose = false;
           this.close();
         },
       });

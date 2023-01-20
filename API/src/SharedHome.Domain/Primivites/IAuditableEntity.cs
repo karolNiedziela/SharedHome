@@ -1,4 +1,4 @@
-﻿namespace SharedHome.Domain.Common.Models
+﻿namespace SharedHome.Domain.Primivites
 {
     public interface IAuditableEntity
     {

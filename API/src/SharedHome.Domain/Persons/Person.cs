@@ -1,5 +1,5 @@
-﻿using SharedHome.Domain.Common.Models;
-using SharedHome.Domain.Persons.ValueObjects;
+﻿using SharedHome.Domain.Persons.ValueObjects;
+using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Domain.Persons
