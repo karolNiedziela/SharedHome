@@ -81,8 +81,8 @@ export class InvitatonsListComponent
   ngAfterViewInit(): void {
     this.statusSelectedSubscription =
       this.statusSelect.selectedChanged.subscribe((selectedValue: number) => {
-        this.onStatusChange(selectedValue!);
         this.statusSelected = selectedValue;
+        this.onStatusChange(selectedValue!);
         this.setColumnsBasedOnStatus();
       });
   }

@@ -1,6 +1,7 @@
+import { ThemeService } from './../../../core/services/theme/theme.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { filter, Observable } from 'rxjs';
 import { ScreenSizeHelper } from '../../helpers/screen-size-helper';
 import { NotificationService } from 'src/app/modules/notifications/services/notification.service';
@@ -13,6 +14,9 @@ import { AuthenticationResponse } from 'src/app/core/models/authentication-respo
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  @Output()
+  darkModeSwitched: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   notificationsCount$!: Observable<number>;
   menuToggled: boolean = false;
   authenticationSubscription!: Subscription;
@@ -20,6 +24,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     public screenSizeHelper: ScreenSizeHelper,
+    public themeService: ThemeService,
     private notificationService: NotificationService,
     private authenticationService: AuthenticationService,
     private router: Router
@@ -48,6 +53,10 @@ export class NavbarComponent implements OnInit {
           this.toggleMenu();
         }
       });
+  }
+
+  switchTheme(): void {
+    this.darkModeSwitched.emit(true);
   }
 
   toggleMenu(): void {
