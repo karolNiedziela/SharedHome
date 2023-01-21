@@ -14,9 +14,15 @@
 </button>
 
 <ng-template #noProfileImage>
-  <span class="username">
+  <button
+    mat-fab
+    color="primary"
+    mat-icon-button
+    [matMenuTriggerFor]="profileMenu"
+    class="sharedhome-circle-btn"
+  >
     {{ userFullName | firstLettersToTitleCase }}
-  </span>
+  </button>
 </ng-template>
 
 <mat-menu #profileMenu="matMenu">

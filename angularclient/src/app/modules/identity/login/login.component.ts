@@ -32,12 +32,13 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.disabled = true;
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+
       return;
     }
+
+    this.disabled = true;
 
     this.loadingSaveButton = true;
 
@@ -51,13 +52,14 @@ export class LoginComponent implements OnInit {
         finalize(() => {
           this.disabled = false;
           this.loadingSaveButton = false;
-          this.signalRService.initiateSignalRConnection(
-            this.authenticationService.authenticationResponseValue.accessToken
-          );
         })
       )
       .subscribe({
-        next: () => {},
+        next: () => {
+          this.signalRService.initiateSignalRConnection(
+            this.authenticationService.authenticationResponseValue.accessToken
+          );
+        },
         error: (error: string[]) => {
           this.errorMessages = error;
         },

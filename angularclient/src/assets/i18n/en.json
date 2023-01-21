@@ -138,7 +138,8 @@
       "invalid_email": "Please provide a valid email address.",
       "drag_and_drop_file": "Drag and drop file here",
       "or": "or",
-      "browse_for_file": "Browse for file"
+      "browse_for_file": "Browse for file",
+      "choose_date": "Choose a date"
     },
     "operations": {
       "delete": "Delete",
