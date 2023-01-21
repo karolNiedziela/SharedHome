@@ -1,6 +1,7 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.SignalR;
 using SharedHome.Application.Notifications.Hubs;
+using SharedHome.Domain.Persons.Repositories;
 using SharedHome.Notifications.DTO;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Repositories;
@@ -15,19 +16,22 @@ namespace SharedHome.Application.Notifications.Services
         private readonly IMapper _mapper;
         private readonly IEnumerable<IAppNotificationFieldValidator> _validators;
         private readonly IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> _hubContext;
+        private readonly IPersonRepository _personRepository;
 
         public AppNotificationService(
             INotificationRepository notificationRepository,
             IMapper mapper,
             IHubContext<HouseGroupNotificationHub, IHouseGroupNotificationHubClient> hubContext,
-            IEnumerable<IAppNotificationFieldValidator> validators)
+            IEnumerable<IAppNotificationFieldValidator> validators,
+            IPersonRepository personRepository)
         {
             _notificationRepository = notificationRepository;
             _mapper = mapper;
             _hubContext = hubContext;
             _validators = validators;
+            _personRepository = personRepository;
         }
-       
+
         public async Task AddAsync(AppNotification notification)
         {
             var isValid = true;
@@ -53,6 +57,8 @@ namespace SharedHome.Application.Notifications.Services
                 throw new Exception("Invalid field");
             }
 
+            notification.CreatedByFullName = await GetPersonFullName(notification.CreatedBy);
+
             await _notificationRepository.AddAsync(notification);
         }
 
@@ -76,6 +82,17 @@ namespace SharedHome.Application.Notifications.Services
                 groupName!, 
                 HouseGroupNotificationHub.GetConnectionId(personIdToExclude))
                 .BroadcastNotificationAsync(notificationDto);
+        }
+
+        private async Task<string> GetPersonFullName(Guid personId)
+        {
+            var person = await _personRepository.GetAsync(personId);
+            if (person is null)
+            {
+                return string.Empty;
+            }
+
+            return $"{person.FirstName.Value} {person.LastName.Value}";
         }
     }
 }

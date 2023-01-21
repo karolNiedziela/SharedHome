@@ -29,7 +29,7 @@ namespace SharedHome.Application.Invitations.Events
                 new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Send.ToString()),
                 new AppNotificationField(AppNotificationFieldType.SentBy, fullName),
             };
-            var appNotification = new AppNotification(notification.RequestedToPersonId, nameof(InvitationSent), notificationFields);
+            var appNotification = new AppNotification(notification.RequestedToPersonId, nameof(InvitationSent), notificationFields, notification.RequestedByPersonId);
             await _appNotificationService.AddAsync(appNotification);
 
             await _appNotificationService.BroadcastNotificationAsync(appNotification, notification.RequestedToPersonId);

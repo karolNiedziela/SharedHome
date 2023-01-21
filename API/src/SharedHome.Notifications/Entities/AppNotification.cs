@@ -3,7 +3,7 @@ using SharedHome.Notifications.Constants;
 
 namespace SharedHome.Notifications.Entities
 {
-    public class AppNotification : Entity
+    public class AppNotification
     {
         public int Id { get; set; }
 
@@ -17,18 +17,26 @@ namespace SharedHome.Notifications.Entities
 
         public IEnumerable<AppNotificationField> Fields { get; set; } = new List<AppNotificationField>();
 
+        public Guid CreatedBy { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public string CreatedByFullName { get; set; } = default!;
+
         public AppNotification()
         {
 
         }
 
-        public AppNotification(Guid personId, string title, IEnumerable<AppNotificationField> fields, NotificationType? type = null)
+        public AppNotification(Guid personId, string title, IEnumerable<AppNotificationField> fields, Guid createdBy, NotificationType? type = null)
         {
             PersonId = personId;
             Title = title;
             Fields = fields;
             Type = type is null ? NotificationType.Other : type;
             IsRead = false;
+            CreatedBy = createdBy;
+            CreatedAt = DateTime.UtcNow;
         }
     }
 }
