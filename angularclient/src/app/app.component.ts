@@ -1,7 +1,7 @@
-import { registerLocaleData } from '@angular/common';
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { ThemeService } from './core/services/theme/theme.service';
+import { DOCUMENT, registerLocaleData } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ThemeService } from 'ng2-charts';
 import { Subscription } from 'rxjs';
 import { AuthenticationResponse } from './core/models/authentication-response';
 import { LanguageService } from './core/services/language.service';
@@ -15,6 +15,8 @@ import localePl from '@angular/common/locales/pl';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private isDark = true;
+
   title = 'sharedhomewebclient';
   authenticationResponse: AuthenticationResponse = null!;
   subscriptions: Subscription[] = [];
@@ -46,10 +48,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.themeService.setTheme();
+    this.themeService.setTheme();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe);
+  }
+
+  switchMode(): void {
+    this.themeService.switchTheme();
   }
 }

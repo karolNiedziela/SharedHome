@@ -1,15 +1,18 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
   private static key: string = 'sharedhome-theme';
-  private stylesheet!: HTMLLinkElement;
 
-  public static isDefaultDark: boolean = window.matchMedia(
-    '(prefers-color-scheme: dark)'
-  ).matches;
+  private renderer!: Renderer2;
+
+  public static darkThemeClass: string = 'theme-dark';
+  public static lightThemeClass: string = 'theme-light';
+
+  public isDark: boolean = true;
 
   public get theme(): string {
     const theme: string | null = localStorage.getItem(ThemeService.key);
@@ -17,41 +20,33 @@ export class ThemeService {
       return theme;
     }
 
-    return ThemeService.isDefaultDark ? 'dark' : 'light';
+    return this.isDark
+      ? ThemeService.darkThemeClass
+      : ThemeService.lightThemeClass;
   }
 
-  constructor() {}
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private rendererFactory: RendererFactory2
+  ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
 
-  public setTheme(theme?: string): void {
-    const link = this.getExistingLinkElementByKey();
-    link?.remove();
-
-    this.stylesheet = document.createElement('link');
-    this.stylesheet.rel = 'stylesheet';
-    this.stylesheet.href = `/${this.theme}.css`;
-
-    if (theme && theme.length > 0) {
-      this.stylesheet.href = `/${theme}.css`;
-      localStorage.setItem(ThemeService.key, theme);
-    } else {
-      this.stylesheet.href = `/${this.theme}.css`;
-      localStorage.setItem(ThemeService.key, this.theme);
-    }
-
-    document.head.appendChild(this.stylesheet);
+  public setTheme(): void {
+    this.renderer.addClass(this.document.body, this.theme);
   }
 
   public switchTheme(): void {
-    if (this.theme === 'light') {
-      this.setTheme('dark');
-    } else {
-      this.setTheme('light');
-    }
-  }
-
-  private getExistingLinkElementByKey(): HTMLLinkElement {
-    return document.head.querySelector(
-      `[href='/${this.theme}.css']`
-    )! as HTMLLinkElement;
+    const previousTheme = this.theme
+      ? ThemeService.darkThemeClass
+      : ThemeService.lightThemeClass;
+    this.renderer.removeClass(this.document.body, previousTheme);
+    const newTheme =
+      this.theme == ThemeService.darkThemeClass
+        ? ThemeService.lightThemeClass
+        : ThemeService.darkThemeClass;
+    this.renderer.addClass(this.document.body, newTheme);
+    localStorage.setItem(ThemeService.key, newTheme);
+    this.isDark = !this.isDark;
   }
 }

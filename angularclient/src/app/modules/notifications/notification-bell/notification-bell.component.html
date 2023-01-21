@@ -6,7 +6,7 @@
     matBadgeOverlap="true"
     matBadgeSize="small"
     (menuClosed)="onMenuClose($event)"
-    matTooltip="notifications.module | translate"
+    [matTooltip]="'notifications.module' | translate"
     >notifications</mat-icon
   >
   <ng-template #noNotifications>

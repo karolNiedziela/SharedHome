@@ -20,7 +20,7 @@
     *ngIf="notifications$ | async as paged; else loading"
   >
     <div
-      class="flex flex-row justify-between items-center w-full"
+      class="flex flex-row justify-between items-center w-full border-b-2 mb-2 pb-1"
       *ngFor="let notification of paged.items"
     >
       <div class="px-2">{{ notification.title }}</div>

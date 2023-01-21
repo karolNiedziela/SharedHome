@@ -1,5 +1,5 @@
 <div class="flex h-full w-full flex-col overflow-hidden">
-  <app-navbar></app-navbar>
+  <app-navbar (darkModeSwitched)="switchMode()"></app-navbar>
   <div class="main flex flex-row overflow-auto w-full h-full">
     <aside class="sidebar" *ngIf="authenticationResponse">
       <app-sidebar></app-sidebar>

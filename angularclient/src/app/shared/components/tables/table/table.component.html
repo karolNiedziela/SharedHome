@@ -1,6 +1,10 @@
 <!-- Table -->
 <ng-container>
-  <table mat-table [dataSource]="tableDataSource" class="w-full">
+  <table
+    mat-table
+    [dataSource]="tableDataSource"
+    class="sharedhome-table w-full"
+  >
     <ng-container
       *ngFor="let tableColumn of tableColumns; let i = index"
       [matColumnDef]="tableColumn.name"
