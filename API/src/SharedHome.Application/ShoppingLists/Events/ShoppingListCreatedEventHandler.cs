@@ -35,7 +35,7 @@ namespace SharedHome.Application.ShoppingLists.Events
                     new AppNotificationField(AppNotificationFieldType.Target, TargetType.ShoppingList.ToString()),
                     new AppNotificationField(AppNotificationFieldType.Operation, OperationType.Create.ToString())
                 };
-                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields);
+                var appNotification = new AppNotification(personId, nameof(ShoppingListCreated), fields: notificationFields, notification.PersonId);
 
                 await _appNotificationService.AddAsync(appNotification);
 

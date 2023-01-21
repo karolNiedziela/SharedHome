@@ -37,7 +37,7 @@ namespace SharedHome.Application.Bills.Events
                     new AppNotificationField(AppNotificationFieldType.DateOfPayment, notification.DateOfPayment.ToShortDateString())
                 };
 
-                var appNotification = new AppNotification(personId, nameof(BillCreated), notificationFields);
+                var appNotification = new AppNotification(personId, nameof(BillCreated), notificationFields, notification.PersonId);
 
                 await _appNotificationService.AddAsync(appNotification);
 
