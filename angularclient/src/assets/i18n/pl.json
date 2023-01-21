@@ -138,7 +138,8 @@
       "invalid_email": "Please provide a valid email address.",
       "drag_and_drop_file": "Przeciągnij i upuść plik tutaj",
       "or": "lub",
-      "browse_for_file": "Przeglądaj pliki"
+      "browse_for_file": "Przeglądaj pliki",
+      "choose_date": "Wybierz datę"
     },
     "operations": {
       "delete": "Usuń",
