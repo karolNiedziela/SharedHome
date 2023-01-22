@@ -224,7 +224,7 @@ export class ShoppingListDetailsComponent
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
     if (this.shoppingList?.isDone) {
       additionalPopupMenuItems.push({
-        text: 'shopping_lists.mark_as_done',
+        text: 'shopping_lists.mark_as_usdone',
         onClick: () => {
           this.markAsUndoneModal.open();
         },
@@ -238,7 +238,7 @@ export class ShoppingListDetailsComponent
       });
 
       additionalPopupMenuItems.push({
-        text: 'shopping_lists.mark_as_undone',
+        text: 'shopping_lists.mark_as_done',
         onClick: () => {
           this.markAsDoneModal.open();
         },

@@ -20,7 +20,6 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
     public class RegisterCommandHandlerTests
     {
         private readonly UserManagerStub _userManagerStub;
-        private readonly IIdentityEmailSender<ConfirmationEmailSender> _emailSender;
         private readonly IPersonRepository _personRepository;
         private readonly ILogger<RegisterCommandHandler> _logger;
         private readonly IRequestHandler<RegisterCommand, ApiResponse<string>> _commandHandler;
@@ -28,10 +27,9 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
         public RegisterCommandHandlerTests()
         {
             _userManagerStub = Substitute.For<UserManagerStub>();           
-            _emailSender = Substitute.For<IIdentityEmailSender<ConfirmationEmailSender>>();
             _personRepository = Substitute.For<IPersonRepository>();
             _logger = Substitute.For<ILogger<RegisterCommandHandler>>();
-            _commandHandler = new RegisterCommandHandler(_userManagerStub, _emailSender, _personRepository, _logger);
+            _commandHandler = new RegisterCommandHandler(_userManagerStub, _personRepository, _logger);
         }
 
         [Fact]
@@ -64,17 +62,12 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
             _userManagerStub.CreateAsync(Arg.Any<ApplicationUser>(), Arg.Any<string>())
                 .Returns(IdentityResult.Success);
 
-            _userManagerStub.Options.SignIn.RequireConfirmedEmail= true;
-
-            _userManagerStub.GenerateEmailConfirmationTokenAsync(Arg.Any<ApplicationUser>())
-                .Returns("tokentokentoken");
+            _userManagerStub.Options.SignIn.RequireConfirmedEmail= true;           
 
             var response = await _commandHandler.Handle(command, default);
 
             await _personRepository.Received(1).AddAsync(Arg.Is<Person>(x => x.FirstName == "Test" &&
             x.LastName == "LastName"));
-
-            await _emailSender.Received(1).SendAsync(Arg.Is<string>(x => x == "email@test.com"), Arg.Any<string>());
 
             response.Data.ShouldBe("Thanks for signing up. Check your mailbox and confirm email to get fully access.");
         }
@@ -93,15 +86,11 @@ namespace SharedHome.Application.UnitTests.Identity.Handlers
 
             _userManagerStub.Options.SignIn.RequireConfirmedEmail = false;
 
-            _userManagerStub.GenerateEmailConfirmationTokenAsync(Arg.Any<ApplicationUser>())
-                .Returns("tokentokentoken");
-
             var response = await _commandHandler.Handle(command, default);
 
             await _personRepository.Received(1).AddAsync(Arg.Is<Person>(x => x.FirstName == "Test" &&
             x.LastName == "LastName"));
 
-            await _emailSender.Received(0).SendAsync(Arg.Any<string>(), Arg.Any<string>());
 
             response.Data.ShouldBe("Thanks for signing up.");
         }

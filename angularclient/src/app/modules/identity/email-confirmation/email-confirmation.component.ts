@@ -43,9 +43,11 @@ export class EmailConfirmationComponent implements OnInit {
       .subscribe({
         next: () => {
           this.router.navigate(['/identity/login']);
+          this.toastrService.success(
+            this.translateService.instant('Email adress confirmed.')
+          );
         },
         error: (error: string[]) => {
-          console.log(error[0]);
           const translatedEmailConfirmed = this.translateService.instant(
             'Email adress confirmed.'
           );
