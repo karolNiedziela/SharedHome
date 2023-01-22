@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'bills',
     component: BillsCalendarComponent,
     canActivate: [AuthGuard],
-    title: 'Bills',
+    title: 'bills.module',
   },
 ];
 

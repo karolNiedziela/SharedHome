@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'expenses',
     component: ExpensesListComponent,
     canActivate: [AuthGuard],
-    title: 'Expenses',
+    title: 'expenses.module',
   },
 ];
 

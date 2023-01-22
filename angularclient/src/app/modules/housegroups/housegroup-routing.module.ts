@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'housegroups',
     component: HousegroupMembersComponent,
     canActivate: [AuthGuard],
-    title: 'House group',
+    title: 'house_groups.module',
   },
 ];
 @NgModule({
