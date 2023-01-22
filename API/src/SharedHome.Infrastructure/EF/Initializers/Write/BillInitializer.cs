@@ -20,6 +20,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             if (await _context.Bills.AsNoTracking().AnyAsync()) return;
 
             var bills = GetBills();
+            bills.ForEach(bill => bill.ClearEvents());
             await _context.Bills.AddRangeAsync(bills);
             await _context.SaveChangesAsync();
         }

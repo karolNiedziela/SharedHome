@@ -39,7 +39,8 @@
     "delete_shopping_list_product": "Usuń produkt",
     "cancel_purchase_of_shopping_list_product": "ofnij zakup produktu",
     "cancel_purchase_of_shopping_list_product_text": "Czy na pewno chcesz cofnąć zakup produktu?",
-    "year_and_month": "Rok i miesiąc"
+    "year_and_month": "Rok i miesiąc",
+    "details": "Szczegóły"
   },
   "bills": {
     "module": "Rachunki",

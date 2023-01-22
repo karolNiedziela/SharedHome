@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { ApiResponse } from './../../../core/models/api-response';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +21,10 @@ export class RegisterComponent implements OnInit {
   successRegistrationInformation: string = '';
 
   registerForm!: FormGroup;
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -69,7 +73,9 @@ export class RegisterComponent implements OnInit {
           });
 
           this.errorMessages = [];
-          this.successRegistrationInformation = response.data;
+          this.successRegistrationInformation = this.translateService.instant(
+            response.data
+          );
         },
         error: (error: string[]) => {
           this.errorMessages = error;

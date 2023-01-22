@@ -1,4 +1,5 @@
-﻿using SharedHome.Domain.Persons.ValueObjects;
+﻿using SharedHome.Domain.Persons.Events;
+using SharedHome.Domain.Persons.ValueObjects;
 using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 
@@ -23,6 +24,8 @@ namespace SharedHome.Domain.Persons
             FirstName = firstName;
             LastName = lastName;
             Email = email;
+
+            AddEvent(new PersonCreated(id, email));
         }
 
         public static Person Create(PersonId id, FirstName firstName, LastName lastName, Email email)

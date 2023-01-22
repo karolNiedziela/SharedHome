@@ -24,6 +24,8 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
             var shoppingLists = GetShoppingLists();
 
             await _context.ShoppingLists.AddRangeAsync(shoppingLists);
+
+            shoppingLists.ForEach(shoppingList => shoppingList.ClearEvents());
             await _context.SaveChangesAsync();
         }
 

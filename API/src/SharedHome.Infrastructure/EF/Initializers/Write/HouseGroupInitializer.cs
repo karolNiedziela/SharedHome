@@ -35,6 +35,7 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
 
             houseGroup.AddMember(firstMember);
             houseGroup.AddMember(secondMember);
+            houseGroup.ClearEvents();
             await _context.HouseGroups.AddAsync(houseGroup);
             await _context.SaveChangesAsync();
         }
