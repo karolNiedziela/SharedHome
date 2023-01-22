@@ -114,6 +114,7 @@
     "view_all": "Zobacz wszystkie"
   },
   "profile": {
+    "module": "Konto",
     "change": "Zmień",
     "change_password": "Zmień hasło",
     "current_password": "Obecne hasło",

@@ -10,12 +10,12 @@ const routes: Routes = [
     path: 'shoppinglists',
     component: ShoppingListsListComponent,
     canActivate: [AuthGuard],
-    title: 'Shopping lists',
+    title: 'shopping_lists.module',
   },
   {
     path: 'shoppinglists/:shoppingListId',
     component: ShoppingListDetailsComponent,
-    title: 'Shopping list',
+    title: 'shopping_lists.module',
   },
 ];
 

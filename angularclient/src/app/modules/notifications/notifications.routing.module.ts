@@ -8,6 +8,7 @@ const routes: Routes = [
     path: 'notifications',
     component: ListNotificationsComponent,
     canActivate: [AuthGuard],
+    title: 'notifications.module',
   },
 ];
 

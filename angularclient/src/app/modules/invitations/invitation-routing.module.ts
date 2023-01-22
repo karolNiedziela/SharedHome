@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'invitations',
     component: InvitatonsListComponent,
     canActivate: [AuthGuard],
-    title: 'Invitations',
+    title: 'invitations.module',
   },
 ];
 
