@@ -1,3 +1,4 @@
+import { ShoppingListStatus } from './../enums/shopping-list-status';
 import { EditShoppingListModalComponent } from './../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
 import {
@@ -21,7 +22,7 @@ import { PurchaseShoppingListProductComponent } from '../modals/purchase-shoppin
 export class ShoppingListProductComponent implements OnInit {
   @Input() shoppingListProduct!: ShoppingListProduct;
   @Input() shoppingListId!: string;
-  @Input() isDone!: boolean;
+  @Input() status!: ShoppingListStatus;
 
   public netContentType: typeof NetContentType = NetContentType;
 
@@ -95,7 +96,7 @@ export class ShoppingListProductComponent implements OnInit {
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
-    if (this.isDone) {
+    if (this.status == ShoppingListStatus.Done) {
       return additionalPopupMenuItems;
     }
 

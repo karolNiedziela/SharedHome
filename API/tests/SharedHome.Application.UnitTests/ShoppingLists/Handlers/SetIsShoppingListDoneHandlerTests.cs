@@ -2,6 +2,7 @@
 using NSubstitute;
 using SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone;
 using SharedHome.Domain.ShoppingLists;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
 
@@ -27,38 +28,43 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
 
         [Fact]
         public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success_WhenPersonIsInHouseGroupAndIsDoneTrue()
-        {            
+        {
+            var shoppingList = ShoppingListFakeProvider.GetEmpty();
+            shoppingList.MarkAsDone();
             var command = new SetIsShoppingListDoneCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
-                IsDone = true,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
+                Status = (int)ShoppingListStatus.Done,
             };
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
-                .Returns(ShoppingListProvider.GetEmpty());
+                .Returns(ShoppingListFakeProvider.GetEmpty());
 
             await _commandHandler.Handle(command, default);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList
-                => shoppingList.IsDone == true));
+                => shoppingList.Status == ShoppingListStatus.Done));
         }
 
         [Fact]
         public async Task SetIsShoppingListDone_Should_Call_Repository_On_Success()
         {
+            var shoppingList = ShoppingListFakeProvider.GetEmpty();
+            shoppingList.MarkAsDone();
             var command = new SetIsShoppingListDoneCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
-                IsDone = false,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
+                Status = (int)ShoppingListStatus.ToDo,
             };
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
-                            .Returns(ShoppingListProvider.GetEmpty(true));
+                            .Returns(shoppingList);
+
 
             await _commandHandler.Handle(command, default);
 
             await _shoppingListRepository.Received(1).UpdateAsync(Arg.Is<ShoppingList>(shoppingList
-                => shoppingList.IsDone == false));
+                => shoppingList.Status == ShoppingListStatus.ToDo));
         }
 
     }

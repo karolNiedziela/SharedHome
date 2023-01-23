@@ -19,7 +19,7 @@ namespace SharedHome.IntegrationTests.Controllers.ShoppingListController
 
         public async Task Patch_ChangePriceOfProduct_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetWithProduct(
+            var shoppingList = ShoppingListFakeProvider.GetWithProduct(
                 price: new Money(100m, "zł"), 
                 isBought: true, 
                 personId: TestDbInitializer.PersonId,

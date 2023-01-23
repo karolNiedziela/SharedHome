@@ -38,7 +38,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Throws_PersonIsNotInHouseGroupException_When_Person_Is_Not_In_HouseGroup()
         {
-            var person = PersonProvider.Get();
+            var person = PersonFakeProvider.Get();
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
@@ -55,7 +55,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Throws_InvitationAlreadySentException_When_Invitation_Already_Sent_ToPerson()
         {
-            var person = PersonProvider.Get();
+            var person = PersonFakeProvider.Get();
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
@@ -75,7 +75,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var person = PersonProvider.Get();
+            var person = PersonFakeProvider.Get();
             _personRepository.GetByEmailOrThrowAsync(Arg.Any<Email>())
                 .Returns(person);
 
@@ -87,8 +87,8 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
 
             var command = new SendInvitationCommand
             {
-                HouseGroupId = InvitationProvider.HouseGroupId,
-                PersonId = InvitationProvider.RequestedToPersonId,
+                HouseGroupId = InvitationFakeProvider.HouseGroupId,
+                PersonId = InvitationFakeProvider.RequestedToPersonId,
                 RequestedToPersonEmail = "email@email.com",
             };
 

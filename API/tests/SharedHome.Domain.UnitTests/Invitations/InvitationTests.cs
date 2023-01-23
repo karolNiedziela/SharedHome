@@ -12,7 +12,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void NewInvitation_Should_Have_InvitationStatus_Set_To_Pending()
         {
-            var invitation = InvitationProvider.Get();
+            var invitation = InvitationFakeProvider.Get();
 
             invitation.Status.ShouldBe(InvitationStatus.Pending);
         }
@@ -20,7 +20,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void Accept_Throws_InvitationAcceptedException_When_Invitation_Is_Already_Accepted()
         {
-            Invitation invitation = InvitationProvider.Get();
+            Invitation invitation = InvitationFakeProvider.Get();
             invitation.Accept();
 
             var exception = Record.Exception(() => invitation.Accept());
@@ -32,7 +32,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void Accept_Throws_InvitationRejectedException_When_Invitation_Is_Already_Rejected()
         {
-            Invitation invitation = InvitationProvider.Get();
+            Invitation invitation = InvitationFakeProvider.Get();
             invitation.Reject();
 
             var exception = Record.Exception(() => invitation.Accept());
@@ -44,7 +44,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void Accept_Should_Set_InvitationStatus_To_Accepted()
         {
-            var invitation = InvitationProvider.Get();
+            var invitation = InvitationFakeProvider.Get();
 
             invitation.Accept();
 
@@ -54,7 +54,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void Reject_Throws_InvitationAcceptedException_When_Invitation_Is_Already_Accepted()
         {
-            Invitation invitation = InvitationProvider.Get();
+            Invitation invitation = InvitationFakeProvider.Get();
             invitation.Accept();
 
             var exception = Record.Exception(() => invitation.Reject());
@@ -66,7 +66,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void Reject_Throws_InvitationRejectedException_When_Invitation_Is_Already_Rejected()
         {
-            Invitation invitation = InvitationProvider.Get();
+            Invitation invitation = InvitationFakeProvider.Get();
             invitation.Reject();
 
             var exception = Record.Exception(() => invitation.Reject());
@@ -78,7 +78,7 @@ namespace SharedHome.Domain.UnitTests.Invitations
         [Fact]
         public void Reject_Should_Set_InvitationStatus_To_Rejected()
         {
-            var invitation = InvitationProvider.Get();
+            var invitation = InvitationFakeProvider.Get();
 
             invitation.Reject();
 

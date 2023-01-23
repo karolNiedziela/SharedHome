@@ -21,7 +21,7 @@ namespace SharedHome.IntegrationTests.Controllers.ShoppingListController
         [Fact]
         public async Task Put_AddShoppingListProduct_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetEmpty(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
+            var shoppingList = ShoppingListFakeProvider.GetEmpty(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
             await _shoppingListSeed.AddAsync(shoppingList);
 
             Authorize(userId: TestDbInitializer.PersonId);

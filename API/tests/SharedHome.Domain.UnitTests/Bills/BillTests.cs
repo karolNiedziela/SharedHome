@@ -17,7 +17,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         public void Create_Throws_EmptyServiceProviderNameException_When_Name_Is_NullOrWhiteSpace(string name) 
         {
             var exception = Record.Exception(() 
-                => Bill.Create(Guid.NewGuid(), BillProvider.PersonId, BillType.Trash, name, DateOnly.FromDateTime(DateTime.Now), new Money(100m, "zł")));
+                => Bill.Create(Guid.NewGuid(), BillFakeProvider.PersonId, BillType.Trash, name, DateOnly.FromDateTime(DateTime.Now), new Money(100m, "zł")));
 
             exception.ShouldNotBeNull();
             exception.ShouldBeOfType<EmptyServiceProviderNameException>();
@@ -26,7 +26,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void PayFor_Throws_BillPaidException_When_Bill_Is_Already_Paid()
         {
-            var bill = BillProvider.Get(isPaid: true);
+            var bill = BillFakeProvider.Get(isPaid: true);
 
             var exception = Record.Exception(() => bill.PayFor(new Money(2500m, "zł")));
 
@@ -37,7 +37,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void PayFor_Should_Set_Cost_And_IsPaid_To_True()
         {
-            var bill = BillProvider.Get();
+            var bill = BillFakeProvider.Get();
 
             bill.PayFor(new Money(1500m, "zł"));
 
@@ -49,7 +49,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void CancelPayment_Throws_BillNotPaidException_When_Bill_Is_Not_Paid()
         {
-            var bill = BillProvider.Get();
+            var bill = BillFakeProvider.Get();
 
             var exception = Record.Exception(() => bill.CancelPayment());
 
@@ -60,7 +60,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void CancelPayment_Should_Clear_Cost_And_Set_IsPaid_To_False()
         {
-            var bill = BillProvider.Get(isPaid: true);
+            var bill = BillFakeProvider.Get(isPaid: true);
 
             bill.CancelPayment();
 
@@ -71,7 +71,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void ChangeCost_Should_Change_Cost()
         {
-            var bill = BillProvider.Get(isPaid: true);
+            var bill = BillFakeProvider.Get(isPaid: true);
 
             bill.ChangeCost(new Money(500m, "zł"));
 
@@ -82,7 +82,7 @@ namespace SharedHome.Domain.UnitTests.Bills
         [Fact]
         public void ChangeDateOfPayments_Should_Change_DateOfPayment()
         {
-            var bill = BillProvider.Get(isPaid: true);
+            var bill = BillFakeProvider.Get(isPaid: true);
 
             bill.ChangeDateOfPayment(DateOnly.FromDateTime(new DateTime(2022, 5, 10)));
 

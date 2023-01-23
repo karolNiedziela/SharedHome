@@ -34,15 +34,15 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Extensions
         [Fact]
         public async Task GetOrThrowAsync_Should_Return_HouseGroup()
         {
-            var houseGroup = HouseGroupProvider.GetWithMember();
+            var houseGroup = HouseGroupFakeProvider.GetWithMember();
 
             _houseGroupRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);
 
-            var returnedHouseGroup = await _houseGroupRepository.GetAsync(HouseGroupProvider.HouseGroupId, Guid.NewGuid());
+            var returnedHouseGroup = await _houseGroupRepository.GetAsync(HouseGroupFakeProvider.HouseGroupId, Guid.NewGuid());
 
-            returnedHouseGroup!.Id.Value.ShouldBe(HouseGroupProvider.HouseGroupId);
-            returnedHouseGroup.Members.First().PersonId.Value.ShouldBe(HouseGroupProvider.PersonId);
+            returnedHouseGroup!.Id.Value.ShouldBe(HouseGroupFakeProvider.HouseGroupId);
+            returnedHouseGroup.Members.First().PersonId.Value.ShouldBe(HouseGroupFakeProvider.PersonId);
         }
     }
 }

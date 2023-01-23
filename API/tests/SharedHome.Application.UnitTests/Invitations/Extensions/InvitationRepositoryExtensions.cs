@@ -34,12 +34,12 @@ namespace SharedHome.Application.UnitTests.Invitations.Extensions
         [Fact]
         public async Task GetOrThrowAsync_Returns_Invitation()
         {
-            var invitation = InvitationProvider.Get();
+            var invitation = InvitationFakeProvider.Get();
 
             _invitationRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(invitation);
 
-            var returnedInvitation = await _invitationRepository.GetAsync(InvitationProvider.InvitationId, Guid.NewGuid());
+            var returnedInvitation = await _invitationRepository.GetAsync(InvitationFakeProvider.InvitationId, Guid.NewGuid());
 
             invitation.ShouldNotBeNull();
             returnedInvitation!.HouseGroupId.ShouldBe(invitation.HouseGroupId);

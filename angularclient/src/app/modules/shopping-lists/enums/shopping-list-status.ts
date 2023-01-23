@@ -1,4 +1,4 @@
 export enum ShoppingListStatus {
-  Done,
-  'To do',
+  'To do' = 1,
+  Done = 2,
 }

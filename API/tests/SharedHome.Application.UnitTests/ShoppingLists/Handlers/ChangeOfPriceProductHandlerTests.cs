@@ -33,13 +33,13 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new ChangePriceOfProductCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
                 ProductName = "Product",
                 Price = new MoneyDto(25, "zł"),
             };
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
-                .Returns(ShoppingListProvider.GetWithProduct(price: new Money(10m, "zł"), isBought: true));
+                .Returns(ShoppingListFakeProvider.GetWithProduct(price: new Money(10m, "zł"), isBought: true));
 
             await _commandHandler.Handle(command, default);
 

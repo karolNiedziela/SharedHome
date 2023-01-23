@@ -17,7 +17,7 @@ namespace SharedHome.IntegrationTests.Controllers.ShoppingListController
         [Fact]
         public async Task Delete_Should_Return_204_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetEmpty(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
+            var shoppingList = ShoppingListFakeProvider.GetEmpty(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
             await _shoppingListSeed.AddAsync(shoppingList);
 
             Authorize(userId: TestDbInitializer.PersonId);

@@ -8,6 +8,7 @@ using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Application.Responses;
+using SharedHome.Shared.Time;
 using Shouldly;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -19,15 +20,17 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
+        private readonly ITimeProvider _timeProvider;
         private readonly IRequestHandler<AddShoppingListCommand, ApiResponse<ShoppingListDto>> _commandHandler;
 
         public AddShoppingListHandlerTests()
         {
             _shoppingListRepository = Substitute.For<IShoppingListRepository>();
+            _timeProvider = Substitute.For<ITimeProvider>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new AddShoppingListHandler(_shoppingListRepository, _mapper);
+            _commandHandler = new AddShoppingListHandler(_shoppingListRepository, _mapper, _timeProvider);
         }
 
         [Fact]

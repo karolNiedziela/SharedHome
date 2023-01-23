@@ -3,7 +3,7 @@ using SharedHome.Domain.HouseGroups.Entities;
 
 namespace SharedHome.Tests.Shared.Providers
 {
-    public static class HouseGroupProvider
+    public static class HouseGroupFakeProvider
     {
         public static readonly Guid PersonId = new("99c3dce2-54ca-48d6-a8cd-faca83168768");
         public static readonly Guid HouseGroupId = new("56b47fac-bd9f-47b7-8ab3-13139f5cfd95");

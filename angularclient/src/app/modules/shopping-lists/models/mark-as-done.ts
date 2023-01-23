@@ -1,4 +1,5 @@
+import { ShoppingListStatus } from './../enums/shopping-list-status';
 export interface MarkAsDone {
   shoppingListId: string;
-  isDone: boolean;
+  status: ShoppingListStatus;
 }

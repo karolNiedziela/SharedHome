@@ -12,7 +12,6 @@ namespace SharedHome.Application.ShoppingLists.Queries
 
         public int? Month { get; set; }
 
-        [BindRequired]
-        public bool IsDone { get; set; }
+        public int Status { get; set; }
     }
 }

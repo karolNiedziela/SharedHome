@@ -30,14 +30,14 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var bill = BillProvider.Get(billCost: new Money(1000m, "zł"));
+            var bill = BillFakeProvider.Get(billCost: new Money(1000m, "zł"));
 
             _billService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(bill);
 
             var command = new ChangeBillCostCommand
             {
-                BillId = BillProvider.BillId,
+                BillId = BillFakeProvider.BillId,
                 Cost = new MoneyDto(2000m, "zł")
             };
 

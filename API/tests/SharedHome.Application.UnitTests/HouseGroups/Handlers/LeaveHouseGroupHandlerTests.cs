@@ -27,14 +27,14 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Call_Delete_Repository_Method_When_Members_Count_Is_Equal_To_Zero()
         {
-            var houseGroup = HouseGroupProvider.GetWithMember();
+            var houseGroup = HouseGroupFakeProvider.GetWithMember();
 
             _houseGroupRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>()).Returns(houseGroup);
 
             var command = new LeaveHouseGroupCommand
             {
-                HouseGroupId = HouseGroupProvider.HouseGroupId,
-                PersonId = HouseGroupProvider.PersonId
+                HouseGroupId = HouseGroupFakeProvider.HouseGroupId,
+                PersonId = HouseGroupFakeProvider.PersonId
             };
 
             await _commandHandler.Handle(command, default);
@@ -45,14 +45,14 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Call_Update_Repository_Method_When_Members_Count_Is_Greater_Than_Zero()
         {
-            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(new Guid[] { Guid.NewGuid() });
+            var houseGroup = HouseGroupFakeProvider.GetWithAdditionalMembers(new Guid[] { Guid.NewGuid() });
 
             _houseGroupRepository.GetOrThrowAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>()).Returns(houseGroup);
 
             var command = new LeaveHouseGroupCommand
             {
-                HouseGroupId = HouseGroupProvider.HouseGroupId,
-                PersonId = HouseGroupProvider.PersonId,
+                HouseGroupId = HouseGroupFakeProvider.HouseGroupId,
+                PersonId = HouseGroupFakeProvider.PersonId,
             };
 
         await _commandHandler.Handle(command, default);

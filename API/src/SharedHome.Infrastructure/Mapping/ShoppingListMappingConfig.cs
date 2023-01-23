@@ -15,7 +15,8 @@ namespace SharedHome.Infrastructure.Mapping
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<ShoppingList, ShoppingListDto>()
-                .Map(dest => dest.Name, src => src.Name.Name);
+                .Map(dest => dest.Name, src => src.Name.Name)
+                .Map(dest => dest.Status, src => src.Status.ToString());
 
             config.NewConfig<ShoppingListProduct, ShoppingListProductDto>()
                 .Map(dest => dest.Name, src => src.Name.Value)

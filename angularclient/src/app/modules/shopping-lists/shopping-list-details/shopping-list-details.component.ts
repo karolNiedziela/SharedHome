@@ -16,6 +16,7 @@ import {
 } from 'src/app/shared/components/menus/popup-menu/popup-menu.config';
 import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.config';
+import { ShoppingListStatus } from '../enums/shopping-list-status';
 import { AddShoppingListProductComponent } from '../modals/add-shopping-list-product/add-shopping-list-product.component';
 import { EditShoppingListModalComponent } from '../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
 import { PurchaseShoppingListProductsModalComponent } from '../modals/purchase-shopping-list-products-modal/purchase-shopping-list-products-modal.component';
@@ -58,7 +59,7 @@ export class ShoppingListDetailsComponent
     modalTitle: 'shopping_lists.mark_shopping_list_as_done',
     confirmationText: 'shopping_lists.mark_shopping_list_as_done_text',
     onConfirm: () => {
-      this.markAsDone(true);
+      this.markAsDone(ShoppingListStatus.Done);
     },
   };
 
@@ -68,7 +69,7 @@ export class ShoppingListDetailsComponent
     modalTitle: 'shopping_lists.mark_shopping_list_as_undone',
     confirmationText: 'shopping_lists.mark_shopping_list_as_undone_text',
     onConfirm: () => {
-      this.markAsDone(false);
+      this.markAsDone(ShoppingListStatus['To do']);
     },
   };
 
@@ -125,9 +126,6 @@ export class ShoppingListDetailsComponent
         this.addOnProductSelectedListener(productComponents);
       }
     );
-
-    this.generateHeaderPopupMenuConfig();
-    this.generateMultipleSelectedItemsPopupMenuConfig();
   }
 
   ngOnDestroy(): void {
@@ -135,18 +133,34 @@ export class ShoppingListDetailsComponent
     this.shoppingListSubscription.unsubscribe();
   }
 
+  public generateHeaderPopupMenuConfig() {
+    this.headerPopupMenuConfig = {
+      isEditVisible: this.shoppingList?.status == ShoppingListStatus['To do'],
+      isDeleteVisible: this.shoppingList?.status == ShoppingListStatus['To do'],
+      onDelete: () => {
+        this.deleteShoppingListModal.open();
+      },
+      onEdit: () => {
+        this.editShoppingListModal.openModal();
+      },
+      additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
+    };
+  }
+
   private getShoppingList() {
     this.shoppingList$ = this.shoppingListService.get(this.shoppingListId).pipe(
       tap((response: ApiResponse<ShoppingList>) => {
         this.shoppingList = response.data;
+        this.generateHeaderPopupMenuConfig();
+        this.generateMultipleSelectedItemsPopupMenuConfig();
       })
     );
   }
 
-  private markAsDone(isDone: boolean): void {
+  private markAsDone(status: ShoppingListStatus): void {
     const markAsDone: MarkAsDone = {
       shoppingListId: this.shoppingListId,
-      isDone: isDone,
+      status: status,
     };
     this.shoppingListService.markAsDone(markAsDone, true).subscribe();
   }
@@ -163,7 +177,7 @@ export class ShoppingListDetailsComponent
         '.product'
       ) as HTMLElement;
 
-      if (!this.shoppingList?.isDone) {
+      if (this.shoppingList?.status == ShoppingListStatus['To do']) {
         productHtmlElement.addEventListener('click', (e) => {
           const targetHtmlElement = e.target as HTMLElement;
 
@@ -177,20 +191,6 @@ export class ShoppingListDetailsComponent
         });
       }
     });
-  }
-
-  private generateHeaderPopupMenuConfig(): void {
-    this.headerPopupMenuConfig = {
-      isEditVisible: !this.shoppingList?.isDone,
-      isDeleteVisible: !this.shoppingList?.isDone,
-      onDelete: () => {
-        this.deleteShoppingListModal.open();
-      },
-      onEdit: () => {
-        this.editShoppingListModal.openModal();
-      },
-      additionalPopupMenuItems: this.getAdditionalPopupMenuItems(),
-    };
   }
 
   private generateMultipleSelectedItemsPopupMenuConfig(): void {
@@ -222,7 +222,7 @@ export class ShoppingListDetailsComponent
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
-    if (this.shoppingList?.isDone) {
+    if (this.shoppingList?.status == ShoppingListStatus.Done) {
       additionalPopupMenuItems.push({
         text: 'shopping_lists.mark_as_usdone',
         onClick: () => {
@@ -261,7 +261,7 @@ export class ShoppingListDetailsComponent
       product.shoppingListProduct
     );
     if (selectedProductIndex > -1) {
-      this.removeSelectedProduct(product, selectedProductIndex);
+      this.removeSelectedProduct(selectedProductIndex);
       return;
     }
 
@@ -271,21 +271,16 @@ export class ShoppingListDetailsComponent
   private addSelectedProduct(product: ShoppingListProductComponent): void {
     this.shoppingListProductsSelected.push(product.shoppingListProduct);
 
-    this.showOrHidePurchaseSelectedOption(product);
+    this.showOrHidePurchaseSelectedOption();
   }
 
-  private removeSelectedProduct(
-    product: ShoppingListProductComponent,
-    indexToRemove: number
-  ): void {
+  private removeSelectedProduct(indexToRemove: number): void {
     this.shoppingListProductsSelected.splice(indexToRemove, 1);
 
-    this.showOrHidePurchaseSelectedOption(product);
+    this.showOrHidePurchaseSelectedOption();
   }
 
-  private showOrHidePurchaseSelectedOption(
-    product: ShoppingListProductComponent
-  ): void {
+  private showOrHidePurchaseSelectedOption(): void {
     const allProductsUnbought = this.shoppingList?.products
       .filter((product) => this.shoppingListProductsSelected.includes(product))
       .every((product) => !product.isBought);

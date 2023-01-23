@@ -1,16 +1,16 @@
 <div
   class="card shopping-list-card"
   *ngIf="(shoppingList$ | async)?.data as shoppingList; else loading"
-  [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+  [ngClass]="{ 'shopping-list-done': shoppingList.status == 2 }"
 >
   <div class="card-header flex flex-row justify-between mb-2 text-xl px-4 pt-1">
     <div
       class="card-title"
-      [ngClass]="{ 'text-decoration-line-through': shoppingList.isDone }"
+      [ngClass]="{ 'text-decoration-line-through': shoppingList.status == 2 }"
     >
       {{ shoppingList.name }}
     </div>
-    <div *ngIf="!shoppingList.isDone">
+    <div *ngIf="shoppingList.status == 1">
       <div
         *ngIf="
           !shoppingListProductsSelected ||
@@ -38,7 +38,7 @@
         class="single-product"
         [shoppingListProduct]="product"
         [shoppingListId]="shoppingListId"
-        [isDone]="shoppingList.isDone"
+        [status]="shoppingList.status"
       ></app-shopping-list-product>
     </li>
   </ul>

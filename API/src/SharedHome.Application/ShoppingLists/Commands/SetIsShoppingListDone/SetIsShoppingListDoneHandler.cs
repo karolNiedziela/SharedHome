@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using SharedHome.Domain.Bills.Enums;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.Services;
-
+using SharedHome.Shared.Helpers;
 
 namespace SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone
 {
@@ -18,15 +20,17 @@ namespace SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone
 
         public async Task<Unit> Handle(SetIsShoppingListDoneCommand request, CancellationToken cancellationToken)
         {
-            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);           
+            var shoppingList = await _shoppingListService.GetAsync(request.ShoppingListId, request.PersonId);
 
-            if (request.IsDone)
+            var status = EnumHelper.ToEnumByIntOrThrow<ShoppingListStatus>(request.Status);
+
+            if (status == ShoppingListStatus.Done)
             {
-                shoppingList.MakeListDone();
+                shoppingList.MarkAsDone();
             }
             else
             {
-                shoppingList.UndoListDone();
+                shoppingList.MarkAsToDo();
             }
 
             await _shoppingListRepository.UpdateAsync(shoppingList);

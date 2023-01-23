@@ -31,11 +31,11 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new DeleteManyShoppingListProductsCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
                 ProductNames = new[] { "Produkt1", "Produkt3" }
             };
 
-            var shoppingList = ShoppingListProvider.GetEmpty();
+            var shoppingList = ShoppingListFakeProvider.GetEmpty();
             shoppingList.AddProduct(ShoppingListProduct.Create("Produkt1", 1));
             shoppingList.AddProduct(ShoppingListProduct.Create("Produkt2", 1));
             shoppingList.AddProduct(ShoppingListProduct.Create("Produkt3", 1));

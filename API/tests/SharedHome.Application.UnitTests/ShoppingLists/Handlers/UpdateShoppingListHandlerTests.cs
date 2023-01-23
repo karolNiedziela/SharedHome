@@ -28,7 +28,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var shoppingList = ShoppingListProvider.GetEmpty();
+            var shoppingList = ShoppingListFakeProvider.GetEmpty();
 
             var command = new UpdateShoppingListCommand
             {

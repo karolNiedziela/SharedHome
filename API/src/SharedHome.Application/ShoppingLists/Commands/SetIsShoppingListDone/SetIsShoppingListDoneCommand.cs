@@ -8,6 +8,6 @@ namespace SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone
     {
         public Guid ShoppingListId { get; set; }
 
-        public bool IsDone { get; set; }
+        public int Status { get; set; }
     }
 }

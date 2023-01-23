@@ -6,7 +6,9 @@
 
         public string Name { get; set; } = default!;
 
-        public bool IsDone { get; set; }
+        public int Status { get; set; }
+
+        public DateTime CreationDate { get; set; }
 
         public ICollection<ShoppingListProductReadModel> Products { get; set; } = default!;
 

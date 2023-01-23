@@ -38,8 +38,8 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var command = new AcceptInvitationCommand
             {
-                PersonId = InvitationProvider.RequestedByPersonId,
-                HouseGroupId = InvitationProvider.HouseGroupId,
+                PersonId = InvitationFakeProvider.RequestedByPersonId,
+                HouseGroupId = InvitationFakeProvider.HouseGroupId,
             };
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(true);
@@ -54,18 +54,18 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         {
             var command = new AcceptInvitationCommand
             {
-                PersonId = InvitationProvider.RequestedByPersonId,
-                HouseGroupId = InvitationProvider.HouseGroupId,
+                PersonId = InvitationFakeProvider.RequestedByPersonId,
+                HouseGroupId = InvitationFakeProvider.HouseGroupId,
             };
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
 
-            var invitation = InvitationProvider.Get();
+            var invitation = InvitationFakeProvider.Get();
 
             _invitationRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(invitation);
 
-            var houseGroup = HouseGroupProvider.Get();
+            var houseGroup = HouseGroupFakeProvider.Get();
 
             _houseGroupRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);

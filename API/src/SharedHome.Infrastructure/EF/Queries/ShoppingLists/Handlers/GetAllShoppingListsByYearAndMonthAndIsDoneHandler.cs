@@ -5,6 +5,7 @@ using SharedHome.Application.Common.Queries;
 using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
 using SharedHome.Infrastructure.EF.Models;
@@ -37,6 +38,11 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 request.Month = currentDate.Month;
             }
 
+            if (request.Status != (int)ShoppingListStatus.ToDo && request.Status != (int)ShoppingListStatus.Done)
+            {
+                request.Status = (int)ShoppingListStatus.ToDo;
+            }
+
             if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
             {
                 var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
@@ -44,11 +50,11 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 return await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)
                     .Include(shoppingLists => shoppingLists.Products)
-                    .Where(shoppingList => shoppingList.CreatedAt.Month == request.Month.Value &&
-                    shoppingList.CreatedAt.Year == request.Year.Value &&
-                    shoppingList.IsDone == request!.IsDone &&
+                    .Where(shoppingList => shoppingList.CreationDate.Month == request.Month.Value &&
+                    shoppingList.CreationDate.Year == request.Year.Value &&
+                    shoppingList.Status == request.Status &&
                     houseGroupPersonIds.Contains(shoppingList.PersonId))
-                    .OrderByDescending(shoppingList => shoppingList.CreatedAt)
+                    .OrderByDescending(shoppingList => shoppingList.CreationDate)
                     .Select(shoppingList => _mapper.Map<ShoppingListDto>(shoppingList))
                     .PaginateAsync(request.PageNumber, request.PageSize);
             }
@@ -56,11 +62,11 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
             return await _shoppingLists
                 .Include(shoppingList => shoppingList.Person)
                 .Include(shoppingList => shoppingList.Products)
-                .Where(shoppingList => shoppingList.CreatedAt.Month == request.Month.Value &&
-                shoppingList.CreatedAt.Year == request.Year.Value &&
+                .Where(shoppingList => shoppingList.CreationDate.Month == request.Month.Value &&
+                shoppingList.CreationDate.Year == request.Year.Value &&
                 shoppingList.PersonId == request.PersonId &&
-                shoppingList.IsDone == request!.IsDone)
-                .OrderByDescending(shoppingList => shoppingList.CreatedAt)
+                shoppingList.Status == request.Status)
+                .OrderByDescending(shoppingList => shoppingList.CreationDate)
                 .Select(shoppingList => _mapper.Map<ShoppingListDto>(shoppingList))
                 .PaginateAsync(request.PageNumber, request.PageSize);
         }

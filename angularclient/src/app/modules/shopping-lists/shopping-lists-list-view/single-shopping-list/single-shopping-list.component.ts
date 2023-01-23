@@ -7,6 +7,7 @@ import {
 import { ConfirmationModalComponent } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalConfig } from 'src/app/shared/components/modals/confirmation-modal/confirmation-modal.config';
 import { ScreenSizeHelper } from 'src/app/shared/helpers/screen-size-helper';
+import { ShoppingListStatus } from '../../enums/shopping-list-status';
 import { EditShoppingListModalComponent } from '../../modals/edit-shopping-list-modal/edit-shopping-list-modal.component';
 import { MarkAsDone } from '../../models/mark-as-done';
 import { ShoppingList } from '../../models/shopping-list';
@@ -35,20 +36,20 @@ export class SingleShoppingListComponent implements OnInit {
   @ViewChild('markAsDoneModal')
   markAsDoneModal!: ConfirmationModalComponent;
   markAsDoneModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Mark shopping list as done',
-    confirmationText: 'Are you sure to mark this shopping list as done?',
+    modalTitle: 'shopping_lists.mark_shopping_list_as_done',
+    confirmationText: 'shopping_lists.mark_shopping_list_as_done_text',
     onConfirm: () => {
-      this.markAsDone(true);
+      this.markAsDone(ShoppingListStatus.Done);
     },
   };
 
   @ViewChild('markAsUndoneModal')
   markAsUndoneModal!: ConfirmationModalComponent;
   markAsUndoneModalConfig: ConfirmationModalConfig = {
-    modalTitle: 'Mark shopping list as undone',
-    confirmationText: 'Are you sure to mark this shopping list as undone?',
+    modalTitle: 'shopping_lists.mark_shopping_list_as_undone',
+    confirmationText: 'shopping_lists.mark_shopping_list_as_undone_text',
     onConfirm: () => {
-      this.markAsDone(false);
+      this.markAsDone(ShoppingListStatus['To do']);
     },
   };
 
@@ -64,11 +65,11 @@ export class SingleShoppingListComponent implements OnInit {
   ngOnInit(): void {
     this.headerPopupMenuConfig = {};
     this.headerPopupMenuConfig = {
-      isEditVisible: !this.shoppingList.isDone,
+      isEditVisible: this.shoppingList.status == ShoppingListStatus['To do'],
       onEdit: () => {
         this.editShoppingListModal.openModal();
       },
-      isDeleteVisible: !this.shoppingList.isDone,
+      isDeleteVisible: this.shoppingList.status == ShoppingListStatus['To do'],
       onDelete: () => {
         this.deleteShoppingListModal.open();
       },
@@ -88,10 +89,10 @@ export class SingleShoppingListComponent implements OnInit {
     this.shoppingListService.delete(shoppingListId).subscribe();
   }
 
-  public markAsDone(isDone: boolean): void {
+  public markAsDone(status: ShoppingListStatus): void {
     const markAsDone: MarkAsDone = {
       shoppingListId: this.shoppingList.id,
-      isDone: isDone,
+      status: status,
     };
     this.shoppingListService.markAsDone(markAsDone, false).subscribe();
   }
@@ -112,16 +113,16 @@ export class SingleShoppingListComponent implements OnInit {
 
   private getAdditionalPopupMenuItems(): AdditionalPopupMenuItem[] {
     const additionalPopupMenuItems: AdditionalPopupMenuItem[] = [];
-    if (this.shoppingList?.isDone) {
+    if (this.shoppingList?.status == ShoppingListStatus.Done) {
       additionalPopupMenuItems.push({
-        text: 'Mark as undone',
+        text: 'shopping_lists.mark_shopping_list_as_undone',
         onClick: () => {
           this.markAsUndoneModal.open();
         },
       });
     } else {
       additionalPopupMenuItems.push({
-        text: 'Mark as done',
+        text: 'shopping_lists.mark_shopping_list_as_done',
         onClick: () => {
           this.markAsDoneModal.open();
         },
