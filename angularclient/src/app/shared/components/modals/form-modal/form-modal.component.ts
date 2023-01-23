@@ -73,7 +73,7 @@ export class FormModalComponent implements OnInit {
     });
 
     this.dialogRef = this.dialog.open(this.modalContent, {
-      panelClass: ['md:w-3/5', 'lg:w-1/2', 'w-full'],
+      panelClass: ['md:w-3/5', 'lg:w-1/2', 'w-full', 'overflow-auto'],
       hasBackdrop: true,
       autoFocus: false,
     });

@@ -1,13 +1,7 @@
 import { FormControl, FormGroup } from '@angular/forms';
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { NetContentType } from '../../enums/net-content-type';
+import { NetContent } from '../../models/net-content';
 
 @Component({
   selector: 'app-net-content-form',
@@ -15,19 +9,34 @@ import { NetContentType } from '../../enums/net-content-type';
   styleUrls: ['./net-content-form.component.scss'],
 })
 export class NetContentFormComponent implements OnInit, OnDestroy {
-  @Input() parentFormGroup!: FormGroup;
+  @Input() netContentFormGroup!: FormGroup;
+
+  get netContentControl() {
+    return this.netContentFormGroup.controls['netContent'];
+  }
+
+  get netContentTypeControl() {
+    return this.netContentFormGroup.controls['netContentType'];
+  }
+
+  get money(): NetContent {
+    return {
+      netContent: this.netContentControl?.value,
+      netContentType: this.netContentTypeControl?.value,
+    };
+  }
 
   public netContentType: typeof NetContentType = NetContentType;
 
   constructor() {}
 
   ngOnInit(): void {
-    this.parentFormGroup.addControl('netContent', new FormControl(''));
+    this.netContentFormGroup.addControl('netContent', new FormControl(''));
 
-    this.parentFormGroup.addControl('netContentType', new FormControl(''));
+    this.netContentFormGroup.addControl('netContentType', new FormControl(''));
   }
 
   ngOnDestroy(): void {
-    this.parentFormGroup.reset();
+    this.netContentFormGroup.reset();
   }
 }

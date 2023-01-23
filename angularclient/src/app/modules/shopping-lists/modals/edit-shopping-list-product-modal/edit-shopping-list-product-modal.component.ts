@@ -42,6 +42,7 @@ export class EditShoppingListProductModalComponent
     this.editShoppingListProductForm = new FormGroup({
       productName: new FormControl('', [Validators.required]),
       quantity: new FormControl(1, [Validators.required]),
+      netContent: new FormGroup({}),
     });
 
     this.setFormValues();

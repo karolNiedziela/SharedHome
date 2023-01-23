@@ -11,7 +11,9 @@
     placeholder="shopping_lists.quantity"
   ></app-number-input>
   <app-net-content-form
-    [parentFormGroup]="addShoppingListProductForm"
+    [netContentFormGroup]="
+      addShoppingListProductForm.get('netContent') | formGroup
+    "
   ></app-net-content-form>
   <app-button
     class="product__button"

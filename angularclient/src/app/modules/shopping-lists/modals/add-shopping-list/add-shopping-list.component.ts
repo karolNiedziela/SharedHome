@@ -76,6 +76,7 @@ export class AddShoppingListComponent implements OnInit, Modalable {
       products: products,
     };
 
+    console.log(addShoppingList);
     this.modal.save(this.shoppingListService.add(addShoppingList));
   }
 

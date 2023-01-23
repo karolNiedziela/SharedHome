@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using SharedHome.Api.HealthChecks;
 using SharedHome.Api.Logging;
 using SharedHome.Api.Swagger.Filters;
 using SharedHome.Shared.Constants;
 using Swashbuckle.AspNetCore.Filters;
 using System.Globalization;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
-using System.Text.Json.Serialization;
 
 namespace SharedHome.Api
 {
@@ -23,18 +24,19 @@ namespace SharedHome.Api
                 {
                     options.SuppressAsyncSuffixInActionNames = false;
                 })
-               .AddJsonOptions(options =>
-               {
-                   options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                   options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-               })
                .AddDataAnnotationsLocalization(options =>
                {
                    options.DataAnnotationLocalizerProvider = (type, factory) =>
                    {
                        return factory.Create(Resources.DataAnnotationMessage, Assembly.GetEntryAssembly()!.GetName().Name!);
                    };
-               });          
+               })
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                   options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore; 
+               });
+   
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>

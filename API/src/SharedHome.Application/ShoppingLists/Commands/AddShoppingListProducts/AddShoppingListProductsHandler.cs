@@ -29,21 +29,10 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingListProducts
 
             foreach (var product in request.Products)
             {
-                NetContent? netContent;
+               
+                NetContentType? netContentType = product.NetContent is not null && product.NetContent!.NetContentType.HasValue ? EnumHelper.ToEnumByIntOrThrow<NetContentType>(product.NetContent!.NetContentType!.Value) : null;
+                var netContent = new NetContent(product.NetContent?.NetContent, netContentType);
 
-                if (product.NetContent == null || product.NetContent.NetContent == null)
-                {
-                    netContent = null;
-                }
-                else if (!product.NetContent.NetContentType.HasValue)
-                {
-                    netContent = null;
-                }
-                else
-                {
-                    netContent = new NetContent(product.NetContent.NetContent, EnumHelper.ToEnumByIntOrThrow<NetContentType>(product.NetContent.NetContentType.Value));
-                }
-             
                 products.Add(ShoppingListProduct.Create(product.Name, product.Quantity, null, netContent, false, Guid.NewGuid()));
             }
 

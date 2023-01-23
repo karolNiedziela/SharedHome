@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
+using Org.BouncyCastle.Asn1.Ntt;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Entities;
@@ -31,20 +32,8 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 
             foreach (var product in request.Products)
             {
-                NetContent? netContent;
-
-                if (product.NetContent == null || product.NetContent.NetContent == null)
-                {
-                    netContent = null;
-                }
-                else if (!product.NetContent.NetContentType.HasValue)
-                {
-                    netContent = null;
-                }
-                else
-                {
-                    netContent = new NetContent(product.NetContent.NetContent, EnumHelper.ToEnumByIntOrThrow<NetContentType>(product.NetContent.NetContentType.Value));
-                }
+                NetContentType? netContentType = product.NetContent is not null && product.NetContent!.NetContentType.HasValue ? EnumHelper.ToEnumByIntOrThrow<NetContentType>(product.NetContent!.NetContentType!.Value) : null;
+                var netContent = new NetContent(product.NetContent?.NetContent, netContentType);              
 
                 products.Add(ShoppingListProduct.Create(product.Name, product.Quantity, null, netContent, false, Guid.NewGuid()));
             }
