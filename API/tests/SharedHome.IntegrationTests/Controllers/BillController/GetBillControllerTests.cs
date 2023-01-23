@@ -17,7 +17,7 @@ namespace SharedHome.IntegrationTests.Controllers.BillController
         [Fact]
         public async Task Get_Should_Return_200_Status_Code()
         {
-            var bill = BillProvider.Get(personId: TestDbInitializer.PersonId, billId: Guid.NewGuid());
+            var bill = BillFakeProvider.Get(personId: TestDbInitializer.PersonId, billId: Guid.NewGuid());
 
             await _billSeed.AddAsync(bill);
 

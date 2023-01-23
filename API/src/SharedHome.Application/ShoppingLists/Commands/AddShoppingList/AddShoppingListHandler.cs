@@ -8,6 +8,7 @@ using SharedHome.Domain.ShoppingLists.Repositories;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
 using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Helpers;
+using SharedHome.Shared.Time;
 
 namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
 {
@@ -15,11 +16,13 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
     {
         private readonly IShoppingListRepository _shoppingListRepository;
         private readonly IMapper _mapper;
+        private readonly ITimeProvider _timeProvider;
 
-        public AddShoppingListHandler(IShoppingListRepository shoppingListRepository, IMapper mapper)
+        public AddShoppingListHandler(IShoppingListRepository shoppingListRepository, IMapper mapper, ITimeProvider timeProvider)
         {
             _shoppingListRepository = shoppingListRepository;
             _mapper = mapper;
+            _timeProvider = timeProvider;
         }
 
         public async Task<ApiResponse<ShoppingListDto>> Handle(AddShoppingListCommand request, CancellationToken cancellationToken)
@@ -46,7 +49,7 @@ namespace SharedHome.Application.ShoppingLists.Commands.AddShoppingList
                 products.Add(ShoppingListProduct.Create(product.Name, product.Quantity, null, netContent, false, Guid.NewGuid()));
             }
 
-            var shoppingList = ShoppingList.Create(Guid.NewGuid(), request.Name, request.PersonId, products: products);
+            var shoppingList = ShoppingList.Create(Guid.NewGuid(), request.Name, request.PersonId, _timeProvider.CurrentDate(), products: products);
 
             await _shoppingListRepository.AddAsync(shoppingList); 
 

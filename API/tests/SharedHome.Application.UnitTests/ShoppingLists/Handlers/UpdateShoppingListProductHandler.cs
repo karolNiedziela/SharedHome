@@ -34,14 +34,14 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new UpdateShoppingListProductCommand
             {
-                CurrentProductName = ShoppingListProvider.ProductName,
+                CurrentProductName = ShoppingListFakeProvider.ProductName,
                 NewProductName = "NewProductName",
                 Quantity = 2,
                 NetContent = new NetContentDto("300"),
                 IsBought = true
             };
 
-            var shoppingList = ShoppingListProvider.GetWithProduct(netContent: new NetContent("500", NetContentType.g));
+            var shoppingList = ShoppingListFakeProvider.GetWithProduct(netContent: new NetContent("500", NetContentType.g));
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                 .Returns(shoppingList);

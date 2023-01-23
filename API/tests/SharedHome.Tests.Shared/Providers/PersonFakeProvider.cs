@@ -2,7 +2,7 @@
 
 namespace SharedHome.Tests.Shared.Providers
 {
-    public static class PersonProvider
+    public static class PersonFakeProvider
     {
         public const string FirstName = "FirstName";
         public const string LastName = "LastName";

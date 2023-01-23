@@ -32,12 +32,12 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new CancelPurchaseOfProductCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
                 ProductName = "Product"
             };
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
-                .Returns(ShoppingListProvider.GetWithProduct(price: new Money(10m, "zł"), isBought: true));
+                .Returns(ShoppingListFakeProvider.GetWithProduct(price: new Money(10m, "zł"), isBought: true));
 
             await _commandHandler.Handle(command, default);
 

@@ -38,7 +38,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new AddShoppingListProductsCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
                 Products = new List<AddShoppingListProductDto>
                 {
                     new AddShoppingListProductDto
@@ -50,7 +50,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 }              
             };
 
-            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(ShoppingListProvider.GetEmpty());
+            _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(ShoppingListFakeProvider.GetEmpty());
 
             await _commandHandler.Handle(command, default);
 

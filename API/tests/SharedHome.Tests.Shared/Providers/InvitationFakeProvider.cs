@@ -2,7 +2,7 @@
 
 namespace SharedHome.Tests.Shared.Providers
 {
-    public static class InvitationProvider
+    public static class InvitationFakeProvider
     {
         public static readonly Guid InvitationId = new("5f140af2-6979-41ab-af1f-97dec47048ee");
         public static readonly Guid HouseGroupId = new("56b47fac-bd9f-47b7-8ab3-13139f5cfd95");

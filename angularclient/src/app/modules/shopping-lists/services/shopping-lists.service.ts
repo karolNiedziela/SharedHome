@@ -1,3 +1,4 @@
+import { ShoppingListStatus } from './../enums/shopping-list-status';
 import { PurchaseShoppingListProducts } from './../models/purchase-shopping-list-products';
 import { CancelPurchaseOfProduct } from './../models/cancel-purchase-of-product';
 import { PurchaseShoppingListProduct } from './../models/purchase-shopping-list-product';
@@ -61,13 +62,13 @@ export class ShoppingListsService {
   getAllByYearAndMonthAndIsDone(
     year: number,
     month: number,
-    isDone: boolean,
+    status: ShoppingListStatus,
     pageNumber: number
   ): Observable<Paged<ShoppingList>> {
     let params = new HttpParams();
     params = params.append('year', year);
     params = params.append('month', month);
-    params = params.append('isdone', isDone);
+    params = params.append('status', status);
     params = params.append('pageNumber', pageNumber);
     params = params.append('pageSize', 10);
 

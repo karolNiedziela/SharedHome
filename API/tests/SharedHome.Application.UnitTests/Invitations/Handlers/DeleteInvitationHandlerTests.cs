@@ -26,14 +26,14 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var invitation = InvitationProvider.Get();
+            var invitation = InvitationFakeProvider.Get();
 
             _invitationRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(invitation);
 
             var command = new DeleteInvitationCommand
             {
-                HouseGroupId = InvitationProvider.HouseGroupId,
+                HouseGroupId = InvitationFakeProvider.HouseGroupId,
                 PersonId = Guid.NewGuid()
             };
 

@@ -9,6 +9,8 @@ using SharedHome.Shared.Application.Responses;
 using SharedHome.Shared.Time;
 using SharedHome.Shared.Extensionss;
 using System.Globalization;
+using SharedHome.Domain.ShoppingLists.Enums;
+using SharedHome.Domain.ShoppingLists;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
@@ -44,9 +46,9 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
                 shoppingLists = await _shoppingLists
                     .Include(shoppingList => shoppingList.Products)
-                    .Where(shoppingList => shoppingList.IsDone &&
-                        shoppingList.CreatedAt.Year == request.Year &&
-                        shoppingList.IsDone &&
+                    .Where(shoppingList => 
+                        shoppingList.CreationDate.Year == request.Year &&
+                           shoppingList.Status == (int)ShoppingListStatus.Done &&
                         houseGroupPersonsId.Contains(shoppingList.PersonId))
                     .ToListAsync();
 
@@ -54,7 +56,7 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                     .GroupJoin(
                        shoppingLists,
                         month => month,
-                        shoppingListReadModel => shoppingListReadModel.CreatedAt.Month,
+                        shoppingListReadModel => shoppingListReadModel.CreationDate.Month,
                         (month, shoppingListReadModels) => new ShoppingListMonthlyCostDto
                         {
                             MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month).FirstCharToUpper(),
@@ -69,17 +71,17 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
             shoppingLists = await _shoppingLists
                 .Include(shoppingList => shoppingList.Products)
-                .Where(shoppingList => shoppingList.IsDone &&
-                    shoppingList.CreatedAt.Year == request.Year &&
-                    shoppingList.IsDone &&
-                     shoppingList.PersonId == request.PersonId!)
+                .Where(shoppingList => 
+                    shoppingList.CreationDate.Year == request.Year &&
+                    shoppingList.Status == (int)ShoppingListStatus.Done &&
+                    shoppingList.PersonId == request.PersonId!)
                 .ToListAsync();
 
             shoppingListsCostsGroupedByMonth = months
                    .GroupJoin(
                       shoppingLists,
                        month => month,
-                       shoppingListReadModel => shoppingListReadModel.CreatedAt.Month,
+                       shoppingListReadModel => shoppingListReadModel.CreationDate.Month,
                        (month, shoppingListReadModels) => new ShoppingListMonthlyCostDto
                        {
                            MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month).FirstCharToUpper(),
@@ -94,13 +96,13 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
         private static decimal SumProductPrices(IEnumerable<ShoppingListReadModel> shoppingLists)
              => shoppingLists
-            .Where(shoppingList => shoppingList.IsDone)
+            .Where(shoppingList => shoppingList.Status == (int)ShoppingListStatus.Done)
             .SelectMany(shoppingList => shoppingList.Products)
             .Where(product => product.IsBought)
             .Aggregate((decimal)0, (count, product) => count + (product.Quantity * (decimal)product.Price!));
 
         private static string GetCurrency(IEnumerable<ShoppingListReadModel> shoppingLists)
-            => shoppingLists.Where(x => x.IsDone)
+            => shoppingLists.Where(shoppingList => shoppingList.Status == (int)ShoppingListStatus.Done)
             .SelectMany(shoppingList => shoppingList.Products)
             .Where(product => product.IsBought)
             .FirstOrDefault()?.Currency ?? string.Empty;

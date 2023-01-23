@@ -5,7 +5,7 @@ using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Tests.Shared.Providers
 {
-    public static class BillProvider
+    public static class BillFakeProvider
     {
         public static readonly Guid BillId = new("082275f4-7566-41ab-8558-21c699939407");
         public static readonly Guid PersonId = new("c2506a12-41d4-4205-aafa-b835ae4bc057");

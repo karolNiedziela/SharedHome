@@ -11,6 +11,8 @@
 @use "../app/shared/components/pagination/pagination.component.scss" as
   pagination;
 @use "../app/shared/components/tables/table/table.component.scss" as table;
+@use "../app/modules/shopping-lists/shopping-list-product/shopping-list-product.component.scss"
+  as shoppingListProduct;
 @use "@angular/material" as mat;
 @use "sass:map";
 
@@ -56,6 +58,7 @@ $dark-theme: mat.define-dark-theme(
 @include input.lightTheme($light-theme);
 @include pagination.color($light-theme);
 @include table.color($light-theme);
+@include shoppingListProduct.color($light-theme);
 
 .theme-dark {
   @include mat.core-theme($dark-theme);
@@ -73,4 +76,5 @@ $dark-theme: mat.define-dark-theme(
   @include input.darkTheme($dark-theme);
   @include pagination.color($dark-theme);
   @include table.color($dark-theme);
+  @include shoppingListProduct.color($dark-theme);
 }

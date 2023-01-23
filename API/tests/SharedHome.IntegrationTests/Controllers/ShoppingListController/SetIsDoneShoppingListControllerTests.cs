@@ -1,5 +1,6 @@
 ﻿using SharedHome.Api.Constants;
 using SharedHome.Application.ShoppingLists.Commands.SetIsShoppingListDone;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.IntegrationTests.Extensions;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
@@ -19,14 +20,14 @@ namespace SharedHome.IntegrationTests.Controllers.ShoppingListController
         [Fact]
         public async Task Patch_SetIsDone_Should_Return_200_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetEmpty(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
+            var shoppingList = ShoppingListFakeProvider.GetEmpty(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
             await _shoppingListSeed.AddAsync(shoppingList);
 
             Authorize(userId: TestDbInitializer.PersonId);
 
             var command = new SetIsShoppingListDoneCommand
             {
-                IsDone = true,
+                Status = (int)ShoppingListStatus.ToDo,
                 ShoppingListId = shoppingList.Id
             };
 

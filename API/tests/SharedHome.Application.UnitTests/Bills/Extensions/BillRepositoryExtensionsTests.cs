@@ -35,14 +35,14 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
         [Fact]
         public async Task GetOrThrowAsync_With_PersonId_Should_Return_Bill_When_Bill_Exists()
         {
-            var bill = BillProvider.Get();
+            var bill = BillFakeProvider.Get();
 
             _billRepository.GetAsync(Arg.Any<BillId>(), Arg.Any<PersonId>())
                 .Returns(bill);
 
-            var returnedBill = await _billRepository.GetOrThrowAsync(BillProvider.BillId, Guid.NewGuid());
+            var returnedBill = await _billRepository.GetOrThrowAsync(BillFakeProvider.BillId, Guid.NewGuid());
 
-            returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.ServiceProviderName);
+            returnedBill.ServiceProvider.Name.ShouldBe(BillFakeProvider.ServiceProviderName);
         }
 
         [Fact]
@@ -57,15 +57,15 @@ namespace SharedHome.Application.UnitTests.Bills.Extensions
         [Fact]
         public async Task GetOrThrowAsync_With_PersonIds_Should_Return_Bill_When_Bill_Exists()
         {
-            var bill = BillProvider.Get();
+            var bill = BillFakeProvider.Get();
             var personIds = new List<PersonId> { Guid.NewGuid() };
 
-            _billRepository.GetAsync(BillProvider.BillId, personIds)
+            _billRepository.GetAsync(BillFakeProvider.BillId, personIds)
                 .Returns(bill);
 
-            var returnedBill = await _billRepository.GetOrThrowAsync(BillProvider.BillId, personIds);
+            var returnedBill = await _billRepository.GetOrThrowAsync(BillFakeProvider.BillId, personIds);
 
-            returnedBill.ServiceProvider.Name.ShouldBe(BillProvider.ServiceProviderName);
+            returnedBill.ServiceProvider.Name.ShouldBe(BillFakeProvider.ServiceProviderName);
         }
     }
 }

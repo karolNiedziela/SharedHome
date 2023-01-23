@@ -1,13 +1,6 @@
 import { PopupMenuConfig } from './../../../../shared/components/menus/popup-menu/popup-menu.config';
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Observable, Subscription, tap } from 'rxjs';
 import { Paged } from 'src/app/core/models/paged';
 import { Paginatable } from 'src/app/core/models/paginatable';
@@ -15,7 +8,6 @@ import { TableColumn } from 'src/app/shared/components/tables/column-setting';
 import { ShoppingListStatus } from '../../enums/shopping-list-status';
 import { ShoppingList } from '../../models/shopping-list';
 import { ShoppingListsService } from '../../services/shopping-lists.service';
-import { SingleEnumSelectComponent } from 'src/app/shared/components/selects/single-enum-select/single-enum-select.component';
 import moment from 'moment';
 
 @Component({
@@ -28,44 +20,18 @@ export class ShoppingListsListComponent
 {
   public shoppingListStatus: typeof ShoppingListStatus = ShoppingListStatus;
 
-  @ViewChild('statusSelect')
-  private statusSelect!: SingleEnumSelectComponent;
   year!: number;
   month!: number;
-  isDone: boolean = false;
+  status: ShoppingListStatus = ShoppingListStatus['To do'];
   shoppingListForm!: FormGroup;
   paged$!: Observable<Paged<ShoppingList>>;
   singleRefreshSubscription!: Subscription;
   yearAndMonthSubscription!: Subscription;
   statusSelectSubscription!: Subscription;
 
-  loading$!: Observable<boolean>;
-
   public currentPage: number = 1;
 
-  shoppings: ShoppingList[] = [];
-
-  shoppingsTableColumns: TableColumn[] = [];
-
-  popupMenuConfigs: PopupMenuConfig[] = [
-    {
-      isEditVisible: true,
-      onEdit: () => alert('Edit 1'),
-      isDeleteVisible: true,
-      onDelete: () => alert('Delete 1'),
-    },
-    {
-      isEditVisible: true,
-      onEdit: () => alert('Edit 2'),
-      isDeleteVisible: true,
-      onDelete: () => alert('Delete 2'),
-    },
-  ];
-
-  constructor(
-    private shoppingListService: ShoppingListsService,
-    private router: Router
-  ) {}
+  constructor(private shoppingListService: ShoppingListsService) {}
 
   ngOnInit(): void {
     this.year = new Date().getFullYear();
@@ -95,7 +61,10 @@ export class ShoppingListsListComponent
     this.statusSelectSubscription = this.shoppingListForm.controls[
       'status'
     ].valueChanges.subscribe((selectedStatus: number) => {
-      this.isDone = selectedStatus == 0;
+      this.status =
+        selectedStatus == ShoppingListStatus.Done
+          ? ShoppingListStatus.Done
+          : ShoppingListStatus['To do'];
       this.getAllShoppingLists();
     });
   }
@@ -129,7 +98,7 @@ export class ShoppingListsListComponent
       .getAllByYearAndMonthAndIsDone(
         this.year,
         this.month,
-        this.isDone,
+        this.status,
         this.currentPage
       )
       .pipe(

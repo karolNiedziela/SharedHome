@@ -30,11 +30,11 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new DeleteShoppingListCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId
             };
 
             _shoppingListService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
-                .Returns(ShoppingListProvider.GetEmpty());
+                .Returns(ShoppingListFakeProvider.GetEmpty());
 
             await _commandHandler.Handle(command, default);
 

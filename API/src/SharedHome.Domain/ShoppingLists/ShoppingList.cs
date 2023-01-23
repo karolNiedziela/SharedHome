@@ -1,6 +1,7 @@
 ﻿using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Entities;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Domain.ShoppingLists.Exceptions;
 using SharedHome.Domain.ShoppingLists.ValueObjects;
@@ -13,32 +14,36 @@ namespace SharedHome.Domain.ShoppingLists
 
         public ShoppingListName Name { get; private set; } = default!;
 
-        // Indicator to mark, that list is closed
-        public bool IsDone { get; private set; } = false;
+        public ShoppingListStatus Status { get; private set; }
 
         public IReadOnlyList<ShoppingListProduct> Products => _products.AsReadOnly();
 
         public PersonId PersonId { get; private set; } = default!;
+
+        public DateTime CreationDate { get; private set; }
+
+
 
         private ShoppingList()
         {
 
         }
 
-        private ShoppingList(ShoppingListId id, ShoppingListName name, PersonId personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
+        private ShoppingList(ShoppingListId id, ShoppingListName name, PersonId personId, DateTime creationDate, IEnumerable<ShoppingListProduct>? products = null)
         {
             Id = id;
             Name = name;
             PersonId = personId;
-            IsDone = isDone;
+            Status = ShoppingListStatus.ToDo;
+            CreationDate = creationDate;
 
             AddProducts(products);
 
             AddEvent(new ShoppingListCreated(id, name, personId));
         }
 
-        public static ShoppingList Create(ShoppingListId id, ShoppingListName name, PersonId personId, bool isDone = false, IEnumerable<ShoppingListProduct>? products = null)
-            => new (id, name, personId, isDone, products);
+        public static ShoppingList Create(ShoppingListId id, ShoppingListName name, PersonId personId, DateTime creationDate, IEnumerable<ShoppingListProduct>? products = null)
+            => new (id, name, personId, creationDate, products);
 
         public void ChangeName(ShoppingListName shoppingListName)
         {
@@ -136,16 +141,13 @@ namespace SharedHome.Domain.ShoppingLists
             product.CancelPurchaseOfProduct();
         }
 
-        public void MakeListDone()
+        public void MarkAsDone()
         {
             IsAlreadyDone();
-            IsDone = true;            
+            Status = ShoppingListStatus.Done;          
         }
 
-        public void UndoListDone()
-        {
-            IsDone = false;
-        }
+        public void MarkAsToDo() => Status = ShoppingListStatus.ToDo;
 
         public ShoppingListProduct GetProduct(string productName)
         {
@@ -158,10 +160,9 @@ namespace SharedHome.Domain.ShoppingLists
             return product;
         }
 
-        // When list is done most of the operations are blocked
         private void IsAlreadyDone()
         {            
-            if (IsDone)
+            if (Status == ShoppingListStatus.Done)
             {
                 throw new ShoppingListAlreadyDoneException();
             }

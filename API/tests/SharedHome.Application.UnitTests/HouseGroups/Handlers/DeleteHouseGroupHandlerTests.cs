@@ -29,7 +29,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Should_Throw_HouseGroupMemberIsNotOwnerException_When_Member_Is_Not_Owner()
         {
-            var houseGroup = HouseGroupProvider.GetWithMember(false);
+            var houseGroup = HouseGroupFakeProvider.GetWithMember(false);
 
             _houseGroupRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);
@@ -48,7 +48,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         [Fact]
         public async Task Handle_Should_Delete_House_Group_When_Member_IsOwner()
         {
-            var houseGroup = HouseGroupProvider.GetWithMember();
+            var houseGroup = HouseGroupFakeProvider.GetWithMember();
 
             _houseGroupRepository.GetAsync(Arg.Any<HouseGroupId>(), Arg.Any<PersonId>())
                 .Returns(houseGroup);

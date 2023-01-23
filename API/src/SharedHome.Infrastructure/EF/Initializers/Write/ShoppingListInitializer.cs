@@ -31,22 +31,23 @@ namespace SharedHome.Infrastructure.EF.Initializers.Write
 
         private static List<ShoppingList> GetShoppingLists()
         {
-            var firstShoppingList = ShoppingList.Create(Guid.NewGuid(), "Lidl", InitializerConstants.CharlesUserId);
+            var currentDate = DateTime.UtcNow;
+            var firstShoppingList = ShoppingList.Create(Guid.NewGuid(), "Lidl", InitializerConstants.CharlesUserId, currentDate);
             firstShoppingList.CreatedByFullName = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             firstShoppingList.CreatedBy = InitializerConstants.CharlesUserId;
             firstShoppingList.AddProducts(GetProducts());
 
-            var secondShoppingList = ShoppingList.Create(Guid.NewGuid(), "Biedronka", InitializerConstants.CharlesUserId);
+            var secondShoppingList = ShoppingList.Create(Guid.NewGuid(), "Biedronka", InitializerConstants.CharlesUserId, currentDate);
             secondShoppingList.CreatedByFullName = $"{InitializerConstants.CharlesFirstName} {InitializerConstants.CharlesLastName}";
             secondShoppingList.CreatedBy = InitializerConstants.CharlesUserId;
             secondShoppingList.AddProducts(GetProducts());
 
-            var thirdShoppingList = ShoppingList.Create(Guid.NewGuid(), "Rossman", InitializerConstants.FrancUserId);
+            var thirdShoppingList = ShoppingList.Create(Guid.NewGuid(), "Rossman", InitializerConstants.FrancUserId, currentDate);
             thirdShoppingList.CreatedByFullName = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             thirdShoppingList.CreatedBy = InitializerConstants.FrancUserId;
             thirdShoppingList.AddProducts(GetProducts());
 
-            var fourthShoppingList = ShoppingList.Create(Guid.NewGuid(), "Tesco", InitializerConstants.FrancUserId);
+            var fourthShoppingList = ShoppingList.Create(Guid.NewGuid(), "Tesco", InitializerConstants.FrancUserId, currentDate);
             fourthShoppingList.CreatedByFullName = $"{InitializerConstants.FrancFirstName} {InitializerConstants.FrancLastName}";
             fourthShoppingList.CreatedBy = InitializerConstants.FrancUserId;
             fourthShoppingList.AddProducts(GetProducts());

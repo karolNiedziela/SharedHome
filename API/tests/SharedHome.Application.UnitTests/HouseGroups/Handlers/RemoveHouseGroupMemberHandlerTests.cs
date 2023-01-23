@@ -30,12 +30,12 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var personToRemoveId = Guid.NewGuid();
             var additionalMembers = new Guid[] { personToRemoveId };
-            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(additionalMembers);
+            var houseGroup = HouseGroupFakeProvider.GetWithAdditionalMembers(additionalMembers);
 
             var command = new RemoveHouseGroupMemberCommand
             {
-                HouseGroupId = HouseGroupProvider.HouseGroupId,
-                PersonId = HouseGroupProvider.PersonId,
+                HouseGroupId = HouseGroupFakeProvider.HouseGroupId,
+                PersonId = HouseGroupFakeProvider.PersonId,
                 PersonToRemoveId = personToRemoveId
             };
 

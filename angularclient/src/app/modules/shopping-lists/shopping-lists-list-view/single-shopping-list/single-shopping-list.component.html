@@ -1,7 +1,7 @@
 <div
   (window:resize)="screenSizeHelper.isMobile()"
   class="shopping-list-card pt-1"
-  [ngClass]="{ 'shopping-list-done': shoppingList.isDone }"
+  [ngClass]="{ 'shopping-list-done': shoppingList.status == 2 }"
   (click)="openShoppingList($event)"
 >
   <div class="card-header flex flex-row justify-between mb-2 pl-2 pr-1 text-xl">

@@ -29,7 +29,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", Guid.NewGuid());
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListFakeProvider.ShoppingListId, "Test", Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(false);
@@ -43,7 +43,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", Guid.NewGuid());
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListFakeProvider.ShoppingListId, "Test", Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);
@@ -60,7 +60,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var shoppingListCreated = new ShoppingListCreated(ShoppingListProvider.ShoppingListId, "Test", Guid.NewGuid());
+            var shoppingListCreated = new ShoppingListCreated(ShoppingListFakeProvider.ShoppingListId, "Test", Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);

@@ -31,14 +31,14 @@ namespace SharedHome.Application.UnitTests.Bills.AddHouseGroup
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var bill = BillProvider.Get(billCost: new Money(100m, "zł"), isPaid: true);
+            var bill = BillFakeProvider.Get(billCost: new Money(100m, "zł"), isPaid: true);
 
             _billService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(bill);
 
             var command = new UpdateBillCommand
             {
-                BillId = BillProvider.BillId,
-                PersonId = BillProvider.PersonId,
+                BillId = BillFakeProvider.BillId,
+                PersonId = BillFakeProvider.PersonId,
                 BillType = 1,
                 Cost = new MoneyDto(200, "zł"),
                 DateOfPayment = bill.DateOfPayment.ToDateTime(TimeOnly.MinValue),

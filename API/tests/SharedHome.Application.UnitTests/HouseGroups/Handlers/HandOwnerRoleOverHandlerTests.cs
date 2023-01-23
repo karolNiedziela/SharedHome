@@ -29,12 +29,12 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
         {
             var additionalMembers = new Guid[] { Guid.NewGuid()};
 
-            var houseGroup = HouseGroupProvider.GetWithAdditionalMembers(additionalMembers);
+            var houseGroup = HouseGroupFakeProvider.GetWithAdditionalMembers(additionalMembers);
 
             var command = new HandOwnerRoleOverCommand
             {
                 HouseGroupId = Guid.NewGuid(),
-                PersonId = HouseGroupProvider.PersonId,
+                PersonId = HouseGroupFakeProvider.PersonId,
                 NewOwnerPersonId = additionalMembers[0]
             };
 
@@ -44,7 +44,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
             await _commandHandler.Handle(command, default);
 
             await _houseGroupRepository.Received(1).UpdateAsync(Arg.Is<HouseGroup>(houseGroup => 
-                houseGroup.Members.Where(member => member.PersonId.Value == HouseGroupProvider.PersonId)
+                houseGroup.Members.Where(member => member.PersonId.Value == HouseGroupFakeProvider.PersonId)
                     .First().IsOwner == false &&
                 houseGroup.Members.Where(member => member.PersonId.Value == additionalMembers[0])
                     .First().IsOwner == true));

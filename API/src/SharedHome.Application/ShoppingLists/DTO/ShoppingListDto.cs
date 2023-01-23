@@ -9,7 +9,7 @@ namespace SharedHome.Application.ShoppingLists.DTO
 
         public string Name { get; set; } = default!;
 
-        public bool IsDone { get; set; }
+        public string Status { get; set; } = default!;
 
         public IEnumerable<ShoppingListProductDto> Products { get; set; } = default!;
     }

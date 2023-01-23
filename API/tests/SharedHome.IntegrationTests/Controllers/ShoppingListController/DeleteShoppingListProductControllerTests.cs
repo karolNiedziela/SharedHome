@@ -17,12 +17,12 @@ namespace SharedHome.IntegrationTests.Controllers.ShoppingListController
         [Fact]
         public async Task Delete_ShoppingListProduct_Should_Return_204_Status_Code()
         {
-            var shoppingList = ShoppingListProvider.GetWithProduct(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
+            var shoppingList = ShoppingListFakeProvider.GetWithProduct(personId: TestDbInitializer.PersonId, shoppingListId: Guid.NewGuid());
             await _shoppingListSeed.AddAsync(shoppingList);
 
             Authorize(userId: TestDbInitializer.PersonId);
 
-            var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.Delete.Replace("{shoppingListId}", shoppingList.Id.Value.ToString()).Replace("{productName}", ShoppingListProvider.ProductName)}";
+            var endpointAddress = $"{BaseAddress}/{ApiRoutes.ShoppingLists.Delete.Replace("{shoppingListId}", shoppingList.Id.Value.ToString()).Replace("{productName}", ShoppingListFakeProvider.ProductName)}";
 
             var response = await Client.DeleteAsync(endpointAddress);
             response.StatusCode.ShouldBe(HttpStatusCode.NoContent);

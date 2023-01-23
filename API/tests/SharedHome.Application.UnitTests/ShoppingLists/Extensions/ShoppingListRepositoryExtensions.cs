@@ -33,14 +33,14 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Extensions
         [Fact]
         public async Task GetOrThrowAsync_Should_Return_Bill_When_Bill_Exists()
         {
-            var shoppingList = ShoppingListProvider.GetEmpty();
+            var shoppingList = ShoppingListFakeProvider.GetEmpty();
 
             _shoppingListRepository.GetOrThrowAsync(Arg.Any<ShoppingListId>(), Arg.Any<PersonId>())
                 .Returns(shoppingList);
 
-            var returnedShoppingList = await _shoppingListRepository.GetOrThrowAsync(ShoppingListProvider.ShoppingListId, Guid.NewGuid());
+            var returnedShoppingList = await _shoppingListRepository.GetOrThrowAsync(ShoppingListFakeProvider.ShoppingListId, Guid.NewGuid());
 
-            returnedShoppingList.Name.Name.ShouldBe(ShoppingListProvider.ShoppingListName);
+            returnedShoppingList.Name.Name.ShouldBe(ShoppingListFakeProvider.ShoppingListName);
         }
     }
 }

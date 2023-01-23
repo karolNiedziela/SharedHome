@@ -18,7 +18,7 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
             builder.HasOne<Person>().WithMany().HasForeignKey(shoppingList => shoppingList.PersonId);
         }
 
-        private void ConfigureShoppingList(EntityTypeBuilder<ShoppingList> builder)
+        private static void ConfigureShoppingList(EntityTypeBuilder<ShoppingList> builder)
         {
             builder.ToTable("ShoppingLists");
 
@@ -37,11 +37,12 @@ namespace SharedHome.Infrastructure.EF.Configurations.Write
                     .HasMaxLength(20);
             });
 
-            builder.Property(shoppingList => shoppingList.IsDone)
-                   .HasDefaultValue(false);
+            builder.Property(shoppingList => shoppingList.Status)
+                   .HasColumnName("Status")
+                   .HasConversion<int>();
         }
 
-        private void ConfigureShoppingListProduct(EntityTypeBuilder<ShoppingList> builder)
+        private static void ConfigureShoppingListProduct(EntityTypeBuilder<ShoppingList> builder)
         {
             builder.OwnsMany(shoppingList => shoppingList.Products, navigation =>
             {

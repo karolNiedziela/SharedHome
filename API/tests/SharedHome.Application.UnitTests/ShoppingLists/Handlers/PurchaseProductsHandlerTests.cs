@@ -34,7 +34,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
         {
             var command = new PurchaseProductsCommand
             {
-                ShoppingListId = ShoppingListProvider.ShoppingListId,
+                ShoppingListId = ShoppingListFakeProvider.ShoppingListId,
                 PriceByProductNames = new Dictionary<string, MoneyDto>
                 {
                     { 
@@ -48,7 +48,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Handlers
                 }
             };
 
-            var shoppingList = ShoppingListProvider.GetEmpty();
+            var shoppingList = ShoppingListFakeProvider.GetEmpty();
 
             shoppingList.AddProducts(new[]
             {

@@ -30,7 +30,7 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Person_Is_Not_In_HouseGroup()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
+            var billCreated = new BillCreated(BillFakeProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
 
@@ -43,7 +43,7 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
         [Fact]
         public async Task Handle_Should_Do_Nothing_When_Only_One_Person_In_HouseGroup()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
+            var billCreated = new BillCreated(BillFakeProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);
@@ -60,7 +60,7 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
         [Fact]
         public async Task Handle_Should_Call_AddAsync_And_BroadcastNotificationAsync_OnSuccess()
         {
-            var billCreated = new BillCreated(BillProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
+            var billCreated = new BillCreated(BillFakeProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
 
             _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
                 .Returns(true);

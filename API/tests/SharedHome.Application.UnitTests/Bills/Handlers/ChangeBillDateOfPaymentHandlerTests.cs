@@ -28,14 +28,14 @@ namespace SharedHome.Application.UnitTests.Bills.Handlers
         [Fact]
         public async Task Handle_Should_Call_Repository_OnSuccess()
         {
-            var bill = BillProvider.Get();
+            var bill = BillFakeProvider.Get();
 
             _billService.GetAsync(Arg.Any<Guid>(), Arg.Any<Guid>())
                  .Returns(bill);
 
             var command = new ChangeBillDateOfPaymentCommand
             {
-                BillId = BillProvider.BillId,
+                BillId = BillFakeProvider.BillId,
                 DateOfPayment = new DateTime(2021, 10, 10)
             };
 
