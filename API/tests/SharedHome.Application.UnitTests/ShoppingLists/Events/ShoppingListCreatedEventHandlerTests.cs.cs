@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using NSubstitute;
-using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.Events;
+using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
@@ -15,15 +16,15 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
 {
     public class ShoppingListCreatedEventHandlerTests
     {
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IAppNotificationService _appNotificationService;
         private readonly INotificationHandler<ShoppingListCreated> _notificationHandler;
 
         public ShoppingListCreatedEventHandlerTests()
         {            
-            _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
+            _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
             _appNotificationService = Substitute.For<IAppNotificationService>();
-            _notificationHandler = new ShoppingListCreatedEventHandler(_houseGroupReadService, _appNotificationService);
+            _notificationHandler = new ShoppingListCreatedEventHandler(_houseGroupRepository, _appNotificationService);
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         {
             var shoppingListCreated = new ShoppingListCreated(ShoppingListFakeProvider.ShoppingListId, "Test", Guid.NewGuid());
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>())
                 .Returns(false);
 
             await _notificationHandler.Handle(shoppingListCreated, default);
@@ -45,10 +46,10 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         {
             var shoppingListCreated = new ShoppingListCreated(ShoppingListFakeProvider.ShoppingListId, "Test", Guid.NewGuid());
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
+            _houseGroupRepository.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<PersonId>())
                 .Returns(Array.Empty<Guid>());
 
             await _notificationHandler.Handle(shoppingListCreated, default);
@@ -62,10 +63,10 @@ namespace SharedHome.Application.UnitTests.ShoppingLists.Events
         {
             var shoppingListCreated = new ShoppingListCreated(ShoppingListFakeProvider.ShoppingListId, "Test", Guid.NewGuid());
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
+            _houseGroupRepository.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<PersonId>())
                .Returns(new List<Guid>
                {
                    Guid.NewGuid(),

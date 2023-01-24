@@ -63,10 +63,12 @@ export class EditShoppingListProductModalComponent
     const productName =
       this.editShoppingListProductForm.get('productName')?.value;
     const quantity = this.editShoppingListProductForm.get('quantity')?.value;
-    const netContent =
-      this.editShoppingListProductForm.get('netContent')?.value;
-    const netContentType =
-      this.editShoppingListProductForm.get('netContentType')?.value;
+    const netContent = this.editShoppingListProductForm
+      ?.get('netContent')
+      ?.get('netContent')?.value;
+    const netContentType = this.editShoppingListProductForm
+      ?.get('netContent')
+      ?.get('netContentType')?.value;
 
     const updateShoppingListProduct: UpdateShoppingListProduct = {
       shoppingListId: this.shoppingListId,
@@ -95,8 +97,10 @@ export class EditShoppingListProductModalComponent
     this.editShoppingListProductForm?.patchValue({
       productName: this.shoppingListProduct.name,
       quantity: this.shoppingListProduct.quantity,
-      netContent: this.shoppingListProduct.netContent?.netContent,
-      netContentType: this.shoppingListProduct.netContent?.netContentType,
+      netContent: {
+        netContent: this.shoppingListProduct.netContent?.netContent,
+        netContentType: this.shoppingListProduct.netContent?.netContentType,
+      },
     });
   }
 }

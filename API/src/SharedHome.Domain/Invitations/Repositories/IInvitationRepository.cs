@@ -1,5 +1,4 @@
 ﻿using SharedHome.Domain.Shared.ValueObjects;
-using SharedHome.Domain.Invitations;
 
 namespace SharedHome.Domain.Invitations.Repositories
 {
@@ -16,5 +15,7 @@ namespace SharedHome.Domain.Invitations.Repositories
         Task DeleteAsync(IEnumerable<Invitation> invitations);
 
         Task UpdateAsync(Invitation invitation);
+
+        Task<bool> IsAnyInvitationFromHouseGroupToPersonAsync(HouseGroupId houseGroupId, PersonId requestedToPersonId);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Invitations.Commands.AcceptInvitation;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
@@ -22,15 +21,13 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IRequestHandler<AcceptInvitationCommand, Unit> _commandHandler;
 
         public AcceptInvitationHandlerTests()
         {
             _invitationRepository = Substitute.For<IInvitationRepository>();
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
-            _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
-            _commandHandler = new AcceptInvitationHandler(_invitationRepository, _houseGroupRepository, _houseGroupReadService);
+            _commandHandler = new AcceptInvitationHandler(_invitationRepository, _houseGroupRepository);
         }
 
         [Fact]
@@ -42,7 +39,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 HouseGroupId = InvitationFakeProvider.HouseGroupId,
             };
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(true);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -58,7 +55,7 @@ namespace SharedHome.Application.UnitTests.Invitations.Handlers
                 HouseGroupId = InvitationFakeProvider.HouseGroupId,
             };
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(false);
 
             var invitation = InvitationFakeProvider.Get();
 

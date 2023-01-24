@@ -40,7 +40,8 @@
     "cancel_purchase_of_shopping_list_product": "Cancel purchase of shopping list product",
     "cancel_purchase_of_shopping_list_product_text": "Are you sure to cancel purchase?",
     "year_and_month": "Year and month",
-    "details": "Details"
+    "details": "Details",
+    "price": "Price"
   },
   "bills": {
     "module": "Bills",

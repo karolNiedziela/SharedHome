@@ -1,14 +1,13 @@
-﻿using MapsterMapper;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
-using SharedHome.Application.ReadServices;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using MediatR;
 using SharedHome.Shared.Application.Responses;
-using SharedHome.Shared.Time;
 using SharedHome.Shared.Extensionss;
+using SharedHome.Shared.Time;
 using System.Globalization;
 
 namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
@@ -17,13 +16,13 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
     {
         private readonly DbSet<BillReadModel> _bills;
         private readonly ITimeProvider _time;
-        private readonly IHouseGroupReadService _houseGroupService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
 
-        public GetMonthlyBillCostByYearHandler(ReadSharedHomeDbContext context, ITimeProvider time, IHouseGroupReadService houseGroupService)
+        public GetMonthlyBillCostByYearHandler(ReadSharedHomeDbContext context, ITimeProvider time, IHouseGroupRepository houseGroupRepository)
         {
             _bills = context.Bills;
             _time = time;
-            _houseGroupService = houseGroupService;
+            _houseGroupRepository = houseGroupRepository;
         }
 
         public async Task<ApiResponse<List<BillMonthlyCostDto>>> Handle(GetMonthlyBillCostByYear request, CancellationToken cancellationToken)
@@ -40,9 +39,9 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
 
             var billCostsGroupedByMonth = new List<BillMonthlyCostDto>();
 
-            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupRepository.GetMemberPersonIdsAsync(request.PersonId!);
 
                 bills = await _bills.Where(bill => bill.IsPaid &&
                     bill.DateOfPayment.Year == request.Year &&

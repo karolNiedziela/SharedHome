@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Bills.DTO;
 using SharedHome.Application.Bills.Queries;
-using SharedHome.Application.ReadServices;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
 using SharedHome.Shared.Application.Responses;
@@ -16,14 +16,14 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
         private readonly DbSet<BillReadModel> _bills;
         private readonly IMapper _mapper;
         private readonly ITimeProvider _time;
-        private readonly IHouseGroupReadService _houseGroupService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
 
-        public GetBillsByMonthAndYearHandler(ReadSharedHomeDbContext context, IMapper mapper, ITimeProvider time, IHouseGroupReadService houseGroupService)
+        public GetBillsByMonthAndYearHandler(ReadSharedHomeDbContext context, IMapper mapper, ITimeProvider time, IHouseGroupRepository houseGroupRepository)
         {
             _bills = context.Bills;
             _mapper = mapper;
             _time = time;
-            _houseGroupService = houseGroupService;
+            _houseGroupRepository = houseGroupRepository;
         }
 
         public async Task<ApiResponse<List<BillDto>>> Handle(GetBillsByMonthAndYear request, CancellationToken cancellationToken)
@@ -35,12 +35,13 @@ namespace SharedHome.Infrastructure.EF.Queries.Bills.Handlers
                 request.Month = currentDate.Month;
             }
 
-            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
+                var houseGroupPersonsId = await _houseGroupRepository.GetMemberPersonIdsAsync(request.PersonId!);
 
                 var billsFromHouseGroup = await _bills
-                    .Where(bill => houseGroupPersonsId.Contains(bill.PersonId) &&
+                    .Where(bill => houseGroupPersonsId
+                    .Contains(bill.PersonId) &&
                     bill.DateOfPayment.Month == request.Month &&
                     bill.DateOfPayment.Year == request.Year)
                     .Select(bill => _mapper.Map<BillDto>(bill))

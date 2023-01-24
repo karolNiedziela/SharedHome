@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Events;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
@@ -9,23 +9,23 @@ namespace SharedHome.Application.Bills.Events
 {
     public class BillCreatedEventHandler : INotificationHandler<BillCreated>
     {
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IAppNotificationService _appNotificationService;
 
-        public BillCreatedEventHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
+        public BillCreatedEventHandler(IHouseGroupRepository houseGroupRepository, IAppNotificationService appNotificationService)
         {
-            _houseGroupReadService = houseGroupReadService;
+            _houseGroupRepository = houseGroupRepository;
             _appNotificationService = appNotificationService;
         }       
 
         public async Task Handle(BillCreated notification, CancellationToken cancellationToken)
         {
-            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(notification.PersonId))
+            if (!await _houseGroupRepository.IsPersonInHouseGroupAsync(notification.PersonId))
             {
                 return;
             }
 
-            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(notification.PersonId);
+            var personIds = await _houseGroupRepository.GetMemberPersonIdsExcludingCreatorAsync(notification.PersonId);
 
             foreach (var personId in personIds)
             {
