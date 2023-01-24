@@ -1,7 +1,6 @@
 ﻿using MapsterMapper;
 using MediatR;
 using SharedHome.Application.HouseGroups.DTO;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Entities;
 using SharedHome.Domain.HouseGroups.Exceptions;
@@ -14,19 +13,17 @@ namespace SharedHome.Application.HouseGroups.Commands.AddHouseGroup
     public class AddHouseGroupHandler : IRequestHandler<AddHouseGroupCommand, ApiResponse<HouseGroupDto>>
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
 
-        public AddHouseGroupHandler(IHouseGroupRepository houseGroupRepository, IHouseGroupReadService houseGroupService, IMapper mapper)
+        public AddHouseGroupHandler(IHouseGroupRepository houseGroupRepository, IMapper mapper)
         {
             _houseGroupRepository = houseGroupRepository;
-            _houseGroupService = houseGroupService;
             _mapper = mapper;
         }
 
         public async Task<ApiResponse<HouseGroupDto>> Handle(AddHouseGroupCommand request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(request.PersonId))
             {
                 throw new PersonIsAlreadyInHouseGroupException(request.PersonId);
             }

@@ -25,6 +25,36 @@ namespace SharedHome.Infrastructure.EF.Repositories
             .Include(houseGroup => houseGroup.Members)
             .FirstOrDefaultAsync(houseGroup => houseGroup.Id == houseGroupId);
 
+        public async Task<bool> IsPersonInHouseGroupAsync(PersonId personId)
+         => await _dbContext.HouseGroups
+           .Include(houseGroup => houseGroup.Members)
+         .AnyAsync(houseGroup => houseGroup.Members
+             .Any(member => member.PersonId == personId));
+
+        public async Task<bool> IsPersonInHouseGroupAsync(PersonId personId, HouseGroupId houseGroupId)
+            => await _dbContext.HouseGroups
+            .AnyAsync(houseGroup => houseGroup.Id == houseGroupId && houseGroup.Members
+                .Any(member => member.PersonId == personId));
+
+        public async Task<IEnumerable<Guid>> GetMemberPersonIdsAsync(PersonId personId)
+             => await _dbContext.HouseGroups
+               .Include(houseGroup => houseGroup.Members)
+               .Where(houseGroup => houseGroup.Members
+                .Any(member => member.PersonId == personId))
+               .SelectMany(houseGroup => houseGroup.Members)
+               .Select(member => member.PersonId.Value)
+               .ToListAsync();
+
+        public async Task<IEnumerable<Guid>> GetMemberPersonIdsExcludingCreatorAsync(PersonId personId)
+            => await _dbContext.HouseGroups
+               .Include(houseGroup => houseGroup.Members)
+               .Where(houseGroup => houseGroup.Members
+                .Any(member => member.PersonId == personId))
+               .SelectMany(houseGroup => houseGroup.Members
+                 .Where(member => member.PersonId != personId)
+               .Select(member => member.PersonId.Value))
+               .ToListAsync();
+
         public async Task AddAsync(HouseGroup houseGroup)
         {
             await _dbContext.HouseGroups.AddAsync(houseGroup);

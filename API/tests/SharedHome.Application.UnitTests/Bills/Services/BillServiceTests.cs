@@ -1,11 +1,11 @@
 ﻿using NSubstitute;
 using SharedHome.Application.Bills.Extensions;
 using SharedHome.Application.Bills.Services;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Enums;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
 using SharedHome.Domain.Bills.ValueObjects;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Tests.Shared.Providers;
 using Shouldly;
@@ -19,27 +19,27 @@ namespace SharedHome.Application.UnitTests.Bills.Services
 {
     public class BillServiceTests
     {
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IBillRepository _billRepository;
         private readonly IBillService _sut;
 
         public BillServiceTests()
         {
-            _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
+            _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
             _billRepository = Substitute.For<IBillRepository>();
-            _sut = new BillService(_billRepository, _houseGroupReadService);
+            _sut = new BillService(_billRepository, _houseGroupRepository);
         }
 
         [Fact]
         public async Task GetAsync_Should_Call_HouseGroupService_Return_Bill_When_Person_Is_In_HouseGroup()
         {
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(true);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(true);
 
             var personIds = new List<Guid> { BillFakeProvider.PersonId };
 
             var convertedPersonIds = new List<PersonId>(personIds.Select(x => new PersonId(x)));
 
-            _houseGroupReadService.GetMemberPersonIdsAsync(Arg.Any<Guid>())
+            _houseGroupRepository.GetMemberPersonIdsAsync(Arg.Any<PersonId>())
                 .Returns(personIds);
 
             _billRepository.GetOrThrowAsync(Arg.Any<BillId>(), Arg.Any<IEnumerable<PersonId>>()).Returns(BillFakeProvider.Get());
@@ -48,7 +48,7 @@ namespace SharedHome.Application.UnitTests.Bills.Services
 
             bill!.PersonId.Value.ShouldBe(BillFakeProvider.PersonId);
             bill!.BillType.ShouldBe(BillType.Rent);
-            await _houseGroupReadService.Received(1).IsPersonInHouseGroupAsync(BillFakeProvider.PersonId);
+            await _houseGroupRepository.Received(1).IsPersonInHouseGroupAsync(BillFakeProvider.PersonId);
 
             await _billRepository.Received(1).GetAsync(BillFakeProvider.BillId, Arg.Any<IEnumerable<PersonId>>());
         }
@@ -56,7 +56,7 @@ namespace SharedHome.Application.UnitTests.Bills.Services
         [Fact]
         public async Task GetAsync_Should_Call_HouseGroupService_Return_Bill_When_Person_Is_In_Not_HouseGroup()
         {
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(false);
 
             _billRepository.GetOrThrowAsync(Arg.Any<BillId>(), Arg.Any<PersonId>()).Returns(BillFakeProvider.Get());
 
@@ -64,7 +64,7 @@ namespace SharedHome.Application.UnitTests.Bills.Services
 
             bill!.PersonId.Value.ShouldBe(BillFakeProvider.PersonId);
             bill!.BillType.ShouldBe(BillType.Rent);
-            await _houseGroupReadService.Received(1).IsPersonInHouseGroupAsync(BillFakeProvider.PersonId);
+            await _houseGroupRepository.Received(1).IsPersonInHouseGroupAsync(BillFakeProvider.PersonId);
             await _billRepository.Received(1).GetAsync(BillFakeProvider.BillId, BillFakeProvider.PersonId);
         }
     }

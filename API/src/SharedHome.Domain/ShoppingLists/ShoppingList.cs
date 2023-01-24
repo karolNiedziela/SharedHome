@@ -1,4 +1,5 @@
-﻿using SharedHome.Domain.Primivites;
+﻿using Org.BouncyCastle.Asn1.Ocsp;
+using SharedHome.Domain.Primivites;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists.Entities;
 using SharedHome.Domain.ShoppingLists.Enums;
@@ -141,6 +142,17 @@ namespace SharedHome.Domain.ShoppingLists
             product.CancelPurchaseOfProduct();
         }
 
+        public void UpdateShoppingListProduct(string currentProductName, ShoppingListProduct shoppingListProduct)
+        {
+            if (shoppingListProduct.Name != currentProductName && _products.Any(p => p.Name == shoppingListProduct.Name))
+            {
+                throw new ShoppingListProductAlreadyExistsException(shoppingListProduct.Name, Id);
+            }
+
+            var product = GetProduct(currentProductName);
+            product.Update(shoppingListProduct);
+        }
+
         public void MarkAsDone()
         {
             IsAlreadyDone();
@@ -149,7 +161,7 @@ namespace SharedHome.Domain.ShoppingLists
 
         public void MarkAsToDo() => Status = ShoppingListStatus.ToDo;
 
-        public ShoppingListProduct GetProduct(string productName)
+        private ShoppingListProduct GetProduct(string productName)
         {
             var product = _products.SingleOrDefault(p => p.Name == productName);
             if (product is null)

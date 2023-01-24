@@ -1,23 +1,23 @@
 ﻿using MapsterMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using MediatR;
 using SharedHome.Shared.Application.Responses;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
     internal class GetShoppingListHandler : IRequestHandler<GetShoppingList, ApiResponse<ShoppingListDto>>
     {
-        private readonly IHouseGroupReadService _houseGroupService;
+        private readonly IHouseGroupRepository _houseGroupService;
         private readonly IMapper _mapper;
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
 
         public GetShoppingListHandler(ReadSharedHomeDbContext context, IMapper mapper, 
-            IHouseGroupReadService houseGroupService)
+            IHouseGroupRepository houseGroupService)
         {
             _mapper = mapper;
             _houseGroupService = houseGroupService;

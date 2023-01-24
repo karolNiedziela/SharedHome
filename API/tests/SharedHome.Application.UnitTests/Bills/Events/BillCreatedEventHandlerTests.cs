@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using NSubstitute;
 using SharedHome.Application.Bills.Events;
-using SharedHome.Application.Common.DTO;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Events;
+using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Notifications.Entities;
 using SharedHome.Notifications.Services;
 using SharedHome.Tests.Shared.Providers;
@@ -16,15 +16,15 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
 {
     public class BillCreatedEventHandlerTests
     {
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IAppNotificationService _appNotificationService;
         private readonly INotificationHandler<BillCreated> _notificationHandler;
 
         public BillCreatedEventHandlerTests()
         {
-            _houseGroupReadService = Substitute.For<IHouseGroupReadService>();
+            _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
             _appNotificationService = Substitute.For<IAppNotificationService>();
-            _notificationHandler = new BillCreatedEventHandler(_houseGroupReadService, _appNotificationService);
+            _notificationHandler = new BillCreatedEventHandler(_houseGroupRepository, _appNotificationService);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
         {
             var billCreated = new BillCreated(BillFakeProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(false);
 
             await _notificationHandler.Handle(billCreated, default);
 
@@ -45,10 +45,10 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
         {
             var billCreated = new BillCreated(BillFakeProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
+            _houseGroupRepository.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<PersonId>())
                 .Returns(Array.Empty<Guid>());
 
             await _notificationHandler.Handle(billCreated, default);
@@ -62,10 +62,10 @@ namespace SSharedHome.Application.UnitTests.Bills.Events
         {
             var billCreated = new BillCreated(BillFakeProvider.BillId, "Test", new DateOnly(), Guid.NewGuid());
 
-            _houseGroupReadService.IsPersonInHouseGroupAsync(Arg.Any<Guid>())
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>())
                 .Returns(true);
 
-            _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<Guid>())
+            _houseGroupRepository.GetMemberPersonIdsExcludingCreatorAsync(Arg.Any<PersonId>())
                .Returns(new List<Guid>
                {
                    Guid.NewGuid(),

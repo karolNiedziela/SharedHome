@@ -1,16 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SharedHome.Application.ReadServices;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
+using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Models;
-using MediatR;
 using SharedHome.Shared.Application.Responses;
-using SharedHome.Shared.Time;
 using SharedHome.Shared.Extensionss;
+using SharedHome.Shared.Time;
 using System.Globalization;
-using SharedHome.Domain.ShoppingLists.Enums;
-using SharedHome.Domain.ShoppingLists;
 
 namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 {
@@ -18,13 +17,13 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
     {
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
         private readonly ITimeProvider _time;
-        private readonly IHouseGroupReadService _houseGroupService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
 
-        public GetMonthlyShoppingListCostsByYearHandler(ReadSharedHomeDbContext context, ITimeProvider time, IHouseGroupReadService houseGroupService)
+        public GetMonthlyShoppingListCostsByYearHandler(ReadSharedHomeDbContext context, ITimeProvider time, IHouseGroupRepository houseGroupRepository)
         {
             _shoppingLists = context.ShoppingLists;
             _time = time;
-            _houseGroupService = houseGroupService;
+            _houseGroupRepository = houseGroupRepository;
         }
         public async Task<ApiResponse<List<ShoppingListMonthlyCostDto>>> Handle(GetMonthlyShoppingListCostsByYear request, CancellationToken cancellationToken)
         {
@@ -40,16 +39,16 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
 
             var shoppingListsCostsGroupedByMonth = new List<ShoppingListMonthlyCostDto>();
 
-            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonsId = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
+                var houseGroupPersonsIds = await _houseGroupRepository.GetMemberPersonIdsAsync(request.PersonId!);
 
                 shoppingLists = await _shoppingLists
                     .Include(shoppingList => shoppingList.Products)
                     .Where(shoppingList => 
                         shoppingList.CreationDate.Year == request.Year &&
                            shoppingList.Status == (int)ShoppingListStatus.Done &&
-                        houseGroupPersonsId.Contains(shoppingList.PersonId))
+                        houseGroupPersonsIds.Contains(shoppingList.PersonId))
                     .ToListAsync();
 
                 shoppingListsCostsGroupedByMonth = months

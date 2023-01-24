@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedHome.Application.Common.Queries;
-using SharedHome.Application.ReadServices;
 using SharedHome.Application.ShoppingLists.DTO;
 using SharedHome.Application.ShoppingLists.Queries;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.ShoppingLists.Enums;
 using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Extensions;
@@ -17,15 +17,15 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
     {
         private readonly IMapper _mapper;
         private readonly ITimeProvider _time;
-        private readonly IHouseGroupReadService _houseGroupService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly DbSet<ShoppingListReadModel> _shoppingLists;
 
         public GetAllShoppingListsByYearAndMonthAndIsDoneHandler(IMapper mapper, ITimeProvider time,
-            IHouseGroupReadService houseGroupService, ReadSharedHomeDbContext context)
+            IHouseGroupRepository houseGroupRepository, ReadSharedHomeDbContext context)
         {
             _mapper = mapper;
             _time = time;
-            _houseGroupService = houseGroupService;
+            _houseGroupRepository = houseGroupRepository;
             _shoppingLists = context.ShoppingLists;
         }
 
@@ -43,9 +43,9 @@ namespace SharedHome.Infrastructure.EF.Queries.ShoppingLists.Handlers
                 request.Status = (int)ShoppingListStatus.ToDo;
             }
 
-            if (await _houseGroupService.IsPersonInHouseGroupAsync(request.PersonId!))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(request.PersonId!))
             {
-                var houseGroupPersonIds = await _houseGroupService.GetMemberPersonIdsAsync(request.PersonId!);
+                var houseGroupPersonIds = await _houseGroupRepository.GetMemberPersonIdsAsync(request.PersonId!);
 
                 return await _shoppingLists
                     .Include(shoppingList => shoppingList.Person)

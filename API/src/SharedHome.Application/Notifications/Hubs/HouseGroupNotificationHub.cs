@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Repositories;
 using System.Collections.Concurrent;
 
@@ -12,12 +11,10 @@ namespace SharedHome.Application.Notifications.Hubs
         public static readonly ConcurrentDictionary<Guid, string> GroupNames = new();
         public static readonly ConcurrentDictionary<Guid, string> UserToConnection = new();
 
-        private readonly IHouseGroupReadService _houseGroupReadService;
         private readonly IHouseGroupRepository _houseGroupRepository;
 
-        public HouseGroupNotificationHub(IHouseGroupReadService houseGroupReadService, IHouseGroupRepository houseGroupRepository)
+        public HouseGroupNotificationHub(IHouseGroupRepository houseGroupRepository)
         {
-            _houseGroupReadService = houseGroupReadService;
             _houseGroupRepository = houseGroupRepository;
         }
 
@@ -63,7 +60,7 @@ namespace SharedHome.Application.Notifications.Hubs
 
         private async Task<string?> GetGroupNameAsync()
         {
-            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(new Guid(Context.UserIdentifier!)))
+            if (!await _houseGroupRepository.IsPersonInHouseGroupAsync(new Guid(Context.UserIdentifier!)))
             {
                 return string.Empty;
             }

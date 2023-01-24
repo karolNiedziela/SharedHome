@@ -1,5 +1,5 @@
-﻿using SharedHome.Application.ReadServices;
-using SharedHome.Application.ShoppingLists.Extensions;
+﻿using SharedHome.Application.ShoppingLists.Extensions;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Domain.ShoppingLists;
 using SharedHome.Domain.ShoppingLists.Repositories;
@@ -9,24 +9,22 @@ namespace SharedHome.Application.ShoppingLists.Services
 {
     public class ShoppingListService : IShoppingListService
     {
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IShoppingListRepository _shoppingListRepository;
 
-        public ShoppingListService(IShoppingListRepository shoppingListRepository, IHouseGroupReadService houseGroupReadService)
+        public ShoppingListService(IShoppingListRepository shoppingListRepository, IHouseGroupRepository houseGroupRepository)
         {
             _shoppingListRepository = shoppingListRepository;
-            _houseGroupReadService = houseGroupReadService;
+            _houseGroupRepository = houseGroupRepository;
         }
 
         public async Task<ShoppingList> GetAsync(Guid shoppingListId, Guid personId)
         {
-            if (await _houseGroupReadService.IsPersonInHouseGroupAsync(personId))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(personId))
             {
-                var houseGroupPersonIds = await _houseGroupReadService.GetMemberPersonIdsAsync(personId);
+                var houseGroupPersonIds = await _houseGroupRepository.GetMemberPersonIdsAsync(personId);
 
-                var convertedHouseGroupPersonIds = new List<PersonId>(houseGroupPersonIds.Select(x => new PersonId(x)));
-
-                return await _shoppingListRepository.GetOrThrowAsync(shoppingListId, convertedHouseGroupPersonIds);           
+                return await _shoppingListRepository.GetOrThrowAsync(shoppingListId, houseGroupPersonIds);           
             }
 
             return await _shoppingListRepository.GetOrThrowAsync(shoppingListId, personId);

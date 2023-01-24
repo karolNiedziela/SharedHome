@@ -4,10 +4,10 @@ using MediatR;
 using NSubstitute;
 using SharedHome.Application.HouseGroups.Commands.AddHouseGroup;
 using SharedHome.Application.HouseGroups.DTO;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups;
 using SharedHome.Domain.HouseGroups.Exceptions;
 using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Shared.ValueObjects;
 using SharedHome.Infrastructure;
 using SharedHome.Shared.Application.Responses;
 using Shouldly;
@@ -22,18 +22,16 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
     public class AddHouseGroupHandlerTests
     {
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IHouseGroupReadService _houseGroupService;
         private readonly IMapper _mapper;
         private readonly IRequestHandler<AddHouseGroupCommand, ApiResponse<HouseGroupDto>> _commandHandler;
         
         public AddHouseGroupHandlerTests()
         {
             _houseGroupRepository = Substitute.For<IHouseGroupRepository>();
-            _houseGroupService = Substitute.For<IHouseGroupReadService>();
             var config = new TypeAdapterConfig();
             config.Scan(Assembly.GetAssembly(typeof(InfrastructureAssemblyReference))!);
             _mapper = new Mapper(config);
-            _commandHandler = new AddHouseGroupHandler(_houseGroupRepository, _houseGroupService, _mapper);
+            _commandHandler = new AddHouseGroupHandler(_houseGroupRepository, _mapper);
         }
 
         [Fact]
@@ -45,7 +43,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 Name = "HouseGroupName"
             };
 
-            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(true);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(true);
 
             var exception = await Record.ExceptionAsync(() => _commandHandler.Handle(command, default));
 
@@ -62,7 +60,7 @@ namespace SharedHome.Application.UnitTests.HouseGroups.Handlers
                 Name = "HouseGroupName"
             };
 
-            _houseGroupService.IsPersonInHouseGroupAsync(Arg.Any<Guid>()).Returns(false);
+            _houseGroupRepository.IsPersonInHouseGroupAsync(Arg.Any<PersonId>()).Returns(false);
 
             var response = await _commandHandler.Handle(command, default);
 

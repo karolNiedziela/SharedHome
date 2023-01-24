@@ -161,6 +161,8 @@ namespace SharedHome.Api.Controllers
         /// Update shopping list
         /// </summary>
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateShoppingListCommand command)
         {
             await Mediator.Send(command);

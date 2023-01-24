@@ -1,12 +1,10 @@
 ﻿using MediatR;
 using SharedHome.Application.HouseGroups.Extensions;
 using SharedHome.Application.Invitations.Extensions;
-using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.HouseGroups.Entities;
-using SharedHome.Domain.Invitations.Repositories;
-
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.HouseGroups.Exceptions;
+using SharedHome.Domain.HouseGroups.Repositories;
+using SharedHome.Domain.Invitations.Repositories;
 
 namespace SharedHome.Application.Invitations.Commands.AcceptInvitation
 {
@@ -14,19 +12,17 @@ namespace SharedHome.Application.Invitations.Commands.AcceptInvitation
     {
         private readonly IInvitationRepository _invitationRepository;
         private readonly IHouseGroupRepository _houseGroupRepository;
-        private readonly IHouseGroupReadService _houseGroupReadService;
 
         public AcceptInvitationHandler(IInvitationRepository invitationRepository,
-            IHouseGroupRepository houseGroupRepository, IHouseGroupReadService houseGroupReadService)
+            IHouseGroupRepository houseGroupRepository)
         {
             _invitationRepository = invitationRepository;
             _houseGroupRepository = houseGroupRepository;
-            _houseGroupReadService = houseGroupReadService;
         }
 
         public async Task<Unit> Handle(AcceptInvitationCommand request, CancellationToken cancellationToken)
         {
-            if (await _houseGroupReadService.IsPersonInHouseGroupAsync(request.PersonId))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(request.PersonId))
             {
                 throw new PersonIsAlreadyInHouseGroupException(request.PersonId);
             }

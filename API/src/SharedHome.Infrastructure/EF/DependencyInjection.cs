@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Invitations.Repositories;
@@ -12,7 +11,6 @@ using SharedHome.Infrastructure.EF.Contexts;
 using SharedHome.Infrastructure.EF.Initializers;
 using SharedHome.Infrastructure.EF.Interceptors;
 using SharedHome.Infrastructure.EF.Options;
-using SharedHome.Infrastructure.EF.ReadServices;
 using SharedHome.Infrastructure.EF.Repositories;
 using SharedHome.Notifications.Repositories;
 
@@ -29,10 +27,6 @@ namespace SharedHome.Infrastructure.EF
             services.AddScoped<IBillRepository, BillRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
-
-            // Services
-            services.AddScoped<IInvitationReadService, InvitationReadService>();
-            services.AddScoped<IHouseGroupReadService, HouseGroupService>();
 
             // Interceptors
             services.AddScoped<AuditableInterceptor>();

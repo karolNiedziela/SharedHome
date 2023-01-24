@@ -45,8 +45,9 @@ namespace SharedHome.Infrastructure.EF.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<bool> IsAnyInvitationFromHouseGroupToPerson(Guid houseGroupId, Guid personId)
-            => await _dbContext.Invitations.AnyAsync(invitation => invitation.HouseGroupId.Value == houseGroupId &&
-            invitation.RequestedToPersonId.Value == personId);
+        public async Task<bool> IsAnyInvitationFromHouseGroupToPersonAsync(HouseGroupId houseGroupId, PersonId requestedToPersonId)
+            => await _dbContext.Invitations.AnyAsync(invitation =>
+            invitation.HouseGroupId == houseGroupId &&
+            invitation.RequestedToPersonId == requestedToPersonId);
     }
 }

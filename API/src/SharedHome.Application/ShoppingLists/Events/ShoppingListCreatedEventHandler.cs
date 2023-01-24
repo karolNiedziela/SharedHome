@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SharedHome.Application.ReadServices;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.ShoppingLists.Events;
 using SharedHome.Notifications.Constants;
 using SharedHome.Notifications.Entities;
@@ -9,23 +9,23 @@ namespace SharedHome.Application.ShoppingLists.Events
 {
     public class ShoppingListCreatedEventHandler : INotificationHandler<ShoppingListCreated>
     {
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
         private readonly IAppNotificationService _appNotificationService;
 
-        public ShoppingListCreatedEventHandler(IHouseGroupReadService houseGroupReadService, IAppNotificationService appNotificationService)
+        public ShoppingListCreatedEventHandler(IHouseGroupRepository houseGroupRepository, IAppNotificationService appNotificationService)
         {
-            _houseGroupReadService = houseGroupReadService;
+            _houseGroupRepository = houseGroupRepository;
             _appNotificationService = appNotificationService;
         }
 
         public async Task Handle(ShoppingListCreated notification, CancellationToken cancellationToken)
         {
-            if (!await _houseGroupReadService.IsPersonInHouseGroupAsync(notification.PersonId))
+            if (!await _houseGroupRepository.IsPersonInHouseGroupAsync(notification.PersonId))
             {
                 return;
             }
 
-            var personIds = await _houseGroupReadService.GetMemberPersonIdsExcludingCreatorAsync(notification.PersonId);
+            var personIds = await _houseGroupRepository.GetMemberPersonIdsExcludingCreatorAsync(notification.PersonId);
 
             foreach (var personId in personIds)
             {

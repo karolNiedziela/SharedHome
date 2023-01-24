@@ -9,6 +9,14 @@ namespace SharedHome.Domain.HouseGroups.Repositories
 
         Task<HouseGroup?> GetAsync(HouseGroupId houseGroupId, PersonId personId);
 
+        Task<bool> IsPersonInHouseGroupAsync(PersonId personId);
+
+        Task<bool> IsPersonInHouseGroupAsync(PersonId personId, HouseGroupId houseGroupId);
+
+        Task<IEnumerable<Guid>> GetMemberPersonIdsAsync(PersonId personId);
+
+        Task<IEnumerable<Guid>> GetMemberPersonIdsExcludingCreatorAsync(PersonId personId);
+
         Task AddAsync(HouseGroup houseGroup);
 
         Task UpdateAsync(HouseGroup houseGroup);

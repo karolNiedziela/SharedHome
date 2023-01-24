@@ -1,8 +1,8 @@
 ﻿using SharedHome.Application.Bills.Extensions;
-using SharedHome.Application.ReadServices;
 using SharedHome.Domain.Bills;
 using SharedHome.Domain.Bills.Repositories;
 using SharedHome.Domain.Bills.Services;
+using SharedHome.Domain.HouseGroups.Repositories;
 using SharedHome.Domain.Shared.ValueObjects;
 
 namespace SharedHome.Application.Bills.Services
@@ -10,19 +10,19 @@ namespace SharedHome.Application.Bills.Services
     public class BillService : IBillService
     {
         private readonly IBillRepository _billRepository;
-        private readonly IHouseGroupReadService _houseGroupReadService;
+        private readonly IHouseGroupRepository _houseGroupRepository;
 
-        public BillService(IBillRepository billRepository, IHouseGroupReadService houseGroupReadService)
+        public BillService(IBillRepository billRepository, IHouseGroupRepository houseGroupRepository)
         {
             _billRepository = billRepository;
-            _houseGroupReadService = houseGroupReadService;
+            _houseGroupRepository = houseGroupRepository;
         }
 
         public async Task<Bill> GetAsync(Guid id, Guid personId)
         {
-            if (await _houseGroupReadService.IsPersonInHouseGroupAsync(personId))
+            if (await _houseGroupRepository.IsPersonInHouseGroupAsync(personId))
             {
-                var houseGroupPersonIds = await _houseGroupReadService.GetMemberPersonIdsAsync(personId);
+                var houseGroupPersonIds = await _houseGroupRepository.GetMemberPersonIdsAsync(personId);
 
                 var convertedHouseGroupPersonIds = new List<PersonId>(houseGroupPersonIds.Select(x => new PersonId(x)));
 

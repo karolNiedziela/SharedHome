@@ -50,27 +50,24 @@ namespace SharedHome.Domain.ShoppingLists.Entities
             return  new ShoppingListProduct(name, quantity, price, netContent, isBought, id);
         }
 
-        public void PurchaseProduct(Money price)
+        internal void PurchaseProduct(Money price)
         {
             Price = price;
             IsBought = true;
         }
 
-        public void ChangePriceOfProduct(Money? price)
-        {
-            Price = price;
-        }
+        internal void ChangePriceOfProduct(Money? price) => Price = price;
 
-        public void CancelPurchaseOfProduct()
+        internal void CancelPurchaseOfProduct()
         {
             Price = null;
             IsBought = false;
         }
-        public void Update(ShoppingListProduct shoppingListProduct)
+
+        internal void Update(ShoppingListProduct shoppingListProduct)
         {
             Name = shoppingListProduct.Name;
             Quantity = shoppingListProduct.Quantity;
-            Price = shoppingListProduct.Price;
             NetContent = shoppingListProduct.NetContent;
             IsBought = shoppingListProduct.IsBought;
         }
